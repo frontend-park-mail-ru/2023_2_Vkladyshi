@@ -12,7 +12,7 @@ export class Footer {
 
     }
 
-    renderTemplate() {
+    render() {
         // Чтобы это работало, нужно импортировать handlebars.runtime.js
         const template = Handlebars.templates['footer.hbs'];
         this.#parent.innerHTML = template();
