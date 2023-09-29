@@ -1,0 +1,25 @@
+@import "./components/footer/footer.css";
+@import "./components/contentBlock/contentBlock.css";
+
+html {
+  background-color: #ebebe7;
+  margin: 0;
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 100%;
+}
+
+#contentBlock {
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#contentBlock > p {
+  height: 2000px;
+}
