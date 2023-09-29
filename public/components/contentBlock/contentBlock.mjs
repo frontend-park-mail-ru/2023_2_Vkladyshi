@@ -1,7 +1,7 @@
-export class Footer {
+export class ContentBlock {
     #parent
 
-    constructor(parent, config) {
+    constructor(parent) {
         this.#parent = parent;
 
         // Инициализация состояния компонента
@@ -12,9 +12,9 @@ export class Footer {
 
     }
 
-    renderTemplate() {
+    render() {
         // Чтобы это работало, нужно импортировать handlebars.runtime.js
-        const template = Handlebars.templates['footer.hbs'];
+        const template = Handlebars.templates['contentBlock.hbs'];
         this.#parent.innerHTML = template();
     }
 }
