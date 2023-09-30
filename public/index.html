@@ -6,21 +6,13 @@
     <link rel="stylesheet" href="./index.css" />
   </head>
   <body>
-    <div id="root">
-      <div id="contentBlock">
-        <p>Привет</p>
-      </div>
-    </div>
-    <!-- Вариант с cdn иногда используется  -->
+    <div id="root"></div>
     <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.runtime.js"></script>
-    <!-- Вариант сразу из node_modules. Для этого нужно подкрутить server.js -->
-    <!-- <script src="/handlebars/dist/handlebars.runtime.js"></script> -->
-    <!-- <script src="../node_modules/handlebars/dist/handlebars.runtime.js"></script> -->
-    <!-- Без импорта handlebars.runtime.js не сработает. Файл появляется после компиляции -->
-    <script src="./components/footer/footer.precompiled.js"></script>
-    <!-- <script src="./components/footer/footer.js"></script> -->
-    <!-- <script src="./modules/ajax.js"></script> -->
-    <!-- Без type="module" нельзя будет использовать import/export внутри -->
+    <script src="./components/contentBlock/contentBlock.precompiled.js"></script>
+    <script src="./components/header/header.precompiled.js"></script>
+    <script src="./components/login/login.precompiled.js"></script>
+    <script type="module" src="./modules/ajax.js"></script>
+    <script type="module" src="./modules/config.js"></script>
     <script type="module" src="./index.js"></script>
   </body>
 </html>
