@@ -1,53 +1,32 @@
+import { Ajax } from "../../modules/ajax.js";
+import { response_statuses, urls } from "../../modules/config.js";
+
 export class FilmSelection {
   #parent;
+  #ajax;
 
   constructor(parent) {
     this.#parent = parent;
-
-    // Инициализация состояния компонента
-    this.state = {
-      activeMenu: null,
-      menuElements: {},
-    };
+    this.#ajax = new Ajax();
   }
 
   render() {
-    const films = {
-      collection: {
-        collectionName: "Боевики",
-        films: {
-          film1: {
-            poster_href: "../../icons/Poster.jpg",
-            name: "film_1",
-            rating: 4.5,
-          },
-          film2: {
-            poster_href: "../../icons/Poster.jpg",
-            name: "film_2",
-            rating: 4.1,
-          },
-          film3: {
-            poster_href: "../../icons/Poster.jpg",
-            name: "film_3",
-            rating: 4.5,
-          },
-          film4: {
-            poster_href: "../../icons/Poster.jpg",
-            name: "film_4",
-            rating: 3,
-          },
-          film5: {
-            poster_href: "../../icons/Poster.jpg",
-            name: "film_5",
-            rating: 2,
-          },
-        },
-      },
-    };
-
-    console.log(films);
-
-    const template = Handlebars.templates["filmSelection.hbs"];
-    this.#parent.innerHTML = template(films);
+    const genre_id = 1;
+    this.#ajax
+      .post({
+        url: urls.basket,
+        body: { genre_id },
+      })
+      .then((response) => {
+        if (response.status === response_statuses.success) {
+          // console.log("sucess");
+          // console.log(response.data.collection.collectionName);
+          const template = Handlebars.templates["filmSelection.hbs"];
+          this.#parent.innerHTML = template(response.data);
+        } else {
+          console.log("fail");
+          console.log(response.status);
+        }
+      });
   }
 }

@@ -19,6 +19,7 @@ rootElement.appendChild(contentBlockElement);
 const login = new Login();
 const header = new Header(headerElement, config.menu);
 const contentBlock = new ContentBlock(contentBlockElement);
+//тут блок подборок собираеться на основе contentBlock
 const filmSelectionBlock = new FilmSelection(contentBlockElement);
 
 const ajax = new Ajax();
@@ -33,7 +34,6 @@ function renderMain() {
     .get({ url: urls.content })
     .then(({ status, response }) => {
       let isAuthorized = false;
-
       if (status === response_statuses.success) {
         isAuthorized = true;
       }
@@ -41,6 +41,8 @@ function renderMain() {
       if (!isAuthorized) {
         contentBlock.render();
         header.render(false);
+        //просто рендериться в главном окне
+        //нужен обработчик чтобы на нужной кнопке был
         filmSelectionBlock.render();
         return;
       }
@@ -53,6 +55,8 @@ function renderMain() {
 }
 
 function goToPage(menuLink) {
+  // console.log("goToPage");
+  // console.log(menuLink);
   if (menuLink === header.state.activeHeader) {
     return;
   }
@@ -62,8 +66,9 @@ function goToPage(menuLink) {
 headerElement.addEventListener("click", (e) => {
   const { target } = e;
   e.preventDefault();
-  console.log(e);
-  console.log(target);
-  console.log(e.target);
+  // console.log("addEventListener");
+  // console.log(e);
+  // console.log(target);
+  // console.log(e.target);
   goToPage(e.target);
 });
