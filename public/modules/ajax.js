@@ -1,4 +1,4 @@
-import { methods, response_statuses  } from "./config.js"
+import { methods  } from "./config.js"
 export class Ajax {
     async get(params = {}) {
         const response = await fetch(params.url, {
@@ -12,8 +12,6 @@ export class Ajax {
     }
 
     async post({ url, body }) {
-
-        console.log(body)
         const response = await fetch(url, {
             method: methods.post,
             credentials: 'include',

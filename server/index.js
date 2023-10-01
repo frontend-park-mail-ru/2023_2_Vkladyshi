@@ -92,7 +92,7 @@ app.get('/me', (req, res) => {
   res.json(users[email]);
 });
 
-app.get('/content', (req, res) => {
+app.get('/', (req, res) => {
   const id = req.cookies['podvorot'];
   const email = ids[id];
   if (!email || !users[email]) {

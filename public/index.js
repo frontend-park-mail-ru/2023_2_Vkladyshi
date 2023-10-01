@@ -4,7 +4,7 @@ import { Signup } from "./components/signup/signup.mjs";
 import { ContentBlock } from "./components/contentBlock/contentBlock.mjs";
 
 import { Ajax } from "./modules/ajax.js";
-import { config, response_statuses, urls } from  "./modules/config.js"
+import { config, responseStatuses, urls } from  "./modules/config.js"
 
 const rootElement = document.querySelector("#root");
 const contentBlockElement = document.createElement("div");
@@ -24,29 +24,24 @@ const ajax = new Ajax();
 login.setHeader(header)
 signup.setHeader(header)
 
-config.menu.login.render_object = login;
-config.menu.signup.render_object = signup;
+config.menu.login.renderObject = login;
+config.menu.signup.renderObject = signup;
+config.menu.main.renderObject = contentBlock;
 
 renderMain();
 
 function renderMain() {
-    addToHeaderEvent()
-
-    ajax.get({url: urls.content})
+    ajax.get({url: urls.main})
         .then(({status, response}) => {
-            let isAuthorized = false;
-
-            if (status === response_statuses.success) {
-                isAuthorized = true;
-            }
-
-            if (!isAuthorized) {
+            if (responseStatuses.success) {
                 contentBlock.render();
                 header.render( false);
-                return;
+            } else {
+                contentBlock.render();
+                header.render(true);
             }
-            contentBlock.render();
-            header.render(true);
+
+            addToHeaderEvent()
         })
         .catch((err) => {
             console.log(err);
@@ -54,20 +49,31 @@ function renderMain() {
 }
 
 function goToPage(menuLink) {
-    if (header.state.activeMenu === menuLink) {
+    if (header.state.activeHeader === menuLink) {
         return
     }
 
-    header.state.activeMenu = menuLink;
-    config.menu[menuLink.dataset.section].render_object.render();
+    const lastPage = header.state.activeHeader;
+    if (lastPage !== null) {
+
+        rootElement.removeChild(document.querySelector(`.${lastPage}`));
+    }
+
+    header.state.activeHeader = menuLink;
+    config.menu[menuLink.dataset.section].renderObject.render();
 }
 
 function addToHeaderEvent() {
-    headerElement.addEventListener('click', (e) => {
-        const { target } = e;
-        e.preventDefault();
-        goToPage(e.target);
-    });
+    const loginHeader = document.querySelector(".loginHeader")
+    loginHeader.addEventListener('click', (event) => {
+
+            event.composedPath().forEach(function(element) {
+                const classNames = element.className;
+                if (classNames === "loginHeader"){
+                    goToPage(element);
+                    return;
+                }
+            });
+
+    })
 }
-
-

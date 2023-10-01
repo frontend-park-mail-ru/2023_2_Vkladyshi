@@ -1,29 +1,29 @@
 <div class="header">
-    <div class="header_item">
+    <div class="headerItem">
         <img src="../../icons/title_icon.png" class="brand_icon">
         <span>MovieHub</span>
     </div>
 
-    <div class="header_item" data-section="{{selection.key}}">
+    <div class="headerItem" data-section="{{selection.key}}">
         <img src="../../icons/{{selection.png_name}}" class="icon">
         <span>{{selection.name}}</span>
     </div>
 
     <input class="header_search_item" placeholder="Поиск фильмов">
 
-    <div class="header_item" data-section="{{basket.key}}">
+    <div class="headerItem" data-section="{{basket.key}}">
         <img src="../../icons/{{basket.png_name}}" class="icon">
         <span>{{ basket.name }}</span>
     </div>
 
     {{#if isAuthorized}}
-        <div class="header_item"  data-section="{{profile.key}}">
+        <div class="headerItem"  data-section="{{profile.key}}">
             <img src="../../icons/{{profile.png_name}}" class="icon">
             <span>{{ profile.name }}</span>
         </div>
     {{else}}
-        <div id="login" class="header_item" data-section="{{login.key}}">
-            <img src="../../icons/{{login.png_name}}" class="icon">
+        <div class="loginHeader" data-section="{{login.key}}">
+            <img src="../../icons/{{login.png_name}}" class="icon" alt="">
             <span class="loginText">{{ login.name }}</span>
         </div>
     {{/if}}

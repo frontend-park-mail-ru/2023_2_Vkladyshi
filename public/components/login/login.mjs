@@ -1,7 +1,8 @@
 import { Ajax } from "../../modules/ajax.js";
-import { response_statuses, urls, config} from "../../modules/config.js"
+import { responseStatuses, urls, config, errorInputs} from "../../modules/config.js"
 import { validateEmail } from "../../modules/validate.js";
 import { returnError } from "../../modules/addError.js";
+
 
 export class Login {
     #header
@@ -25,56 +26,58 @@ export class Login {
         const root = document.querySelector("#root");
 
         const loginBox = document.createElement("div");
-
         loginBox.className = "loginBox"
 
         root.appendChild(loginBox)
 
         contentBlock.innerHTML = ""
-        loginBox.innerHTML += Handlebars.templates['login.hbs']();
-        this.#header.state.headerElement = loginBox;
+        loginBox.innerHTML = Handlebars.templates['login.hbs']();
+        this.#header.state.activeHeader = loginBox.className;
 
-        loginBox.addEventListener('click', (e) => {
-            switch (e.target.className) {
-                case "buttonLogin":
-                    e.preventDefault();
-                    const email = document.querySelector(".emailInput").value.trim();
-                    const password = document.querySelector(".passwordInput").value;
+        const redirectToSignup = document.querySelector(".redirectToSignup");
+        redirectToSignup.addEventListener('click', (event) => {
+            root.removeChild(document.querySelector(".loginBox"))
 
-                    if (!validateEmail(email)) {
-                        returnError(loginBox, "Email не валиден")
-                        return
-                    }
 
-                    if (!password) {
-                        returnError(loginBox, "Введите пароль")
-                        return
-                    }
-
-                    this.#ajax.post({
-                        url: urls.login,
-                        body: {password, email}
-                    }).then( response => {
-                        switch (response.status) {
-                            case response_statuses.success:
-                                root.removeChild(loginBox);
-                                config.menu["signup"].render_object.render();
-                                this.#header.render(true)
-                                break;
-                            case response_statuses.not_authorized:
-                                returnError(loginBox, `Ошибка пароля или email`);
-                                break;
-                            default:
-                                throw new Error(`Error ${response.status}`)
-                        }
-                    });
-                    break;
-                case "redirectToSignup":
-                    e.preventDefault()
-                    root.removeChild(loginBox)
-                    config.menu["signup"].render_object.render();
-                    break;
-            }
+            this.#header.state.activeHeader = redirectToSignup.className;
+            config.menu[redirectToSignup.dataset.section].renderObject.render();
         });
-    }
+
+        loginBox.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const email = document.querySelector(".emailInput").value.trim();
+            const password = document.querySelector(".passwordInput").value;
+
+            if (!validateEmail(email)) {
+                returnError(loginBox, errorInputs.EmailNoValid)
+                return
+            }
+
+            if (!password) {
+                returnError(loginBox, errorInputs.NotPassword)
+                return
+            }
+
+            this.#ajax.post({
+                url: urls.login,
+                body: {password, email}
+            }).then( response => {
+                switch (response.status) {
+                    case responseStatuses.success:
+                        root.removeChild(loginBox);
+                        root.appendChild(contentBlock);
+
+                        config.menu["main"].renderObject.render();
+                        this.#header.render(true)
+                        break;
+                    case responseStatuses.notAuthorized:
+                        returnError(loginBox, errorInputs.EmailOrPasswordError);
+                        break;
+                    default:
+                        throw new Error(`Error ${response.status}`)
+                }
+            });
+
+        });
+        }
 }

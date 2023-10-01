@@ -8,7 +8,7 @@ templates['header.hbs'] = template({"1":function(container,depth0,helpers,partia
         return undefined
     };
 
-  return "        <div class=\"header_item\"  data-section=\""
+  return "        <div class=\"headerItem\"  data-section=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"profile") : depth0)) != null ? lookupProperty(stack1,"key") : stack1), depth0))
     + "\">\n            <img src=\"../../icons/"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"profile") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))
@@ -23,11 +23,11 @@ templates['header.hbs'] = template({"1":function(container,depth0,helpers,partia
         return undefined
     };
 
-  return "        <div id=\"login\" class=\"header_item\" data-section=\""
+  return "        <div class=\"loginHeader\" data-section=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"login") : depth0)) != null ? lookupProperty(stack1,"key") : stack1), depth0))
     + "\">\n            <img src=\"../../icons/"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"login") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))
-    + "\" class=\"icon\">\n            <span class=\"loginText\">"
+    + "\" class=\"icon\" alt=\"\">\n            <span class=\"loginText\">"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"login") : depth0)) != null ? lookupProperty(stack1,"name") : stack1), depth0))
     + "</span>\n        </div>\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
@@ -38,13 +38,13 @@ templates['header.hbs'] = template({"1":function(container,depth0,helpers,partia
         return undefined
     };
 
-  return "<div class=\"header\">\n    <div class=\"header_item\">\n        <img src=\"../../icons/title_icon.png\" class=\"brand_icon\">\n        <span>MovieHub</span>\n    </div>\n\n    <div class=\"header_item\" data-section=\""
+  return "<div class=\"header\">\n    <div class=\"headerItem\">\n        <img src=\"../../icons/title_icon.png\" class=\"brand_icon\">\n        <span>MovieHub</span>\n    </div>\n\n    <div class=\"headerItem\" data-section=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"selection") : depth0)) != null ? lookupProperty(stack1,"key") : stack1), depth0))
     + "\">\n        <img src=\"../../icons/"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"selection") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))
     + "\" class=\"icon\">\n        <span>"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"selection") : depth0)) != null ? lookupProperty(stack1,"name") : stack1), depth0))
-    + "</span>\n    </div>\n\n    <input class=\"header_search_item\" placeholder=\"Поиск фильмов\">\n\n    <div class=\"header_item\" data-section=\""
+    + "</span>\n    </div>\n\n    <input class=\"header_search_item\" placeholder=\"Поиск фильмов\">\n\n    <div class=\"headerItem\" data-section=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"basket") : depth0)) != null ? lookupProperty(stack1,"key") : stack1), depth0))
     + "\">\n        <img src=\"../../icons/"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"basket") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))

@@ -40,7 +40,7 @@ export class Header {
         const elements = this.#parent.querySelectorAll('[data-section]');
         elements.forEach((element, index) => {
             if (index === 0) {
-                this.state.activeHeader = element;
+                this.state.activeHeader = null;
             }
             this.state.headerElements[element.dataset.section] = element;
         })

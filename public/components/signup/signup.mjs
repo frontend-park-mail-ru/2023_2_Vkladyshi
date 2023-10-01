@@ -1,5 +1,5 @@
 import { Ajax } from "../../modules/ajax.js";
-import { response_statuses, urls} from "../../modules/config.js"
+import {errorInputs, responseStatuses, urls} from "../../modules/config.js"
 import { validateEmail } from "../../modules/validate.js";
 import { returnError } from "../../modules/addError.js";
 
@@ -21,19 +21,18 @@ export class Signup {
     }
 
     render() {
-        const template = Handlebars.templates['signup.hbs'];
         const root = document.querySelector("#root");
         const contentBlock = document.querySelector(".contentBlock");
-        const loginBox = document.createElement("div");
-        loginBox.className = "signupBox";
+        const signupBox = document.createElement("div");
+        signupBox.className = "signupBox";
 
         contentBlock.innerHTML = ""
-        root.appendChild(loginBox);
+        root.appendChild(signupBox);
 
-        loginBox.innerHTML = template();
+        signupBox.innerHTML = Handlebars.templates['signup.hbs']();
 
         const signupForm = document.querySelector('.signupForm');
-        this.#header.state.activeMenu = "signup";
+        this.#header.state.activeHeader = signupBox.className;
 
         signupForm.addEventListener('submit', (e) => {
             e.preventDefault();
@@ -44,16 +43,16 @@ export class Signup {
             const passwordSecond = document.querySelector(".passwordInputSecond").value;
 
             if (!login || !email || !password || !passwordSecond) {
-                returnError(loginBox, "Заполните все поля")
+                returnError(signupBox, errorInputs.NotAllElements)
                 return ;
             }
 
             if (password !== passwordSecond) {
-                returnError(loginBox, "Пароли не совпадают")
+                returnError(signupBox, errorInputs.PasswordsNoEqual)
                 return;
             }
             if (!validateEmail(email)) {
-                returnError(loginBox, "Email не валиден")
+                returnError(signupBox, errorInputs.EmailNoValid)
                 return ;
             }
 
@@ -62,15 +61,15 @@ export class Signup {
                 body: {password, email}
             }).then( response => {
                 switch (response.status) {
-                    case response_statuses.success:
+                    case responseStatuses.success:
                         const template = Handlebars.templates['contentBlock.hbs'];
-                        root.removeChild(loginBox);
+                        root.removeChild(signupBox);
                         root.appendChild(contentBlock);
-                        contentBlock.innerHTML = template();
+                        contentBlock.innerHTML = Handlebars.templates['contentBlock.hbs']();
                         this.#header.render(true);
                         break;
-                    case response_statuses.already_exists:
-                        returnError(loginBox, `Эта почта уже используется`);
+                    case responseStatuses.alreadyExists:
+                        returnError(signupBox, errorInputs.EmailOrPasswordError);
                         break;
                     default:
                         throw new Error(`Error ${response.status}`)

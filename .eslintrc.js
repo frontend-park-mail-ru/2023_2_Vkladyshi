@@ -5,7 +5,7 @@ module.exports = {
     },
     "extends": [
         "eslint:recommended",
-        "plugin:react/recommended"
+        'plugin:stylelint/recommended',
     ],
     "overrides": [
         {
@@ -25,7 +25,7 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react"
+        'stylelint'
     ],
     "rules": {
     }
