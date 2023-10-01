@@ -19,6 +19,7 @@ rootElement.appendChild(contentBlockElement);
 const login = new Login();
 const header = new Header(headerElement, config.menu);
 const contentBlock = new ContentBlock(contentBlockElement);
+const filmSelectionBlock = new FilmSelection(contentBlockElement);
 
 const ajax = new Ajax();
 login.setHeader(header);
@@ -40,14 +41,6 @@ function renderMain() {
       if (!isAuthorized) {
         contentBlock.render();
         header.render(false);
-
-        const selectBox = document.createElement("div");
-        selectBox.className = "film_select_box";
-
-        rootElement.removeChild(document.querySelector(".contentBlock"));
-        rootElement.appendChild(selectBox);
-
-        const filmSelectionBlock = new FilmSelection(selectBox);
         filmSelectionBlock.render();
         return;
       }
