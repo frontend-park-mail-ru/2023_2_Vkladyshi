@@ -7,11 +7,8 @@ body {
   padding: 0;
   margin: 0;
 
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
 }
 .contentBlock > p {
   height: 2000px;
-}
-
-#root {
 }
