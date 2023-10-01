@@ -7,7 +7,7 @@ export class ContentBlock {
         // Инициализация состояния компонента
         this.state = {
             activeMenu: null,
-            menuElements: {},
+            menuElement: {},
         }
 
     }

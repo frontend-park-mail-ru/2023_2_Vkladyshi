@@ -5,9 +5,6 @@ export class Ajax {
             method: methods.get,
             credentials: 'include',
         })
-        if (response.status === response_statuses.invalid_error) {
-            throw new Error(`Request failed with status 400`);
-        }
         return {
             status: response.status,
             response,
@@ -15,6 +12,8 @@ export class Ajax {
     }
 
     async post({ url, body }) {
+
+        console.log(body)
         const response = await fetch(url, {
             method: methods.post,
             credentials: 'include',
@@ -23,10 +22,6 @@ export class Ajax {
             },
             body: JSON.stringify(body),
         })
-
-        if (!response.ok) {
-            throw new Error(`Request failed with status ${response.status}`);
-        }
         return response;
 
     }

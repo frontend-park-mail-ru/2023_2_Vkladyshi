@@ -27,7 +27,7 @@ templates['header.hbs'] = template({"1":function(container,depth0,helpers,partia
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"login") : depth0)) != null ? lookupProperty(stack1,"key") : stack1), depth0))
     + "\">\n            <img src=\"../../icons/"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"login") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))
-    + "\" class=\"icon\">\n            <span>"
+    + "\" class=\"icon\">\n            <span class=\"loginText\">"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"login") : depth0)) != null ? lookupProperty(stack1,"name") : stack1), depth0))
     + "</span>\n        </div>\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {

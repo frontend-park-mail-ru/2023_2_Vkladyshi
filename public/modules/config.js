@@ -18,6 +18,7 @@ export const response_statuses = {
     not_authorized: 401,
     server_error: 500,
     not_found: 404,
+    already_exists: 409,
 
 }
 export const config = {

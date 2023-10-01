@@ -1,5 +1,7 @@
 import { Ajax } from "../../modules/ajax.js";
-import { response_statuses, urls} from "../../modules/config.js"
+import { response_statuses, urls, config} from "../../modules/config.js"
+import { validateEmail } from "../../modules/validate.js";
+import { returnError } from "../../modules/addError.js";
 
 export class Login {
     #header
@@ -7,6 +9,11 @@ export class Login {
 
     constructor() {
         this.#ajax = new Ajax();
+
+        this.state = {
+            activeHeader: null,
+            headerElement: null,
+        }
     }
 
     setHeader(header) {
@@ -14,40 +21,60 @@ export class Login {
     }
 
     render() {
-        const template = Handlebars.templates['login.hbs'];
-        const root = document.querySelector("#root");
         const contentBlock = document.querySelector(".contentBlock");
+        const root = document.querySelector("#root");
+
         const loginBox = document.createElement("div");
-        loginBox.className = "login_box";
 
-        root.removeChild(contentBlock);
-        root.appendChild(loginBox);
+        loginBox.className = "loginBox"
 
-        loginBox.innerHTML = template();
+        root.appendChild(loginBox)
 
-        const loginForm = document.querySelector('.login_form');
+        contentBlock.innerHTML = ""
+        loginBox.innerHTML += Handlebars.templates['login.hbs']();
+        this.#header.state.headerElement = loginBox;
 
-        loginForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const email = document.querySelector(".login_input").value.trim();
-            const password = document.querySelector(".password_input").value;
+        loginBox.addEventListener('click', (e) => {
+            switch (e.target.className) {
+                case "buttonLogin":
+                    e.preventDefault();
+                    const email = document.querySelector(".emailInput").value.trim();
+                    const password = document.querySelector(".passwordInput").value;
 
-            this.#ajax.post({
-                url: urls.login,
-                body: {password, email}
-            }).then( response => {
-                    if (response.status === response_statuses.success) {
-                        const template = Handlebars.templates['contentBlock.hbs'];
-
-                        root.removeChild(loginBox);
-                        root.appendChild(contentBlock);
-                        contentBlock.innerHTML = template();
-
-                        this.#header.render(true)
-                    } else {
-
+                    if (!validateEmail(email)) {
+                        returnError(loginBox, "Email не валиден")
+                        return
                     }
-            });
+
+                    if (!password) {
+                        returnError(loginBox, "Введите пароль")
+                        return
+                    }
+
+                    this.#ajax.post({
+                        url: urls.login,
+                        body: {password, email}
+                    }).then( response => {
+                        switch (response.status) {
+                            case response_statuses.success:
+                                root.removeChild(loginBox);
+                                config.menu["signup"].render_object.render();
+                                this.#header.render(true)
+                                break;
+                            case response_statuses.not_authorized:
+                                returnError(loginBox, `Ошибка пароля или email`);
+                                break;
+                            default:
+                                throw new Error(`Error ${response.status}`)
+                        }
+                    });
+                    break;
+                case "redirectToSignup":
+                    e.preventDefault()
+                    root.removeChild(loginBox)
+                    config.menu["signup"].render_object.render();
+                    break;
+            }
         });
     }
 }
