@@ -62,5 +62,8 @@ function goToPage(menuLink) {
 headerElement.addEventListener("click", (e) => {
   const { target } = e;
   e.preventDefault();
+  console.log(e);
+  console.log(target);
+  console.log(e.target);
   goToPage(e.target);
 });
