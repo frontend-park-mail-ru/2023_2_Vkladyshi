@@ -1,19 +1,16 @@
-import { Ajax } from "../../modules/ajax.js";
-import { response_statuses, urls } from "../../modules/config.js";
+import { get, post } from "../../modules/ajax.js";
+import { responseStatuses, urls } from "../../modules/config.js";
 
 export class FilmSelection {
   #parent;
-  #ajax;
 
   constructor(parent) {
     this.#parent = parent;
-    this.#ajax = new Ajax();
   }
 
   render() {
     const genre_id = 1;
-    this.#ajax
-      .post({
+      post({
         url: urls.basket,
         body: { genre_id },
       })

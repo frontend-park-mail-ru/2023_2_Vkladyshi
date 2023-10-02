@@ -1,17 +1,19 @@
 export class Header {
-  #parent;
-  #config;
+    #parent
+    #content
+    #config
 
-  constructor(parent, config) {
-    this.#parent = parent;
-    this.#config = config;
+    constructor(parent, content, config) {
+        this.#parent = parent;
+        this.#content = content;
+        this.#config = config;
 
-    // Инициализация состояния компонента
-    this.state = {
-      activeHeader: null,
-      headerElements: {},
-    };
-  }
+        // Инициализация состояния компонента
+        this.state = {
+            activeElements: null,
+            headerElements: {},
+        }
+    }
 
   get config() {
     return this.#config;
@@ -31,25 +33,17 @@ export class Header {
   render(isAuthorized = false) {
     const template = Handlebars.templates["header.hbs"];
 
-    let login = this.items.find((item) => item.key === "login");
-    let basket = this.items.find((item) => item.key === "basket");
-    let profile = this.items.find((item) => item.key === "profile");
-    let selection = this.items.find((item) => item.key === "selection");
+        let brand = this.items.find(item => item.key === "main");
+        let login = this.items.find(item => item.key === "login");
+        let basket = this.items.find(item => item.key === "basket");
+        let profile = this.items.find(item => item.key === "profile");
+        let selection = this.items.find(item => item.key === "selection");
 
-    this.#parent.innerHTML = template({
-      isAuthorized,
-      login,
-      basket,
-      profile,
-      selection,
-    });
+        this.#parent.innerHTML = template({isAuthorized, login, basket, profile, selection, brand} );
 
-    const elements = this.#parent.querySelectorAll("[data-section]");
-    elements.forEach((element, index) => {
-      if (index === 0) {
-        this.state.activeHeader = element;
-      }
-      this.state.headerElements[element.dataset.section] = element;
-    });
-  }
+        const elements = this.#parent.querySelectorAll('[data-section]');
+        elements.forEach((element, index) => {
+            this.state.headerElements[element.dataset.section] = element;
+        })
+    }
 }
