@@ -2,6 +2,8 @@
 @import "./components/login/login.css";
 @import "./components/header/header.css";
 @import "./components/contentBlock/contentBlock.css";
+@import "./components/signup/signup.css";
+@import "./components/footer/footer.css";
 
 body {
   background-color: #ebebe7;
@@ -10,6 +12,7 @@ body {
 
   font-family: "Montserrat", sans-serif;
 }
+
 .contentBlock > p {
   height: 2000px;
 }

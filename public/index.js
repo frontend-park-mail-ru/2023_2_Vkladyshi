@@ -1,74 +1,93 @@
 import { Header } from "./components/header/header.mjs";
 import { Login } from "./components/login/login.mjs";
+import { Signup } from "./components/signup/signup.mjs";
 import { ContentBlock } from "./components/contentBlock/contentBlock.mjs";
+
 import { FilmSelection } from "./components/filmSelection/filmSelection.mjs";
 
 import { Ajax } from "./modules/ajax.js";
 
-import { config, response_statuses, urls } from "./modules/config.js";
 
-const rootElement = document.querySelector("#root");
 const contentBlockElement = document.createElement("div");
 
-const headerElement = document.createElement("header");
-contentBlockElement.className = "contentBlock";
 
+
+import {config, responseStatuses, urls} from "./modules/config.js"
+import { goToPage } from "./modules/goToPage.js";
+import { checkAuthorized } from "./modules/checkAuthorized.js";
+
+const rootElement = document.querySelector("#root");
+
+const headerElement = document.createElement("header");
 rootElement.appendChild(headerElement);
-rootElement.appendChild(contentBlockElement);
 
 const login = new Login();
-const header = new Header(headerElement, config.menu);
-const contentBlock = new ContentBlock(contentBlockElement);
+
+
 //тут блок подборок собираеться на основе contentBlock
 const filmSelectionBlock = new FilmSelection(contentBlockElement);
 
-const ajax = new Ajax();
+const signup = new Signup();
+const contentBlock = new ContentBlock()
+const header = new Header(headerElement, contentBlock, config.menu);
+
 login.setHeader(header);
+contentBlock.setHeader(header);
+signup.setHeader(header);
 
-config.menu.login.render_object = login;
 
-renderMain();
+config.menu.login.renderObject = login;
+config.menu.signup.renderObject = signup;
+config.menu.main.renderObject = contentBlock;
 
-function renderMain() {
-  ajax
-    .get({ url: urls.content })
-    .then(({ status, response }) => {
-      let isAuthorized = false;
-      if (status === response_statuses.success) {
-        isAuthorized = true;
-      }
+header.render( false);
+contentBlock.render();
+addToHeaderEvent()
 
-      if (!isAuthorized) {
-        contentBlock.render();
-        header.render(false);
-        //просто рендериться в главном окне
-        //нужен обработчик чтобы на нужной кнопке был
-        filmSelectionBlock.render();
-        return;
-      }
-      contentBlock.render();
-      header.render(true);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-function goToPage(menuLink) {
-  // console.log("goToPage");
-  // console.log(menuLink);
-  if (menuLink === header.state.activeHeader) {
-    return;
-  }
-
-  config.menu[menuLink.dataset.section].render_object.render();
-}
-headerElement.addEventListener("click", (e) => {
-  const { target } = e;
-  e.preventDefault();
-  // console.log("addEventListener");
-  // console.log(e);
-  // console.log(target);
-  // console.log(e.target);
-  goToPage(e.target);
+checkAuthorized().then((isAuthorized) => {
+    if (isAuthorized) {
+        header.render(true);
+        addToHeaderEvent();
+    }
 });
+
+function addToHeaderEvent() {
+    const loginHeader = document.querySelector(".loginHeader")
+    if (loginHeader) {
+        loginHeader.addEventListener('click', (event) => {
+                event.composedPath().forEach(function(element) {
+                    const classNames = element.className;
+                    if (classNames === "loginHeader"){
+                        goToPage(header, element);
+                        return;
+                    }
+                });
+        })
+    }
+
+    const brandHeader = document.querySelector(".brandHeader")
+    brandHeader.addEventListener('click', (event) => {
+        event.composedPath().forEach(function(element) {
+            const classNames = element.className;
+            if (classNames === "brandHeader"){
+                goToPage(header, element);
+                return;
+            }
+        });
+
+    })
+
+    const logoutHeader = document.querySelector(".logoutHeader")
+    if (logoutHeader) {
+        logoutHeader.addEventListener('click', (event) => {
+            event.composedPath().forEach(function(element) {
+                const classNames = element.className;
+                if (classNames === "logoutHeader"){
+                    goToPage(header, element);
+                    return;
+                }
+            });
+        })
+    }
+}
+

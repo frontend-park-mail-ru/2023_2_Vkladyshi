@@ -1,10 +1,14 @@
 export const urls = {
-  basket: "/basket",
-  profile: "/profile",
-  login: "/login",
-  signup: "/signup",
-  selection: "/selection",
-  content: "/content",
+
+    main: "/",
+    basket: "/basket",
+    profile: "/profile",
+    login: "/login",
+    signup: "/signup",
+    selection: "/selection",
+    content: "/content",
+    authorized: "/authorized",
+
 };
 
 export const methods = {
@@ -12,44 +16,67 @@ export const methods = {
   get: "GET",
 };
 
-export const response_statuses = {
-  success: 200,
-  invalid_error: 400,
-  not_authorized: 401,
-  server_error: 500,
-  not_found: 404,
-};
+
+export const responseStatuses = {
+    success: 200,
+    invalidError: 400,
+    notAuthorized: 401,
+    serverError: 500,
+    notFound: 404,
+    alreadyExists: 409,
+}
+
+export const errorInputs = {
+    EmailNoValid: "Email не валиден",
+    EmailOrPasswordError: "Ошибка пароля или email",
+    PasswordNoValid: "Пароль не валиден",
+    PasswordsNoEqual : "Пароли не одинаковые",
+    NotPassword: "Нет пароля",
+    NotAllElements: "Нет всех полей",
+    EmailExists: "Почта уже используется",
+}
+
 export const config = {
-  menu: {
-    basket: {
-      href: urls.basket,
-      png_name: "Vector_MY_FILMS.png",
-      name: "Мои фильмы",
-      render_object: "",
-    },
-    profile: {
-      href: urls.profile,
-      png_name: "profile_icon.png",
-      name: "Мой профиль",
-      render_object: "",
-    },
-    login: {
-      href: urls.login,
-      png_name: "profile_icon.png",
-      name: "Войти",
-      render_object: "",
-    },
-    signup: {
-      href: urls.signup,
-      png_name: "profile_icon.png",
-      name: "Зарегистрироваться",
-      render_object: "",
-    },
-    selection: {
-      href: urls.selection,
-      png_name: "Vector_TAGS.png",
-      name: "Меню",
-      render_object: "",
-    },
-  },
+    menu: {
+        basket: {
+            href: urls.basket,
+            png_name: "Vector_MY_FILMS.png",
+            name: 'Мои фильмы',
+            renderObject: "",
+        },
+        profile: {
+            href: urls.profile,
+            png_name: "profile_icon.png",
+            name: 'Мой профиль',
+            renderObject: "",
+        },
+        login: {
+            href: urls.login,
+            png_name: "profile_icon.png",
+            name: 'Войти',
+            renderObject: "",
+        },
+        signup: {
+            href: urls.signup,
+            png_name: "profile_icon.png",
+            name: 'Зарегистрироваться',
+            renderObject: "",
+        },
+        selection: {
+            href: urls.selection,
+            png_name: "Vector_TAGS.png",
+            name: 'Меню',
+            renderObject: "",
+        },
+        main: {
+            href: urls.main,
+            png_name: "title_icon.png",
+            name: 'MovieHub',
+            renderObject: "",
+        },
+        footer: {
+            renderObject: "",
+        }
+    }
 };
+
