@@ -2,7 +2,7 @@
 
 const films = {
   collection: {
-    collectionName: "Боевики",
+    collectionName: "Новинки",
     films: {
       film1: {
         poster_href: "../../icons/Poster.jpg",
@@ -23,12 +23,7 @@ const films = {
         poster_href: "../../icons/Poster.jpg",
         name: "film_4",
         rating: 3,
-      },
-      film5: {
-        poster_href: "../../icons/Poster.jpg",
-        name: "film_5",
-        rating: 2,
-      },
+      }
     },
   },
 };
@@ -158,11 +153,6 @@ app.get('/content', (req, res) => {
 });
 
 app.post("/basket", (req, res) => {
-  console.log("=============");
-  console.log("Server sucess");
-  console.log(req.body.genre_id);
-  console.log("=============");
-
   switch (req.body.genre_id) {
     case 1:
       return res.status(200).json(films);

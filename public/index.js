@@ -2,19 +2,12 @@ import { Header } from "./components/header/header.mjs";
 import { Login } from "./components/login/login.mjs";
 import { Signup } from "./components/signup/signup.mjs";
 import { ContentBlock } from "./components/contentBlock/contentBlock.mjs";
-
 import { FilmSelection } from "./components/filmSelection/filmSelection.mjs";
-
-import { Ajax } from "./modules/ajax.js";
-
-
-const contentBlockElement = document.createElement("div");
-
-
-
-import {config, responseStatuses, urls} from "./modules/config.js"
+import {config} from "./modules/config.js"
 import { goToPage } from "./modules/goToPage.js";
 import { checkAuthorized } from "./modules/checkAuthorized.js";
+
+const contentBlockElement = document.createElement("div");
 
 const rootElement = document.querySelector("#root");
 
@@ -22,11 +15,7 @@ const headerElement = document.createElement("header");
 rootElement.appendChild(headerElement);
 
 const login = new Login();
-
-
-//тут блок подборок собираеться на основе contentBlock
-const filmSelectionBlock = new FilmSelection(contentBlockElement);
-
+// const filmSelectionBlock = new FilmSelection(contentBlockElement);
 const signup = new Signup();
 const contentBlock = new ContentBlock()
 const header = new Header(headerElement, contentBlock, config.menu);
@@ -35,13 +24,14 @@ login.setHeader(header);
 contentBlock.setHeader(header);
 signup.setHeader(header);
 
-
 config.menu.login.renderObject = login;
 config.menu.signup.renderObject = signup;
 config.menu.main.renderObject = contentBlock;
 
 header.render( false);
 contentBlock.render();
+const filmSelectionBlock = new FilmSelection(document.querySelector(".contentBlock"));
+filmSelectionBlock.render();
 addToHeaderEvent()
 
 checkAuthorized().then((isAuthorized) => {

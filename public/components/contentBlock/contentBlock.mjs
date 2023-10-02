@@ -1,4 +1,5 @@
 import {Footer} from "../footer/footer.mjs";
+import {FilmSelection} from "../filmSelection/filmSelection.mjs";
 
 export class ContentBlock {
     #header
@@ -30,8 +31,10 @@ export class ContentBlock {
         } else {
             footer.before(contentBlock);
         }
-        contentBlock.innerHTML = Handlebars.templates['contentBlock.hbs']();
 
+        contentBlock.innerHTML = Handlebars.templates['contentBlock.hbs']();
+        const film = new FilmSelection(contentBlock);
+        film.render();
 
     }z
 }

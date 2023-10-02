@@ -1,26 +1,21 @@
-import { Ajax } from "../../modules/ajax.js";
-import { response_statuses, urls } from "../../modules/config.js";
+import { get, post } from "../../modules/ajax.js";
+import { responseStatuses, urls } from "../../modules/config.js";
 
 export class FilmSelection {
   #parent;
-  #ajax;
 
   constructor(parent) {
     this.#parent = parent;
-    this.#ajax = new Ajax();
   }
 
   render() {
     const genre_id = 1;
-    this.#ajax
-      .post({
+      post({
         url: urls.basket,
         body: { genre_id },
       })
       .then((response) => {
-        if (response.status === response_statuses.success) {
-          // console.log("sucess");
-          // console.log(response.data.collection.collectionName);
+        if (response.status === responseStatuses.success) {
           const template = Handlebars.templates["filmSelection.hbs"];
           this.#parent.innerHTML = template(response.data);
         } else {

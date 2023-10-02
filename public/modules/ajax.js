@@ -12,7 +12,7 @@ export async function get(params = {}) {
     }
     return response;
   }
-}
+
 
 export async function post({ url, body }) {
     const response = await fetch(url, {
