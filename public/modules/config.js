@@ -1,4 +1,5 @@
 export const urls = {
+
     main: "/",
     basket: "/basket",
     profile: "/profile",
@@ -7,12 +8,14 @@ export const urls = {
     selection: "/selection",
     content: "/content",
     authorized: "/authorized",
+
 };
 
 export const methods = {
-    post: "POST",
-    get: "GET",
-}
+  post: "POST",
+  get: "GET",
+};
+
 
 export const responseStatuses = {
     success: 200,
@@ -76,3 +79,4 @@ export const config = {
         }
     }
 };
+

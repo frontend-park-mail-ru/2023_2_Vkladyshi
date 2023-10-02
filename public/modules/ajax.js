@@ -1,3 +1,4 @@
+
 import {methods} from "./config.js";
 
 export async function get(params = {}) {
@@ -9,6 +10,8 @@ export async function get(params = {}) {
         status: response.status,
         response,
     }
+    return response;
+  }
 }
 
 export async function post({ url, body }) {
@@ -20,6 +23,7 @@ export async function post({ url, body }) {
         },
         body: JSON.stringify(body),
     })
+    response.data = await response.json();
     return response;
 
 }

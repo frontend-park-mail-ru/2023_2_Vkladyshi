@@ -1,0 +1,136 @@
+.filmSelection {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.filmSelection_films {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  width: 90%;
+  height: auto;
+}
+.filmSelection_name {
+  width: 85%;
+
+  margin-top: 5%;
+  padding-bottom: 2%;
+  padding-left: 5%;
+
+  border-bottom: 1px solid black;
+
+  color: #000;
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.96px;
+  text-align: left;
+}
+
+.filmSelection_film {
+  /* fixit */
+  width: 20%;
+  height: auto;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  /*  */
+
+  border-radius: 46px;
+  background: rgba(217, 217, 217, 0.19);
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.filmSelection_film_poster {
+  width: 70%;
+  height: auto;
+  margin-top: 15%;
+  margin-bottom: 10%;
+}
+
+.filmSelection_film_rating {
+  height: auto;
+  width: 75%;
+
+  margin-top: 5%;
+  margin-bottom: 15%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filmSelection_film_rating_p {
+  margin-top: 0;
+  margin-bottom: 0;
+  width: 20%;
+}
+
+.filmSelection_film_name {
+  color: #0b0a0a;
+  font-family: Montserrat;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  letter-spacing: 0.51px;
+
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.filmSelection_film_select {
+  width: 65%;
+  height: auto;
+
+  padding-top: 5%;
+  padding-bottom: 5%;
+  margin-bottom: 15%;
+
+  border-radius: 8px;
+  border: 1px solid #cdc6c6;
+  background: rgba(217, 217, 217, 0.3);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.filmSelection_film_select_img {
+  width: 10%;
+  height: auto;
+}
+
+.filmSelection_film_select_p {
+  width: 80%;
+  height: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+
+  color: #000;
+  font-family: Montserrat;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.42px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+@media screen and (max-width: 1370px) {
+  .filmSelection_film_select {
+    width: 40%;
+  }
+  .filmSelection_film_select_p {
+    display: none;
+  }
+}
