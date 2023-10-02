@@ -17,9 +17,21 @@
     </div>
 
     {{#if isAuthorized}}
-        <div class="headerItem"  data-section="{{profile.key}}">
-            <img src="../../icons/{{profile.png_name}}" class="icon">
-            <span>{{ profile.name }}</span>
+        <div>
+            <nav role="navigation">
+                <ul>
+                    <li>
+                        <div class="headerItem">
+                            <img src="../../icons/{{profile.png_name}}" class="icon">
+                            <span>{{ profile.name }}</span>
+                        </div>
+                        <ul class="dropdown">
+                            <li class="settingsHeader" data-section="{{profile.key}}">Настройки</li>
+                            <li class="logoutHeader">Выйти</li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </div>
     {{else}}
         <div class="loginHeader" data-section="{{login.key}}">
@@ -28,6 +40,8 @@
         </div>
     {{/if}}
 </div>
+
+
 
 
 

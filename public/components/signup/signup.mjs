@@ -64,13 +64,13 @@ export class Signup {
             }
 
             if (!validateEmail(email)) {
-                returnError(signupBox, errorInputs.EmailNoValid)
+                returnError(signupBox, errorInputs.PasswordNoValid)
                 return ;
             }
 
             post({
                 url: urls.signup,
-                body: {password, email}
+                body: {login, password}
             }).then( response => {
                 switch (response.status) {
                     case responseStatuses.success:
@@ -78,7 +78,7 @@ export class Signup {
                         this.#header.render(true);
                         break;
                     case responseStatuses.alreadyExists:
-                        returnError(signupBox, errorInputs.EmailOrPasswordError);
+                        returnError(signupBox, errorInputs.LoginOrPasswordError);
                         break;
                     default:
                         throw new Error(`Error ${response.status}`)

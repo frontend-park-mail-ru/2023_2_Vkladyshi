@@ -1,5 +1,6 @@
 import {Footer} from "../footer/footer.mjs";
 import {FilmSelection} from "../filmSelection/filmSelection.mjs";
+import {goToPage} from "../../modules/goToPage.js";
 
 export class ContentBlock {
     #header
@@ -35,7 +36,6 @@ export class ContentBlock {
         contentBlock.innerHTML = Handlebars.templates['contentBlock.hbs']();
         const film = new FilmSelection(contentBlock);
         film.render();
-
-    }z
+    }
 }
 

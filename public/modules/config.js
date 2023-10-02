@@ -1,5 +1,4 @@
 export const urls = {
-
     main: "/",
     basket: "/basket",
     profile: "/profile",
@@ -8,7 +7,7 @@ export const urls = {
     selection: "/selection",
     content: "/content",
     authorized: "/authorized",
-
+    logout: "/logout",
 };
 
 export const methods = {
@@ -27,13 +26,13 @@ export const responseStatuses = {
 }
 
 export const errorInputs = {
-    EmailNoValid: "Email не валиден",
-    EmailOrPasswordError: "Ошибка пароля или email",
+    LoginNoValid: "Email не валиден",
+    LoginOrPasswordError: "Ошибка пароля или email",
     PasswordNoValid: "Пароль не валиден",
     PasswordsNoEqual : "Пароли не одинаковые",
     NotPassword: "Нет пароля",
     NotAllElements: "Нет всех полей",
-    EmailExists: "Почта уже используется",
+    LoginExists: "Почта уже используется",
 }
 
 export const config = {

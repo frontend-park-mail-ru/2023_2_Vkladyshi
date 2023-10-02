@@ -38,22 +38,22 @@ export class Login {
 
         loginBox.addEventListener('submit', (event) => {
             event.preventDefault();
-            const email = document.querySelector(".emailInput").value.trim();
+            const login = document.querySelector(".loginInput").value.trim();
             const password = document.querySelector(".passwordInput").value;
 
-            if (!validateEmail(email)) {
-                returnError(loginBox, errorInputs.EmailNoValid)
-                return
+            if (!login || !password ) {
+                returnError(loginBox, errorInputs.NotAllElements)
+                return ;
             }
 
-            const isValidate = validatePassword(password);
-            if (!isValidate.result) {
-                returnError(loginBox, isValidate.error)
+            const passwordValidate = validatePassword(password);
+            if (!passwordValidate.result) {
+                returnError(loginBox, passwordValidate.error)
             }
 
             post({
                 url: urls.login,
-                body: {password, email}
+                body: {login, password}
             }).then( response => {
                 switch (response.status) {
                     case responseStatuses.success:
@@ -61,7 +61,10 @@ export class Login {
                         this.#header.render(true)
                         break;
                     case responseStatuses.notAuthorized:
-                        returnError(loginBox, errorInputs.EmailOrPasswordError);
+                        returnError(loginBox, errorInputs.LoginOrPasswordError);
+                        break;
+                    case responseStatuses.alreadyExists:
+                        returnError(loginBox, errorInputs.LoginExists);
                         break;
                     default:
                         throw new Error(`Error ${response.status}`)

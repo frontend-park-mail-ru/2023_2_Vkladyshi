@@ -3,6 +3,7 @@
   align-items: center;
   flex-direction: column;
 }
+
 .filmSelection_films {
   display: flex;
   justify-content: space-between;
@@ -32,6 +33,7 @@
 }
 
 .filmSelection_film {
+  cursor: pointer;
   /* fixit */
   width: 20%;
   height: auto;
@@ -47,6 +49,12 @@
   display: flex;
   align-items: center;
   flex-direction: column;
+  transition: margin-top 0.5s ease, background 0.5s ease;
+}
+
+.filmSelection_film:hover {
+  background: rgba(152, 147, 147, 0.19);
+  margin-top: 0;
 }
 
 .filmSelection_film_poster {
@@ -76,7 +84,7 @@
 
 .filmSelection_film_name {
   color: #0b0a0a;
-  font-family: Montserrat;
+  font-family: Montserrat, serif;
   font-size: 17px;
   font-style: normal;
   font-weight: 700;
@@ -102,6 +110,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
+  transition: width, background 0.3s ease;
+}
+.filmSelection_film_select:hover{
+  background: rgba(107, 103, 103, 0.3);
 }
 
 .filmSelection_film_select_img {
