@@ -1,3 +1,16 @@
-{{! <div class="selectCollection"> }}
-<p>Movie Hub</p>
-{{! </div> }}
+<div class="selectCollection-frame">
+  <div class="selectCollection-frame-header">
+    <img class="selectCollection-frame-img" src="../../icons/arrow_left.svg" />
+    <p class="selectCollection-frame-header-name"> MovieGate</p>
+  </div>
+  <div class="selectCollection-frame-lists">
+    {{#each collections}}
+      <div class="selectCollection-frame-list">
+        <p class="selectCollection-frame-list-header"> {{collection_name}}</p>
+        {{#each collection_items}}
+          <p class="selectCollection-frame-list-item">{{this}}</p>
+        {{/each}}
+      </div>
+    {{/each}}
+  </div>
+</div>
