@@ -2,6 +2,7 @@ import { Header } from "./components/header/header.mjs";
 import { Login } from "./components/login/login.mjs";
 import { ContentBlock } from "./components/contentBlock/contentBlock.mjs";
 import { FilmSelection } from "./components/filmSelection/filmSelection.mjs";
+import { SelectCollection } from "./components/selectCollection/selectCollection.mjs";
 
 import { Ajax } from "./modules/ajax.js";
 
@@ -12,6 +13,7 @@ const contentBlockElement = document.createElement("div");
 
 const headerElement = document.createElement("header");
 contentBlockElement.className = "contentBlock";
+const findContentBlock = document.querySelector(".contentBlock");
 
 rootElement.appendChild(headerElement);
 rootElement.appendChild(contentBlockElement);
@@ -20,7 +22,8 @@ const login = new Login();
 const header = new Header(headerElement, config.menu);
 const contentBlock = new ContentBlock(contentBlockElement);
 //тут блок подборок собираеться на основе contentBlock
-const filmSelectionBlock = new FilmSelection(contentBlockElement);
+const filmSelectionBlock = new FilmSelection(findContentBlock);
+const selectCollectionBlock = new SelectCollection(findContentBlock);
 
 const ajax = new Ajax();
 login.setHeader(header);
@@ -39,11 +42,14 @@ function renderMain() {
       }
 
       if (!isAuthorized) {
-        contentBlock.render();
         header.render(false);
+        contentBlock.render();
         //просто рендериться в главном окне
         //нужен обработчик чтобы на нужной кнопке был
         filmSelectionBlock.render();
+        console.log("main");
+
+        selectCollectionBlock.render();
         return;
       }
       contentBlock.render();
