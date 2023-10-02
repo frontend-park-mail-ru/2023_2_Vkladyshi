@@ -6,6 +6,7 @@ const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const uuid = require('uuid').v4;
 const path = require("path");
+const e = require("express");
 const app = express();
 
 app.use(morgan('dev'));
@@ -20,25 +21,25 @@ app.listen(port, function () {
   console.log(`Server listening port ${port}`);
 });
 
-const users = {
+let users = {
   'd.dorofeev@corp.mail.ru': {
     email: 'd.dorofeev@corp.mail.ru',
-    password: 'password',
+    password: 'Password1',
     age: 21,
   },
   's.volodin@corp.mail.ru': {
-    email: 's.volodin@corp.mail.ru',
-    password: 'password',
+    email: 'Password2@mail.ru',
+    password: 'Password1',
     age: 25,
   },
-  'aleksandr.tsvetkov@corp.mail.ru': {
-    email: 'aleksandr.tsvetkov@corp.mail.ru',
-    password: 'password',
+  'Password1@mail.ru': {
+    email: 'Password1@mail.ru',
+    password: 'Password1@mail.ru',
     age: 28,
   },
   'a.ostapenko@corp.mail.ru': {
     email: 'a.ostapenko@corp.mail.ru',
-    password: 'password',
+    password: 'Password1',
     age: 21,
   },
 };
@@ -48,10 +49,10 @@ app.post('/login',  (req, res) => {
   const password = req.body.password;
   const email = req.body.email;
   if (!password || !email) {
-    return res.status(400).json({error: 'Не указан E-Mail или пароль'});
+    return res.status(401).json({error: 'Не указан E-Mail или пароль'});
   }
   if (!users[email] || users[email].password !== password) {
-    return res.status(400).json({error: 'Не верный E-Mail и/или пароль'});
+    return res.status(401).json({error: 'Не верный E-Mail и/или пароль'});
   }
 
   const id = uuid();
@@ -61,6 +62,29 @@ app.post('/login',  (req, res) => {
   res.status(200).json({id});
 });
 
+app.post('/signup',  (req, res) => {
+  const password = req.body.password;
+  const email = req.body.email;
+  console.log(password, email)
+
+  if (!password || !email) {
+    return res.status(400).json({error: 'Не указан E-Mail или пароль'});
+  }
+  if (users[email] !== undefined) {
+    return res.status(409).json({error: 'Аккаунт с указанным электронным адресом уже существует'});
+  }
+
+  users[email] = {email: email, password: password, age: 20}
+
+  const id = uuid();
+  ids[id] = email;
+
+  res.cookie('podvorot', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+  res.status(200).json({id});
+  return res
+});
+
+
 app.get('/me', (req, res) => {
   const id = req.cookies['podvorot'];
   const email = ids[id];
@@ -69,6 +93,16 @@ app.get('/me', (req, res) => {
   }
 
   res.json(users[email]);
+});
+
+app.get('/authorized', (req, res) => {
+  const id = req.cookies['podvorot'];
+  const email = ids[id];
+  if (!email || !users[email]) {
+    return res.status(401).end();
+  }
+
+  return res.status(200).end();
 });
 
 app.get('/content', (req, res) => {

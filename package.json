@@ -6,7 +6,7 @@
   "scripts": {
     "prestart": "npm run compile:templates",
     "start": "node server/index.js",
-    "compile:templates": "handlebars public/components/contentBlock/contentBlock.hbs -f public/components/contentBlock/contentBlock.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js && handlebars public/components/login/login.hbs -f public/components/login/login.precompiled.js",
+    "compile:templates": "handlebars public/components/contentBlock/contentBlock.hbs -f public/components/contentBlock/contentBlock.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js && handlebars public/components/login/login.hbs -f public/components/login/login.precompiled.js && handlebars public/components/signup/signup.hbs -f public/components/signup/signup.precompiled.js && handlebars public/components/footer/footer.hbs -f public/components/footer/footer.precompiled.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -18,5 +18,15 @@
     "handlebars": "^4.7.8",
     "morgan": "^1.10.0",
     "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.7.3",
+    "eslint": "^8.50.0",
+    "eslint-plugin-react": "^7.33.2",
+    "stylelint": "^15.10.3",
+    "stylelint-config-recommended": "^13.0.0",
+    "stylelint-config-standard": "^34.0.0",
+    "stylelint-order": "^6.0.3",
+    "stylelint-webpack-plugin": "^4.1.1"
   }
 }
