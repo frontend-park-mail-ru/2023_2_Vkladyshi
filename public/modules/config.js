@@ -6,6 +6,7 @@ export const urls = {
     signup: "/signup",
     selection: "/selection",
     content: "/content",
+    authorized: "/authorized",
 };
 
 export const methods = {
@@ -66,8 +67,11 @@ export const config = {
         },
         main: {
             href: urls.main,
-            png_name: "",
-            name: 'Главная страница',
+            png_name: "title_icon.png",
+            name: 'MovieHub',
+            renderObject: "",
+        },
+        footer: {
             renderObject: "",
         }
     }

@@ -43,13 +43,11 @@
     border: 1px solid black;
 }
 
-
 .passwordInputFirst .passwordInputSecond  {
     width: 50%;
     height: 12%;
     border: 1px solid white;
     transition: border 0.3s ease
-
 }
 
 .passwordInputFirst:hover .passwordInputSecond:hover {
@@ -66,4 +64,15 @@
 
 .signupButton:hover {
     border: 1px solid black;
+}
+.redirectToLogin {
+    cursor: pointer;
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 55%;
+    height: 10%;
+    border: 1px solid #51523A;
+    font-size: 15px;
+    display: flex;
 }

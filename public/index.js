@@ -3,77 +3,74 @@ import { Login } from "./components/login/login.mjs";
 import { Signup } from "./components/signup/signup.mjs";
 import { ContentBlock } from "./components/contentBlock/contentBlock.mjs";
 
-import { Ajax } from "./modules/ajax.js";
-import { config, responseStatuses, urls } from  "./modules/config.js"
+import {config, responseStatuses, urls} from "./modules/config.js"
+import { goToPage } from "./modules/goToPage.js";
+import { checkAuthorized } from "./modules/checkAuthorized.js";
 
 const rootElement = document.querySelector("#root");
-const contentBlockElement = document.createElement("div");
 const headerElement = document.createElement("header");
-
-contentBlockElement.className = "contentBlock";
-
 rootElement.appendChild(headerElement);
-rootElement.appendChild(contentBlockElement);
 
-const login = new Login(contentBlockElement);
-const signup = new Signup(contentBlockElement);
-const header = new Header(headerElement, config.menu);
-const contentBlock = new ContentBlock(contentBlockElement)
-const ajax = new Ajax();
+const login = new Login();
+const signup = new Signup();
+const contentBlock = new ContentBlock()
+const header = new Header(headerElement, contentBlock, config.menu);
 
-login.setHeader(header)
-signup.setHeader(header)
+login.setHeader(header);
+contentBlock.setHeader(header);
+signup.setHeader(header);
 
 config.menu.login.renderObject = login;
 config.menu.signup.renderObject = signup;
 config.menu.main.renderObject = contentBlock;
 
-renderMain();
+header.render( false);
+contentBlock.render();
+addToHeaderEvent()
 
-function renderMain() {
-    ajax.get({url: urls.main})
-        .then(({status, response}) => {
-            if (responseStatuses.success) {
-                contentBlock.render();
-                header.render( false);
-            } else {
-                contentBlock.render();
-                header.render(true);
-            }
-
-            addToHeaderEvent()
-        })
-        .catch((err) => {
-            console.log(err);
-     })
-}
-
-function goToPage(menuLink) {
-    if (header.state.activeHeader === menuLink) {
-        return
+checkAuthorized().then((isAuthorized) => {
+    if (isAuthorized) {
+        header.render(true);
+        addToHeaderEvent();
     }
-
-    const lastPage = header.state.activeHeader;
-    if (lastPage !== null) {
-
-        rootElement.removeChild(document.querySelector(`.${lastPage}`));
-    }
-
-    header.state.activeHeader = menuLink;
-    config.menu[menuLink.dataset.section].renderObject.render();
-}
+});
 
 function addToHeaderEvent() {
     const loginHeader = document.querySelector(".loginHeader")
-    loginHeader.addEventListener('click', (event) => {
+    if (loginHeader) {
+        loginHeader.addEventListener('click', (event) => {
+                event.composedPath().forEach(function(element) {
+                    const classNames = element.className;
+                    if (classNames === "loginHeader"){
+                        goToPage(header, element);
+                        return;
+                    }
+                });
+        })
+    }
 
+    const brandHeader = document.querySelector(".brandHeader")
+    brandHeader.addEventListener('click', (event) => {
+        event.composedPath().forEach(function(element) {
+            const classNames = element.className;
+            if (classNames === "brandHeader"){
+                goToPage(header, element);
+                return;
+            }
+        });
+
+    })
+
+    const logoutHeader = document.querySelector(".logoutHeader")
+    if (logoutHeader) {
+        logoutHeader.addEventListener('click', (event) => {
             event.composedPath().forEach(function(element) {
                 const classNames = element.className;
-                if (classNames === "loginHeader"){
-                    goToPage(element);
+                if (classNames === "logoutHeader"){
+                    goToPage(header, element);
                     return;
                 }
             });
-
-    })
+        })
+    }
 }

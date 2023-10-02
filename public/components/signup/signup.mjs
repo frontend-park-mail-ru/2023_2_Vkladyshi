@@ -1,14 +1,14 @@
-import { Ajax } from "../../modules/ajax.js";
-import {errorInputs, responseStatuses, urls} from "../../modules/config.js"
-import { validateEmail } from "../../modules/validate.js";
+import { errorInputs, responseStatuses, urls} from "../../modules/config.js"
+import { validateEmail, validatePassword } from "../../modules/validate.js";
 import { returnError } from "../../modules/addError.js";
+import {goToPage} from "../../modules/goToPage.js";
+import {post} from "../../modules/ajax.js";
 
 export class Signup {
     #header
-    #ajax
+
 
     constructor() {
-        this.#ajax = new Ajax();
 
         this.state = {
             activeHeader: null,
@@ -22,9 +22,10 @@ export class Signup {
 
     render() {
         const root = document.querySelector("#root");
-        const contentBlock = document.querySelector(".contentBlock");
+        const contentBlock = document.createElement("div");
         const signupBox = document.createElement("div");
         signupBox.className = "signupBox";
+        contentBlock.className = "contentBlock"
 
         contentBlock.innerHTML = ""
         root.appendChild(signupBox);
@@ -32,10 +33,14 @@ export class Signup {
         signupBox.innerHTML = Handlebars.templates['signup.hbs']();
 
         const signupForm = document.querySelector('.signupForm');
-        this.#header.state.activeHeader = signupBox.className;
+        this.#header.state.activeHeader = signupBox;
+        const redirectToLogin = document.querySelector(".redirectToLogin");
+        redirectToLogin.addEventListener('click', (event) => {
+            goToPage(this.#header, document.querySelector(".redirectToLogin"));
+        });
 
         signupForm.addEventListener('submit', (e) => {
-            e.preventDefault();
+           e.preventDefault();
             const login = document.querySelector(".loginInput").value.trim();
             const email = document.querySelector(".emailInput").value.trim();
 
@@ -51,21 +56,25 @@ export class Signup {
                 returnError(signupBox, errorInputs.PasswordsNoEqual)
                 return;
             }
+
+            const isValidate = validatePassword(password);
+            if (!isValidate.result) {
+                returnError(signupBox, isValidate.error)
+                return;
+            }
+
             if (!validateEmail(email)) {
                 returnError(signupBox, errorInputs.EmailNoValid)
                 return ;
             }
 
-            this.#ajax.post({
+            post({
                 url: urls.signup,
                 body: {password, email}
             }).then( response => {
                 switch (response.status) {
                     case responseStatuses.success:
-                        const template = Handlebars.templates['contentBlock.hbs'];
-                        root.removeChild(signupBox);
-                        root.appendChild(contentBlock);
-                        contentBlock.innerHTML = Handlebars.templates['contentBlock.hbs']();
+                        goToPage(this.#header, document.querySelector(".brandHeader"));
                         this.#header.render(true);
                         break;
                     case responseStatuses.alreadyExists:

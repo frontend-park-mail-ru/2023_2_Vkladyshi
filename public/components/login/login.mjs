@@ -1,16 +1,13 @@
-import { Ajax } from "../../modules/ajax.js";
-import { responseStatuses, urls, config, errorInputs} from "../../modules/config.js"
-import { validateEmail } from "../../modules/validate.js";
+import { responseStatuses, urls, errorInputs} from "../../modules/config.js"
+import { post } from "../../modules/ajax.js";
+import { validateEmail, validatePassword } from "../../modules/validate.js";
 import { returnError } from "../../modules/addError.js";
-
+import { goToPage } from "../../modules/goToPage.js";
 
 export class Login {
     #header
-    #ajax
 
     constructor() {
-        this.#ajax = new Ajax();
-
         this.state = {
             activeHeader: null,
             headerElement: null,
@@ -22,25 +19,21 @@ export class Login {
     }
 
     render() {
-        const contentBlock = document.querySelector(".contentBlock");
         const root = document.querySelector("#root");
-
         const loginBox = document.createElement("div");
         loginBox.className = "loginBox"
 
         root.appendChild(loginBox)
+        if (document.querySelector(".footer")) {
+            root.removeChild(document.querySelector(".footer"));
+        }
 
-        contentBlock.innerHTML = ""
         loginBox.innerHTML = Handlebars.templates['login.hbs']();
-        this.#header.state.activeHeader = loginBox.className;
+        this.#header.state.activeHeader = loginBox;
 
         const redirectToSignup = document.querySelector(".redirectToSignup");
         redirectToSignup.addEventListener('click', (event) => {
-            root.removeChild(document.querySelector(".loginBox"))
-
-
-            this.#header.state.activeHeader = redirectToSignup.className;
-            config.menu[redirectToSignup.dataset.section].renderObject.render();
+            goToPage(this.#header, document.querySelector(".redirectToSignup"))
         });
 
         loginBox.addEventListener('submit', (event) => {
@@ -53,21 +46,18 @@ export class Login {
                 return
             }
 
-            if (!password) {
-                returnError(loginBox, errorInputs.NotPassword)
-                return
+            const isValidate = validatePassword(password);
+            if (!isValidate.result) {
+                returnError(loginBox, isValidate.error)
             }
 
-            this.#ajax.post({
+            post({
                 url: urls.login,
                 body: {password, email}
             }).then( response => {
                 switch (response.status) {
                     case responseStatuses.success:
-                        root.removeChild(loginBox);
-                        root.appendChild(contentBlock);
-
-                        config.menu["main"].renderObject.render();
+                        goToPage(this.#header, document.querySelector(".brandHeader"));
                         this.#header.render(true)
                         break;
                     case responseStatuses.notAuthorized:

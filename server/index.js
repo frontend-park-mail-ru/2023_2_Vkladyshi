@@ -6,6 +6,7 @@ const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const uuid = require('uuid').v4;
 const path = require("path");
+const e = require("express");
 const app = express();
 
 app.use(morgan('dev'));
@@ -23,22 +24,22 @@ app.listen(port, function () {
 let users = {
   'd.dorofeev@corp.mail.ru': {
     email: 'd.dorofeev@corp.mail.ru',
-    password: 'password',
+    password: 'Password1',
     age: 21,
   },
   's.volodin@corp.mail.ru': {
-    email: 'password',
-    password: 'password',
+    email: 'Password2@mail.ru',
+    password: 'Password1',
     age: 25,
   },
-  'password': {
-    email: 'password',
-    password: 'password',
+  'Password1@mail.ru': {
+    email: 'Password1@mail.ru',
+    password: 'Password1@mail.ru',
     age: 28,
   },
   'a.ostapenko@corp.mail.ru': {
     email: 'a.ostapenko@corp.mail.ru',
-    password: 'password',
+    password: 'Password1',
     age: 21,
   },
 };
@@ -64,6 +65,8 @@ app.post('/login',  (req, res) => {
 app.post('/signup',  (req, res) => {
   const password = req.body.password;
   const email = req.body.email;
+  console.log(password, email)
+
   if (!password || !email) {
     return res.status(400).json({error: 'Не указан E-Mail или пароль'});
   }
@@ -92,7 +95,17 @@ app.get('/me', (req, res) => {
   res.json(users[email]);
 });
 
-app.get('/', (req, res) => {
+app.get('/authorized', (req, res) => {
+  const id = req.cookies['podvorot'];
+  const email = ids[id];
+  if (!email || !users[email]) {
+    return res.status(401).end();
+  }
+
+  return res.status(200).end();
+});
+
+app.get('/content', (req, res) => {
   const id = req.cookies['podvorot'];
   const email = ids[id];
   if (!email || !users[email]) {
