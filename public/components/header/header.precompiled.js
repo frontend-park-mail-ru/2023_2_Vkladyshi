@@ -8,7 +8,7 @@ templates['header.hbs'] = template({"1":function(container,depth0,helpers,partia
         return undefined
     };
 
-  return "        <div>\n            <nav role=\"navigation\">\n                <ul>\n                    <li>\n                        <div class=\"headerItem\">\n                            <img src=\"../../icons/"
+  return "        <div>\n            <nav class=\"navigationProfile\" role=\"navigation\">\n                <ul class=\"ulNavProfile\">\n                    <li class=\"liNavProfile\">\n                        <div class=\"headerItem\">\n                            <img src=\"../../icons/"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"profile") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))
     + "\" class=\"icon\">\n                            <span>"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"profile") : depth0)) != null ? lookupProperty(stack1,"name") : stack1), depth0))

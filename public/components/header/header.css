@@ -71,6 +71,17 @@ input::placeholder {
 
 .settingsHeader, .logoutHeader {
     padding: 1rem;
+    cursor: pointer;
+    background: #F3C23C;
+    font-family: "Montserrat", sans-serif;
+    display: block;
+    float: left;
+    position: relative;
+    text-decoration: none;
+    transition-duration: 0.5s;
+
+    clear: both;
+    width: 100%;
 }
 
 .settingsHeader:hover, .logoutHeader:hover {
@@ -78,23 +89,18 @@ input::placeholder {
     background: #d2dcd4;
 }
 
-a {
-    text-decoration: none;
-}
-
-nav {
+.navigationProfile {
     font-family: monospace;
 }
 
-ul {
+.ulNavProfile {
     background: darkorange;
     list-style: none;
     margin: 0;
     padding-left: 0;
 }
 
-li {
-//color: #fff;
+.liNavProfile {
     background: #F3C23C;
     font-family: "Montserrat", sans-serif;
     display: block;
@@ -104,35 +110,19 @@ li {
     transition-duration: 0.5s;
 }
 
-li a {
-    color: #fff;
-}
-
-li:hover {
-//background: red;
-    cursor: pointer;
-}
-
-ul li ul {
-//background: orange;
+.dropdown {
     visibility: hidden;
     opacity: 0;
     min-width: 5rem;
     position: absolute;
     transition: all 0.5s ease;
-//margin-top: 1rem;
     left: 0;
     display: none;
 }
 
-ul li:hover > ul,
-ul li ul:hover {
+.ulNavProfile .liNavProfile:hover > .dropdown,
+.dropdown .logoutHeader:hover, .dropdown .settingsHeader:hover{
     visibility: visible;
     opacity: 1;
     display: block;
-}
-
-ul li ul li {
-    clear: both;
-    width: 100%;
 }

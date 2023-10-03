@@ -42,13 +42,14 @@ export class Login {
             const password = document.querySelector(".passwordInput").value;
 
             if (!login || !password ) {
-                returnError(loginBox, errorInputs.NotAllElements)
+                returnError(errorInputs.NotAllElements)
                 return ;
             }
 
             const passwordValidate = validatePassword(password);
             if (!passwordValidate.result) {
-                returnError(loginBox, passwordValidate.error)
+                returnError(passwordValidate.error)
+                return;
             }
 
             post({

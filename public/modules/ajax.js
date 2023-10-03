@@ -1,5 +1,5 @@
 
-import {methods} from "./config.js";
+import {methods} from './config.js';
 
 export async function get(params = {}) {
     const response = await fetch(params.url, {
@@ -10,7 +10,6 @@ export async function get(params = {}) {
         status: response.status,
         response,
     }
-    return response;
   }
 
 

@@ -5,7 +5,6 @@ export const urls = {
     login: "/login",
     signup: "/signup",
     selection: "/selection",
-    content: "/content",
     authorized: "/authorized",
     logout: "/logout",
 };
@@ -26,7 +25,8 @@ export const responseStatuses = {
 }
 
 export const errorInputs = {
-    LoginNoValid: "Email не валиден",
+    LoginNoValid: "Логин не валиден",
+    EmailNoValid: "Email не валиден",
     LoginOrPasswordError: "Ошибка пароля или email",
     PasswordNoValid: "Пароль не валиден",
     PasswordsNoEqual : "Пароли не одинаковые",
@@ -39,31 +39,31 @@ export const config = {
     menu: {
         basket: {
             href: urls.basket,
-            png_name: "Vector_MY_FILMS.png",
+            png_name: "Vector_MY_FILMS.svg",
             name: 'Мои фильмы',
             renderObject: "",
         },
         profile: {
             href: urls.profile,
-            png_name: "profile_icon.png",
+            png_name: "profile_icon.svg",
             name: 'Мой профиль',
             renderObject: "",
         },
         login: {
             href: urls.login,
-            png_name: "profile_icon.png",
+            png_name: "profile_icon.svg",
             name: 'Войти',
             renderObject: "",
         },
         signup: {
             href: urls.signup,
-            png_name: "profile_icon.png",
+            png_name: "profile_icon.svg",
             name: 'Зарегистрироваться',
             renderObject: "",
         },
         selection: {
             href: urls.selection,
-            png_name: "Vector_TAGS.png",
+            png_name: "Vector_TAGS.svg",
             name: 'Меню',
             renderObject: "",
         },

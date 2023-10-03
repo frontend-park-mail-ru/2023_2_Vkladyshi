@@ -41,30 +41,32 @@ export class Signup {
 
         signupForm.addEventListener('submit', (e) => {
            e.preventDefault();
-            const login = document.querySelector(".loginInput").value.trim();
+            const login = document.querySelector(".loginInputSignup").value.trim();
             const email = document.querySelector(".emailInput").value.trim();
 
             const password = document.querySelector(".passwordInputFirst").value;
             const passwordSecond = document.querySelector(".passwordInputSecond").value;
 
+            console.log(login, email, password, passwordSecond)
+
             if (!login || !email || !password || !passwordSecond) {
-                returnError(signupBox, errorInputs.NotAllElements)
+                returnError(errorInputs.NotAllElements)
                 return ;
             }
 
             if (password !== passwordSecond) {
-                returnError(signupBox, errorInputs.PasswordsNoEqual)
+                returnError(errorInputs.PasswordsNoEqual)
                 return;
             }
 
             const isValidate = validatePassword(password);
             if (!isValidate.result) {
-                returnError(signupBox, isValidate.error)
+                returnError(isValidate.error)
                 return;
             }
 
             if (!validateEmail(email)) {
-                returnError(signupBox, errorInputs.PasswordNoValid)
+                returnError(errorInputs.EmailNoValid)
                 return ;
             }
 

@@ -1,16 +1,13 @@
-export function returnError(page, string) {
-    removeErrorNodes(page);
+export function returnError(string) {
+    removeErrorNodes();
 
-    const errorElement = document.createElement('div');
-    errorElement.classList.add('error');
+    const errorElement = document.querySelector('.errorString');
+    errorElement.style.display = "block";
     errorElement.textContent = string;
-    errorElement.style.color = "red"
-    page.appendChild(errorElement);
 }
 
-function removeErrorNodes(page) {
-    const errorNodes = page.getElementsByClassName('error');
-    while (errorNodes.length > 0) {
-        errorNodes[0].parentNode.removeChild(errorNodes[0]);
-    }
+function removeErrorNodes() {
+    const errorElement = document.querySelector('.errorString');
+    errorElement.textContent = "";
+
 }

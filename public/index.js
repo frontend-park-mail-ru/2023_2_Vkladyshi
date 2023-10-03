@@ -1,3 +1,5 @@
+
+
 import { Header } from "./components/header/header.mjs";
 import { Login } from "./components/login/login.mjs";
 import { Signup } from "./components/signup/signup.mjs";
@@ -27,7 +29,6 @@ header.render( false);
 contentBlock.render();
 const filmSelectionBlock = new FilmSelection(document.querySelector(".contentBlock"));
 filmSelectionBlock.render();
-//addToHeaderEvent()
 
 if (document.cookie) {
     header.render(true);
