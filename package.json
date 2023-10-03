@@ -6,12 +6,7 @@
   "scripts": {
     "prestart": "npm run compile:templates",
     "start": "node server/index.js",
-<<<<<<< HEAD
-    "compile:templates": "handlebars public/components/contentBlock/contentBlock.hbs -f public/components/contentBlock/contentBlock.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js && handlebars public/components/login/login.hbs -f public/components/login/login.precompiled.js && handlebars public/components/filmSelection/filmSelection.hbs -f public/components/filmSelection/filmSelection.precompiled.js && handlebars public/components/selectCollection/selectCollection.hbs -f public/components/selectCollection/selectCollection.precompiled.js",
-=======
-
-    "compile:templates": "handlebars public/components/contentBlock/contentBlock.hbs -f public/components/contentBlock/contentBlock.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js && handlebars public/components/login/login.hbs -f public/components/login/login.precompiled.js && handlebars public/components/signup/signup.hbs -f public/components/signup/signup.precompiled.js && handlebars public/components/footer/footer.hbs -f public/components/footer/footer.precompiled.js && handlebars public/components/filmSelection/filmSelection.hbs -f public/components/filmSelection/filmSelection.precompiled.js",
->>>>>>> dev
+    "compile:templates": "handlebars public/components/contentBlock/contentBlock.hbs -f public/components/contentBlock/contentBlock.precompiled.js && handlebars public/components/header/header.hbs -f public/components/header/header.precompiled.js && handlebars public/components/login/login.hbs -f public/components/login/login.precompiled.js && handlebars public/components/signup/signup.hbs -f public/components/signup/signup.precompiled.js && handlebars public/components/footer/footer.hbs -f public/components/footer/footer.precompiled.js && handlebars public/components/filmSelection/filmSelection.hbs -f public/components/filmSelection/filmSelection.precompiled.js && handlebars public/components/selectCollection/selectCollection.hbs -f public/components/selectCollection/selectCollection.precompiled.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
