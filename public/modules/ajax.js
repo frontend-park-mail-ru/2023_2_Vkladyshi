@@ -1,5 +1,5 @@
 
-import {methods} from './config.js';
+import {methods, urls} from './config.js';
 
 export async function get(params = {}) {
     const response = await fetch(params.url, {
@@ -17,6 +17,7 @@ export async function post({ url, body }) {
     const response = await fetch(url, {
         method: methods.post,
         credentials: 'include',
+        mode: "cors",
         headers: {
             'Content-Type': 'application/json; charset=utf-8',
         },

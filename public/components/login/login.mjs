@@ -22,7 +22,6 @@ export class Login {
         const root = document.querySelector("#root");
         const loginBox = document.createElement("div");
         loginBox.className = "loginBox"
-
         root.appendChild(loginBox)
         if (document.querySelector(".footer")) {
             root.removeChild(document.querySelector(".footer"));
@@ -53,7 +52,7 @@ export class Login {
             }
 
             post({
-                url: urls.login,
+                url: urls.ipAddress + urls.login,
                 body: {login, password}
             }).then( response => {
                 switch (response.status) {

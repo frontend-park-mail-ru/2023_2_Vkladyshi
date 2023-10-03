@@ -7,6 +7,7 @@ export const urls = {
     selection: "/selection",
     authorized: "/authorized",
     logout: "/logout",
+    ipAddress : "http://84.23.54.189:8080",
 };
 
 export const methods = {
