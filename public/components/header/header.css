@@ -20,7 +20,6 @@ header {
 
 .header{
     width: 80%;
-
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -31,7 +30,6 @@ header {
 .headerItem, .brandHeader, .loginHeader, .menuHeader {
     cursor: pointer;
     height: 50px;
-
     display: flex;
     justify-content: center;
     align-items: center;
@@ -79,7 +77,6 @@ input::placeholder {
     position: relative;
     text-decoration: none;
     transition-duration: 0.5s;
-
     clear: both;
     width: 100%;
 }

@@ -15,15 +15,12 @@
 }
 .filmSelection_name {
   width: 85%;
-
   margin-top: 5%;
   padding-bottom: 2%;
   padding-left: 5%;
-
   border-bottom: 1px solid black;
-
   color: #000;
-  font-family: Montserrat;
+  font-family: Montserrat, serif;
   font-size: 32px;
   font-style: normal;
   font-weight: 500;
@@ -34,18 +31,14 @@
 
 .filmSelection_film {
   cursor: pointer;
-  /* fixit */
   width: 20%;
   height: auto;
   margin-left: 2%;
   margin-right: 2%;
   margin-top: 2%;
   margin-bottom: 2%;
-  /*  */
-
   border-radius: 46px;
   background: rgba(217, 217, 217, 0.19);
-
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -67,10 +60,8 @@
 .filmSelection_film_rating {
   height: auto;
   width: 75%;
-
   margin-top: 5%;
   margin-bottom: 15%;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -90,7 +81,6 @@
   font-weight: 700;
   line-height: normal;
   letter-spacing: 0.51px;
-
   margin-top: 0;
   margin-bottom: 0;
 }
@@ -98,11 +88,9 @@
 .filmSelection_film_select {
   width: 65%;
   height: auto;
-
   padding-top: 5%;
   padding-bottom: 5%;
   margin-bottom: 15%;
-
   border-radius: 8px;
   border: 1px solid #cdc6c6;
   background: rgba(217, 217, 217, 0.3);

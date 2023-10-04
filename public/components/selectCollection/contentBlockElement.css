@@ -1,32 +1,15 @@
 .selectCollection {
   display: flex;
   justify-content: center;
-
   z-index: 100;
-
-  /* position: absolute;
-  top: 100px;
-  left: 500px;
-  left: 50%; */
-
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
 .selectCollection-frame {
-  /* z-index: 100;
-  position: relative;
-  top: 100px; */
-
-  /* display: none; */
-  /* visibility: hiddesn; */
-
   width: 800px;
   height: 800px;
-  /* width: 800px;
-  height: 800px; */
-
   border-radius: 45px;
   background: rgba(29, 29, 25, 0.774);
 }
@@ -56,7 +39,7 @@
   margin-right: 10%;
 
   color: #000;
-  font-family: Montserrat;
+  font-family: Montserrat, serif;
   font-size: 30px;
   font-style: normal;
   font-weight: 700;
@@ -72,10 +55,8 @@
 .selectCollection-frame-list {
   display: flex;
   flex-direction: column;
-
   width: 27%;
   height: auto;
-
   margin-left: 5%;
   margin-right: 5%;
 }
@@ -83,20 +64,16 @@
 .selectCollection-frame-list-header {
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
+  font-family: Montserrat, serif;
   font-size: 30px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
   letter-spacing: 1.2px;
-
   margin-top: 0;
   margin-bottom: 0%;
-
   padding-bottom: 10%;
-
   border-bottom: 2px solid black;
-
   height: auto;
   width: auto;
 }
@@ -104,16 +81,14 @@
 .selectCollection-frame-list-item {
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
+  font-family: Montserrat, serif;
   font-size: 25px;
   font-style: normal;
   font-weight: 400;
   line-height: normal;
   letter-spacing: 0.96px;
-
   width: 100%;
   height: auto;
-
   margin-top: 10%;
   margin-bottom: 10%;
 }
