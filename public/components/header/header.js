@@ -1,20 +1,14 @@
 import {goToPage} from "../../modules/goToPage.js";
-import {cookie} from "../../modules/cookie.js";
-import {FilmSelection} from "../filmSelection/filmSelection.js";
-import {SelectCollection} from "../selectCollection/selectCollection.js";
+import {logout} from "../../modules/logout.js";
 
 export class Header {
     #parent
-    #content
     #config
 
-    constructor(parent, content, config) {
-        //console.log(this)
+    constructor(parent , config) {
         this.#parent = parent;
-        this.#content = content;
         this.#config = config;
 
-        // Инициализация состояния компонента
         this.state = {
             activeElements: null,
             headerElements: {},
@@ -35,7 +29,6 @@ export class Header {
     }
 
     render(isAuthorized=false) {
-        //console.log(this)
         const template = Handlebars.templates['header.hbs'];
 
         let brand = this.items.find(item => item.key === "main");
@@ -75,7 +68,6 @@ export class Header {
                 const classNames = element.className;
                 if (classNames === "brandHeader"){
                     goToPage(current, element);
-                    return;
                 }
             });
         })
@@ -86,8 +78,7 @@ export class Header {
                 event.composedPath().forEach(function(element) {
                     const classNames = element.className;
                     if (classNames === "logoutHeader"){
-                        cookie(current);
-                        return;
+                        logout(current);
                     }
                 });
             })
@@ -99,27 +90,7 @@ export class Header {
                 event.composedPath().forEach(function (element) {
                     const classNames = element.className;
                     if (classNames === "menuHeader") {
-
-                        const selectCollectionBlock = new SelectCollection(
-                            current.state.activeHeader
-                        );
-                        //const lastPage = ;
-
-                        let promisefilmSelectionBlock = new Promise((resolve, reject) => {
-                            resolve("render filmSelectionBlock");
-                        });
-
-                        promisefilmSelectionBlock.then(
-                            (result) => {
-                                // первая функция-обработчик - запустится при вызове resolve
-                                selectCollectionBlock.render();
-                                console.log("Fulfilled: " + result); // result - аргумент resolve
-                            },
-                            (error) => {
-                                // вторая функция - запустится при вызове reject
-                                console.log("Rejected: " + error); // error - аргумент reject
-                            }
-                        );
+                        goToPage(current, element);
                     }
                 });
 

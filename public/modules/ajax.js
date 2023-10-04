@@ -1,5 +1,4 @@
-
-import {methods, urls} from './config.js';
+import {methods} from './config.js';
 
 export async function get(params = {}) {
     const response = await fetch(params.url + '?' + new URLSearchParams(params.query || {}), {

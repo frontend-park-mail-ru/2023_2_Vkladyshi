@@ -16,7 +16,8 @@ export class FilmSelection {
       .then((response) => {
         if (response.status === responseStatuses.success) {
           const template = Handlebars.templates["filmSelection.hbs"];
-          this.#parent.insertAdjacentHTML("afterbegin", template(response.data));
+          console.log(response)
+          this.#parent.innerHTML = template(response.data.body);
         } else {
           console.log(response.status);
         }

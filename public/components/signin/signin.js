@@ -29,7 +29,7 @@ export class Signin {
 
         loginBox.innerHTML = Handlebars.templates['signin.hbs']();
         this.#header.state.activeHeader = loginBox;
-
+        //this.#header = loginBox
         const redirectToSignup = document.querySelector(".redirectToSignup");
         redirectToSignup.addEventListener('click', (event) => {
             goToPage(this.#header, document.querySelector(".redirectToSignup"))

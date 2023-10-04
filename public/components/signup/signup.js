@@ -7,7 +7,6 @@ import {post} from "../../modules/ajax.js";
 export class Signup {
     #header
 
-
     constructor() {
 
         this.state = {
@@ -75,10 +74,9 @@ export class Signup {
                 switch (response.status) {
                     case responseStatuses.success:
                         goToPage(this.#header, document.querySelector(".brandHeader"));
-                        //this.#header.render(true);
                         break;
                     case responseStatuses.alreadyExists:
-                        returnError(signupBox, errorInputs.LoginOrPasswordError);
+                        returnError(signupBox, errorInputs.LoginExists);
                         break;
                     default:
                         throw new Error(`Error ${response.status}`)

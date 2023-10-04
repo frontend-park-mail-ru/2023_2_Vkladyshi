@@ -1,11 +1,13 @@
+import {get} from "../../modules/ajax.js";
+import {collections, responseStatuses, urls} from "../../modules/config.js";
+import {Footer} from "../footer/footer.js";
 
 export class SelectCollection {
-  #parent;
+  #header;
 
-  constructor(parent) {
-    this.#parent = parent;
+  constructor(header= null) {
+    this.#header = header;
 
-    // Инициализация состояния компонента
     this.state = {
       activeMenu: null,
       menuElements: {},
@@ -13,40 +15,31 @@ export class SelectCollection {
   }
 
   render() {
-    // Чтобы это работало, нужно импортировать handlebars.runtime.js
     const selection = document.querySelector(".selectCollection");
     if (selection) {
       return
     }
 
-    const collections = {
-      collections: {
-        collection1: {
-          collection_name: "Жанры",
-          collection_items: [
-            "Боевики",
-            "Военные",
-            "Детские",
-            "Детективы",
-            "Драмы",
-            "Комедии",
-            "Крименальные",
-            "Ужасы",
-            "Мелодрама",
-          ],
-        },
-        collection2: {
-          collection_name: "Страны",
-          collection_items: ["Российские", "Зарубежные",],
-        },
-      },
-    };
+    const root = document.querySelector("#root");
+    const contentBlock = document.createElement("div");
+    contentBlock.className = "contentBlock"
+    this.#header.state.activeHeader = contentBlock;
+
+    const footer = document.querySelector("footer");
+    if (!footer){
+      root.appendChild(contentBlock)
+    } else {
+     root.removeChild(footer);
+     root.appendChild(contentBlock);
+    }
+
+    contentBlock.innerHTML = Handlebars.templates['contentBlock.hbs']();
 
     const template = Handlebars.templates["selectCollection.hbs"];
-    this.#parent.insertAdjacentHTML("afterbegin", template(collections));
-
+    this.#header.state.activeHeader.innerHTML = template(collections);
     this.addToSelectEvent();
   }
+
 
   addToSelectEvent() {
     let current = this;
@@ -56,10 +49,49 @@ export class SelectCollection {
         event.composedPath().forEach(function(element) {
           const classNames = element.className;
           if (classNames === "selectCollection-frame-img"){
-            current.#parent.removeChild(document.querySelector(".selectCollection"));
+            current.#header.removeChild(document.querySelector(".selectCollection"));
           }
         });
       })
     }
+
+    let buttons = document.getElementsByClassName("selectCollection-frame-list-item");
+
+    for (let i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener("click", function() {
+        let dataSection = this.getAttribute("data-section");
+
+        const root = document.querySelector("#root");
+        const contentBlock = document.createElement("div");
+        contentBlock.className = "contentBlock";
+
+        root.removeChild(current.#header.state.activeHeader);
+        root.appendChild(contentBlock);
+        current.#header.state.activeHeader = contentBlock;
+
+        const footer = document.querySelector("footer");
+        if (!footer){
+          const footer = new Footer(current.#header)
+          root.appendChild(contentBlock)
+          footer.render();
+        } else {
+          root.removeChild(footer)
+        }
+
+        get({
+          url: urls.basket,
+          query: { collection_id : dataSection },
+        })
+            .then((response) => {
+              if (response.status === responseStatuses.success) {
+                const template = Handlebars.templates["filmSelection.hbs"];
+                current.#header.state.activeHeader.innerHTML = template(response.data.body);
+              } else {
+                console.log(response.status);
+              }
+            });
+      });
+    }
   }
 }
+

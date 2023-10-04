@@ -1,6 +1,5 @@
 import {Footer} from "../footer/footer.js";
 import {FilmSelection} from "../filmSelection/filmSelection.js";
-import {goToPage} from "../../modules/goToPage.js";
 
 export class ContentBlock {
     #header
@@ -24,6 +23,8 @@ export class ContentBlock {
 
         this.#header.state.activeHeader = contentBlock;
 
+
+
         const footer = document.querySelector("footer");
         if (!footer){
             const footer = new Footer(this.#header)
@@ -38,4 +39,3 @@ export class ContentBlock {
         film.render();
     }
 }
-

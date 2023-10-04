@@ -5,8 +5,8 @@ export const urls = {
     signin: "/signin",
     signup: "/signup",
     selection: "/selection",
-    authorized: "/authorized",
-    logout: "/cookie",
+    authorized: "/authcheck",
+    logout: "/logout",
 };
 
 export const methods = {
@@ -31,7 +31,7 @@ export const errorInputs = {
     PasswordsNoEqual : "Пароли не одинаковые",
     NotPassword: "Нет пароля",
     NotAllElements: "Нет всех полей",
-    LoginExists: "Почта уже используется",
+    LoginExists: "Логин уже используется",
 }
 
 export const config = {
@@ -76,5 +76,31 @@ export const config = {
             renderObject: "",
         }
     }
+};
+
+export const collections = {
+    collections: {
+        collection1: {
+            collection_name: "Жанры",
+            collection_items: [
+                {key: "Боевики", value: "action"},
+                {key: "Военные", value: "war"},
+                {key: "Детские", value: "kids"},
+                {key: "Детективы", value: "detective"},
+                {key: "Драмы", value: "drama"},
+                {key: "Комедии", value: "comedy"},
+                {key: "Криминальные", value: "crime"},
+                {key: "Ужасы", value: "horror"},
+                {key: "Мелодрама", value: "melodrama"},
+            ],
+        },
+        collection2: {
+            collection_name: "Страны",
+            collection_items: [
+                { key: "Российские", value: "ru" },
+                { key: "Зарубежные", value: "eu" },
+            ]
+        },
+    },
 };
 
