@@ -1,5 +1,5 @@
-import {Footer} from "../footer/footer.mjs";
-import {FilmSelection} from "../filmSelection/filmSelection.mjs";
+import {Footer} from "../footer/footer.js";
+import {FilmSelection} from "../filmSelection/filmSelection.js";
 
 export class ContentBlock {
     #header
@@ -23,6 +23,8 @@ export class ContentBlock {
 
         this.#header.state.activeHeader = contentBlock;
 
+
+
         const footer = document.querySelector("footer");
         if (!footer){
             const footer = new Footer(this.#header)
@@ -35,7 +37,5 @@ export class ContentBlock {
         contentBlock.innerHTML = Handlebars.templates['contentBlock.hbs']();
         const film = new FilmSelection(contentBlock);
         film.render();
-
-    }z
+    }
 }
-

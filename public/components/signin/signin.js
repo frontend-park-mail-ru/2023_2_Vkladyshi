@@ -4,7 +4,7 @@ import { validateEmail, validatePassword } from "../../modules/validate.js";
 import { returnError } from "../../modules/addError.js";
 import { goToPage } from "../../modules/goToPage.js";
 
-export class Login {
+export class Signin {
     #header
 
     constructor() {
@@ -22,15 +22,14 @@ export class Login {
         const root = document.querySelector("#root");
         const loginBox = document.createElement("div");
         loginBox.className = "loginBox"
-
         root.appendChild(loginBox)
         if (document.querySelector(".footer")) {
             root.removeChild(document.querySelector(".footer"));
         }
 
-        loginBox.innerHTML = Handlebars.templates['login.hbs']();
+        loginBox.innerHTML = Handlebars.templates['signin.hbs']();
         this.#header.state.activeHeader = loginBox;
-
+        //this.#header = loginBox
         const redirectToSignup = document.querySelector(".redirectToSignup");
         redirectToSignup.addEventListener('click', (event) => {
             goToPage(this.#header, document.querySelector(".redirectToSignup"))
@@ -38,22 +37,23 @@ export class Login {
 
         loginBox.addEventListener('submit', (event) => {
             event.preventDefault();
-            const email = document.querySelector(".emailInput").value.trim();
+            const login = document.querySelector(".loginInput").value.trim();
             const password = document.querySelector(".passwordInput").value;
 
-            if (!validateEmail(email)) {
-                returnError(loginBox, errorInputs.EmailNoValid)
-                return
+            if (!login || !password ) {
+                returnError(errorInputs.NotAllElements)
+                return ;
             }
 
-            const isValidate = validatePassword(password);
-            if (!isValidate.result) {
-                returnError(loginBox, isValidate.error)
+            const passwordValidate = validatePassword(password);
+            if (!passwordValidate.result) {
+                returnError(passwordValidate.error)
+                return;
             }
 
             post({
-                url: urls.login,
-                body: {password, email}
+                url:urls.signin,
+                body: {login, password}
             }).then( response => {
                 switch (response.status) {
                     case responseStatuses.success:
@@ -61,7 +61,10 @@ export class Login {
                         this.#header.render(true)
                         break;
                     case responseStatuses.notAuthorized:
-                        returnError(loginBox, errorInputs.EmailOrPasswordError);
+                        returnError(errorInputs.LoginOrPasswordError);
+                        break;
+                    case responseStatuses.alreadyExists:
+                        returnError(errorInputs.LoginExists);
                         break;
                     default:
                         throw new Error(`Error ${response.status}`)

@@ -1,11 +1,9 @@
 <div class="filmSelection">
   <div class="filmSelection_name">
-    {{collection.collectionName}}
+    {{collection_name}}
   </div>
   <div class="filmSelection_films">
-
-    {{#each collection.films}}
-
+    {{#each films}}
       <div class="filmSelection_film">
         <img class="filmSelection_film_poster" src="{{poster_href}}" />
         <p class="filmSelection_film_name">{{name}}</p>
@@ -27,10 +25,7 @@
             К просмотру
           </p>
         </div>
-
       </div>
-
     {{/each}}
-
   </div>
 </div>

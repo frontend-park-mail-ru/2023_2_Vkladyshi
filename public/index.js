@@ -1,83 +1,40 @@
-import { Header } from "./components/header/header.mjs";
-import { Login } from "./components/login/login.mjs";
-import { Signup } from "./components/signup/signup.mjs";
-import { ContentBlock } from "./components/contentBlock/contentBlock.mjs";
-import { FilmSelection } from "./components/filmSelection/filmSelection.mjs";
-import {config} from "./modules/config.js"
-import { goToPage } from "./modules/goToPage.js";
-import { checkAuthorized } from "./modules/checkAuthorized.js";
-
-const contentBlockElement = document.createElement("div");
+import {Header} from "./components/header/header.js";
+import {Signin} from "./components/signin/signin.js";
+import {Signup} from "./components/signup/signup.js";
+import {ContentBlock} from "./components/contentBlock/contentBlock.js";
+import {config, urls} from "./modules/config.js"
+import {SelectCollection} from "./components/selectCollection/selectCollection.js";
+import {get} from "./modules/ajax.js"
 
 const rootElement = document.querySelector("#root");
-
 const headerElement = document.createElement("header");
 rootElement.appendChild(headerElement);
 
-const login = new Login();
-// const filmSelectionBlock = new FilmSelection(contentBlockElement);
+const signin = new Signin();
 const signup = new Signup();
 const contentBlock = new ContentBlock()
-const header = new Header(headerElement, contentBlock, config.menu);
+const header = new Header(headerElement, config.menu);
+const selectCollectionBlock = new SelectCollection(header);
 
-login.setHeader(header);
+signin.setHeader(header);
 contentBlock.setHeader(header);
 signup.setHeader(header);
 
-config.menu.login.renderObject = login;
+config.menu.signin.renderObject = signin;
 config.menu.signup.renderObject = signup;
 config.menu.main.renderObject = contentBlock;
+config.menu.selection.renderObject = selectCollectionBlock;
 
-header.render( false);
+header.render(false);
 contentBlock.render();
-const filmSelectionBlock = new FilmSelection(document.querySelector(".contentBlock"));
-filmSelectionBlock.render();
-addToHeaderEvent()
 
-checkAuthorized().then((isAuthorized) => {
-    if (isAuthorized) {
-        header.render(true);
-        addToHeaderEvent();
-    }
-});
+get({
+    url: urls.authorized,
+})
+    .then((response) => {
+        if ( response.data.status === 200) {
+            header.render(true);
+        }
+    });
 
-function addToHeaderEvent() {
-    const loginHeader = document.querySelector(".loginHeader")
-    if (loginHeader) {
-        loginHeader.addEventListener('click', (event) => {
-                event.composedPath().forEach(function(element) {
-                    const classNames = element.className;
-                    if (classNames === "loginHeader"){
-                        goToPage(header, element);
-                        return;
-                    }
-                });
-        })
-    }
-
-    const brandHeader = document.querySelector(".brandHeader")
-    brandHeader.addEventListener('click', (event) => {
-        event.composedPath().forEach(function(element) {
-            const classNames = element.className;
-            if (classNames === "brandHeader"){
-                goToPage(header, element);
-                return;
-            }
-        });
-
-    })
-
-    const logoutHeader = document.querySelector(".logoutHeader")
-    if (logoutHeader) {
-        logoutHeader.addEventListener('click', (event) => {
-            event.composedPath().forEach(function(element) {
-                const classNames = element.className;
-                if (classNames === "logoutHeader"){
-                    goToPage(header, element);
-                    return;
-                }
-            });
-        })
-    }
-}
 

@@ -1,21 +1,18 @@
 export const urls = {
-
     main: "/",
-    basket: "/basket",
+    basket: "/api/v1/films",
     profile: "/profile",
-    login: "/login",
+    signin: "/signin",
     signup: "/signup",
     selection: "/selection",
-    content: "/content",
-    authorized: "/authorized",
-
+    authorized: "/authcheck",
+    logout: "/logout",
 };
 
 export const methods = {
   post: "POST",
   get: "GET",
 };
-
 
 export const responseStatuses = {
     success: 200,
@@ -27,44 +24,45 @@ export const responseStatuses = {
 }
 
 export const errorInputs = {
+    LoginNoValid: "Логин не валиден",
     EmailNoValid: "Email не валиден",
-    EmailOrPasswordError: "Ошибка пароля или email",
+    LoginOrPasswordError: "Ошибка пароля или email",
     PasswordNoValid: "Пароль не валиден",
     PasswordsNoEqual : "Пароли не одинаковые",
     NotPassword: "Нет пароля",
     NotAllElements: "Нет всех полей",
-    EmailExists: "Почта уже используется",
+    LoginExists: "Логин уже используется",
 }
 
 export const config = {
     menu: {
         basket: {
             href: urls.basket,
-            png_name: "Vector_MY_FILMS.png",
+            png_name: "Vector_MY_FILMS.svg",
             name: 'Мои фильмы',
             renderObject: "",
         },
         profile: {
             href: urls.profile,
-            png_name: "profile_icon.png",
+            png_name: "profile_icon.svg",
             name: 'Мой профиль',
             renderObject: "",
         },
-        login: {
-            href: urls.login,
-            png_name: "profile_icon.png",
+        signin: {
+            href: urls.signin,
+            png_name: "profile_icon.svg",
             name: 'Войти',
             renderObject: "",
         },
         signup: {
             href: urls.signup,
-            png_name: "profile_icon.png",
+            png_name: "profile_icon.svg",
             name: 'Зарегистрироваться',
             renderObject: "",
         },
         selection: {
             href: urls.selection,
-            png_name: "Vector_TAGS.png",
+            png_name: "Vector_TAGS.svg",
             name: 'Меню',
             renderObject: "",
         },
@@ -78,5 +76,31 @@ export const config = {
             renderObject: "",
         }
     }
+};
+
+export const collections = {
+    collections: {
+        collection1: {
+            collection_name: "Жанры",
+            collection_items: [
+                {key: "Боевики", value: "action"},
+                {key: "Военные", value: "war"},
+                {key: "Детские", value: "kids"},
+                {key: "Детективы", value: "detective"},
+                {key: "Драмы", value: "drama"},
+                {key: "Комедии", value: "comedy"},
+                {key: "Криминальные", value: "crime"},
+                {key: "Ужасы", value: "horror"},
+                {key: "Мелодрама", value: "melodrama"},
+            ],
+        },
+        collection2: {
+            collection_name: "Страны",
+            collection_items: [
+                { key: "Российские", value: "ru" },
+                { key: "Зарубежные", value: "eu" },
+            ]
+        },
+    },
 };
 

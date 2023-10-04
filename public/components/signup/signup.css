@@ -1,6 +1,30 @@
+@media (min-width: 1050px) {
+    .redirectToLogin, .errorString{
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 1050px) {
+    .redirectToLogin, .errorString{
+        font-size: 10px;
+    }
+}
+
+@media (max-width: 500px) {
+    .redirectToLogin, .errorString{
+        font-size: 7px;
+    }
+}
+
+@media (max-width: 700px) {
+    .signupButton{
+        font-size: 7px;
+    }
+}
+
 .signupBox {
     width: 23%;
-    height: 300px;
+    height: 400px;
     background-color: #51523A;
     border-radius: 5%;
     opacity: 0.5;
@@ -18,45 +42,25 @@
     justify-content: space-around;
     align-items: center;
 
-    height: 80%;
+    height: 60%;
 }
 
-.loginInput  {
-    width: 50%;
-    height: 12%;
+.loginInputSignup, .emailInput, .passwordInputFirst, .passwordInputSecond  {
+    width: 60%;
+    height: 13%;
     border: 1px solid white;
+    border-radius: 10px;
     transition: border 0.3s ease
 }
 
-.loginInput:hover {
-    border: 1px solid black;
-}
-
-.emailInput  {
-    width: 50%;
-    height: 12%;
-    border: 1px solid white;
-    transition: border 0.3s ease
-}
-
-.emailInput:hover {
-    border: 1px solid black;
-}
-
-.passwordInputFirst .passwordInputSecond  {
-    width: 50%;
-    height: 12%;
-    border: 1px solid white;
-    transition: border 0.3s ease
-}
-
-.passwordInputFirst:hover .passwordInputSecond:hover {
+.loginInputSignup:hover, .emailInput:hover, .passwordInputFirst:hover, .passwordInputSecond:hover {
     border: 1px solid black;
 }
 
 .signupButton {
-    width: 20%;
-    height: 10%;
+    width: 40%;
+    height: 15%;
+    border-radius: 10px;
     background-color: #ffffff;
     border: 1px solid white;
     transition: border 0.3s ease
@@ -67,12 +71,10 @@
 }
 .redirectToLogin {
     cursor: pointer;
-    margin-left: auto;
-    margin-right: auto;
+}
 
-    width: 55%;
-    height: 10%;
-    border: 1px solid #51523A;
-    font-size: 15px;
-    display: flex;
+.errorString {
+    color: red;
+    margin-top: 1%;
+    display: none;
 }

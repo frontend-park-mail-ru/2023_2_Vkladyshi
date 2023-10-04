@@ -7,7 +7,6 @@ import {post} from "../../modules/ajax.js";
 export class Signup {
     #header
 
-
     constructor() {
 
         this.state = {
@@ -41,44 +40,43 @@ export class Signup {
 
         signupForm.addEventListener('submit', (e) => {
            e.preventDefault();
-            const login = document.querySelector(".loginInput").value.trim();
+            const login = document.querySelector(".loginInputSignup").value.trim();
             const email = document.querySelector(".emailInput").value.trim();
 
             const password = document.querySelector(".passwordInputFirst").value;
             const passwordSecond = document.querySelector(".passwordInputSecond").value;
 
             if (!login || !email || !password || !passwordSecond) {
-                returnError(signupBox, errorInputs.NotAllElements)
+                returnError(errorInputs.NotAllElements)
                 return ;
             }
 
             if (password !== passwordSecond) {
-                returnError(signupBox, errorInputs.PasswordsNoEqual)
+                returnError(errorInputs.PasswordsNoEqual)
                 return;
             }
 
             const isValidate = validatePassword(password);
             if (!isValidate.result) {
-                returnError(signupBox, isValidate.error)
+                returnError(isValidate.error)
                 return;
             }
 
             if (!validateEmail(email)) {
-                returnError(signupBox, errorInputs.EmailNoValid)
+                returnError(errorInputs.EmailNoValid)
                 return ;
             }
 
             post({
                 url: urls.signup,
-                body: {password, email}
+                body: {login, password}
             }).then( response => {
                 switch (response.status) {
                     case responseStatuses.success:
                         goToPage(this.#header, document.querySelector(".brandHeader"));
-                        this.#header.render(true);
                         break;
                     case responseStatuses.alreadyExists:
-                        returnError(signupBox, errorInputs.EmailOrPasswordError);
+                        returnError(signupBox, errorInputs.LoginExists);
                         break;
                     default:
                         throw new Error(`Error ${response.status}`)

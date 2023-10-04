@@ -53,22 +53,22 @@ app.listen(port, function () {
 
 
 let users = {
-  'd.dorofeev@corp.mail.ru': {
+  'dorofeef': {
     email: 'd.dorofeev@corp.mail.ru',
     password: 'Password1',
     age: 21,
   },
-  's.volodin@corp.mail.ru': {
+  'volodin': {
     email: 'Password2@mail.ru',
     password: 'Password1',
     age: 25,
   },
-  'Password1@mail.ru': {
-    email: 'Password1@mail.ru',
-    password: 'Password1@mail.ru',
+  'login': {
+    email: 'email@mail.ru',
+    password: 'Password1',
     age: 28,
   },
-  'a.ostapenko@corp.mail.ru': {
+  'ostapenko': {
     email: 'a.ostapenko@corp.mail.ru',
     password: 'Password1',
     age: 21,
@@ -78,17 +78,16 @@ const ids = {};
 
 app.post("/login", (req, res) => {
   const password = req.body.password;
-  const email = req.body.email;
-  if (!password || !email) {
-
+  const login = req.body.login;
+  if (!password || !login) {
     return res.status(401).json({error: 'Не указан E-Mail или пароль'});
   }
-  if (!users[email] || users[email].password !== password) {
+  if (!users[login] || users[login].password !== password) {
     return res.status(401).json({error: 'Не верный E-Mail и/или пароль'});
   }
 
   const id = uuid();
-  ids[id] = email;
+  ids[id] = login;
 
   res.cookie("podvorot", id, {
     expires: new Date(Date.now() + 1000 * 60 * 10),
@@ -99,20 +98,19 @@ app.post("/login", (req, res) => {
 
 app.post('/signup',  (req, res) => {
   const password = req.body.password;
-  const email = req.body.email;
-  console.log(password, email)
+  const login = req.body.login;
 
-  if (!password || !email) {
-    return res.status(400).json({error: 'Не указан E-Mail или пароль'});
+  if (!password || !login) {
+    return res.status(400).json({error: 'Не указан login или пароль'});
   }
-  if (users[email] !== undefined) {
+  if (users[login] !== undefined) {
     return res.status(409).json({error: 'Аккаунт с указанным электронным адресом уже существует'});
   }
 
-  users[email] = {email: email, password: password, age: 20}
+  users[login] = {login: login, password: password, age: 20}
 
   const id = uuid();
-  ids[id] = email;
+  ids[id] = login;
 
   res.cookie('podvorot', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
   res.status(200).json({id});
@@ -122,30 +120,18 @@ app.post('/signup',  (req, res) => {
 
 app.get('/me', (req, res) => {
   const id = req.cookies['podvorot'];
-  const email = ids[id];
-  if (!email || !users[email]) {
+  const login = ids[id];
+  if (!login || !users[login]) {
     return res.status(401).end();
   }
 
-  res.json(users[email]);
-});
-
-
-app.get('/authorized', (req, res) => {
-  const id = req.cookies['podvorot'];
-  const email = ids[id];
-  if (!email || !users[email]) {
-    return res.status(401).end();
-  }
-
-  return res.status(200).end();
+  res.json(users[login]);
 });
 
 app.get('/content', (req, res) => {
   const id = req.cookies['podvorot'];
-
-  const email = ids[id];
-  if (!email || !users[email]) {
+  const login = ids[id];
+  if (!login || !users[login]) {
     return res.status(401).end();
   }
 
@@ -159,3 +145,14 @@ app.post("/basket", (req, res) => {
   }
   return res.status(401).end();
 });
+
+app.get("/logout", (req, res) => {
+  const id = req.cookies['podvorot'];
+  const login = ids[id];
+
+  const uid = uuid();
+
+  delete ids[id];
+
+  return res.status(200).end();
+})

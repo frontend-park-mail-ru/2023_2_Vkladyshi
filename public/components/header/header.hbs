@@ -4,7 +4,7 @@
         <span>{{brand.name}}</span>
     </div>
 
-    <div class="headerItem" data-section="{{selection.key}}">
+    <div class="menuHeader" data-section="{{selection.key}}">
         <img src="../../icons/{{selection.png_name}}" class="icon">
         <span>{{selection.name}}</span>
     </div>
@@ -17,17 +17,31 @@
     </div>
 
     {{#if isAuthorized}}
-        <div class="headerItem"  data-section="{{profile.key}}">
-            <img src="../../icons/{{profile.png_name}}" class="icon">
-            <span>{{ profile.name }}</span>
+        <div>
+            <nav class="navigationProfile" role="navigation">
+                <ul class="ulNavProfile">
+                    <li class="liNavProfile">
+                        <div class="headerItem">
+                            <img src="../../icons/{{profile.png_name}}" class="icon">
+                            <span>{{ profile.name }}</span>
+                        </div>
+                        <ul class="dropdown">
+                            <li class="settingsHeader" data-section="{{profile.key}}">Настройки</li>
+                            <li class="logoutHeader">Выйти</li>
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
         </div>
     {{else}}
-        <div class="loginHeader" data-section="{{login.key}}">
-            <img src="../../icons/{{login.png_name}}" class="icon" alt="">
-            <span class="loginText">{{ login.name }}</span>
+        <div class="loginHeader" data-section="{{signin.key}}">
+            <img src="../../icons/{{signin.png_name}}" class="icon" alt="">
+            <span class="loginText">{{ signin.name }}</span>
         </div>
     {{/if}}
 </div>
+
+
 
 
 
