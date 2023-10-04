@@ -10,14 +10,14 @@ export class FilmSelection {
 
   render() {
     const genre_id = 1;
-      post({
+      get({
         url: urls.basket,
-        body: { genre_id },
+        query: { collection_id : "new" },
       })
       .then((response) => {
         if (response.status === responseStatuses.success) {
           const template = Handlebars.templates["filmSelection.hbs"];
-          this.#parent.innerHTML = template(response.data);
+          this.#parent.innerHTML = template(response.data.body);
         } else {
           console.log("fail");
           console.log(response.status);

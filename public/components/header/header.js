@@ -37,12 +37,12 @@ export class Header {
         const template = Handlebars.templates['header.hbs'];
 
         let brand = this.items.find(item => item.key === "main");
-        let login = this.items.find(item => item.key === "login");
+        let signin = this.items.find(item => item.key === "signin");
         let basket = this.items.find(item => item.key === "basket");
         let profile = this.items.find(item => item.key === "profile");
         let selection = this.items.find(item => item.key === "selection");
 
-        this.#parent.innerHTML = template({isAuthorized, login, basket, profile, selection, brand} );
+        this.#parent.innerHTML = template({isAuthorized, signin, basket, profile, selection, brand} );
 
         const elements = this.#parent.querySelectorAll('[data-section]');
         elements.forEach((element, index) => {

@@ -47,8 +47,6 @@ export class Signup {
             const password = document.querySelector(".passwordInputFirst").value;
             const passwordSecond = document.querySelector(".passwordInputSecond").value;
 
-            console.log(login, email, password, passwordSecond)
-
             if (!login || !email || !password || !passwordSecond) {
                 returnError(errorInputs.NotAllElements)
                 return ;
@@ -77,7 +75,7 @@ export class Signup {
                 switch (response.status) {
                     case responseStatuses.success:
                         goToPage(this.#header, document.querySelector(".brandHeader"));
-                        this.#header.render(true);
+                        //this.#header.render(true);
                         break;
                     case responseStatuses.alreadyExists:
                         returnError(signupBox, errorInputs.LoginOrPasswordError);

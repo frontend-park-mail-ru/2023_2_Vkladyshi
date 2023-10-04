@@ -4,7 +4,7 @@ import { validateEmail, validatePassword } from "../../modules/validate.js";
 import { returnError } from "../../modules/addError.js";
 import { goToPage } from "../../modules/goToPage.js";
 
-export class Login {
+export class Signin {
     #header
 
     constructor() {
@@ -27,7 +27,7 @@ export class Login {
             root.removeChild(document.querySelector(".footer"));
         }
 
-        loginBox.innerHTML = Handlebars.templates['login.hbs']();
+        loginBox.innerHTML = Handlebars.templates['signin.hbs']();
         this.#header.state.activeHeader = loginBox;
 
         const redirectToSignup = document.querySelector(".redirectToSignup");
@@ -52,7 +52,7 @@ export class Login {
             }
 
             post({
-                url: urls.ipAddress + urls.login,
+                url:urls.signin,
                 body: {login, password}
             }).then( response => {
                 switch (response.status) {
@@ -61,10 +61,10 @@ export class Login {
                         this.#header.render(true)
                         break;
                     case responseStatuses.notAuthorized:
-                        returnError(loginBox, errorInputs.LoginOrPasswordError);
+                        returnError(errorInputs.LoginOrPasswordError);
                         break;
                     case responseStatuses.alreadyExists:
-                        returnError(loginBox, errorInputs.LoginExists);
+                        returnError(errorInputs.LoginExists);
                         break;
                     default:
                         throw new Error(`Error ${response.status}`)

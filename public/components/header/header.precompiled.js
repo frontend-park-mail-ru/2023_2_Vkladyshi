@@ -24,11 +24,11 @@ templates['header.hbs'] = template({"1":function(container,depth0,helpers,partia
     };
 
   return "        <div class=\"loginHeader\" data-section=\""
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"login") : depth0)) != null ? lookupProperty(stack1,"key") : stack1), depth0))
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"signin") : depth0)) != null ? lookupProperty(stack1,"key") : stack1), depth0))
     + "\">\n            <img src=\"../../icons/"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"login") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"signin") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))
     + "\" class=\"icon\" alt=\"\">\n            <span class=\"loginText\">"
-    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"login") : depth0)) != null ? lookupProperty(stack1,"name") : stack1), depth0))
+    + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"signin") : depth0)) != null ? lookupProperty(stack1,"name") : stack1), depth0))
     + "</span>\n        </div>\n";
 },"compiler":[8,">= 4.3.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1, alias1=container.lambda, alias2=container.escapeExpression, lookupProperty = container.lookupProperty || function(parent, propertyName) {

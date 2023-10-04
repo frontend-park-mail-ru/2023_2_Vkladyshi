@@ -1,5 +1,5 @@
-import {Footer} from "../footer/footer.mjs";
-import {FilmSelection} from "../filmSelection/filmSelection.mjs";
+import {Footer} from "../footer/footer.js";
+import {FilmSelection} from "../filmSelection/filmSelection.js";
 import {goToPage} from "../../modules/goToPage.js";
 
 export class ContentBlock {

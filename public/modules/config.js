@@ -1,20 +1,18 @@
 export const urls = {
     main: "/",
-    basket: "/basket",
+    basket: "/api/v1/films",
     profile: "/profile",
-    login: "/login",
+    signin: "/signin",
     signup: "/signup",
     selection: "/selection",
     authorized: "/authorized",
     logout: "/logout",
-    ipAddress : "http://84.23.54.189:8080",
 };
 
 export const methods = {
   post: "POST",
   get: "GET",
 };
-
 
 export const responseStatuses = {
     success: 200,
@@ -50,8 +48,8 @@ export const config = {
             name: 'Мой профиль',
             renderObject: "",
         },
-        login: {
-            href: urls.login,
+        signin: {
+            href: urls.signin,
             png_name: "profile_icon.svg",
             name: 'Войти',
             renderObject: "",
