@@ -139,6 +139,10 @@
   vertical-align: middle;
 }
 
+.selectCollection-frame-list-item:hover {
+  cursor: pointer;
+}
+
 @media screen and (max-width: 1370px) {
   .filmSelection_film_select {
     width: 40%;

@@ -6,7 +6,7 @@ export const urls = {
     signup: "/signup",
     selection: "/selection",
     authorized: "/authorized",
-    logout: "/logout",
+    logout: "/cookie",
 };
 
 export const methods = {

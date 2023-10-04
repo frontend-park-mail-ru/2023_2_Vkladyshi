@@ -1,11 +1,11 @@
 @media (max-width: 1920px) {
-    .headerItem, .loginHeader, .brandHeader{
+    .headerItem, .loginHeader, .brandHeader, .menuHeader{
         font-size: 16px;
     }
 }
 
 @media (max-width: 980px) {
-    .headerItem, .loginHeader, .brandHeader {
+    .headerItem, .loginHeader, .brandHeader, .menuHeader {
         font-size: 0;
         max-width: 30px;
     }
@@ -28,7 +28,7 @@ header {
     margin-right: auto;
 }
 
-.headerItem, .brandHeader, .loginHeader {
+.headerItem, .brandHeader, .loginHeader, .menuHeader {
     cursor: pointer;
     height: 50px;
 
@@ -39,11 +39,11 @@ header {
     transition: margin-top 0.1s ease;
 }
 
-.headerItem:hover, .brandHeader:hover, .loginHeader:hover {
+.headerItem:hover, .brandHeader:hover, .loginHeader:hover, .menuHeader:hover {
     margin-top:5px;
 }
 
-.headerItem span, .brandHeader span, .loginHeader span {
+.headerItem span, .brandHeader span, .loginHeader span, .menuHeader span {
     margin-left: 1%;
 }
 

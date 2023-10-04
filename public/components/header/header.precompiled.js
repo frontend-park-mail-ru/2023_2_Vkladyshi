@@ -44,7 +44,7 @@ templates['header.hbs'] = template({"1":function(container,depth0,helpers,partia
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"brand") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))
     + "\" class=\"brand_icon\">\n        <span>"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"brand") : depth0)) != null ? lookupProperty(stack1,"name") : stack1), depth0))
-    + "</span>\n    </div>\n\n    <div class=\"headerItem\" data-section=\""
+    + "</span>\n    </div>\n\n    <div class=\"menuHeader\" data-section=\""
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"selection") : depth0)) != null ? lookupProperty(stack1,"key") : stack1), depth0))
     + "\">\n        <img src=\"../../icons/"
     + alias2(alias1(((stack1 = (depth0 != null ? lookupProperty(depth0,"selection") : depth0)) != null ? lookupProperty(stack1,"png_name") : stack1), depth0))

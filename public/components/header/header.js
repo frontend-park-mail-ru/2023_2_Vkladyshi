@@ -1,5 +1,7 @@
 import {goToPage} from "../../modules/goToPage.js";
-import {logout} from "../../modules/logout.js";
+import {cookie} from "../../modules/cookie.js";
+import {FilmSelection} from "../filmSelection/filmSelection.js";
+import {SelectCollection} from "../selectCollection/selectCollection.js";
 
 export class Header {
     #parent
@@ -84,10 +86,43 @@ export class Header {
                 event.composedPath().forEach(function(element) {
                     const classNames = element.className;
                     if (classNames === "logoutHeader"){
-                        logout(current);
+                        cookie(current);
                         return;
                     }
                 });
+            })
+        }
+
+        const menuHeader = document.querySelector(".menuHeader")
+        if (menuHeader) {
+            menuHeader.addEventListener('click', (event) => {
+                event.composedPath().forEach(function (element) {
+                    const classNames = element.className;
+                    if (classNames === "menuHeader") {
+
+                        const selectCollectionBlock = new SelectCollection(
+                            current.state.activeHeader
+                        );
+                        //const lastPage = ;
+
+                        let promisefilmSelectionBlock = new Promise((resolve, reject) => {
+                            resolve("render filmSelectionBlock");
+                        });
+
+                        promisefilmSelectionBlock.then(
+                            (result) => {
+                                // первая функция-обработчик - запустится при вызове resolve
+                                selectCollectionBlock.render();
+                                console.log("Fulfilled: " + result); // result - аргумент resolve
+                            },
+                            (error) => {
+                                // вторая функция - запустится при вызове reject
+                                console.log("Rejected: " + error); // error - аргумент reject
+                            }
+                        );
+                    }
+                });
+
             })
         }
     }
