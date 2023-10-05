@@ -1,13 +1,19 @@
+/**
+ *
+ * @param string
+ */
 export function returnError(string) {
-    removeErrorNodes();
+  removeErrorNodes();
 
-    const errorElement = document.querySelector('.errorString');
-    errorElement.style.display = "block";
-    errorElement.textContent = string;
+  const errorElement = document.querySelector('.errorString');
+  errorElement.style.display = 'block';
+  errorElement.textContent = string;
 }
 
+/**
+ *
+ */
 function removeErrorNodes() {
-    const errorElement = document.querySelector('.errorString');
-    errorElement.textContent = "";
-
+  const errorElement = document.querySelector('.errorString');
+  errorElement.textContent = '';
 }

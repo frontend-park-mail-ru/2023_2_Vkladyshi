@@ -1,27 +1,26 @@
 export class Footer {
-    #header
+  #header;
 
-    constructor(parent) {
-        this.#header = parent;
+  constructor(parent) {
+    this.#header = parent;
 
-        this.state = {
-            activeHeader: null,
-            headerElements: {},
-        }
-    }
+    this.state = {
+      activeHeader: null,
+      headerElements: {},
+    };
+  }
 
-    setHeader(header) {
-        this.#header = header;
-    }
+  setHeader(header) {
+    this.#header = header;
+  }
 
-    render() {
-        const root = document.querySelector("#root");
-        const footer = document.createElement("footer");
+  render() {
+    const root = document.querySelector('#root');
+    const footer = document.createElement('footer');
 
-        footer.className = "footer"
-        root.appendChild(footer)
+    footer.className = 'footer';
+    root.appendChild(footer);
 
-        footer.innerHTML = Handlebars.templates['footer.hbs']();
-    }
+    footer.innerHTML = Handlebars.templates['footer.hbs']();
+  }
 }
-
