@@ -9,7 +9,7 @@ import {FilmSelection} from "../filmSelection/filmSelection.js";
  * @param {Object} header - Родительскй элемент внутри которого проходит рендер.
  */
 export class ContentBlock {
-    #header
+  #header;
 
     /**
  * @constructor
@@ -38,21 +38,19 @@ export class ContentBlock {
         const contentBlock = document.createElement("div");
         contentBlock.className = "contentBlock"
 
-        this.#header.state.activeHeader = contentBlock;
+    this.#header.state.activeHeader = contentBlock;
 
-
-
-        const footer = document.querySelector("footer");
-        if (!footer){
-            const footer = new Footer(this.#header)
-            root.appendChild(contentBlock)
-            footer.render();
-        } else {
-            footer.before(contentBlock);
-        }
-
-        contentBlock.innerHTML = Handlebars.templates['contentBlock.hbs']();
-        const film = new FilmSelection(contentBlock);
-        film.render();
+    const footer = document.querySelector('footer');
+    if (!footer) {
+      const footer = new Footer(this.#header);
+      root.appendChild(contentBlock);
+      footer.render();
+    } else {
+      footer.before(contentBlock);
     }
+
+    contentBlock.innerHTML = Handlebars.templates['contentBlock.hbs']();
+    const film = new FilmSelection(contentBlock);
+    film.render();
+  }
 }

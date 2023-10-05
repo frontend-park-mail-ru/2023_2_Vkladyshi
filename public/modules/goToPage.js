@@ -1,17 +1,22 @@
-import {config} from "./config.js";
+import { config } from './config.js';
 
+/**
+ *
+ * @param header
+ * @param menuLink
+ */
 export function goToPage(header, menuLink) {
-    if (header.state.activeHeader === menuLink) {
-        return
-    }
+  if (header.state.activeHeader === menuLink) {
+    return;
+  }
 
-    const lastPage = header.state.activeHeader;
+  const lastPage = header.state.activeHeader;
 
-    if (lastPage !== null) {
-        const root = document.querySelector("#root");
-        root.removeChild(document.querySelector(`.${lastPage.className}`));
-    }
+  if (lastPage !== null) {
+    const root = document.querySelector('#root');
+    root.removeChild(document.querySelector(`.${lastPage.className}`));
+  }
 
-    header.state.activeHeader = menuLink;
-    config.menu[menuLink.dataset.section].renderObject.render();
+  header.state.activeHeader = menuLink;
+  config.menu[menuLink.dataset.section].renderObject.render();
 }

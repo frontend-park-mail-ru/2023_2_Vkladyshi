@@ -1,0 +1,28 @@
+name: Build and Delivery
+
+on:
+  push:
+    branches: ['main', 'dev']
+  pull_request:
+    branches: ['main', 'dev']
+
+jobs:
+  formattingCode:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.18.0
+
+      - name: Install instance
+        run: npm install
+
+      - name: Prettier
+        run: npm run prettier
+
+      - name: Eslint
+        run: npm run eslint

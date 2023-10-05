@@ -1,48 +1,45 @@
-<div class="header">
-    <div class="brandHeader" data-section="{{brand.key}}">
-        <img src="../../icons/{{brand.png_name}}" class="brand_icon">
-        <span>{{brand.name}}</span>
+<div class='header'>
+  <div class='brandHeader' data-section='{{brand.key}}'>
+    <img src='../../icons/{{brand.png_name}}' class='brand_icon' />
+    <span>{{brand.name}}</span>
+  </div>
+
+  <div class='menuHeader' data-section='{{selection.key}}'>
+    <img src='../../icons/{{selection.png_name}}' class='icon' />
+    <span>{{selection.name}}</span>
+  </div>
+
+  <input class='header_search_item' placeholder='Поиск фильмов' />
+
+  <div class='headerItem' data-section='{{basket.key}}'>
+    <img src='../../icons/{{basket.png_name}}' class='icon' />
+    <span>{{basket.name}}</span>
+  </div>
+
+  {{#if isAuthorized}}
+    <div>
+      <nav class='navigationProfile' role='navigation'>
+        <ul class='ulNavProfile'>
+          <li class='liNavProfile'>
+            <div class='headerItem'>
+              <img src='../../icons/{{profile.png_name}}' class='icon' />
+              <span>{{profile.name}}</span>
+            </div>
+            <ul class='dropdown'>
+              <li
+                class='settingsHeader'
+                data-section='{{profile.key}}'
+              >Настройки</li>
+              <li class='logoutHeader'>Выйти</li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
     </div>
-
-    <div class="menuHeader" data-section="{{selection.key}}">
-        <img src="../../icons/{{selection.png_name}}" class="icon">
-        <span>{{selection.name}}</span>
+  {{else}}
+    <div class='loginHeader' data-section='{{signin.key}}'>
+      <img src='../../icons/{{signin.png_name}}' class='icon' alt='' />
+      <span class='loginText'>{{signin.name}}</span>
     </div>
-
-    <input class="header_search_item" placeholder="Поиск фильмов">
-
-    <div class="headerItem" data-section="{{basket.key}}">
-        <img src="../../icons/{{basket.png_name}}" class="icon">
-        <span>{{ basket.name }}</span>
-    </div>
-
-    {{#if isAuthorized}}
-        <div>
-            <nav class="navigationProfile" role="navigation">
-                <ul class="ulNavProfile">
-                    <li class="liNavProfile">
-                        <div class="headerItem">
-                            <img src="../../icons/{{profile.png_name}}" class="icon">
-                            <span>{{ profile.name }}</span>
-                        </div>
-                        <ul class="dropdown">
-                            <li class="settingsHeader" data-section="{{profile.key}}">Настройки</li>
-                            <li class="logoutHeader">Выйти</li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-    {{else}}
-        <div class="loginHeader" data-section="{{signin.key}}">
-            <img src="../../icons/{{signin.png_name}}" class="icon" alt="">
-            <span class="loginText">{{ signin.name }}</span>
-        </div>
-    {{/if}}
+  {{/if}}
 </div>
-
-
-
-
-
-
