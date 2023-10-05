@@ -1,12 +1,13 @@
 "use strict";
 
 const films = {
-  collection: {
-    collectionName: "Новинки",
+    status: 200,
+  body: {
+    collection_name: "Новинки",
     films: {
       film1: {
         poster_href: "../../icons/Poster.jpg",
-        name: "film_1",
+        name: "film_1 1",
         rating: 4.5,
       },
       film2: {
@@ -23,9 +24,29 @@ const films = {
         poster_href: "../../icons/Poster.jpg",
         name: "film_4",
         rating: 3,
+      },
+      film5: {
+        poster_href: "../../icons/Poster.jpg",
+        name: "film_1",
+        rating: 4.5,
+      },
+      film6: {
+        poster_href: "../../icons/Poster.jpg",
+        name: "film_2",
+        rating: 4.1,
+      },
+      film7: {
+        poster_href: "../../icons/Poster.jpg",
+        name: "film_3",
+        rating: 4.5,
+      },
+      film8: {
+        poster_href: "../../icons/Poster.jpg",
+        name: "film_4",
+        rating: 3,
       }
     },
-  },
+  }
 };
 
 const express = require("express");
@@ -76,7 +97,7 @@ let users = {
 };
 const ids = {};
 
-app.post("/login", (req, res) => {
+app.post("/signin", (req, res) => {
   const password = req.body.password;
   const login = req.body.login;
   if (!password || !login) {
@@ -89,7 +110,7 @@ app.post("/login", (req, res) => {
   const id = uuid();
   ids[id] = login;
 
-  res.cookie("podvorot", id, {
+  res.cookie("session_id", id, {
     expires: new Date(Date.now() + 1000 * 60 * 10),
   });
   res.status(200).json({ id });
@@ -112,14 +133,14 @@ app.post('/signup',  (req, res) => {
   const id = uuid();
   ids[id] = login;
 
-  res.cookie('podvorot', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
+  res.cookie('session_id', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
   res.status(200).json({id});
   return res
 });
 
 
 app.get('/me', (req, res) => {
-  const id = req.cookies['podvorot'];
+  const id = req.cookies['session_id'];
   const login = ids[id];
   if (!login || !users[login]) {
     return res.status(401).end();
@@ -129,7 +150,7 @@ app.get('/me', (req, res) => {
 });
 
 app.get('/content', (req, res) => {
-  const id = req.cookies['podvorot'];
+  const id = req.cookies['session_id'];
   const login = ids[id];
   if (!login || !users[login]) {
     return res.status(401).end();
@@ -138,21 +159,29 @@ app.get('/content', (req, res) => {
   return res.status(200).end();
 });
 
-app.post("/basket", (req, res) => {
-  switch (req.body.genre_id) {
-    case 1:
-      return res.status(200).json(films);
+app.get("/api/v1/films", (req, res) => {
+  console.log(req.query)
+  return res.status(200).json(films);
+
+});
+
+app.get("/authcheck", (req, res) => {
+  const id = req.cookies['session_id'];
+  const login = ids[id];
+  if (!login || !users[login]) {
+    return res.status(200).json({status: 401}).end();
   }
-  return res.status(401).end();
+
+  return res.status(200).json({status: 200}).end();
 });
 
 app.get("/logout", (req, res) => {
-  const id = req.cookies['podvorot'];
+  const id = req.cookies['session_id'];
   const login = ids[id];
 
   const uid = uuid();
 
   delete ids[id];
 
-  return res.status(200).end();
+  return res.status(200).data({status: 200}).end();
 })
