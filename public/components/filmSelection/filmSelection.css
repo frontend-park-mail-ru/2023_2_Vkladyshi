@@ -42,7 +42,9 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  transition: margin-top 0.5s ease, background 0.5s ease;
+  transition:
+    margin-top 0.5s ease,
+    background 0.5s ease;
 }
 
 .filmSelection_film:hover {
@@ -99,9 +101,11 @@
   justify-content: center;
   align-items: center;
 
-  transition: width, background 0.3s ease;
+  transition:
+    width,
+    background 0.3s ease;
 }
-.filmSelection_film_select:hover{
+.filmSelection_film_select:hover {
   background: rgba(107, 103, 103, 0.3);
 }
 

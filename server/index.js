@@ -1,47 +1,44 @@
-"use strict";
+'use strict';
 
 const films = {
   collection: {
-    collectionName: "Новинки",
+    collectionName: 'Новинки',
     films: {
       film1: {
-        poster_href: "../../icons/Poster.jpg",
-        name: "film_1",
+        poster_href: '../../icons/Poster.jpg',
+        name: 'film_1',
         rating: 4.5,
       },
       film2: {
-        poster_href: "../../icons/Poster.jpg",
-        name: "film_2",
+        poster_href: '../../icons/Poster.jpg',
+        name: 'film_2',
         rating: 4.1,
       },
       film3: {
-        poster_href: "../../icons/Poster.jpg",
-        name: "film_3",
+        poster_href: '../../icons/Poster.jpg',
+        name: 'film_3',
         rating: 4.5,
       },
       film4: {
-        poster_href: "../../icons/Poster.jpg",
-        name: "film_4",
+        poster_href: '../../icons/Poster.jpg',
+        name: 'film_4',
         rating: 3,
-      }
+      },
     },
   },
 };
 
-const express = require("express");
-const body = require("body-parser");
-const cookie = require("cookie-parser");
-const morgan = require("morgan");
-const uuid = require("uuid").v4;
-const path = require("path");
-
-const { Console } = require("console");
-const e = require("express");
+const express = require('express');
+const body = require('body-parser');
+const cookie = require('cookie-parser');
+const morgan = require('morgan');
+const uuid = require('uuid').v4;
+const path = require('path');
 const app = express();
 
-app.use(morgan("dev"));
-app.use(express.static(path.resolve(__dirname, "..", "public")));
-app.use(express.static(path.resolve(__dirname, "..", "node_modules")));
+app.use(morgan('dev'));
+app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));
 app.use(body.json());
 app.use(cookie());
 
@@ -51,24 +48,23 @@ app.listen(port, function () {
   console.log(`Server listening port ${port}`);
 });
 
-
-let users = {
-  'dorofeef': {
+const users = {
+  dorofeef: {
     email: 'd.dorofeev@corp.mail.ru',
     password: 'Password1',
     age: 21,
   },
-  'volodin': {
+  volodin: {
     email: 'Password2@mail.ru',
     password: 'Password1',
     age: 25,
   },
-  'login': {
+  login: {
     email: 'email@mail.ru',
     password: 'Password1',
     age: 28,
   },
-  'ostapenko': {
+  ostapenko: {
     email: 'a.ostapenko@corp.mail.ru',
     password: 'Password1',
     age: 21,
@@ -76,47 +72,49 @@ let users = {
 };
 const ids = {};
 
-app.post("/login", (req, res) => {
+app.post('/login', (req, res) => {
   const password = req.body.password;
   const login = req.body.login;
   if (!password || !login) {
-    return res.status(401).json({error: 'Не указан E-Mail или пароль'});
+    return res.status(401).json({ error: 'Не указан E-Mail или пароль' });
   }
   if (!users[login] || users[login].password !== password) {
-    return res.status(401).json({error: 'Не верный E-Mail и/или пароль'});
+    return res.status(401).json({ error: 'Не верный E-Mail и/или пароль' });
   }
 
   const id = uuid();
   ids[id] = login;
 
-  res.cookie("podvorot", id, {
+  res.cookie('podvorot', id, {
     expires: new Date(Date.now() + 1000 * 60 * 10),
   });
   res.status(200).json({ id });
 });
 
-
-app.post('/signup',  (req, res) => {
+app.post('/signup', (req, res) => {
   const password = req.body.password;
   const login = req.body.login;
 
   if (!password || !login) {
-    return res.status(400).json({error: 'Не указан login или пароль'});
+    return res.status(400).json({ error: 'Не указан login или пароль' });
   }
   if (users[login] !== undefined) {
-    return res.status(409).json({error: 'Аккаунт с указанным электронным адресом уже существует'});
+    return res.status(409).json({
+      error: 'Аккаунт с указанным электронным адресом уже существует',
+    });
   }
 
-  users[login] = {login: login, password: password, age: 20}
+  users[login] = { login: login, password: password, age: 20 };
 
   const id = uuid();
   ids[id] = login;
 
-  res.cookie('podvorot', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
-  res.status(200).json({id});
-  return res
+  res.cookie('podvorot', id, {
+    expires: new Date(Date.now() + 1000 * 60 * 10),
+  });
+  res.status(200).json({ id });
+  return res;
 });
-
 
 app.get('/me', (req, res) => {
   const id = req.cookies['podvorot'];
@@ -138,7 +136,7 @@ app.get('/content', (req, res) => {
   return res.status(200).end();
 });
 
-app.post("/basket", (req, res) => {
+app.post('/basket', (req, res) => {
   switch (req.body.genre_id) {
     case 1:
       return res.status(200).json(films);
@@ -146,13 +144,9 @@ app.post("/basket", (req, res) => {
   return res.status(401).end();
 });
 
-app.get("/logout", (req, res) => {
+app.get('/logout', (req, res) => {
   const id = req.cookies['podvorot'];
-  const login = ids[id];
-
-  const uid = uuid();
-
   delete ids[id];
 
   return res.status(200).end();
-})
+});
