@@ -12,6 +12,7 @@ export class SigninPage extends View {
 
   addToEvent() {
     const headerHTML = document.querySelector(".buttonLogin");
+    
     headerHTML.addEventListener('click', (event) => {
       if (goToPage(event)) {
         this.componentWillUnmount();
@@ -20,6 +21,6 @@ export class SigninPage extends View {
   }
 
   componentWillUnmount() {
-    this.rootNode.removeChild(document.querySelector(".login"))
+    this.rootNode.removeChild(document.querySelector(".login"));
   }
 }

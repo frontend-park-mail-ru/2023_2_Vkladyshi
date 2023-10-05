@@ -26,12 +26,15 @@ export class MainPage extends View {
     const header = new Header(config.menu, {rootNode: document.querySelector("#root")});
 
     this.state.isExist = true;
+    
+    // отрисовка основных элементов
 
     if (!document.querySelector("header")) {
       this.rootNode.insertAdjacentHTML('beforeend', header.render(false));
     }
     if (!document.querySelector(".contentBlock")) {
       this.rootNode.insertAdjacentHTML('beforeend', contentBlock.render());
+      // document.querySelector(".contentBlock").insertAdjacentHTML('beforeend', await filmSelection.render());
       document.querySelector(".contentBlock").insertAdjacentHTML('beforeend', await filmSelection.render());
     }
     if (!document.querySelector(".footer")){
@@ -41,27 +44,30 @@ export class MainPage extends View {
     //this.rootNode.insertAdjacentHTML('beforeend', contentBlock.render());
     // document.querySelector(".contentBlock").insertAdjacentHTML('beforeend', await filmSelection.render());
 
-
-    const headerHTML = document.querySelector(".header");
-    headerHTML.addEventListener('click', (event) => {
-      if (goToPage(event)) {
-          this.componentWillUnmount();
-      }
-    })
-
     checkAuthorized().then(result => {
       console.log(1112)
       if (result) {
         document.querySelector("header").innerHTML = header.render(true);
         this.state.isAuth = true;
       }
-    })
+    });
+
+    // Анонимная функция-обработчик события
+    var handleClick = function(event) {
+      if (goToPage(event)) {
+        headerHTML.removeEventListener("click", handleClick);
+        this.componentWillUnmount();
+      };
+    };  
+    
+    const headerHTML = document.querySelector(".header");
+    headerHTML.addEventListener('click', handleClick);
   }
 
   componentWillUnmount() {
     this.rootNode.removeChild(document.querySelector(".footer"))
    // document.querySelector("footer").innerHTML = "";
-    document.querySelector(".contentBlock").removeChild(document.querySelector(".filmSelection"));
+    this.rootNode.removeChild(document.querySelector(".contentBlock"));
     //document.querySelector(".contentBlock").innerHTML = "";
   }
 }
