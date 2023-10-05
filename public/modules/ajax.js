@@ -1,8 +1,13 @@
 import { methods } from './config.js';
 
 /**
- *
- * @param params
+ * Выполняет GET-запрос по указанному URL с опциональными параметрами запроса.
+ * @async
+ * @function get
+ * @param {object} params - Параметры запроса.
+ * @param {string} params.url - URL, по которому будет выполнен GET-запрос.
+ * @param {object} [params.query] - Объект с параметрами запроса, которые будут добавлены к URL в виде строки запроса.
+ * @returns {Promise<Response>} Промис, который разрешается объектом Response, содержащим данные ответа на запрос.
  */
 export async function get(params = {}) {
   const response = await fetch(
@@ -18,10 +23,13 @@ export async function get(params = {}) {
 }
 
 /**
- *
- * @param root0
- * @param root0.url
- * @param root0.body
+ * Выполняет POST-запрос по указанному URL с указанным телом запроса.
+ * @async
+ * @function post
+ * @param {object} params - Параметры запроса.
+ * @param {string} params.url - URL, по которому будет выполнен POST-запрос.
+ * @param {object} params.body - Тело запроса в формате JSON.
+ * @returns {Promise<Response>} Промис, который разрешается объектом Response, содержащим данные ответа на запрос.
  */
 export async function post({ url, body }) {
   const response = await fetch(url, {

@@ -1,6 +1,6 @@
 /**
- *
- * @param string
+ * Функция возвращения ошибки
+ * @param {string} string - входная строка
  */
 export function returnError(string) {
   removeErrorNodes();
@@ -11,7 +11,7 @@ export function returnError(string) {
 }
 
 /**
- *
+ * Функция удаления узлов
  */
 function removeErrorNodes() {
   const errorElement = document.querySelector('.errorString');

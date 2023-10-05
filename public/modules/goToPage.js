@@ -1,9 +1,11 @@
 import { config } from './config.js';
 
 /**
- *
- * @param header
- * @param menuLink
+ * Переходит на указанную страницу в зависимости от выбранного заголовка меню.
+ * @function goToPage
+ * @param {object} header - Объект, представляющий состояние заголовка.
+ * @param {HTMLElement} menuLink - Ссылка меню, на которую нужно перейти.
+ * @return {void}
  */
 export function goToPage(header, menuLink) {
   if (header.state.activeHeader === menuLink) {

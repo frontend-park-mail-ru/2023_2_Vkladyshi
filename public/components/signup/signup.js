@@ -4,9 +4,21 @@ import { returnError } from '../../modules/addError.js';
 import { goToPage } from '../../modules/goToPage.js';
 import { post } from '../../modules/ajax.js';
 
+/**
+ * Класс регистрации пользователя
+ * @class Signup
+ * @typedef {Signup}
+ */
 export class Signup {
+  /**
+   * Родительский элемент в который добаляеться шаблон
+   * @type {object}
+   */
   #header;
 
+  /**
+   * Конструктор класса Signup
+   */
   constructor() {
     this.state = {
       activeHeader: null,
@@ -14,10 +26,17 @@ export class Signup {
     };
   }
 
+  /**
+   * Сетер header
+   * @param {object} header - указатель на родитя в DOM дереве
+   */
   setHeader(header) {
     this.#header = header;
   }
 
+  /**
+   * Метод рендера элемента
+   */
   render() {
     const root = document.querySelector('#root');
     const contentBlock = document.createElement('div');

@@ -1,6 +1,8 @@
 /**
- *
- * @param email
+ * Проверяет валидность электронной почты.
+ * @function validateEmail
+ * @param {string} email - Электронная почта для проверки.
+ * @returns {boolean} Результат проверки. `true`, если электронная почта валидна, иначе `false`.
  */
 export function validateEmail(email) {
   const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -8,8 +10,12 @@ export function validateEmail(email) {
 }
 
 /**
- *
- * @param password
+ * Проверяет валидность пароля.
+ * @function validatePassword
+ * @param {string} password - Пароль для проверки.
+ * @return {object} Объект с результатом проверки и, в случае ошибки, сообщением об ошибке.
+ * @property {boolean} result - Результат проверки пароля. `true`, если пароль валиден, иначе `false`.
+ * @property {string} [error] - Сообщение об ошибке, в случае если пароль не валиден.
  */
 export function validatePassword(password) {
   if (

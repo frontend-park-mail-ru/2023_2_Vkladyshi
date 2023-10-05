@@ -1,42 +1,44 @@
-
-
-import {Footer} from "../footer/footer.js";
-import {FilmSelection} from "../filmSelection/filmSelection.js";
+import { Footer } from '../footer/footer.js';
+import { FilmSelection } from '../filmSelection/filmSelection.js';
 
 /**
- * Рендерит основную страницу.
- * В переданном блоке создает нужнюю панель и выборку фильмов.
- * @param {Object} header - Родительскй элемент внутри которого проходит рендер.
+ * Класс формирования основной части страницы
+ * @class ContentBlock
+ * @typedef {ContentBlock}
  */
 export class ContentBlock {
+  /**
+   * Родительский элемент в который добаляеться шаблон
+   * @type {object}
+   */
   #header;
 
-    /**
- * @constructor
- */
-    constructor() {
-        this.state = {
-            activeHeader: null,
-            headerElements: {},
-        }
-    }
+  /**
+   * Конструктор класса
+   */
+  constructor() {
+    this.state = {
+      activeHeader: null,
+      headerElements: {},
+    };
+  }
 
-    /**
- * Сетер header-а
- * @setHeader
- */
-    setHeader(header) {
-        this.#header = header;
-    }
+  /**
+   * Сетер header
+   * @param {object} header - указатель на родитя в DOM дереве
+   * @default
+   */
+  setHeader(header) {
+    this.#header = header;
+  }
 
-
-/**
- * Функция рендера
- */
-    render() {
-        const root = document.querySelector("#root");
-        const contentBlock = document.createElement("div");
-        contentBlock.className = "contentBlock"
+  /**
+   * Метод рендера элемента
+   */
+  render() {
+    const root = document.querySelector('#root');
+    const contentBlock = document.createElement('div');
+    contentBlock.className = 'contentBlock';
 
     this.#header.state.activeHeader = contentBlock;
 

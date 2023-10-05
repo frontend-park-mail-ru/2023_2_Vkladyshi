@@ -1,10 +1,29 @@
 import { goToPage } from '../../modules/goToPage.js';
 import { logout } from '../../modules/logout.js';
 
+/**
+ * Класс создания верхней шапки
+ * @class Header
+ * @typedef {Header}
+ */
 export class Header {
+  /**
+   * Родительский элемент в который добаляеться шаблон
+   * @type {object}
+   */
   #parent;
+  /**
+   * Данные для подстановки в шаблон
+   * @type {JSON}
+   */
   #config;
 
+  /**
+   * Конструктор для формирония родительского элемента
+   * @class
+   * @param {object} parent - указатель на родитя в DOM дереве
+   * @param {JSON} config - парамтры для наполнения шаблона
+   */
   constructor(parent, config) {
     this.#parent = parent;
     this.#config = config;
@@ -15,10 +34,20 @@ export class Header {
     };
   }
 
+  /**
+   * Геттер конфига
+   * @readonly
+   * @type {JSON}
+   */
   get config() {
     return this.#config;
   }
 
+  /**
+   * Разбивает конфиг на определенные элементы, которын подставляються в шаблон
+   * @readonly
+   * @type {Array}
+   */
   get items() {
     return Object.entries(this.config).map(
       ([key, { href, png_name: pngName, name }]) => ({
@@ -30,6 +59,10 @@ export class Header {
     );
   }
 
+  /**
+   * Рендер шапки для незарегистрированного пользователя
+   * @param {boolean} [isAuthorized] - пользватель не авторизован
+   */
   render(isAuthorized = false) {
     const template = Handlebars.templates['header.hbs'];
 
@@ -55,6 +88,10 @@ export class Header {
 
     this.addToHeaderEvent(isAuthorized);
   }
+  /**
+   * Рендер шапки для зарегистрированного пользователя
+   * @param {boolean} isAuth - пользватель не авторизован
+   */
   addToHeaderEvent(isAuth) {
     const current = this;
 

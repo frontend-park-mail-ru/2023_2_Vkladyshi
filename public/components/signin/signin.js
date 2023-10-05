@@ -4,9 +4,21 @@ import { validatePassword } from '../../modules/validate.js';
 import { returnError } from '../../modules/addError.js';
 import { goToPage } from '../../modules/goToPage.js';
 
+/**
+ * Класс авторизация
+ * @class Signin
+ * @typedef {Signin}
+ */
 export class Signin {
+  /**
+   * Родительский элемент в который добаляеться шаблон
+   * @type {object}
+   */
   #header;
 
+  /**
+   * Конструктор класса
+   */
   constructor() {
     this.state = {
       activeHeader: null,
@@ -14,10 +26,17 @@ export class Signin {
     };
   }
 
+  /**
+   * Сеттер header
+   * @param {object} header - указатель на родителя в DOM дереве
+   */
   setHeader(header) {
     this.#header = header;
   }
 
+  /**
+   * Метод рендера элемента
+   */
   render() {
     const root = document.querySelector('#root');
     const loginBox = document.createElement('div');

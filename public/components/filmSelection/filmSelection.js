@@ -1,17 +1,30 @@
-/**
- * @param {Object} parent - Родительскй элемент внутри которого проходит рендер.
- * @description В переданном блоке создает выборку фильмов.
- */
-import { get, post } from "../../modules/ajax.js";
-import { responseStatuses, urls } from "../../modules/config.js";
+import { get } from '../../modules/ajax.js';
+import { responseStatuses, urls } from '../../modules/config.js';
 
+/**
+ * Класс формирования подборки фильмов
+ * @class FilmSelection
+ * @typedef {FilmSelection}
+ */
 export class FilmSelection {
+  /**
+   * Родительский элемент в который добаляеться шаблон
+   * @type {object}
+   */
   #parent;
 
+  /**
+   * Коструктор, заполняющий класс
+   * @class
+   * @param {object} parent - указатель на родителя в DOM дереве
+   */
   constructor(parent) {
     this.#parent = parent;
   }
 
+  /**
+   * Метод рендера элемента
+   */
   render() {
     get({
       url: urls.basket,
