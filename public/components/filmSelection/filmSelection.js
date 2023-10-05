@@ -1,3 +1,7 @@
+/**
+ * @param {Object} parent - Родительскй элемент внутри которого проходит рендер.
+ * @description В переданном блоке создает выборку фильмов.
+ */
 import { get, post } from "../../modules/ajax.js";
 import { responseStatuses, urls } from "../../modules/config.js";
 
