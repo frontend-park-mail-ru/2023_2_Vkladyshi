@@ -84,7 +84,7 @@ export class SignupPage extends View {
         url: urls.signup,
         body: { login, password },
       }).then((response) => {
-        switch (response.status) {
+        switch (response.data.status) {
           case responseStatuses.success:
             goToPageByClassName('main');
             break;

@@ -69,7 +69,7 @@ export class SigninPage extends View {
         url: urls.signin,
         body: { login, password },
       }).then((response) => {
-        switch (response.status) {
+        switch (response.data.status) {
           case responseStatuses.success:
             goToPageByClassName('main');
             header.render(true);
