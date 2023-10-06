@@ -1,9 +1,21 @@
 import { Footer } from '../footer/footer.js';
 import { FilmSelection } from '../filmSelection/filmSelection.js';
 
+/**
+ * Класс формирования основной части страницы
+ * @class ContentBlock
+ * @typedef {ContentBlock}
+ */
 export class ContentBlock {
+  /**
+   * Родительский элемент в который добаляеться шаблон
+   * @type {object}
+   */
   #header;
 
+  /**
+   * Конструктор класса
+   */
   constructor() {
     this.state = {
       activeHeader: null,
@@ -11,10 +23,18 @@ export class ContentBlock {
     };
   }
 
+  /**
+   * Сетер header
+   * @param {object} header - указатель на родитя в DOM дереве
+   * @default
+   */
   setHeader(header) {
     this.#header = header;
   }
 
+  /**
+   * Метод рендера элемента
+   */
   render() {
     const root = document.querySelector('#root');
     const contentBlock = document.createElement('div');

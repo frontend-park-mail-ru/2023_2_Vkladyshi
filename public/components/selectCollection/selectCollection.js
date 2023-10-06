@@ -2,9 +2,22 @@ import { get } from '../../modules/ajax.js';
 import { collections, responseStatuses, urls } from '../../modules/config.js';
 import { Footer } from '../footer/footer.js';
 
+/**
+ * Класс формирования окна выбора подборки фильмов
+ * @class SelectCollection
+ * @typedef {SelectCollection}
+ */
 export class SelectCollection {
+  /**
+   * Родительский элемент в который добаляеться шаблон
+   * @type {object}
+   */
   #header;
 
+  /**
+   * Создает экземпляр SelectCollection.
+   * @param {object} [header] - указатель на родителя в DOM дереве
+   */
   constructor(header = null) {
     this.#header = header;
 
@@ -14,6 +27,9 @@ export class SelectCollection {
     };
   }
 
+  /**
+   * Метод рендера элемента
+   */
   render() {
     const selection = document.querySelector('.selectCollection');
     if (selection) {
@@ -40,6 +56,9 @@ export class SelectCollection {
     this.addToSelectEvent();
   }
 
+  /**
+   * Метод обработки нажатий на выбранную коллекцию
+   */
   addToSelectEvent() {
     const current = this;
     const redirect = document.querySelector('.selectCollection-frame-img');
