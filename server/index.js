@@ -1,7 +1,7 @@
 "use strict";
 
 const films = {
-    status: 200,
+  status: 200,
   body: {
     collection_name: "Новинки",
     films: {
@@ -44,9 +44,9 @@ const films = {
         poster_href: "../../icons/Poster.jpg",
         name: "film_4",
         rating: 3,
-      }
+      },
     },
-  }
+  },
 };
 
 const express = require("express");
@@ -55,9 +55,6 @@ const cookie = require("cookie-parser");
 const morgan = require("morgan");
 const uuid = require("uuid").v4;
 const path = require("path");
-
-const { Console } = require("console");
-const e = require("express");
 const app = express();
 
 app.use(morgan("dev"));
@@ -72,26 +69,25 @@ app.listen(port, function () {
   console.log(`Server listening port ${port}`);
 });
 
-
-let users = {
-  'dorofeef': {
-    email: 'd.dorofeev@corp.mail.ru',
-    password: 'Password1',
+const users = {
+  dorofeef: {
+    email: "d.dorofeev@corp.mail.ru",
+    password: "Password1",
     age: 21,
   },
-  'volodin': {
-    email: 'Password2@mail.ru',
-    password: 'Password1',
+  volodin: {
+    email: "Password2@mail.ru",
+    password: "Password1",
     age: 25,
   },
-  'login': {
-    email: 'email@mail.ru',
-    password: 'Password1',
+  login: {
+    email: "email@mail.ru",
+    password: "Password1",
     age: 28,
   },
-  'ostapenko': {
-    email: 'a.ostapenko@corp.mail.ru',
-    password: 'Password1',
+  ostapenko: {
+    email: "a.ostapenko@corp.mail.ru",
+    password: "Password1",
     age: 21,
   },
 };
@@ -101,10 +97,10 @@ app.post("/signin", (req, res) => {
   const password = req.body.password;
   const login = req.body.login;
   if (!password || !login) {
-    return res.status(401).json({error: 'Не указан E-Mail или пароль'});
+    return res.status(401).json({ error: "Не указан E-Mail или пароль" });
   }
   if (!users[login] || users[login].password !== password) {
-    return res.status(401).json({error: 'Не верный E-Mail и/или пароль'});
+    return res.status(401).json({ error: "Не верный E-Mail и/или пароль" });
   }
 
   const id = uuid();
@@ -116,31 +112,33 @@ app.post("/signin", (req, res) => {
   res.status(200).json({ id });
 });
 
-
-app.post('/signup',  (req, res) => {
+app.post("/signup", (req, res) => {
   const password = req.body.password;
   const login = req.body.login;
 
   if (!password || !login) {
-    return res.status(400).json({error: 'Не указан login или пароль'});
+    return res.status(400).json({ error: "Не указан login или пароль" });
   }
   if (users[login] !== undefined) {
-    return res.status(409).json({error: 'Аккаунт с указанным электронным адресом уже существует'});
+    return res.status(409).json({
+      error: "Аккаунт с указанным электронным адресом уже существует",
+    });
   }
 
-  users[login] = {login: login, password: password, age: 20}
+  users[login] = { login: login, password: password, age: 20 };
 
   const id = uuid();
   ids[id] = login;
 
-  res.cookie('session_id', id, {expires: new Date(Date.now() + 1000 * 60 * 10)});
-  res.status(200).json({id});
-  return res
+  res.cookie("session_id", id, {
+    expires: new Date(Date.now() + 1000 * 60 * 10),
+  });
+  res.status(200).json({ id });
+  return res;
 });
 
-
-app.get('/me', (req, res) => {
-  const id = req.cookies['session_id'];
+app.get("/me", (req, res) => {
+  const id = req.cookies["session_id"];
   const login = ids[id];
   if (!login || !users[login]) {
     return res.status(401).end();
@@ -149,8 +147,8 @@ app.get('/me', (req, res) => {
   res.json(users[login]);
 });
 
-app.get('/content', (req, res) => {
-  const id = req.cookies['session_id'];
+app.get("/content", (req, res) => {
+  const id = req.cookies["session_id"];
   const login = ids[id];
   if (!login || !users[login]) {
     return res.status(401).end();
@@ -160,28 +158,23 @@ app.get('/content', (req, res) => {
 });
 
 app.get("/api/v1/films", (req, res) => {
-  console.log(req.query)
+  console.log(req.query);
   return res.status(200).json(films);
-
 });
 
 app.get("/authcheck", (req, res) => {
-  const id = req.cookies['session_id'];
+  const id = req.cookies["session_id"];
   const login = ids[id];
   if (!login || !users[login]) {
-    return res.status(200).json({status: 401}).end();
+    return res.status(200).json({ status: 401 }).end();
   }
 
-  return res.status(200).json({status: 200}).end();
+  return res.status(200).json({ status: 200 }).end();
 });
 
 app.get("/logout", (req, res) => {
-  const id = req.cookies['session_id'];
-  const login = ids[id];
-
-  const uid = uuid();
-
+  const id = req.cookies["session_id"];
   delete ids[id];
 
-  return res.status(200).json({status: 200}).end();;
-})
+  return res.status(200).json({ status: 200 }).end();
+});

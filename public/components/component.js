@@ -1,9 +1,17 @@
-import { ROOT } from "../utils/config.js"
+import { ROOT } from "../utils/config.js";
 
+/**
+ * Класс родитель всех компонентов
+ * @class Component
+ * @typedef {Component}
+ */
 export class Component {
-    constructor() {
-        this.state = {};
-        //this.props = props;
-        this.rootNode = ROOT
-    }
+  /**
+   * Конструктор для формирония родительского элемента
+   * @class
+   */
+  constructor() {
+    this.state = {};
+    this.rootNode = ROOT;
+  }
 }

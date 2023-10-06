@@ -1,82 +1,86 @@
 @media (min-width: 1200px) {
-    .redirectToSignup, .errorString{
-        font-size: 16px;
-    }
+  .redirectToSignup,
+  .errorString {
+    font-size: 16px;
+  }
 }
 
 @media (max-width: 1200px) {
-    .redirectToSignup, .errorString{
-        font-size: 10px;
-    }
+  .redirectToSignup,
+  .errorString {
+    font-size: 10px;
+  }
 }
 
 @media (max-width: 500px) {
-    .redirectToSignup, .errorString{
-        font-size: 7px;
-    }
+  .redirectToSignup,
+  .errorString {
+    font-size: 7px;
+  }
 }
 
 @media (max-width: 700px) {
-    .buttonLogin{
-        font-size: 7px;
-    }
+  .buttonLogin {
+    font-size: 7px;
+  }
 }
 
+.signin {
+  width: 23%;
+  height: 400px;
+  background-color: #51523a;
+  border-radius: 5%;
+  opacity: 0.5;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
 
- .signin {
-     width: 23%;
-     height: 400px;
-     background-color: #51523A;
-     border-radius: 5%;
-     opacity: 0.5;
-     box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
-
-     text-align: center;
-     margin-left: auto;
-     margin-right: auto;
-     margin-top: 60px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 60px;
 }
 
 .loginForm {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 
-    height: 60%;
+  height: 60%;
 }
 
-.loginInput, .passwordInput  {
-    width: 60%;
-    height: 13%;
-    border: 1px solid white;
-    border-radius: 10px;
-    transition: border 0.3s ease
+.loginInput,
+.passwordInput {
+  width: 60%;
+  height: 13%;
+  border: 1px solid white;
+  border-radius: 10px;
+  transition: border 0.3s ease;
 }
 
-.loginInput:hover, .passwordInput:hover {
-    border: 1px solid black;
+.loginInput:hover,
+.passwordInput:hover {
+  border: 1px solid black;
 }
 
 .buttonLogin {
-    width: 30%;
-    height: 20%;
-    border-radius: 10px;
-    background-color: #ffffff;
-    border: 1px solid white;
-    transition: border 0.3s ease
+  width: 30%;
+  height: 20%;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: 1px solid white;
+  transition: border 0.3s ease;
 }
 
 .buttonLogin:hover {
-    border: 1px solid black;
+  border: 1px solid black;
 }
 
 .redirectToSignup {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .errorString {
-    color: red;
-    margin-top: 1%;
-    display: none;
+  color: red;
+  margin-top: 1%;
+  display: none;
 }

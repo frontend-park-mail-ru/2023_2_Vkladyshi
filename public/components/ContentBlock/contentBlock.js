@@ -1,11 +1,24 @@
-import {Component} from '../component.js';
+import { Component } from "../component.js";
 
-export class ContentBlock extends Component{
-    constructor() {
-        super();
-    }
+/**
+ * Класс рейдера формирования подборки фильмов
+ * @class FilmSelection
+ * @typedef {FilmSelection}
+ */
+export class ContentBlock extends Component {
+  /**
+   * Конструктор, заполняющий класс
+   * @class
+   */
+  constructor() {
+    super();
+  }
 
-    render() {
-        return Handlebars.templates['contentBlock.hbs']();
-    }
+  /**
+   * Метод рендеринга элемента
+   * @return {string} html авторизации
+   */
+  render() {
+    return Handlebars.templates["contentBlock.hbs"]();
+  }
 }

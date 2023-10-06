@@ -1,3 +1,3 @@
-import {mainPage, ROOT} from "./utils/config.js"
+import { mainPage } from "./utils/config.js";
 
-mainPage.render()
+mainPage.render();

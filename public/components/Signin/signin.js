@@ -1,11 +1,23 @@
-import {Component} from '../component.js';
+import { Component } from "../component.js";
 
-export class Signin extends Component{
-    constructor() {
-        super();
-    }
+/**
+ * Класс рендеринга авторизации
+ * @class Signin
+ * @typedef {Signin}
+ */
+export class Signin extends Component {
+  /**
+   * Конструктор класса
+   */
+  constructor() {
+    super();
+  }
 
-    render() {
-        return Handlebars.templates['signin.hbs']();
-    }
+  /**
+   * Метод рендеринга элемента
+   * @return {string} html авторизации
+   */
+  render() {
+    return Handlebars.templates["signin.hbs"]();
+  }
 }

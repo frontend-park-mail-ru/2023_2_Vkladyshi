@@ -1,12 +1,24 @@
-import {Component} from '../component.js';
+import { Component } from "../component.js";
 
-export class Footer extends Component{
-    constructor() {
-        super()
-    }
+/**
+ * Класс создания нижней панели
+ * @class Footer
+ * @typedef {Footer}
+ */
+export class Footer extends Component {
+  /**
+   * Конструктор для формирования родительского элемента
+   * @class
+   */
+  constructor() {
+    super();
+  }
 
-    render() {
-        return Handlebars.templates['footer.hbs']();
-    }
+  /**
+   * Метод для рендеринга HTML кода
+   * @return {string} html нижней панели
+   */
+  render() {
+    return Handlebars.templates["footer.hbs"]();
+  }
 }
-
