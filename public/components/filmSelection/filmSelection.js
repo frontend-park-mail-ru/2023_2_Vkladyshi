@@ -8,13 +8,13 @@ import { responseStatuses, urls } from '../../modules/config.js';
  */
 export class FilmSelection {
   /**
-   * Родительский элемент в который добаляеться шаблон
+   * Родительский элемент в который добавляется шаблон
    * @type {object}
    */
   #parent;
 
   /**
-   * Коструктор, заполняющий класс
+   * Конструктор, заполняющий класс
    * @class
    * @param {object} parent - указатель на родителя в DOM дереве
    */
@@ -23,7 +23,7 @@ export class FilmSelection {
   }
 
   /**
-   * Метод рендера элемента
+   * Метод рендеринга элемента
    */
   render() {
     get({
