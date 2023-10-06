@@ -10,7 +10,7 @@ import {
 import { goToPageByClassName } from '../../utils/goToPage.js';
 import { returnError } from '../../utils/addError.js';
 import { post } from '../../utils/ajax.js';
-import {validateLogin, validatePassword} from '../../utils/validate.js';
+import { validateLogin, validatePassword } from '../../utils/validate.js';
 
 /**
  * Класс регистрации пользователя

@@ -53,5 +53,5 @@ export function validateLogin(login) {
     }
   }
 
-  return {result :true};
+  return { result: true };
 }

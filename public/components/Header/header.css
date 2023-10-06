@@ -57,7 +57,7 @@ header {
 .brandHeader span,
 .loginHeader span,
 .menuHeader span {
-  margin-left: 1%;
+  margin-left: 10%;
 }
 
 .brand_icon {
@@ -75,7 +75,7 @@ input::placeholder {
   border-radius: 45px;
   border: 1px solid white;
   transition: border 0.3s ease;
-  padding: 8px 8px 8px 8px;
+  padding: 8px 30px 8px 30px;
 }
 
 .header_search_item:hover {

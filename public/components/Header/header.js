@@ -86,8 +86,7 @@ export class Header extends Component {
             clickHandler,
             clickLogout,
             clickMenu,
-            clickRedirectToSignin,
-            clickRedirectToSignup
+            clickRedirect
           );
           goToPageByEvent(event);
         }
@@ -109,8 +108,7 @@ export class Header extends Component {
             clickHandler,
             clickLogout,
             clickMenu,
-            clickRedirectToSignin,
-            clickRedirectToSignup
+            clickRedirect
           );
           goToPageByEvent(event);
         }
@@ -130,8 +128,7 @@ export class Header extends Component {
             clickHandler,
             clickLogout,
             clickMenu,
-            clickRedirectToSignin,
-            clickRedirectToSignup
+            clickRedirect
           );
           logout();
         }
@@ -151,8 +148,7 @@ export class Header extends Component {
             clickHandler,
             clickLogout,
             clickMenu,
-            clickRedirectToSignin,
-            clickRedirectToSignup
+            clickRedirect
           );
           goToPageByEvent(event);
         }
@@ -160,41 +156,22 @@ export class Header extends Component {
     };
 
     /**
-     * ивент на клик redirectToSignin
+     * ивент на клик redirectToSignin и redirectToSignup
      * @param event ивент с кнопки
      */
-    const clickRedirectToSignin = (event) => {
+    const clickRedirect = (event) => {
       event.composedPath().forEach(function (element) {
         const classNames = element.className;
-        if (classNames === 'redirectToSignin') {
+        if (
+          classNames === 'redirectToSignin' ||
+          classNames === 'redirectToSignup'
+        ) {
           Header.removeEvents(
             clickLogin,
             clickHandler,
             clickLogout,
             clickMenu,
-            clickRedirectToSignin,
-            clickRedirectToSignup
-          );
-          goToPageByEvent(event);
-        }
-      });
-    };
-
-    /**
-     * ивент на клик redirectToSignup
-     * @param event ивент с кнопки
-     */
-    const clickRedirectToSignup = (event) => {
-      event.composedPath().forEach(function (element) {
-        const classNames = element.className;
-        if (classNames === 'redirectToSignup') {
-          Header.removeEvents(
-            clickLogin,
-            clickHandler,
-            clickLogout,
-            clickMenu,
-            clickRedirectToSignin,
-            clickRedirectToSignup
+            clickRedirect
           );
           goToPageByEvent(event);
         }
@@ -207,9 +184,9 @@ export class Header extends Component {
         clickHandler,
         clickLogout,
         clickMenu,
-        clickRedirectToSignin
+        clickRedirect
       );
-      redirectToSignin.addEventListener('click', clickRedirectToSignin);
+      redirectToSignin.addEventListener('click', clickRedirect);
     }
     if (redirectToSignup) {
       Header.removeEvents(
@@ -217,9 +194,9 @@ export class Header extends Component {
         clickHandler,
         clickLogout,
         clickMenu,
-        clickRedirectToSignin
+        clickRedirect
       );
-      redirectToSignup.addEventListener('click', clickRedirectToSignup);
+      redirectToSignup.addEventListener('click', clickRedirect);
     }
     if (loginHeader) {
       loginHeader.addEventListener('click', clickLogin);
@@ -237,16 +214,14 @@ export class Header extends Component {
    * @param {Function} clickBrand - пользователь не авторизован
    * @param {Function} clickLogout - пользователь не авторизован
    * @param {Function} clickMenu - пользователь не авторизован
-   * @param {Function} redirectToSignin - редирект на регистрацию
-   * @param {Function} redirectToSignup -редирект на авторизацию
+   * @param {Function} clickRedirect - редирект
    */
   static removeEvents(
     clickLogin,
     clickBrand,
     clickLogout,
     clickMenu,
-    redirectToSignin,
-    redirectToSignup
+    clickRedirect
   ) {
     const menu = document.querySelector('.menuHeader');
     const brand = document.querySelector('.brandHeader');
@@ -260,8 +235,7 @@ export class Header extends Component {
       login.removeEventListener('click', clickLogin);
     }
     if (signup) {
-      signup.removeEventListener('click', redirectToSignin);
-      signup.removeEventListener('click', redirectToSignup);
+      signup.removeEventListener('click', clickRedirect);
     }
   }
 }

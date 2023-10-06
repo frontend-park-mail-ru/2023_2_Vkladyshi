@@ -6,8 +6,8 @@ const films = {
     collection_name: 'Новинки',
     films: {
       film1: {
-        poster_href: '../../icons/Poster.jpg',
-        name: 'film_1 1',
+        poster_href: '../../icons/bastards.jpg',
+        name: 'film_1 111111111111111111111111111111111111111111111111111111111111111111111111111',
         rating: 4.5,
       },
       film2: {
