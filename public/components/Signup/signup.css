@@ -69,7 +69,7 @@
 .signupButton:hover {
     border: 1px solid black;
 }
-.redirectToLogin {
+.redirectToSignin {
     cursor: pointer;
 }
 

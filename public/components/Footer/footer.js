@@ -3,9 +3,6 @@ import {Component} from '../component.js';
 export class Footer extends Component{
     constructor() {
         super()
-
-        this.state = {
-        }
     }
 
     render() {

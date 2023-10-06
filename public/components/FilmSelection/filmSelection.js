@@ -1,13 +1,11 @@
 import {get} from '../../utils/ajax.js';
-import {responseStatuses, urls} from '../../utils/config.js';
+import {errorInputs, responseStatuses, urls} from '../../utils/config.js';
 import {Component} from '../component.js';
 
 export class FilmSelection extends Component{
 
   constructor() {
     super()
-    this.state = {
-    }
   }
 
   async render() {
@@ -19,8 +17,12 @@ export class FilmSelection extends Component{
         if (response.data.status === responseStatuses.success) {
           return Handlebars.templates["filmSelection.hbs"](response.data.body);
         } else {
-          return "ERROR";
+          return errorInputs.ServerError;
         }
       });
+  }
+
+  renderTemplate(object){
+    return Handlebars.templates["filmSelection.hbs"](object);
   }
 }

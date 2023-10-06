@@ -1,7 +1,7 @@
 import { View } from '../view.js';
 import { checkAuthorized } from '../../utils/checkAuthorized.js';
-import { goToPage } from '../../utils/goToPage.js';
-import { config } from '../../utils/config.js';
+import { goToPageByEvent } from '../../utils/goToPage.js';
+import {config, ROOT, header} from '../../utils/config.js';
 import {ContentBlock} from '../../components/ContentBlock/contentBlock.js';
 import {Footer} from '../../components/Footer/footer.js';
 import {FilmSelection} from '../../components/FilmSelection/filmSelection.js';
@@ -12,64 +12,42 @@ export class MainPage extends View {
     super();
 
     this.state = {
+      first : false,
       isExist : false,
-      isAuth: false
+      isAuth: false,
     }
+
   }
 
-  async render() {
-    console.log(111)
-
+   async render() {
     const contentBlock = new ContentBlock();
     const footer = new Footer();
     const filmSelection = new FilmSelection();
-    const header = new Header(config.menu, {rootNode: document.querySelector("#root")});
 
-    this.state.isExist = true;
-    
-    // отрисовка основных элементов
+    if (document.querySelector("main")) {
+        ROOT.removeChild(document.querySelector("main"));
+    }
+
+    const main = document.createElement("main");
+    ROOT.appendChild(main);
 
     if (!document.querySelector("header")) {
-      this.rootNode.insertAdjacentHTML('beforeend', header.render(false));
-    }
-    if (!document.querySelector(".contentBlock")) {
-      this.rootNode.insertAdjacentHTML('beforeend', contentBlock.render());
-      // document.querySelector(".contentBlock").insertAdjacentHTML('beforeend', await filmSelection.render());
-      document.querySelector(".contentBlock").insertAdjacentHTML('beforeend', await filmSelection.render());
-    }
-    if (!document.querySelector(".footer")){
-      this.rootNode.insertAdjacentHTML('beforeend', footer.render());
+      ROOT.insertAdjacentHTML('afterbegin', header.render(false));
     }
 
-    //this.rootNode.insertAdjacentHTML('beforeend', contentBlock.render());
-    // document.querySelector(".contentBlock").insertAdjacentHTML('beforeend', await filmSelection.render());
+     header.addToHeaderEvent(false)
+
+     main.insertAdjacentHTML('beforeend', contentBlock.render());
+     await filmSelection.render().then((response) => { document.querySelector(".contentBlock").insertAdjacentHTML("beforeend", response)} )
+     main.insertAdjacentHTML('beforeend', footer.render());
 
     checkAuthorized().then(result => {
-      console.log(1112)
       if (result) {
         document.querySelector("header").innerHTML = header.render(true);
-        this.state.isAuth = true;
+        header.addToHeaderEvent(false);
+
       }
     });
 
-    // Анонимная функция-обработчик события
-    var handleClick = function(event) {
-      if (goToPage(event)) {
-        headerHTML.removeEventListener("click", handleClick);
-        this.componentWillUnmount();
-      };
-    };  
-    
-    const headerHTML = document.querySelector(".header");
-    headerHTML.addEventListener('click', handleClick);
-  }
-
-  componentWillUnmount() {
-    this.rootNode.removeChild(document.querySelector(".footer"))
-   // document.querySelector("footer").innerHTML = "";
-    this.rootNode.removeChild(document.querySelector(".contentBlock"));
-    //document.querySelector(".contentBlock").innerHTML = "";
   }
 }
-
-// export const mainPage = new MainPage({ rootNode: document.querySelector('#root') });

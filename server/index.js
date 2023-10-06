@@ -183,5 +183,5 @@ app.get("/logout", (req, res) => {
 
   delete ids[id];
 
-  return res.status(200).data({status: 200}).end();
+  return res.status(200).json({status: 200}).end();;
 })

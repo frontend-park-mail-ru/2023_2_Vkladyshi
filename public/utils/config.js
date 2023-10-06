@@ -2,11 +2,13 @@ import { SigninPage } from "../views/SigninPage/SigninPage.js";
 import { SignupPage } from '../views/SignupPage/SignupPage.js';
 import {MainPage} from '../views/MainPage/MainPage.js';
 import { Header } from '../components/Header/header.js';
-import {ContentBlock} from '../components/ContentBlock/contentBlock.js';
-import {Footer} from '../components/Footer/footer.js';
-import {FilmSelection} from '../components/FilmSelection/filmSelection.js';
+import {FilmSelectionPage} from '../views/FilmSelectionPage/FilmSelectionPage.js';
+import {
+    SelectCollectionPage
+} from '../views/SelectCollectionPage/SelectCollectionPage.js';
 
 export const ROOT = document.querySelector("#root");
+
 export const urls = {
     main: "/",
     basket: "/api/v1/films",
@@ -30,25 +32,26 @@ export const responseStatuses = {
     serverError: 500,
     notFound: 404,
     alreadyExists: 409,
+
 }
 
 export const errorInputs = {
     LoginNoValid: "Логин не валиден",
     EmailNoValid: "Email не валиден",
-    LoginOrPasswordError: "Ошибка пароля или email",
+    LoginOrPasswordError: "Ошибка пароля или логина",
     PasswordNoValid: "Пароль не валиден",
     PasswordsNoEqual : "Пароли не одинаковые",
     NotPassword: "Нет пароля",
     NotAllElements: "Нет всех полей",
     LoginExists: "Логин уже используется",
+    ServerError: "Ошибка сервера",
 }
 
 export const mainPage = new MainPage({ rootNode: document.querySelector('#root') });
 export const signin = new SigninPage({ROOT});
 export const signup = new SignupPage({ROOT});
-// export const contentBlock = new ContentBlock({ROOT});
-// export const footer = new Footer();
-// export const filmSelection = new FilmSelection({ROOT});
+export const filmSelection = new FilmSelectionPage({ROOT});
+export const selectCollection = new SelectCollectionPage({ROOT});
 
 export const config = {
     menu: {
@@ -80,7 +83,7 @@ export const config = {
             href: urls.selection,
             png_name: "Vector_TAGS.svg",
             name: 'Меню',
-            renderObject: "",
+            renderObject: selectCollection,
         },
         main: {
             href: urls.main,
