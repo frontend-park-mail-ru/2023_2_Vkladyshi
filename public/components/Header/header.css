@@ -1,0 +1,143 @@
+@media (max-width: 1920px) {
+  .headerItem,
+  .loginHeader,
+  .brandHeader,
+  .menuHeader {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 980px) {
+  .headerItem,
+  .loginHeader,
+  .brandHeader,
+  .menuHeader {
+    font-size: 0;
+    max-width: 30px;
+  }
+}
+
+header {
+  width: 100%;
+  height: 70px;
+  background: #f3c23c;
+  display: flex;
+}
+
+.header {
+  width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.headerItem,
+.brandHeader,
+.loginHeader,
+.menuHeader {
+  cursor: pointer;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  transition: margin-top 0.1s ease;
+}
+
+.headerItem:hover,
+.brandHeader:hover,
+.loginHeader:hover,
+.menuHeader:hover {
+  margin-top: 5px;
+}
+
+.headerItem span,
+.brandHeader span,
+.loginHeader span,
+.menuHeader span {
+  margin-left: 10%;
+}
+
+.brand_icon {
+  width: 30px;
+}
+
+input::placeholder {
+  text-align: center;
+}
+
+.header_search_item {
+  display: block;
+  width: 30%;
+  max-height: 32px;
+  border-radius: 45px;
+  border: 1px solid white;
+  transition: border 0.3s ease;
+  padding: 8px 30px 8px 30px;
+}
+
+.header_search_item:hover {
+  border: 1px solid black;
+}
+
+.settingsHeader,
+.logoutHeader {
+  padding: 1rem;
+  cursor: pointer;
+  background: #f3c23c;
+  font-family: 'Montserrat', sans-serif;
+  display: block;
+  float: left;
+  position: relative;
+  text-decoration: none;
+  transition-duration: 0.5s;
+  clear: both;
+  width: 100%;
+}
+
+.settingsHeader:hover,
+.logoutHeader:hover {
+  padding: 1rem;
+  background: #d2dcd4;
+}
+
+.navigationProfile {
+  font-family: monospace;
+}
+
+.ulNavProfile {
+  background: darkorange;
+  list-style: none;
+  margin: 0;
+  padding-left: 0;
+}
+
+.liNavProfile {
+  background: #f3c23c;
+  font-family: 'Montserrat', sans-serif;
+  display: block;
+  float: left;
+  position: relative;
+  text-decoration: none;
+  transition-duration: 0.5s;
+}
+
+.dropdown {
+  visibility: hidden;
+  opacity: 0;
+  min-width: 5rem;
+  position: absolute;
+  transition: all 0.5s ease;
+  left: 0;
+  display: none;
+}
+
+.ulNavProfile .liNavProfile:hover > .dropdown,
+.dropdown .logoutHeader:hover,
+.dropdown .settingsHeader:hover {
+  visibility: visible;
+  opacity: 1;
+  display: block;
+}

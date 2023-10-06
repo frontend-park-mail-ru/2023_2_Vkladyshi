@@ -1,0 +1,15 @@
+@import './components/FilmSelection/filmSelection.css';
+@import './components/SelectCollection/contentBlockElement.css';
+@import './components/Signin/signin.css';
+@import './components/Header/header.css';
+@import './components/ContentBlock/contentBlock.css';
+@import './components/Signup/signup.css';
+@import './components/Footer/footer.css';
+
+body {
+  background-color: #ebebe7;
+  padding: 0;
+  margin: 0;
+
+  font-family: 'Montserrat', sans-serif;
+}
