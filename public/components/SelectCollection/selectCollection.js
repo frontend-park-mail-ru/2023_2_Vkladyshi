@@ -39,16 +39,23 @@ export class SelectCollection extends Component {
       'selectCollection-frame-list-item'
     );
 
+    document.querySelector('.selectCollection-frame-img').addEventListener('click', (event) => {
+      document.querySelector('.popupSelectCollection').classList.remove('active');
+      document.body.classList.remove('none-active')
+    });
+
+    document.body.classList.add('none-active')
+
     for (let i = 0; i < buttons.length; i++) {
       buttons[i].addEventListener('click', function () {
-        // eslint-disable-next-line no-invalid-this
         const dataSection = this.getAttribute('data-section');
 
         get({
           url: urls.basket,
           query: { collection_id: dataSection },
         }).then((response) => {
-          if (response.status === responseStatuses.success) {
+          if (response.data.status === responseStatuses.success) {
+            document.body.classList.remove('none-active')
             filmSelection.render(response.data.body);
             return response;
           } else {

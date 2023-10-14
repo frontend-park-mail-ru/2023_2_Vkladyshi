@@ -21,18 +21,7 @@ export class SelectCollectionPage extends View {
    */
   async render() {
     const selectCollection = new SelectCollection();
-    let main;
-
-    if (
-      document.querySelector('main') ||
-      !document.querySelector('.selectCollection')
-    ) {
-      ROOT.removeChild(document.querySelector('main'));
-      main = document.createElement('main');
-      ROOT.appendChild(main);
-      main.insertAdjacentHTML('beforeend', selectCollection.render());
-      selectCollection.addEvent().then();
-    }
-    header.addToHeaderEvent(false);
+    document.querySelector('.popupSelectCollection').classList.add('active')
+    selectCollection.addEvent().then();
   }
 }

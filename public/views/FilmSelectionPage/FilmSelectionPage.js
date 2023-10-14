@@ -23,36 +23,21 @@ export class FilmSelectionPage extends View {
    * @param content объект JSON
    */
   async render(content = null) {
-    const contentBlock = new ContentBlock();
     const filmSelection = new FilmSelection();
-    const footer = new Footer();
-    let main;
+    const main = document.querySelector('main');
+    const select = document.querySelector('.filmSelection');
+    const contentBlock = document.querySelector('.contentBlock');
+    const popupSelectCollection = document.querySelector('.popupSelectCollection');
 
-    if (
-      document.querySelector('main') ||
-      !document.querySelector('.filmSelection')
-    ) {
-      ROOT.removeChild(document.querySelector('main'));
-      main = document.createElement('main');
-      ROOT.appendChild(main);
-
-      main.insertAdjacentHTML('beforeend', contentBlock.render());
+    if (main || !select) {
+      popupSelectCollection.classList.remove('active');
       if (content !== null) {
-        document
-          .querySelector('.contentBlock')
-          .insertAdjacentHTML(
-            'beforeend',
-            filmSelection.renderTemplate(content)
-          );
+        contentBlock.innerHTML = filmSelection.renderTemplate(content);
       } else {
         filmSelection.render().then((value) => {
-          document
-            .querySelector('.contentBlock')
-            .insertAdjacentHTML('beforeend', value);
+          contentBlock.insertAdjacentHTML('beforeend', value);
         });
       }
-
-      main.insertAdjacentHTML('beforeend', footer.render());
     }
   }
 }

@@ -10,7 +10,7 @@
       <span>{{selection.name}}</span>
     </div>
 
-    <input class='header_search_item' placeholder='Поиск фильмов' />
+    <input class='header_search_item' placeholder='Поиск фильмов' disabled/>
 
     <div class='headerItem' data-section='{{basket.key}}'>
       <img src='../../icons/{{basket.png_name}}' class='icon' />
@@ -22,10 +22,12 @@
         <nav class='navigationProfile' role='navigation'>
           <ul class='ulNavProfile'>
             <li class='liNavProfile'>
-              <div class='headerItem'>
-                <img src='../../icons/{{profile.png_name}}' class='icon' />
-                <span>{{profile.name}}</span>
-              </div>
+                <ul>
+                        <div class='headerItem'>
+                            <img src='../../icons/{{profile.png_name}}' class='icon' />
+                            <span>{{profile.name}}</span>
+                        </div>
+                </ul>
               <ul class='dropdown'>
                 <li
                   class='settingsHeader'

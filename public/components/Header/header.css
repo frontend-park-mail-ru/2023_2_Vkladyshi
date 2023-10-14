@@ -7,13 +7,20 @@
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 1150px) {
   .headerItem,
   .loginHeader,
   .brandHeader,
   .menuHeader {
     font-size: 0;
     max-width: 30px;
+  }
+}
+
+@media (max-width: 780px) {
+  .settingsHeader,
+  .logoutHeader {
+    font-size: 10px;
   }
 }
 
@@ -44,6 +51,7 @@ header {
   align-items: center;
   text-align: center;
   transition: margin-top 0.1s ease;
+  white-space: nowrap;
 }
 
 .headerItem:hover,
@@ -57,7 +65,7 @@ header {
 .brandHeader span,
 .loginHeader span,
 .menuHeader span {
-  margin-left: 10%;
+  margin-left:5%;
 }
 
 .brand_icon {

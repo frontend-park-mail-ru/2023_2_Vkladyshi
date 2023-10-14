@@ -11,7 +11,6 @@ export class Component {
    * @class
    */
   constructor() {
-    this.state = {};
     this.rootNode = ROOT;
   }
 }

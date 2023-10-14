@@ -7,7 +7,7 @@ const films = {
     films: {
       film1: {
         poster_href: '../../icons/bastards.jpg',
-        name: 'film_1 111111111111111111111111111111111111111111111111111111111111111111111111111',
+        name: 'film_1 111111',
         rating: 4.5,
       },
       film2: {
@@ -45,6 +45,26 @@ const films = {
         name: 'film_4',
         rating: 3,
       },
+    },
+  },
+};
+
+// eslint-disable-next-line camelcase
+const films_tags = {
+  status: 200,
+  body: {
+    collection_name: 'Новинки',
+    films: {
+      film1: {
+        poster_href: '../../icons/bastards.jpg',
+        name: 'film_1 111110000000000000000000000000000000000000000001',
+        rating: 1,
+      },
+      film2: {
+        poster_href: '../../icons/Poster.jpg',
+        name: 'film_2',
+        rating: 2,
+      }
     },
   },
 };
@@ -96,11 +116,12 @@ const ids = {};
 app.post('/signin', (req, res) => {
   const password = req.body.password;
   const login = req.body.login;
+
   if (!password || !login) {
-    return res.status(401).json({ error: 'Не указан E-Mail или пароль' });
+    return res.status(200).json({ status: 401});
   }
   if (!users[login] || users[login].password !== password) {
-    return res.status(401).json({ error: 'Не верный E-Mail и/или пароль' });
+    return res.status(200).json({ status: 401});
   }
 
   const id = uuid();
@@ -109,7 +130,7 @@ app.post('/signin', (req, res) => {
   res.cookie('session_id', id, {
     expires: new Date(Date.now() + 1000 * 60 * 10),
   });
-  res.status(200).json({ id });
+  res.status(200).json({ status: 200 });
 });
 
 app.post('/signup', (req, res) => {
@@ -133,32 +154,15 @@ app.post('/signup', (req, res) => {
   res.cookie('session_id', id, {
     expires: new Date(Date.now() + 1000 * 60 * 10),
   });
-  res.status(200).json({ id });
+  res.status(200).json({ status: 200 });
   return res;
 });
 
-app.get('/me', (req, res) => {
-  const id = req.cookies['session_id'];
-  const login = ids[id];
-  if (!login || !users[login]) {
-    return res.status(401).end();
-  }
-
-  res.json(users[login]);
-});
-
-app.get('/content', (req, res) => {
-  const id = req.cookies['session_id'];
-  const login = ids[id];
-  if (!login || !users[login]) {
-    return res.status(401).end();
-  }
-
-  return res.status(200).end();
-});
-
 app.get('/api/v1/films', (req, res) => {
-  console.log(req.query);
+  if (req.query.collection_id !== 'new') {
+    return res.status(200).json(films_tags);
+  }
+
   return res.status(200).json(films);
 });
 

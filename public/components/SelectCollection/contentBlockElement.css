@@ -1,17 +1,35 @@
+.popupSelectCollection {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  top: 0;
+  left: 0;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.5s ease 0s;
+}
+
+.popupSelectCollection.active {
+  opacity: 1;
+  visibility: visible;
+}
+
 .selectCollection {
   display: flex;
   justify-content: center;
   z-index: 1;
-  position: absolute;
+  position: fixed;
   top: 53%;
   left: 50%;
   transform: translate(-50%, -50%);
 }
+
 .selectCollection-frame {
-  width: 800px;
-  height: 800px;
+  width: 500px;
   border-radius: 45px;
   background: rgba(29, 29, 25, 0.774);
+  transition: all 1s ease 0s;
 }
 
 .selectCollection-frame-header {
@@ -27,9 +45,7 @@
   width: 5%;
   height: auto;
   margin-left: 10%;
-}
-.selectCollection-frame-img:hover {
-  margin-top: 5px;
+  cursor: pointer;
 }
 
 .selectCollection-frame-header-name {

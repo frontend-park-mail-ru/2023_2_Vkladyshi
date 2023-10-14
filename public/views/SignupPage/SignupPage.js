@@ -1,9 +1,7 @@
 import { View } from '../view.js';
 import {
   errorInputs,
-  header,
   responseStatuses,
-  ROOT,
   urls,
 } from '../../utils/config.js';
 import { Signup } from '../../components/Signup/signup.js';
@@ -14,7 +12,7 @@ import {
   validateLogin,
 } from '../../utils/validate.js';
 import { post } from '../../utils/ajax.js';
-import { goToPageByClassName } from '../../utils/goToPage.js';
+import { goToPageByClassName, goToPageByEvent } from '../../utils/goToPage.js';
 
 /**
  * Класс регистрации пользователя
@@ -31,18 +29,38 @@ export class SignupPage extends View {
   }
   render() {
     const signup = new Signup();
-    let main;
+    document.querySelector('.popupSign').innerHTML = signup.render();
+    this.addActiveSignin();
+    this.addEvents();
+  }
 
-    if (!document.querySelector('main') || !document.querySelector('.signup')) {
-      ROOT.removeChild(document.querySelector('main'));
-      main = document.createElement('main');
-      ROOT.appendChild(main);
-      main.innerHTML = signup.render();
-    }
-
-    header.addToHeaderEvent(false);
-
+  addEvents() {
+    const redirectToSignin = document.querySelector('.redirectToSignin');
+    const closeSignup = document.querySelector('.signup-frame-img');
+    const errorString = document.querySelector('.errorStringSignup');
     const signupForm = document.querySelector('.signupForm');
+
+    const clickExitSignup = (event) => {
+      closeSignup.onclick = null;
+      redirectToSignin.onclick = null;
+      errorString.classList.remove('active')
+      document.body.classList.remove('none-active')
+      this.removeActiveSignup();
+    };
+
+    const redirectSignup = (event) => {
+      closeSignup.onclick = null;
+      redirectToSignin.onclick = null;
+      errorString.classList.remove('active')
+      this.removeActiveSignup();
+      goToPageByEvent(event);
+    };
+
+    closeSignup.onclick = clickExitSignup;
+    redirectToSignin.onclick = redirectSignup;
+
+    document.body.classList.add('none-active')
+
     signupForm.addEventListener('submit', (event) => {
       event.preventDefault();
       const login = document.querySelector('.loginInputSignup').value.trim();
@@ -50,51 +68,64 @@ export class SignupPage extends View {
 
       const password = document.querySelector('.passwordInputFirst').value;
       const passwordSecond = document.querySelector(
-        '.passwordInputSecond'
+          '.passwordInputSecond'
       ).value;
 
       if (!login || !email || !password || !passwordSecond) {
-        returnError(errorInputs.NotAllElements);
+        returnError(errorInputs.NotAllElements, "errorStringSignup");
         return;
       }
 
       if (password !== passwordSecond) {
-        returnError(errorInputs.PasswordsNoEqual);
+        returnError(errorInputs.PasswordsNoEqual, "errorStringSignup");
         return;
       }
 
       const isValidate = validatePassword(password);
       if (!isValidate.result) {
-        returnError(isValidate.error);
+        returnError(isValidate.error, "errorStringSignup");
         return;
       }
 
       if (!validateEmail(email)) {
-        returnError(errorInputs.EmailNoValid);
+        returnError(errorInputs.EmailNoValid, "errorStringSignup");
         return;
       }
 
       const loginValidate = validateLogin(login);
       if (!loginValidate.result) {
-        returnError(loginValidate.error);
+        returnError(loginValidate.error, "errorStringSignup");
         return;
       }
 
       post({
         url: urls.signup,
-        body: { login, password },
+        body: { login, email ,password },
       }).then((response) => {
         switch (response.data.status) {
           case responseStatuses.success:
+            this.removeActiveSignup();
+            document.body.classList.remove('none-active')
             goToPageByClassName('main');
             break;
           case responseStatuses.alreadyExists:
-            returnError(errorInputs.LoginExists);
+            returnError(errorInputs.LoginExists, "errorStringSignup");
             break;
           default:
-            throw new Error(`Error ${response.status}`);
+            throw new Error(`Error ${response.data.status}`);
         }
       });
     });
   }
+
+  addActiveSignin() {
+    document.querySelector('.popupSign').classList.add('active')
+    document.querySelector('.signup').classList.add('active')
+  }
+
+  removeActiveSignup() {
+    document.querySelector('.popupSign').classList.remove('active')
+    document.querySelector('.signup').classList.remove('active')
+  }
+
 }
