@@ -1,5 +1,27 @@
 'use strict';
 
+const express = require('express');
+const body = require('body-parser');
+const cookie = require('cookie-parser');
+const morgan = require('morgan');
+const uuid = require('uuid').v4;
+const path = require('path');
+const app = express();
+
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpackConfig = require('../webpack.config');
+
+app.use(webpackDevMiddleware(webpack(webpackConfig)));
+
+app.use(morgan('dev'));
+app.use(express.static(path.resolve(__dirname, '..', 'public')));
+app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));
+app.use(body.json());
+app.use(cookie());
+
+const port = process.env.PORT || 8001;
+
 const films = {
   status: 200,
   body: {
@@ -68,37 +90,6 @@ const films_tags = {
     },
   },
 };
-
-const express = require('express');
-const body = require('body-parser');
-const cookie = require('cookie-parser');
-const morgan = require('morgan');
-const uuid = require('uuid').v4;
-const path = require('path');
-const app = express();
-
-module.exports = {
-  entry: '../public/index.js',
-  output: {
-    filename: 'bundle.js'
-  },
-  module: {
-    rules: [
-      {
-        test: /\.hbs$/,
-        loader: 'handlebars-loader'
-      }
-    ]
-  }
-};
-
-app.use(morgan('dev'));
-app.use(express.static(path.resolve(__dirname, '..', 'public')));
-app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));
-app.use(body.json());
-app.use(cookie());
-
-const port = process.env.PORT || 8001;
 
 app.listen(port, function () {
   console.log(`Server listening port ${port}`);

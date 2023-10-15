@@ -1,6 +1,7 @@
 import { Component } from '../component.js';
 import { goToPageByEvent } from '../../utils/goToPage.js';
 import { logout } from '../../utils/logout.js';
+import templateHeader from './header.hbs';
 
 /**
  * Класс создания верхней шапки
@@ -49,7 +50,7 @@ export class Header extends Component {
     const profile = this.items.find((item) => item.key === 'profile');
     const selection = this.items.find((item) => item.key === 'selection');
 
-    return Handlebars.templates['header.hbs']({
+    return templateHeader({
       isAuthorized,
       signin,
       basket,

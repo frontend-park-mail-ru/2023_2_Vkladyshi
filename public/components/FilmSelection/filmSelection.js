@@ -1,6 +1,7 @@
 import { get } from '../../utils/ajax.js';
 import { errorInputs, responseStatuses, urls } from '../../utils/config.js';
 import { Component } from '../component.js';
+import templateFilmSelection from './filmSelection.hbs';
 
 /**
  * Класс рендеринга формирования подборки фильмов
@@ -32,7 +33,7 @@ export class FilmSelection extends Component {
         const templateData = Object.assign({}, response.data.body, {
           haveFilms: haveFilms,
         });
-        return Handlebars.templates['filmSelection.hbs'](templateData);
+        return templateFilmSelection(templateData);
       } else {
         return errorInputs.ServerError;
       }
@@ -47,7 +48,7 @@ export class FilmSelection extends Component {
   renderTemplate(object) {
     const haveFilms = this.checkFilms(Object.keys(object.films));
     const templateData = Object.assign({}, object, { haveFilms: haveFilms });
-    return Handlebars.templates['filmSelection.hbs'](templateData);
+    return templateFilmSelection(templateData);
   }
 
   checkFilms(films) {

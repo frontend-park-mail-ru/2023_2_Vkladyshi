@@ -50,7 +50,7 @@ export class MainPage extends View {
     if (!document.querySelector('.contentBlock')) {
       main.insertAdjacentHTML('beforeend', selectCollection.render());
       main.insertAdjacentHTML('beforeend', contentBlock.render());
-      await filmSelection.render().then((response) => {
+      filmSelection.render().then((response) => {
         document
           .querySelector('.contentBlock')
           .insertAdjacentHTML('beforeend', response);

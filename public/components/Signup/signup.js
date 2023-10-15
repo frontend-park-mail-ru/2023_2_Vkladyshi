@@ -1,4 +1,5 @@
 import { Component } from '../component.js';
+import templateSignup from './signup.hbs';
 
 /**
  * Класс рендеринга регистрации пользователя
@@ -19,6 +20,6 @@ export class Signup extends Component {
    * @return {string} html авторизации
    */
   render() {
-    return Handlebars.templates['signup.hbs']();
+    return templateSignup();
   }
 }

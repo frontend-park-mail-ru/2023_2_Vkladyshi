@@ -7,6 +7,7 @@ import {
   errorInputs,
 } from '../../utils/config.js';
 import { Component } from '../component.js';
+import templateSelectCollection from './selectCollection.hbs';
 
 /**
  * Класс формирования окна выбора подборки фильмов
@@ -27,7 +28,7 @@ export class SelectCollection extends Component {
    * @return {string} html авторизации
    */
   render() {
-    return Handlebars.templates['selectCollection.hbs'](collections);
+    return templateSelectCollection(collections);
   }
 
   /**

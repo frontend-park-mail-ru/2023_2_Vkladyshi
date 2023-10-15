@@ -1,4 +1,5 @@
 import { Component } from '../component.js';
+import templateFooter from './footer.hbs';
 
 /**
  * Класс создания нижней панели
@@ -19,6 +20,6 @@ export class Footer extends Component {
    * @return {string} html нижней панели
    */
   render() {
-    return Handlebars.templates['footer.hbs']();
+    return templateFooter();
   }
 }

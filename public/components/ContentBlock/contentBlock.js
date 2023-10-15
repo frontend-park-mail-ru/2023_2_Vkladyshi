@@ -1,5 +1,5 @@
 import { Component } from '../component.js';
-
+import templateContentBlock from './contentBlock.hbs';
 /**
  * Класс рейдера формирования подборки фильмов
  * @class FilmSelection
@@ -19,6 +19,6 @@ export class ContentBlock extends Component {
    * @return {string} html авторизации
    */
   render() {
-    return Handlebars.templates['contentBlock.hbs']();
+    return templateContentBlock();
   }
 }
