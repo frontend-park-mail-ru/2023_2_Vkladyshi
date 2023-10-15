@@ -77,6 +77,21 @@ const uuid = require('uuid').v4;
 const path = require('path');
 const app = express();
 
+module.exports = {
+  entry: '../public/index.js',
+  output: {
+    filename: 'bundle.js'
+  },
+  module: {
+    rules: [
+      {
+        test: /\.hbs$/,
+        loader: 'handlebars-loader'
+      }
+    ]
+  }
+};
+
 app.use(morgan('dev'));
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));

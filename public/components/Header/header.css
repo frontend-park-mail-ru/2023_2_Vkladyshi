@@ -44,7 +44,6 @@ header {
 .brandHeader,
 .loginHeader,
 .menuHeader {
-  cursor: pointer;
   height: 50px;
   display: flex;
   justify-content: center;
@@ -52,6 +51,16 @@ header {
   text-align: center;
   transition: margin-top 0.1s ease;
   white-space: nowrap;
+}
+
+.headerItem {
+  cursor: not-allowed;
+}
+
+.brandHeader,
+.loginHeader,
+.menuHeader {
+  cursor: pointer;
 }
 
 .headerItem:hover,
@@ -77,6 +86,7 @@ input::placeholder {
 }
 
 .header_search_item {
+  cursor: not-allowed;
   display: block;
   width: 30%;
   max-height: 32px;
