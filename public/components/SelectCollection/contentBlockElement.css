@@ -28,7 +28,8 @@
 .selectCollection-frame {
   width: 500px;
   border-radius: 45px;
-  background: rgba(29, 29, 25, 0.774);
+  background-color: rgb(98, 98, 93);
+
   transition: all 1s ease 0s;
 }
 
@@ -42,7 +43,7 @@
 }
 
 .selectCollection-frame-img {
-  width: 5%;
+  width: 7%;
   height: auto;
   margin-left: 10%;
   cursor: pointer;
@@ -53,7 +54,6 @@
   height: auto;
   text-align: right;
   margin-right: 10%;
-
   color: #000;
   font-family: Montserrat, serif;
   font-size: 24px;

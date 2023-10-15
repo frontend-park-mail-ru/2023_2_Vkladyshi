@@ -1,5 +1,6 @@
 .contentBlock {
   width: 80%;
+  min-height: 400px;
   background-color: #ffffff;
   text-align: center;
   margin: auto auto;

@@ -1,5 +1,4 @@
 import { View } from '../view.js';
-import { ROOT, header } from '../../utils/config.js';
 import { SelectCollection } from '../../components/SelectCollection/selectCollection.js';
 
 /**
@@ -21,7 +20,7 @@ export class SelectCollectionPage extends View {
    */
   async render() {
     const selectCollection = new SelectCollection();
-    document.querySelector('.popupSelectCollection').classList.add('active')
+    document.querySelector('.popupSelectCollection').classList.add('active');
     selectCollection.addEvent().then();
   }
 }

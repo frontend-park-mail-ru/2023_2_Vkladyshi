@@ -35,34 +35,38 @@ export class SelectCollection extends Component {
    * @return {Promise} Promise ответа
    */
   async addEvent() {
-    const buttons = document.getElementsByClassName(
-      'selectCollection-frame-list-item'
-    );
+    const popup = document.querySelector('.popupSelectCollection');
 
-    document.querySelector('.selectCollection-frame-img').addEventListener('click', (event) => {
-      document.querySelector('.popupSelectCollection').classList.remove('active');
-      document.body.classList.remove('none-active')
-    });
+    document.body.style.paddingRight =
+      window.innerWidth - document.querySelector('main').offsetWidth + 1 + 'px';
 
-    document.body.classList.add('none-active')
-
-    for (let i = 0; i < buttons.length; i++) {
-      buttons[i].addEventListener('click', function () {
-        const dataSection = this.getAttribute('data-section');
+    popup.onclick = (event) => {
+      if (
+        event.target.closest('.selectCollection-frame-img') ||
+        !event.target.closest('.selectCollection')
+      ) {
+        document.body.style.paddingRight = '0px';
+        popup.classList.remove('active');
+        document.body.classList.remove('none-active');
+      } else if (event.target.closest('.selectCollection-frame-list-item')) {
+        const dataSection = event.target.getAttribute('data-section');
 
         get({
           url: urls.basket,
           query: { collection_id: dataSection },
         }).then((response) => {
           if (response.data.status === responseStatuses.success) {
-            document.body.classList.remove('none-active')
+            document.body.classList.remove('none-active');
             filmSelection.render(response.data.body);
+            document.body.style.paddingRight = '0px';
             return response;
           } else {
             return errorInputs.ServerError;
           }
         });
-      });
-    }
+      }
+    };
+
+    document.body.classList.add('none-active');
   }
 }

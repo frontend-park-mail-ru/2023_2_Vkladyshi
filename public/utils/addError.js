@@ -8,4 +8,3 @@ export function returnError(string, className) {
   errorElement.classList.add('active');
   errorElement.textContent = string;
 }
-

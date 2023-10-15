@@ -26,14 +26,14 @@ export class Header extends Component {
    */
   get items() {
     return Object.entries(this.config).map(
+      // eslint-disable-next-line camelcase
+      ([key, { href, png_name, name }]) => ({
+        key,
+        href,
         // eslint-disable-next-line camelcase
-        ([key, { href, png_name, name }]) => ({
-          key,
-          href,
-          // eslint-disable-next-line camelcase
-          png_name,
-          name,
-        })
+        png_name,
+        name,
+      })
     );
   }
 

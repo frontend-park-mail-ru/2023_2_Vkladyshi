@@ -1,8 +1,5 @@
 import { View } from '../view.js';
-import { ROOT } from '../../utils/config.js';
 import { FilmSelection } from '../../components/FilmSelection/filmSelection.js';
-import { ContentBlock } from '../../components/ContentBlock/contentBlock.js';
-import { Footer } from '../../components/Footer/footer.js';
 
 /**
  * Класс формирования подборки фильмов
@@ -22,12 +19,14 @@ export class FilmSelectionPage extends View {
    * Метод создания страницы
    * @param content объект JSON
    */
-  async render(content = null) {
+  render(content = null) {
     const filmSelection = new FilmSelection();
     const main = document.querySelector('main');
     const select = document.querySelector('.filmSelection');
     const contentBlock = document.querySelector('.contentBlock');
-    const popupSelectCollection = document.querySelector('.popupSelectCollection');
+    const popupSelectCollection = document.querySelector(
+      '.popupSelectCollection'
+    );
 
     if (main || !select) {
       popupSelectCollection.classList.remove('active');

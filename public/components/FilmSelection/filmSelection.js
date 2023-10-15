@@ -26,7 +26,13 @@ export class FilmSelection extends Component {
       query: { collection_id: 'new' },
     }).then(async (response) => {
       if (response.data.status === responseStatuses.success) {
-        return Handlebars.templates['filmSelection.hbs'](response.data.body);
+        const haveFilms = this.checkFilms(
+          Object.keys(response.data.body.films)
+        );
+        const templateData = Object.assign({}, response.data.body, {
+          haveFilms: haveFilms,
+        });
+        return Handlebars.templates['filmSelection.hbs'](templateData);
       } else {
         return errorInputs.ServerError;
       }
@@ -39,6 +45,16 @@ export class FilmSelection extends Component {
    * @return {string} html авторизации
    */
   renderTemplate(object) {
-    return Handlebars.templates['filmSelection.hbs'](object);
+    const haveFilms = this.checkFilms(Object.keys(object.films));
+    const templateData = Object.assign({}, object, { haveFilms: haveFilms });
+    return Handlebars.templates['filmSelection.hbs'](templateData);
+  }
+
+  checkFilms(films) {
+    let haveFilms = false;
+    if (films.length > 0) {
+      haveFilms = true;
+    }
+    return haveFilms;
   }
 }

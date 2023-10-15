@@ -7,42 +7,42 @@ const films = {
     films: {
       film1: {
         poster_href: '../../icons/bastards.jpg',
-        name: 'film_1 111111',
+        title: 'film_1 111111',
         rating: 4.5,
       },
       film2: {
         poster_href: '../../icons/Poster.jpg',
-        name: 'film_2',
+        title: 'film_2',
         rating: 4.1,
       },
       film3: {
         poster_href: '../../icons/Poster.jpg',
-        name: 'film_3',
+        title: 'film_3',
         rating: 4.5,
       },
       film4: {
         poster_href: '../../icons/Poster.jpg',
-        name: 'film_4',
+        title: 'film_4',
         rating: 3,
       },
       film5: {
         poster_href: '../../icons/Poster.jpg',
-        name: 'film_1',
+        title: 'film_1',
         rating: 4.5,
       },
       film6: {
         poster_href: '../../icons/Poster.jpg',
-        name: 'film_2',
+        title: 'film_2',
         rating: 4.1,
       },
       film7: {
         poster_href: '../../icons/Poster.jpg',
-        name: 'film_3',
+        title: 'film_3',
         rating: 4.5,
       },
       film8: {
         poster_href: '../../icons/Poster.jpg',
-        name: 'film_4',
+        title: 'film_4',
         rating: 3,
       },
     },
@@ -57,14 +57,14 @@ const films_tags = {
     films: {
       film1: {
         poster_href: '../../icons/bastards.jpg',
-        name: 'film_1 111110000000000000000000000000000000000000000001',
+        title: 'film_1 111110000000000000000000000000000000000000000001',
         rating: 1,
       },
       film2: {
-        poster_href: '../../icons/Poster.jpg',
-        name: 'film_2',
+        poster_href: '/',
+        title: 'film_2',
         rating: 2,
-      }
+      },
     },
   },
 };
@@ -118,10 +118,10 @@ app.post('/signin', (req, res) => {
   const login = req.body.login;
 
   if (!password || !login) {
-    return res.status(200).json({ status: 401});
+    return res.status(200).json({ status: 401 });
   }
   if (!users[login] || users[login].password !== password) {
-    return res.status(200).json({ status: 401});
+    return res.status(200).json({ status: 401 });
   }
 
   const id = uuid();
