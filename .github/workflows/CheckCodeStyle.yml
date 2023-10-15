@@ -1,8 +1,9 @@
-name: Build and Delivery
+name: Check Code Style
 
 on:
+  workflow_call:
   push:
-    branches: ['main', 'dev']
+    branches: ['dev']
   pull_request:
     branches: ['main', 'dev']
 
