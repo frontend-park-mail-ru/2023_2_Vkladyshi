@@ -144,11 +144,11 @@ app.post('/signup', (req, res) => {
   const login = req.body.login;
 
   if (!password || !login) {
-    return res.status(400).json({ error: 'Не указан login или пароль' });
+    return res.status(200).json({ status: 400 });
   }
   if (users[login] !== undefined) {
-    return res.status(409).json({
-      error: 'Аккаунт с указанным электронным адресом уже существует',
+    return res.status(200).json({
+      status: 409,
     });
   }
 
@@ -157,9 +157,9 @@ app.post('/signup', (req, res) => {
   const id = uuid();
   ids[id] = login;
 
-  res.cookie('session_id', id, {
-    expires: new Date(Date.now() + 1000 * 60 * 10),
-  });
+  // res.cookie('session_id', id, {
+  //   expires: new Date(Date.now() + 1000 * 60 * 10),
+  // });
   res.status(200).json({ status: 200 });
   return res;
 });

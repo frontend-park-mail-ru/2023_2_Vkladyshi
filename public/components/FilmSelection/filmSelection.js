@@ -51,11 +51,12 @@ export class FilmSelection extends Component {
     return templateFilmSelection(templateData);
   }
 
+  /**
+   * Проверка на наличие фильмов
+   * @param {list} films список фильмов
+   * @return {boolean} результат наличия фильмов в списке
+   */
   checkFilms(films) {
-    let haveFilms = false;
-    if (films.length > 0) {
-      haveFilms = true;
-    }
-    return haveFilms;
+    return films.length > 0;
   }
 }

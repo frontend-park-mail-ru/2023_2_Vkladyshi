@@ -1,5 +1,10 @@
 import { View } from '../view.js';
-import { errorInputs, responseStatuses, urls } from '../../utils/config.js';
+import {
+  errorInputs,
+  header,
+  responseStatuses,
+  urls,
+} from '../../utils/config.js';
 import { Signup } from '../../components/Signup/signup.js';
 import { returnError } from '../../utils/addError.js';
 import {
@@ -23,6 +28,10 @@ export class SignupPage extends View {
   constructor() {
     super();
   }
+
+  /**
+   * Метод создания страницы
+   */
   render() {
     const signup = new Signup();
     document.querySelector('.popupSign').innerHTML = signup.render();
@@ -30,9 +39,11 @@ export class SignupPage extends View {
     this.addEvents();
   }
 
+  /**
+   * Добавляет ивенты на странице
+   */
   addEvents() {
     const errorString = document.querySelector('.errorStringSignup');
-    const signupForm = document.querySelector('.signupForm');
     const popup = document.querySelector('.popupSign');
 
     popup.onclick = (event) => {
@@ -48,9 +59,18 @@ export class SignupPage extends View {
         errorString.classList.remove('active');
         document.body.classList.remove('none-active');
         this.removeActiveSignup();
+      } else if (event.target.closest('.signupButton')) {
+        this.registration();
       }
     };
     document.body.classList.add('none-active');
+  }
+
+  /**
+   * Происходит процесс регистрации юзера
+   */
+  registration() {
+    const signupForm = document.querySelector('.signupForm');
 
     signupForm.addEventListener('submit', (event) => {
       event.preventDefault();
@@ -61,60 +81,94 @@ export class SignupPage extends View {
       const passwordSecond = document.querySelector(
         '.passwordInputSecond'
       ).value;
+      const errorClassName = 'errorStringSignup';
 
       if (!login || !email || !password || !passwordSecond) {
-        returnError(errorInputs.NotAllElements, 'errorStringSignup');
+        returnError(errorInputs.NotAllElements, errorClassName);
         return;
       }
 
       if (password !== passwordSecond) {
-        returnError(errorInputs.PasswordsNoEqual, 'errorStringSignup');
+        returnError(errorInputs.PasswordsNoEqual, errorClassName);
         return;
       }
 
       const isValidate = validatePassword(password);
       if (!isValidate.result) {
-        returnError(isValidate.error, 'errorStringSignup');
+        console.log('');
+        returnError(isValidate.error, errorClassName);
         return;
       }
 
       if (!validateEmail(email)) {
-        returnError(errorInputs.EmailNoValid, 'errorStringSignup');
+        returnError(errorInputs.EmailNoValid, errorClassName);
         return;
       }
 
       const loginValidate = validateLogin(login);
       if (!loginValidate.result) {
-        returnError(loginValidate.error, 'errorStringSignup');
+        returnError(loginValidate.error, errorClassName);
         return;
       }
 
-      post({
-        url: urls.signup,
-        body: { login, email, password },
-      }).then((response) => {
-        switch (response.data.status) {
-          case responseStatuses.success:
-            this.removeActiveSignup();
-            document.body.style.paddingRight = '0px';
-            document.body.classList.remove('none-active');
-            goToPageByClassName('main');
-            break;
-          case responseStatuses.alreadyExists:
-            returnError(errorInputs.LoginExists, 'errorStringSignup');
-            break;
-          default:
-            throw new Error(`Error ${response.data.status}`);
-        }
-      });
+      this.signupRequest(login, email, password, errorClassName);
     });
   }
 
+  /**
+   * Запрос на регистрацию
+   * @param {string} login логин пользователя
+   * @param {string} password пароль пользователя
+   * @param {string} email почта юзера
+   * @param {string} errorClassName название класса, куда вписывать ошибку
+   */
+  signupRequest(login, email, password, errorClassName) {
+    post({
+      url: urls.signup,
+      body: { login, email, password },
+    }).then((response) => {
+      switch (response.data.status) {
+        case responseStatuses.success:
+          this.signinRequest(login, password);
+          this.removeActiveSignup();
+          document.body.style.paddingRight = '0px';
+          document.body.classList.remove('none-active');
+          goToPageByClassName('main');
+          break;
+        case responseStatuses.alreadyExists:
+          returnError(errorInputs.LoginExists, errorClassName);
+          break;
+        default:
+          throw new Error(`Error ${response.data.status}`);
+      }
+    });
+  }
+
+  /**
+   * Запрос на авторизацию
+   * @param {string} login логин пользователя
+   * @param {string} password пароль пользователя
+   */
+  signinRequest(login, password) {
+    post({
+      url: urls.signin,
+      body: { login, password },
+    }).then((response) => {
+      header.addToHeaderEvent(true);
+    });
+  }
+
+  /**
+   * Делаем страницу регистрации активной
+   */
   addActiveSignin() {
     document.querySelector('.popupSign').classList.add('active');
     document.querySelector('.signup').classList.add('active');
   }
 
+  /**
+   * Деактивируем страницу регистрации
+   */
   removeActiveSignup() {
     document.querySelector('.popupSign').classList.remove('active');
     document.querySelector('.signup').classList.remove('active');

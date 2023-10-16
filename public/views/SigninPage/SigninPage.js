@@ -37,6 +37,9 @@ export class SigninPage extends View {
     this.addEvents();
   }
 
+  /**
+   * Добавляет ивенты на странице
+   */
   addEvents() {
     const errorString = document.querySelector('.errorStringSignin');
     const popup = document.querySelector('.popupSign');
@@ -65,6 +68,9 @@ export class SigninPage extends View {
     document.body.classList.add('none-active');
   }
 
+  /**
+   * Происходит процесс авторизации юзера
+   */
   authorization() {
     const signin = document.querySelector('.signin');
 
@@ -72,51 +78,68 @@ export class SigninPage extends View {
       event.preventDefault();
       const login = document.querySelector('.loginInput').value.trim();
       const password = document.querySelector('.passwordInput').value;
+      const errorClassName = 'errorStringSignin';
 
       if (!login || !password) {
-        returnError(errorInputs.NotAllElements, 'errorStringSignin');
+        returnError(errorInputs.NotAllElements, errorClassName);
         return;
       }
 
       const loginValidate = validateLogin(login);
       if (!loginValidate.result) {
-        returnError(loginValidate.error, 'errorStringSignin');
+        returnError(loginValidate.error, errorClassName);
         return;
       }
 
       const passwordValidate = validatePassword(password);
       if (!passwordValidate.result) {
-        returnError(passwordValidate.error, 'errorStringSignin');
+        returnError(passwordValidate.error, errorClassName);
         return;
       }
 
-      post({
-        url: urls.signin,
-        body: { login, password },
-      }).then((response) => {
-        switch (response.data.status) {
-          case responseStatuses.success:
-            this.removeActiveSignin();
-            document.body.style.paddingRight = '0px';
-            document.body.classList.remove('none-active');
-            goToPageByClassName('main');
-            header.render(true);
-            break;
-          case responseStatuses.notAuthorized:
-            returnError(errorInputs.LoginOrPasswordError, 'errorStringSignin');
-            break;
-          default:
-            returnError(response.data.status);
-        }
-      });
+      this.signinRequest(login, password, errorClassName);
     });
   }
 
+  /**
+   * Запрос на авторизацию
+   * @param {string} login логин пользователя
+   * @param {string} password пароль пользователя
+   * @param {string} errorClassName название класса, куда вписывать ошибку
+   */
+  signinRequest(login, password, errorClassName) {
+    post({
+      url: urls.signin,
+      body: { login, password },
+    }).then((response) => {
+      switch (response.data.status) {
+        case responseStatuses.success:
+          this.removeActiveSignin();
+          document.body.style.paddingRight = '0px';
+          document.body.classList.remove('none-active');
+          goToPageByClassName('main');
+          header.render(true);
+          break;
+        case responseStatuses.notAuthorized:
+          returnError(errorInputs.LoginOrPasswordError, errorClassName);
+          break;
+        default:
+          returnError(response.data.status);
+      }
+    });
+  }
+
+  /**
+   * Делаем страницу авторизации активной
+   */
   addActiveSignin() {
     document.querySelector('.popupSign').classList.add('active');
     document.querySelector('.signin').classList.add('active');
   }
 
+  /**
+   * Деактивируем страницу авторизации
+   */
   removeActiveSignin() {
     document.querySelector('.popupSign').classList.remove('active');
     document.querySelector('.signin').classList.remove('active');
