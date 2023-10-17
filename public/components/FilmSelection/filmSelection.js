@@ -1,6 +1,7 @@
 import { get } from '../../utils/ajax.js';
 import { errorInputs, responseStatuses, urls } from '../../utils/config.js';
 import { Component } from '../component.js';
+import templateFilmSelection from './filmSelection.hbs';
 
 /**
  * Класс рендеринга формирования подборки фильмов
@@ -26,7 +27,13 @@ export class FilmSelection extends Component {
       query: { collection_id: 'new' },
     }).then(async (response) => {
       if (response.data.status === responseStatuses.success) {
-        return Handlebars.templates['filmSelection.hbs'](response.data.body);
+        const haveFilms = this.checkFilms(
+          Object.keys(response.data.body.films)
+        );
+        const templateData = Object.assign({}, response.data.body, {
+          haveFilms: haveFilms,
+        });
+        return templateFilmSelection(templateData);
       } else {
         return errorInputs.ServerError;
       }
@@ -39,6 +46,17 @@ export class FilmSelection extends Component {
    * @return {string} html авторизации
    */
   renderTemplate(object) {
-    return Handlebars.templates['filmSelection.hbs'](object);
+    const haveFilms = this.checkFilms(Object.keys(object.films));
+    const templateData = Object.assign({}, object, { haveFilms: haveFilms });
+    return templateFilmSelection(templateData);
+  }
+
+  /**
+   * Проверка на наличие фильмов
+   * @param {list} films список фильмов
+   * @return {boolean} результат наличия фильмов в списке
+   */
+  checkFilms(films) {
+    return films.length > 0;
   }
 }

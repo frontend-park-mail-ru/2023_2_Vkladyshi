@@ -1,8 +1,5 @@
 import { View } from '../view.js';
-import { ROOT } from '../../utils/config.js';
 import { FilmSelection } from '../../components/FilmSelection/filmSelection.js';
-import { ContentBlock } from '../../components/ContentBlock/contentBlock.js';
-import { Footer } from '../../components/Footer/footer.js';
 
 /**
  * Класс формирования подборки фильмов
@@ -22,37 +19,24 @@ export class FilmSelectionPage extends View {
    * Метод создания страницы
    * @param content объект JSON
    */
-  async render(content = null) {
-    const contentBlock = new ContentBlock();
+  render(content = null) {
     const filmSelection = new FilmSelection();
-    const footer = new Footer();
-    let main;
+    const main = document.querySelector('main');
+    const select = document.querySelector('.filmSelection');
+    const contentBlock = document.querySelector('.contentBlock');
+    const popupSelectCollection = document.querySelector(
+      '.popupSelectCollection'
+    );
 
-    if (
-      document.querySelector('main') ||
-      !document.querySelector('.filmSelection')
-    ) {
-      ROOT.removeChild(document.querySelector('main'));
-      main = document.createElement('main');
-      ROOT.appendChild(main);
-
-      main.insertAdjacentHTML('beforeend', contentBlock.render());
+    if (main || !select) {
+      popupSelectCollection.classList.remove('active');
       if (content !== null) {
-        document
-          .querySelector('.contentBlock')
-          .insertAdjacentHTML(
-            'beforeend',
-            filmSelection.renderTemplate(content)
-          );
+        contentBlock.innerHTML = filmSelection.renderTemplate(content);
       } else {
         filmSelection.render().then((value) => {
-          document
-            .querySelector('.contentBlock')
-            .insertAdjacentHTML('beforeend', value);
+          contentBlock.insertAdjacentHTML('beforeend', value);
         });
       }
-
-      main.insertAdjacentHTML('beforeend', footer.render());
     }
   }
 }
