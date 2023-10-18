@@ -20,7 +20,7 @@
 .left_text {
   width: 40%;
   text-align: center;
-  opacity: 0.5;
+  color: #a29f9f;
 }
 
 .center_image {
@@ -33,5 +33,5 @@
 .right_text {
   width: 40%;
   text-align: left;
-  opacity: 0.5;
+  color: #a29f9f;
 }

@@ -1,0 +1,25 @@
+name: Deploy
+
+on:
+  push:
+    branches: ['main', 'dev']
+
+jobs:
+  check_style:
+    uses: ./.github/workflows/CheckCodeStyle.yml
+
+  deploy:
+    needs: check_style
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run command on remote server@v0.2.2
+        uses: cross-the-world/ssh-scp-ssh-pipelines@latest
+        with:
+          host: ${{secrets.SSH_HOST}}
+          user: ${{secrets.SSH_USER}}
+          key: ${{secrets.SSH_KEY}}
+          first_ssh: |
+            cd ${{secrets.PROJECT_FOLDER}};
+            sudo git clone -v https://github.com/frontend-park-mail-ru/2023_2_Vkladyshi.git;
+            sudo cp -rv 2023_2_Vkladyshi/public .;
+            sudo rm -rv 2023_2_Vkladyshi;

@@ -4,7 +4,7 @@
  * @return {boolean} результат проверки на валидацию
  */
 export function validateEmail(email) {
-  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const re = /^.+@.+$/;
   return re.test(email);
 }
 

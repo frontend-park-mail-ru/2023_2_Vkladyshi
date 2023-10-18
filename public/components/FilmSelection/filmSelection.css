@@ -1,3 +1,12 @@
+@media screen and (max-width: 1370px) {
+  .filmSelection_film_select {
+    width: 40%;
+  }
+  .filmSelection_film_select_p {
+    display: none;
+  }
+}
+
 .filmSelection {
   display: flex;
   align-items: center;
@@ -6,10 +15,9 @@
 
 .filmSelection_films {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
-
   width: 90%;
 }
 .filmSelection_name {
@@ -74,6 +82,11 @@
 }
 
 .filmSelection_film_name {
+  width: 80%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
   color: #0b0a0a;
   font-family: Montserrat, serif;
   font-size: 17px;
@@ -94,11 +107,9 @@
   border-radius: 8px;
   border: 1px solid #cdc6c6;
   background: rgba(217, 217, 217, 0.3);
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   transition:
     width,
     background 0.3s ease;
@@ -117,7 +128,6 @@
   height: auto;
   margin-top: 0;
   margin-bottom: 0;
-
   color: #000;
   font-family: Montserrat;
   font-size: 14px;
@@ -131,13 +141,4 @@
 
 .selectCollection-frame-list-item:hover {
   cursor: pointer;
-}
-
-@media screen and (max-width: 1370px) {
-  .filmSelection_film_select {
-    width: 40%;
-  }
-  .filmSelection_film_select_p {
-    display: none;
-  }
 }
