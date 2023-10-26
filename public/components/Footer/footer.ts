@@ -1,5 +1,6 @@
-import { Component } from '../component.js';
-import templateFooter from './footer.hbs';
+import { Component } from '@components/component';
+// @ts-ignore
+const templateFooter = require('./footer.hbs');
 
 /**
  * Класс создания нижней панели
@@ -11,8 +12,8 @@ export class Footer extends Component {
    * Конструктор для формирования родительского элемента
    * @class
    */
-  constructor() {
-    super();
+  constructor(ROOT) {
+    super(ROOT);
   }
 
   /**

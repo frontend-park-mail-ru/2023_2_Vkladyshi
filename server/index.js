@@ -2,18 +2,20 @@
 
 const express = require('express');
 const body = require('body-parser');
+const cors = require('cors');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const uuid = require('uuid').v4;
 const path = require('path');
 const app = express();
 
+
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackConfig = require('../webpack.config');
+const webpackConfig = require('../webpack.config.ts');
 
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
-
+//app.use(cors());
 app.use(morgan('dev'));
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));

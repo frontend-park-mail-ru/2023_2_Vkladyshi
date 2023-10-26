@@ -1,4 +1,4 @@
-import { methods } from './config.js';
+import { methods } from '@utils/config';
 
 /**
  * get запрос
@@ -7,15 +7,16 @@ import { methods } from './config.js';
  */
 export async function get(params = {}) {
   const response = await fetch(
-    params.url + '?' + new URLSearchParams(params.query || {}),
+    params["url"] + '?' + new URLSearchParams(params["query"] || {}),
     {
       method: methods.get,
       credentials: 'include',
       mode: 'cors',
     }
   );
-  response.data = await response.json();
-  return response;
+  let result = await response.text();
+  result = JSON.parse(result);
+  return result;
 }
 
 /**
@@ -35,6 +36,7 @@ export async function post({ url, body }) {
     },
     body: JSON.stringify(body),
   });
-  response.data = await response.json();
-  return response;
+  let result = await response.text();
+  result = JSON.parse(result);
+  return result;
 }

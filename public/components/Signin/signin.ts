@@ -1,5 +1,6 @@
-import { Component } from '../component.js';
-import templateSignin from './signin.hbs';
+import { Component } from '@components/component';
+// @ts-ignore
+const templateSignin = require('./signin.hbs');
 
 /**
  * Класс рендеринга авторизации
@@ -10,8 +11,8 @@ export class Signin extends Component {
   /**
    * Конструктор класса
    */
-  constructor() {
-    super();
+  constructor(ROOT) {
+    super(ROOT);
   }
 
   /**

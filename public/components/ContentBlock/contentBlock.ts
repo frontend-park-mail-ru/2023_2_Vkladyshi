@@ -1,5 +1,6 @@
-import { Component } from '../component.js';
-import templateContentBlock from './contentBlock.hbs';
+import { Component } from '@components/component';
+// @ts-ignore
+const templateContentBlock = require('./contentBlock.hbs');
 /**
  * Класс рейдера формирования подборки фильмов
  * @class FilmSelection
@@ -10,8 +11,8 @@ export class ContentBlock extends Component {
    * Конструктор, заполняющий класс
    * @class
    */
-  constructor() {
-    super();
+  constructor(ROOT) {
+    super(ROOT);
   }
 
   /**

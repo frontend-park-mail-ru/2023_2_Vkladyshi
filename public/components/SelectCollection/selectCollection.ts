@@ -1,13 +1,14 @@
-import { get } from '../../utils/ajax.js';
+import { get } from '@utils/ajax';
 import {
   collections,
   responseStatuses,
   urls,
-  filmSelection,
-  errorInputs,
-} from '../../utils/config.js';
-import { Component } from '../component.js';
-import templateSelectCollection from './selectCollection.hbs';
+  errorInputs, filmSelectionPage,
+} from '@utils/config';
+import { Component } from '@components/component';
+import {router} from "@router/Router";
+// @ts-ignore
+const templateSelectCollection = require('./selectCollection.hbs');
 
 /**
  * Класс формирования окна выбора подборки фильмов
@@ -19,8 +20,8 @@ export class SelectCollection extends Component {
    * Конструктор для формирования родительского элемента
    * @class
    */
-  constructor() {
-    super();
+  constructor(ROOT) {
+    super(ROOT);
   }
 
   /**
@@ -35,20 +36,18 @@ export class SelectCollection extends Component {
    * Метод обработки нажатий на выбранную коллекцию
    * @return {Promise} Promise ответа
    */
-  async addEvent() {
+    addEvent() {
     const popup = document.querySelector('.popupSelectCollection');
 
-    document.body.style.paddingRight =
-      window.innerWidth - document.querySelector('main').offsetWidth + 1 + 'px';
-
-    popup.onclick = (event) => {
+    const popupEvent = (event) => {
       if (
-        event.target.closest('.selectCollection-frame-img') ||
-        !event.target.closest('.selectCollection')
+        event.target.closest('.selectCollection-frame-img')
       ) {
-        document.body.style.paddingRight = '0px';
-        popup.classList.remove('active');
-        document.body.classList.remove('none-active');
+        router.go({
+          path: '/',
+          props: '/',
+        }, { pushState: false, refresh: false });
+
       } else if (event.target.closest('.selectCollection-frame-list-item')) {
         const dataSection = event.target.getAttribute('data-section');
 
@@ -56,10 +55,8 @@ export class SelectCollection extends Component {
           url: urls.basket,
           query: { collection_id: dataSection },
         }).then((response) => {
-          if (response.data.status === responseStatuses.success) {
-            document.body.classList.remove('none-active');
-            filmSelection.render(response.data.body);
-            document.body.style.paddingRight = '0px';
+          if (response["status"] === responseStatuses.success) {
+            filmSelectionPage.render(response["body"]);
             return response;
           } else {
             return errorInputs.ServerError;
@@ -68,6 +65,6 @@ export class SelectCollection extends Component {
       }
     };
 
-    document.body.classList.add('none-active');
+    popup?.addEventListener('click', popupEvent);
   }
 }

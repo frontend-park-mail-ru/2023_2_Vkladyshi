@@ -1,15 +1,16 @@
-import { View } from '../view.js';
-import { Signin } from '../../components/Signin/signin.js';
+import { View } from '../view';
+import { Signin } from '@components/Signin/signin';
 import {
   errorInputs,
   header,
   responseStatuses,
   urls,
-} from '../../utils/config.js';
-import { goToPageByClassName, goToPageByEvent } from '../../utils/goToPage.js';
-import { returnError } from '../../utils/addError.js';
-import { post } from '../../utils/ajax.js';
-import { validateLogin, validatePassword } from '../../utils/validate.js';
+  ROOT
+} from '@utils/config';
+import { returnError } from '@utils/addError';
+import { post } from '@utils/ajax';
+import { validateLogin, validatePassword } from '@utils/validate';
+import {router} from "@router/Router";
 
 /**
  * Класс регистрации пользователя
@@ -21,16 +22,26 @@ export class SigninPage extends View {
    * Конструктор для формирования родительского элемента
    * @class
    */
-  constructor() {
-    super();
+  constructor(ROOT) {
+    super(ROOT);
   }
 
   /**
    * Метод создания страницы
    */
   render() {
-    const signin = new Signin();
+    const signin = new Signin({ROOT});
 
+
+    if (!document.querySelector('.popupSign')) {
+      const popup = document.createElement('div');
+      popup.className = 'popupSign';
+      // @ts-ignore
+      document.querySelector('main').innerHTML = '';
+      document?.querySelector('main')?.appendChild(popup);
+    }
+
+    // @ts-ignore
     document.querySelector('.popupSign').innerHTML = signin.render();
 
     this.addActiveSignin();
@@ -44,28 +55,30 @@ export class SigninPage extends View {
     const errorString = document.querySelector('.errorStringSignin');
     const popup = document.querySelector('.popupSign');
 
-    document.body.style.paddingRight =
-      window.innerWidth - document.querySelector('main').offsetWidth + 1 + 'px';
-
-    popup.onclick = (event) => {
+    const popupEvent = (event) => {
       if (event.target.closest('.redirectToSignup')) {
-        errorString.classList.remove('active');
+        errorString?.classList.remove('active');
         this.removeActiveSignin();
-        goToPageByEvent(event);
+        popup?.removeEventListener('click', popupEvent);
+        router.go({
+          path: '/signup',
+          props: '/signup',
+        }, { pushState: false, refresh: false });
       } else if (
-        event.target.closest('.signin-frame-img') ||
-        !event.target.closest('.signin')
+          event.target.closest('.sign-frame-img')
       ) {
-        document.body.style.paddingRight = '0px';
-        errorString.classList.remove('active');
-        document.body.classList.remove('none-active');
-        this.removeActiveSignin();
+        errorString?.classList.remove('active');
+
+        router.go({
+          path: '/',
+          props: '/',
+        }, { pushState: false, refresh: false });
       } else if (event.target.closest('.buttonLogin')) {
         this.authorization();
       }
     };
+    popup?.addEventListener('click', popupEvent);
 
-    document.body.classList.add('none-active');
   }
 
   /**
@@ -74,11 +87,14 @@ export class SigninPage extends View {
   authorization() {
     const signin = document.querySelector('.signin');
 
-    signin.addEventListener('submit', (event) => {
+    const handleSubmit = (event) => {
       event.preventDefault();
+      // @ts-ignore
       const login = document.querySelector('.loginInput').value.trim();
+      // @ts-ignore
       const password = document.querySelector('.passwordInput').value;
       const errorClassName = 'errorStringSignin';
+      signin?.removeEventListener('submit', handleSubmit);
 
       if (!login || !password) {
         returnError(errorInputs.NotAllElements, errorClassName);
@@ -96,9 +112,11 @@ export class SigninPage extends View {
         returnError(passwordValidate.error, errorClassName);
         return;
       }
-
       this.signinRequest(login, password, errorClassName);
-    });
+    };
+
+    // @ts-ignore
+    signin.addEventListener('submit', handleSubmit);
   }
 
   /**
@@ -108,23 +126,24 @@ export class SigninPage extends View {
    * @param {string} errorClassName название класса, куда вписывать ошибку
    */
   signinRequest(login, password, errorClassName) {
-    post({
+     post({
       url: urls.signin,
       body: { login, password },
-    }).then((response) => {
-      switch (response.data.status) {
+    }).then(async (response) => {
+      switch (response["status"]) {
         case responseStatuses.success:
           this.removeActiveSignin();
-          document.body.style.paddingRight = '0px';
-          document.body.classList.remove('none-active');
-          goToPageByClassName('main');
+          router.go({
+            path: '/',
+            props: '/',
+          }, { pushState: false, refresh: false });
           header.render(true);
           break;
         case responseStatuses.notAuthorized:
           returnError(errorInputs.LoginOrPasswordError, errorClassName);
           break;
         default:
-          returnError(response.data.status);
+          returnError(errorInputs.LoginOrPasswordError, errorClassName);
       }
     });
   }
@@ -133,15 +152,15 @@ export class SigninPage extends View {
    * Делаем страницу авторизации активной
    */
   addActiveSignin() {
-    document.querySelector('.popupSign').classList.add('active');
-    document.querySelector('.signin').classList.add('active');
+    document?.querySelector('.popupSign')?.classList.add('active');
+    document?.querySelector('.signin')?.classList.add('active');
   }
 
   /**
    * Деактивируем страницу авторизации
    */
   removeActiveSignin() {
-    document.querySelector('.popupSign').classList.remove('active');
-    document.querySelector('.signin').classList.remove('active');
+    document?.querySelector('.popupSign')?.classList.remove('active');
+    document?.querySelector('.signin')?.classList.remove('active');
   }
 }

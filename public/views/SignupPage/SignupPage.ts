@@ -1,19 +1,19 @@
-import { View } from '../view.js';
+import { View } from '../view';
 import {
   errorInputs,
   header,
   responseStatuses,
-  urls,
-} from '../../utils/config.js';
-import { Signup } from '../../components/Signup/signup.js';
-import { returnError } from '../../utils/addError.js';
+  urls,ROOT
+} from '@utils/config';
+import { Signup } from '@components/Signup/signup';
+import { returnError } from '@utils/addError';
 import {
   validateEmail,
   validateLogin,
   validatePassword,
-} from '../../utils/validate.js';
-import { post } from '../../utils/ajax.js';
-import { goToPageByClassName, goToPageByEvent } from '../../utils/goToPage.js';
+} from '@utils/validate';
+import { post } from '@utils/ajax';
+import {router} from "@router/Router";
 
 /**
  * Класс регистрации пользователя
@@ -25,15 +25,25 @@ export class SignupPage extends View {
    * Конструктор для формирования родительского элемента
    * @class
    */
-  constructor() {
-    super();
+  constructor(ROOT) {
+    super(ROOT);
   }
 
   /**
    * Метод создания страницы
    */
   render() {
-    const signup = new Signup();
+    const signup = new Signup({ROOT});
+
+    if (!document.querySelector('.popupSign')) {
+      const popup = document.createElement('div');
+      popup.className = 'popupSign';
+      // @ts-ignore
+      document.querySelector('main').innerHTML = '';
+      document?.querySelector('main')?.appendChild(popup);
+    }
+
+    // @ts-ignore
     document.querySelector('.popupSign').innerHTML = signup.render();
     this.addActiveSignin();
     this.addEvents();
@@ -46,24 +56,30 @@ export class SignupPage extends View {
     const errorString = document.querySelector('.errorStringSignup');
     const popup = document.querySelector('.popupSign');
 
-    popup.onclick = (event) => {
+    const popupEvent = (event) => {
       if (event.target.closest('.redirectToSignin')) {
-        errorString.classList.remove('active');
+
+        errorString?.classList.remove('active');
         this.removeActiveSignup();
-        goToPageByEvent(event);
+        router.go({
+          path: '/signin',
+          props: '/signin',
+        }, { pushState: false, refresh: false });
       } else if (
-        event.target.closest('.signup-frame-img') ||
-        !event.target.closest('.signup')
+        event.target.closest('.sign-frame-img')
       ) {
-        document.body.style.paddingRight = '0px';
-        errorString.classList.remove('active');
-        document.body.classList.remove('none-active');
+        errorString?.classList.remove('active');
         this.removeActiveSignup();
+        router.go({
+          path: '/',
+          props: '/',
+        }, { pushState: false, refresh: false });
       } else if (event.target.closest('.signupButton')) {
         this.registration();
       }
     };
-    document.body.classList.add('none-active');
+
+    popup?.addEventListener('click', popupEvent);
   }
 
   /**
@@ -72,16 +88,18 @@ export class SignupPage extends View {
   registration() {
     const signupForm = document.querySelector('.signupForm');
 
-    signupForm.addEventListener('submit', (event) => {
+    const handleSubmit = (event) => {
       event.preventDefault();
+      // @ts-ignore
       const login = document.querySelector('.loginInputSignup').value.trim();
+      // @ts-ignore
       const email = document.querySelector('.emailInput').value.trim();
-
+      // @ts-ignore
       const password = document.querySelector('.passwordInputFirst').value;
-      const passwordSecond = document.querySelector(
-        '.passwordInputSecond'
-      ).value;
+      // @ts-ignore
+      const passwordSecond = document.querySelector('.passwordInputSecond').value;
       const errorClassName = 'errorStringSignup';
+      signupForm?.removeEventListener('submit', handleSubmit);
 
       if (!login || !email || !password || !passwordSecond) {
         returnError(errorInputs.NotAllElements, errorClassName);
@@ -95,7 +113,6 @@ export class SignupPage extends View {
 
       const isValidate = validatePassword(password);
       if (!isValidate.result) {
-        console.log('');
         returnError(isValidate.error, errorClassName);
         return;
       }
@@ -112,14 +129,16 @@ export class SignupPage extends View {
       }
 
       this.signupRequest(login, email, password, errorClassName);
-    });
+    };
+
+    signupForm?.addEventListener('submit', handleSubmit);
   }
 
   /**
    * Запрос на регистрацию
    * @param {string} login логин пользователя
    * @param {string} password пароль пользователя
-   * @param {string} email почта юзера
+   * @param {string} email почта пользователя
    * @param {string} errorClassName название класса, куда вписывать ошибку
    */
   signupRequest(login, email, password, errorClassName) {
@@ -127,19 +146,20 @@ export class SignupPage extends View {
       url: urls.signup,
       body: { login, email, password },
     }).then((response) => {
-      switch (response.data.status) {
+      switch (response["status"]) {
         case responseStatuses.success:
           this.signinRequest(login, password);
           this.removeActiveSignup();
-          document.body.style.paddingRight = '0px';
-          document.body.classList.remove('none-active');
-          goToPageByClassName('main');
+          router.go({
+            path: '/',
+            props: '/',
+          }, { pushState: false, refresh: false });
           break;
         case responseStatuses.alreadyExists:
           returnError(errorInputs.LoginExists, errorClassName);
           break;
         default:
-          throw new Error(`Error ${response.data.status}`);
+          throw new Error(`Error ${response["status"]}`);
       }
     });
   }
@@ -154,6 +174,8 @@ export class SignupPage extends View {
       url: urls.signin,
       body: { login, password },
     }).then((response) => {
+      // @ts-ignore
+      document.querySelector('header').innerHTML = header.render(true);
       header.addToHeaderEvent(true);
     });
   }
@@ -162,15 +184,15 @@ export class SignupPage extends View {
    * Делаем страницу регистрации активной
    */
   addActiveSignin() {
-    document.querySelector('.popupSign').classList.add('active');
-    document.querySelector('.signup').classList.add('active');
+    document?.querySelector('.popupSign')?.classList.add('active');
+    document?.querySelector('.signup')?.classList.add('active');
   }
 
   /**
    * Деактивируем страницу регистрации
    */
   removeActiveSignup() {
-    document.querySelector('.popupSign').classList.remove('active');
-    document.querySelector('.signup').classList.remove('active');
+    document?.querySelector('.popupSign')?.classList.remove('active');
+    document?.querySelector('.signup')?.classList.remove('active');
   }
 }

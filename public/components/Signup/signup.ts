@@ -1,5 +1,5 @@
-import { Component } from '../component.js';
-import templateSignup from './signup.hbs';
+import { Component } from '@components/component';
+const templateSignup = require('./signup.hbs');
 
 /**
  * Класс рендеринга регистрации пользователя
@@ -11,8 +11,8 @@ export class Signup extends Component {
    * Конструктор для формирования родительского элемента
    * @class
    */
-  constructor() {
-    super();
+  constructor(ROOT) {
+    super(ROOT);
   }
 
   /**

@@ -1,5 +1,5 @@
-import { View } from '../view.js';
-import { FilmSelection } from '../../components/FilmSelection/filmSelection.js';
+import { View } from '../view';
+import {contentBlock, filmSelection} from "@utils/config";
 
 /**
  * Класс формирования подборки фильмов
@@ -11,8 +11,8 @@ export class FilmSelectionPage extends View {
    * Конструктор для формирования родительского элемента
    * @class
    */
-  constructor() {
-    super();
+  constructor(ROOT) {
+    super(ROOT);
   }
 
   /**
@@ -20,21 +20,25 @@ export class FilmSelectionPage extends View {
    * @param content объект JSON
    */
   render(content = null) {
-    const filmSelection = new FilmSelection();
+    //const filmSelection = new FilmSelection(ROOT);
     const main = document.querySelector('main');
     const select = document.querySelector('.filmSelection');
-    const contentBlock = document.querySelector('.contentBlock');
-    const popupSelectCollection = document.querySelector(
-      '.popupSelectCollection'
-    );
+
 
     if (main || !select) {
-      popupSelectCollection.classList.remove('active');
+
+      // @ts-ignore
+      main.innerHTML = contentBlock.render();
+      const contentBlockHTML = document.querySelector('.contentBlock');
+
       if (content !== null) {
-        contentBlock.innerHTML = filmSelection.renderTemplate(content);
+
+        // @ts-ignore
+        contentBlockHTML.innerHTML = filmSelection.renderTemplate(content);
       } else {
         filmSelection.render().then((value) => {
-          contentBlock.insertAdjacentHTML('beforeend', value);
+
+          contentBlockHTML?.insertAdjacentHTML('beforeend', value);
         });
       }
     }

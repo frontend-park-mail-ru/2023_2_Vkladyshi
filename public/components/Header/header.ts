@@ -1,7 +1,8 @@
-import { Component } from '../component.js';
-import { goToPageByEvent } from '../../utils/goToPage.js';
-import { logout } from '../../utils/logout.js';
-import templateHeader from './header.hbs';
+import { Component } from '@components/component';
+import { logout } from '@utils/logout';
+import { router } from '@router/Router';
+const templateHeader = require('./header.hbs');
+import { config } from "@utils/config";
 
 /**
  * Класс создания верхней шапки
@@ -9,14 +10,16 @@ import templateHeader from './header.hbs';
  * @typedef {Header}
  */
 export class Header extends Component {
+  private config = {};
+  private state = {};
   /**
    * Конструктор для формирования родительского элемента
    * @class
-   * @param {JSON} config - параметры для наполнения шаблона
+   * @param ROOT
    */
-  constructor(config) {
-    super();
-    this.config = config;
+  constructor(ROOT) {
+    super(ROOT);
+    this.config = config.menu;
     this.state = {};
   }
 
@@ -28,6 +31,7 @@ export class Header extends Component {
   get items() {
     return Object.entries(this.config).map(
       // eslint-disable-next-line camelcase
+        // @ts-ignore
       ([key, { href, png_name, name }]) => ({
         key,
         href,
@@ -78,7 +82,10 @@ export class Header extends Component {
       event.composedPath().forEach(function (element) {
         const classNames = element.className;
         if (classNames === 'loginHeader') {
-          goToPageByEvent(event);
+          router.go({
+            path: '/signin',
+            props: '/signin',
+          }, { pushState: true, refresh: false });
         }
       });
     };
@@ -91,7 +98,11 @@ export class Header extends Component {
       event.composedPath().forEach(function (element) {
         const classNames = element.className;
         if (classNames === 'brandHeader') {
-          goToPageByEvent(event);
+          //goToPageByEvent(event);
+          router.go({
+            path: '/',
+            props: '/',
+          }, { pushState: true, refresh: false });
         }
       });
     };
@@ -117,7 +128,11 @@ export class Header extends Component {
       event.composedPath().forEach(function (element) {
         const classNames = element.className;
         if (classNames === 'menuHeader') {
-          goToPageByEvent(event);
+          router.go({
+            path: '/selection',
+            props: '/selection',
+          }, { pushState: true, refresh: false });
+         // goToPageByEvent(event);
         }
       });
     };
@@ -129,7 +144,9 @@ export class Header extends Component {
       logoutHeader.addEventListener('click', clickLogout);
     }
 
+    // @ts-ignore
     menuHeader.addEventListener('click', clickMenu);
+    // @ts-ignore
     brandHeader.addEventListener('click', clickHandler);
   }
 }

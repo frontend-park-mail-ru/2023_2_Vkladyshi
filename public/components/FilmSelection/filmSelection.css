@@ -40,10 +40,7 @@
   cursor: pointer;
   width: 20%;
   height: 100%;
-  margin-left: 2%;
-  margin-right: 2%;
-  margin-top: 2%;
-  margin-bottom: 2%;
+  margin: 2%;
   border-radius: 46px;
   background: rgba(217, 217, 217, 0.19);
   display: flex;

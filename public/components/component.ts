@@ -1,16 +1,15 @@
-import { ROOT } from '../utils/config.js';
-
 /**
  * Класс родитель всех компонентов
  * @class Component
  * @typedef {Component}
  */
 export class Component {
+  private rootNode: Element;
   /**
-   * Конструктор для формирония родительского элемента
+   * Конструктор для формирования родительского элемента
    * @class
    */
-  constructor() {
+  constructor(ROOT) {
     this.rootNode = ROOT;
   }
 }

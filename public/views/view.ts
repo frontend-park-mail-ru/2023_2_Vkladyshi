@@ -1,4 +1,4 @@
-import { Component } from '../components/component.js';
+import { Component } from '../components/component';
 
 /**
  * Родитель всех страниц
@@ -10,7 +10,7 @@ export class View extends Component {
    * Конструктор для формирония родительского элемента
    * @class
    */
-  constructor() {
-    super();
+  constructor(ROOT) {
+    super(ROOT);
   }
 }

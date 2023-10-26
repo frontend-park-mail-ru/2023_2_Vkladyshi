@@ -1,5 +1,5 @@
-import { responseStatuses, urls } from './config.js';
-import { get } from './ajax.js';
+import { responseStatuses, urls } from '@utils/config';
+import { get } from '@utils/ajax';
 
 /**
  * проверка на авторизацию
@@ -9,6 +9,6 @@ export async function checkAuthorized() {
   return await get({
     url: urls.authorized,
   }).then((response) => {
-    return response.data.status === responseStatuses.success;
+    return response["status"] === responseStatuses.success;
   });
 }
