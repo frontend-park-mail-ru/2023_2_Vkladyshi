@@ -1,4 +1,4 @@
-import { Component } from '../components/component';
+import { Component } from '../components/component'
 
 /**
  * Родитель всех страниц
@@ -6,11 +6,4 @@ import { Component } from '../components/component';
  * @typedef {View}
  */
 export class View extends Component {
-  /**
-   * Конструктор для формирония родительского элемента
-   * @class
-   */
-  constructor(ROOT) {
-    super(ROOT);
-  }
 }

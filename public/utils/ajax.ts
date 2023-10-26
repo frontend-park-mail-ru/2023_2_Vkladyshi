@@ -1,22 +1,21 @@
-import { methods } from '@utils/config';
+import { methods } from '@utils/config'
 
 /**
  * get запрос
  * @param params параметры запроса
- * @return {Promise} Promise ответ
+ * @returns {Promise} Promise ответ
  */
-export async function get(params = {}) {
+export async function get (params = {}) {
   const response = await fetch(
-    params["url"] + '?' + new URLSearchParams(params["query"] || {}),
+    params['url'] + '?' + new URLSearchParams(params['query'] || {}),
     {
       method: methods.get,
       credentials: 'include',
-      mode: 'cors',
+      mode: 'cors'
     }
-  );
-  let result = await response.text();
-  result = JSON.parse(result);
-  return result;
+  )
+  const result = await response.text()
+  return JSON.parse(result)
 }
 
 /**
@@ -26,17 +25,17 @@ export async function get(params = {}) {
  * @param root0.body
  * @return {Promise} Promise ответ
  */
-export async function post({ url, body }) {
+export async function post ({ url, body }) {
   const response = await fetch(url, {
     method: methods.post,
     credentials: 'include',
     mode: 'cors',
     headers: {
-      'Content-Type': 'application/json; charset=utf-8',
+      'Content-Type': 'application/json; charset=utf-8'
     },
-    body: JSON.stringify(body),
-  });
-  let result = await response.text();
-  result = JSON.parse(result);
-  return result;
+    body: JSON.stringify(body)
+  })
+  let result = await response.text()
+  result = JSON.parse(result)
+  return result
 }

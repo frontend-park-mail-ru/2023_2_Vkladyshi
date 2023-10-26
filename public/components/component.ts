@@ -4,12 +4,13 @@
  * @typedef {Component}
  */
 export class Component {
-  private rootNode: Element;
+  private readonly rootNode;
   /**
    * Конструктор для формирования родительского элемента
+   * @param ROOT
    * @class
    */
-  constructor(ROOT) {
-    this.rootNode = ROOT;
+  constructor (ROOT) {
+    this.rootNode = ROOT
   }
 }

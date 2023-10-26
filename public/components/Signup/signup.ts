@@ -1,5 +1,15 @@
-import { Component } from '@components/component';
-const templateSignup = require('./signup.hbs');
+import { Component } from '@components/component'
+import * as templateSignup from '@components/Signup/signup.hbs'
+
+export interface Signup {
+  state: {
+    statusSignup: number;
+    isSubscribed: boolean;
+    isUserSubscriber: boolean;
+    login: string;
+    password: string;
+  };
+}
 
 /**
  * Класс рендеринга регистрации пользователя
@@ -8,18 +18,10 @@ const templateSignup = require('./signup.hbs');
  */
 export class Signup extends Component {
   /**
-   * Конструктор для формирования родительского элемента
-   * @class
-   */
-  constructor(ROOT) {
-    super(ROOT);
-  }
-
-  /**
    * Метод рендеринга элемента
    * @return {string} html авторизации
    */
-  render() {
-    return templateSignup();
+  render () {
+    return templateSignup()
   }
 }

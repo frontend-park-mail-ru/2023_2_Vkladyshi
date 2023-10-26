@@ -51,7 +51,7 @@ module.exports = {
         },
       },
       {
-        test:  /\.ts$/,
+        test: /\.ts$/,
         exclude: /node_modules/,
         use: ['babel-loader', 'ts-loader'],
       },
@@ -63,7 +63,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: [ '.ts', '.js', '.hbs', '.json'],
+    extensions: ['.ts', '.js', '.hbs', '.json'],
     plugins: [new TsconfigPathsPlugin()],
   },
 };

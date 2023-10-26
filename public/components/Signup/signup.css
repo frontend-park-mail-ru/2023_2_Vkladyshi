@@ -55,7 +55,6 @@
   /*margin-right: auto;*/
   position: relative;
   transition: all 1s ease 0s;
-
 }
 
 .signupForm {
@@ -97,7 +96,7 @@
 }
 
 .redirectToSignin {
-  cursor: pointer;;
+  cursor: pointer;
   text-align: center;
   font-size: 13px;
   color: #555555;

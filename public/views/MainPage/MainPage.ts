@@ -1,10 +1,13 @@
-import { View } from '../view';
-import { checkAuthorized } from '@utils/checkAuthorized';
-import { ROOT, header } from '@utils/config';
-import { ContentBlock } from '@components/ContentBlock/contentBlock';
-import { Footer } from '@components/Footer/footer';
-import { FilmSelection } from '@components/FilmSelection/filmSelection';
-import { SelectCollection } from '@components/SelectCollection/selectCollection';
+import { View } from '@views/view'
+import { ROOT, header, contentBlock, footer, filmSelectionPage } from '@utils/config'
+import { store } from '@store/store'
+import { actionAuth } from '@store/action/actionTemplates'
+
+export interface MainPage {
+  state: {
+    isAuth: boolean
+  }
+}
 
 /**
  * Класс формирования главной страницы
@@ -14,50 +17,70 @@ import { SelectCollection } from '@components/SelectCollection/selectCollection'
 export class MainPage extends View {
   /**
    * Конструктор для формирования родительского элемента
+   * @param ROOT
    * @class
    */
-  constructor(ROOT) {
-    super(ROOT);
+  constructor (ROOT) {
+    super(ROOT)
+    this.state = {
+      isAuth: false
+    }
+
+    this.subscribeMainPageStatus = this.subscribeMainPageStatus.bind(this)
+
+    store.subscribe('statusAuth', this.subscribeMainPageStatus)
+    store.subscribe('logoutStatus', this.subscribeMainPageStatus)
+    store.subscribe('statusLogin', this.subscribeMainPageStatus)
   }
 
   /**
    * Метод создания страницы
    */
-  async render() {
-    const contentBlock = new ContentBlock(ROOT);
-    const footer = new Footer(ROOT);
-    const filmSelection = new FilmSelection(ROOT);
-    let main = document.querySelector('main');
-    const headerHTML = document.querySelector('header');
+  render () {
+    let main = document.querySelector('main')
 
-    if (!main) {
-      main = document.createElement('main');
-      ROOT?.appendChild(main);
+    if (main == null) {
+      main = document.createElement('main')
+      ROOT?.appendChild(main)
     }
 
     if (!document.querySelector('header')) {
-      ROOT?.insertAdjacentHTML('afterbegin', header.render(false));
-      header.addToHeaderEvent(false);
+      ROOT?.insertAdjacentHTML('afterbegin', header.render())
+      header.componentDidMount()
     } else {
-      main.innerHTML = '';
+      main.innerHTML = ''
     }
 
-    if (!document.querySelector('.contentBlock')) {
-      main.insertAdjacentHTML('beforeend', contentBlock.render());
-       filmSelection.render().then((response) => {
-       document.querySelector(".contentBlock")?.insertAdjacentHTML('beforeend', response);
-      });
+    if (document.querySelector('.contentBlock') == null) {
+      main.insertAdjacentHTML('beforeend', contentBlock.render())
+      filmSelectionPage.render().then((response) => {
+        // @ts-ignore
+        document.querySelector('.contentBlock')?.insertAdjacentHTML('beforeend', response)
+      })
     }
 
-    if (!document.querySelector('.footer')) {
-      main.insertAdjacentHTML('beforeend', footer.render());
+    if (document.querySelector('.footer') == null) {
+      main.insertAdjacentHTML('beforeend', footer.render())
     }
 
-    checkAuthorized().then((result) => {
-      if (result && headerHTML) {
-        headerHTML.innerHTML = header.render(true);
-        header.addToHeaderEvent(true);
-      }
-    });
+    store.dispatch(actionAuth())
+  }
+
+  subscribeMainPageStatus () {
+    this.state.isAuth = store.getState('statusAuth') === 200
+    const isLogout = store.getState('logoutStatus') === 200
+
+    if (isLogout) {
+      this.changeHeader(!isLogout)
+      return
+    }
+    this.changeHeader(this.state.isAuth)
+  }
+
+  changeHeader (isAuth) {
+    const headerHTML = document.querySelector('header')
+
+    headerHTML!.innerHTML = header.render(isAuth)
+    header.componentDidMount()
   }
 }
