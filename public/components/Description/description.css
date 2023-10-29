@@ -1,0 +1,121 @@
+.description {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: flex-start;
+
+  margin-left: 5%;
+  margin-right: 5%;
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 7%;
+  padding-bottom: 7%;
+
+  background-color: var(--content-block-color);
+}
+
+.img__description {
+  width: 50%;
+  height: auto;
+
+  margin-left: 5%;
+  margin-right: 5%;
+}
+.text__description {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+
+  width: 50%;
+  height: auto;
+
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.header-string__header__text__description {
+  color: #000;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 2.5px;
+
+  margin-top: 0%;
+  margin-bottom: 3%;
+}
+
+.subheader-string__header__text__description {
+  color: #000;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: normal;
+  letter-spacing: 1.5px;
+
+  margin-top: 0%;
+  margin-bottom: 0%;
+}
+
+.header__text__description {
+  height: 30%;
+  margin-top: 10%;
+  margin-bottom: 10%;
+}
+
+.header__table {
+  color: #000;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 2px;
+}
+
+.row__table {
+  margin-top: 2%;
+  margin-bottom: 2%;
+
+  display: flex;
+  align-items: flex-start;
+}
+
+.img__row__table {
+  height: 90%;
+  width: auto;
+  margin-right: 5%;
+}
+
+.title__row__table {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1.5px;
+
+  margin-right: 10%;
+  width: 30%;
+}
+
+.text__row__table {
+  color: #000;
+  text-align: left;
+  font-family: Montserrat;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: normal;
+  letter-spacing: 1.5px;
+
+  width: 50%;
+}
