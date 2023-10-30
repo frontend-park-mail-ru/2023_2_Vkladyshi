@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["public/*"],
+      "@utils/*": ["public/utils/*"],
+      "@components/*": ["public/components/*"],
+      "@views/*": ["public/views/*"],
+      "@router/*": ["public/router/*"],
+      "@store/*": ["public/store/*"]
+    },
+    "outDir": "cache/",
+    "target": "es2017",
+    "declaration": false,
+    "module": "commonjs",
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "public",
+    "public/components/**/*.hbs",
+    "public/components/**/*.precompiled.js"
+  ],
+  "exclude": [
+    "node_modules",
+    "public/components/**/*.hbs",
+    "public/components/**/*.precompiled.js"
+  ]
+}

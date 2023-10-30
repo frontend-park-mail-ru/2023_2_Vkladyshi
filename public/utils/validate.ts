@@ -3,9 +3,9 @@
  * @param {string} email почта
  * @return {boolean} результат проверки на валидацию
  */
-export function validateEmail(email) {
-  const re = /^.+@.+$/;
-  return re.test(email);
+export function validateEmail (email) {
+  const re = /^.+@.+$/
+  return re.test(email)
 }
 
 /**
@@ -13,7 +13,7 @@ export function validateEmail(email) {
  * @param {string} password пароль
  * @return {{}} результат проверки на валидацию
  */
-export function validatePassword(password) {
+export function validatePassword (password) {
   if (
     password.length < 8 ||
     !/[A-Z]/.test(password) ||
@@ -23,10 +23,10 @@ export function validatePassword(password) {
     return {
       result: false,
       error:
-        'Пароль должен содержать не менее 8 символов, иметь хотя бы одну заглавную букву, строчную букву и цифру',
-    };
+        'Пароль должен содержать не менее 8 символов, иметь хотя бы одну заглавную букву, строчную букву и цифру'
+    }
   }
-  return { result: true };
+  return { result: true }
 }
 
 /**
@@ -34,24 +34,24 @@ export function validatePassword(password) {
  * @param {string} login логин
  * @return {{}} результат проверки на валидацию
  */
-export function validateLogin(login) {
-  const regex = /^[a-zA-Z0-9_-]+$/;
+export function validateLogin (login) {
+  const regex = /^[a-zA-Z0-9_-]+$/
   if (!regex.test(login)) {
     return {
       result: false,
-      error: 'Логин должен состоять из букв, цифр, - и _',
-    };
+      error: 'Логин должен состоять из букв, цифр, - и _'
+    }
   }
 
-  const dangerousChars = ['<', '>', '&', '"', "'", '/', '`'];
+  const dangerousChars = ['<', '>', '&', '"', "'", '/', '`']
   for (let i = 0; i < dangerousChars.length; i++) {
     if (login.includes(dangerousChars[i])) {
       return {
         result: false,
-        error: "В логине не должно символов: < > & ' / `",
-      };
+        error: "В логине не должно символов: < > & ' / `"
+      }
     }
   }
 
-  return { result: true };
+  return { result: true }
 }

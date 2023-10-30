@@ -1,5 +1,6 @@
-import { Component } from '../component.js';
-import templateContentBlock from './contentBlock.hbs';
+import { Component } from '@components/component'
+import * as templateContentBlock from '@components/ContentBlock/contentBlock.hbs'
+
 /**
  * Класс рейдера формирования подборки фильмов
  * @class FilmSelection
@@ -7,18 +8,10 @@ import templateContentBlock from './contentBlock.hbs';
  */
 export class ContentBlock extends Component {
   /**
-   * Конструктор, заполняющий класс
-   * @class
-   */
-  constructor() {
-    super();
-  }
-
-  /**
    * Метод рендеринга элемента
    * @return {string} html авторизации
    */
-  render() {
-    return templateContentBlock();
+  render () {
+    return templateContentBlock()
   }
 }

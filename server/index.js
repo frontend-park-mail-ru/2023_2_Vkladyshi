@@ -2,6 +2,7 @@
 
 const express = require('express');
 const body = require('body-parser');
+const cors = require('cors');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const uuid = require('uuid').v4;
@@ -10,15 +11,22 @@ const app = express();
 
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
-const webpackConfig = require('../webpack.config');
+const webpackConfig = require('../webpack.config.ts');
 
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
+app.use(
+  cors({
+    origin: ['http://localhost:8001', 'http://127.0.0.1:8001'],
+    credentials: true,
+  })
+);
 
 app.use(morgan('dev'));
 app.use(express.static(path.resolve(__dirname, '..', 'public')));
 app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));
 app.use(body.json());
 app.use(cookie());
+
 
 const port = process.env.PORT || 8001;
 
@@ -119,6 +127,16 @@ const users = {
 };
 const ids = {};
 
+const { expressCspHeader, INLINE, NONE, SELF } = require('express-csp-header');
+// other app.use() options ...
+app.use(expressCspHeader({
+  policies: {
+    'default-src': [expressCspHeader.NONE],
+    'img-src': [expressCspHeader.SELF],
+  }
+}));
+
+
 app.post('/signin', (req, res) => {
   const password = req.body.password;
   const login = req.body.login;
@@ -134,8 +152,10 @@ app.post('/signin', (req, res) => {
   ids[id] = login;
 
   res.cookie('session_id', id, {
-    expires: new Date(Date.now() + 1000 * 60 * 10),
+    expires: new Date(Date.now() + 1000 * 60 * 10 )
   });
+
+  // res.cookie('session_id', { httpOnly: true });
   res.status(200).json({ status: 200 });
 });
 
@@ -152,7 +172,7 @@ app.post('/signup', (req, res) => {
     });
   }
 
-  users[login] = { login: login, password: password, age: 20 };
+  users[login] = { login, password, age: 20 };
 
   const id = uuid();
   ids[id] = login;
@@ -168,12 +188,11 @@ app.get('/api/v1/films', (req, res) => {
   if (req.query.collection_id !== 'new') {
     return res.status(200).json(films_tags);
   }
-
   return res.status(200).json(films);
 });
 
 app.get('/authcheck', (req, res) => {
-  const id = req.cookies['session_id'];
+  const id = req.cookies.session_id;
   const login = ids[id];
   if (!login || !users[login]) {
     return res.status(200).json({ status: 401 }).end();
@@ -183,8 +202,8 @@ app.get('/authcheck', (req, res) => {
 });
 
 app.get('/logout', (req, res) => {
-  const id = req.cookies['session_id'];
+  const id = req.cookies.session_id;
   delete ids[id];
 
-  return res.status(200).json({ status: 200 }).end();
+  return res.status(200).json({ status: 200 });
 });
