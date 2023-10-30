@@ -1,0 +1,57 @@
+.film-score {
+  display: flex;
+  align-items: center;
+
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+
+  background-color: #f3f3f3;
+}
+
+.star__film-score {
+  margin-left: 0.1%;
+  margin-right: 0.1%;
+}
+
+.score__film-score {
+  margin-left: 2%;
+  margin-right: 1%;
+
+  font-family: Montserrat;
+  font-size: 50px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 2.5px;
+}
+
+.good_score__film-score {
+  color: #06cb02;
+}
+
+.medium_score__film-score {
+  color: #fcc400;
+}
+
+.bad_score__film-score {
+  color: #cb3202;
+}
+
+.watched__film-score {
+  margin-left: 1%;
+  margin-right: 1%;
+
+  color: #000;
+  font-family: Montserrat;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 1.5px;
+}
+
+.button__film-score {
+  margin-left: 4%;
+  margin-right: 2%;
+}

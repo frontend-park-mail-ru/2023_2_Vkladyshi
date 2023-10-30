@@ -5,6 +5,7 @@
 @import './components/ContentBlock/contentBlock.css';
 @import './components/Signup/signup.css';
 @import './components/Footer/footer.css';
+@import './components/scoreFilm/scoreFilm.css';
 
 body {
   background-color: #ebebe7;
