@@ -7,11 +7,16 @@ import {
   filmSelectionPage,
   desc,
   info,
+  LkStar,
 } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth } from '@store/action/actionTemplates';
 
-import { getActorDescrition, getFilmInfo } from '@utils/getCollection';
+import {
+  getActorDescrition,
+  getFilmInfo,
+  getLikeOfStar,
+} from '@utils/getCollection';
 
 export interface ActorDescritionPage {}
 
@@ -35,6 +40,12 @@ export class ActorDescritionPage extends View {
       document
         ?.querySelector('.contentBlock')
         ?.insertAdjacentHTML('beforeend', desc.render(getActorDescrition()));
+    }
+
+    if (document.querySelector('.contentBlock') != null) {
+      document
+        ?.querySelector('.contentBlock')
+        ?.insertAdjacentHTML('beforeend', LkStar.render(getLikeOfStar()));
     }
 
     if (document.querySelector('.contentBlock') != null) {

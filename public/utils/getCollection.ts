@@ -43,6 +43,12 @@ export const getFilmInfo = () => {
   };
 };
 
+export const getLikeOfStar = () => {
+  return {
+    number: '8 млн.',
+  };
+};
+
 /**
  * Проверка на наличие фильмов
  * @param {list} films список фильмов

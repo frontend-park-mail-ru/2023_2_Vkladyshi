@@ -8,6 +8,8 @@
 @import './components/Description/description.css';
 @import './components/AdditionalInfo/additionalInfo.css';
 @import './components/TableStyle/TableStyle.css';
+@import './components/LikeStar/likeStar.css';
+@import './components/Button/button.css';
 
 :root {
   --background-color: #cdc6c6;

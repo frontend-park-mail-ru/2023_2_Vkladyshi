@@ -12,6 +12,7 @@ import { Signup } from '@components/Signup/signup';
 import { SelectCollection } from '@components/SelectCollection/selectCollection';
 import { Description } from '@components/Description/description';
 import { AddInfo } from '@components/AdditionalInfo/additionalInfo';
+import { LikeStar } from '@components/LikeStar/likeStar';
 
 export const ROOT = document.querySelector('#root');
 
@@ -68,6 +69,7 @@ export const info = new AddInfo(ROOT);
 export const signup = new Signup(ROOT);
 export const footer = new Footer(ROOT);
 export const filmSelection = new FilmSelection(ROOT);
+export const LkStar = new LikeStar(ROOT);
 
 export const selectCollection = new SelectCollection(ROOT);
 export const config = {
