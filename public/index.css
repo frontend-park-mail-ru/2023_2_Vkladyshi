@@ -7,10 +7,10 @@
 @import './components/Footer/footer.css';
 @import './components/Description/description.css';
 @import './components/AdditionalInfo/additionalInfo.css';
+@import './components/TableStyle/TableStyle.css';
 
 :root {
   --background-color: #cdc6c6;
-  /* --content-block-color: #f3f3f3; */
   --content-block-color: rgb(255, 255, 255);
 }
 
