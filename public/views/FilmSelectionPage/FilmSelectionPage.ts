@@ -27,8 +27,12 @@ export class FilmSelectionPage extends View {
    * @return {string} html авторизации
    */
   async render () {
-    return store.dispatch(actionCollectionMain({ collection_id: 'new' })).then(response => {
-      return filmSelection.render(getCollection(store.getState('collectionMain')))
-    })
+    return store
+      .dispatch(actionCollectionMain({ collection_id: 'new' }))
+      .then((response) => {
+        return filmSelection.render(
+          getCollection(store.getState('collectionMain'))
+        )
+      })
   }
 }

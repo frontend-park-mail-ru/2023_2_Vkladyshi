@@ -4,7 +4,11 @@ import { router } from '@router/router'
 import { store } from '@store/store'
 import { actionSignin, actionSignup } from '@store/action/actionTemplates'
 import { returnError } from '@utils/addError'
-import { validateEmail, validateLogin, validatePassword } from '@utils/validate'
+import {
+  validateEmail,
+  validateLogin,
+  validatePassword
+} from '@utils/validate'
 
 export interface SignupPage {
   state: {
@@ -68,7 +72,8 @@ export class SignupPage extends View {
           path: '/',
           props: '/'
         },
-        { pushState: true, refresh: false })
+        { pushState: true, refresh: false }
+      )
       return
     }
 
@@ -147,10 +152,18 @@ export class SignupPage extends View {
 
   getForm () {
     const signupForm = document.querySelector('.signupForm')
-    const loginInoutHTML = document.querySelector('.loginInputSignup') as HTMLInputElement
-    const emailInputHTML = document.querySelector('.emailInput') as HTMLInputElement
-    const passwordInputFirstHTML = document.querySelector('.passwordInputFirst') as HTMLInputElement
-    const passwordInputSecondHTML = document.querySelector('.passwordInputSecond') as HTMLInputElement
+    const loginInoutHTML = document.querySelector(
+      '.loginInputSignup'
+    ) as HTMLInputElement
+    const emailInputHTML = document.querySelector(
+      '.emailInput'
+    ) as HTMLInputElement
+    const passwordInputFirstHTML = document.querySelector(
+      '.passwordInputFirst'
+    ) as HTMLInputElement
+    const passwordInputSecondHTML = document.querySelector(
+      '.passwordInputSecond'
+    ) as HTMLInputElement
 
     const handleSubmit = (event) => {
       event.preventDefault()
@@ -163,7 +176,9 @@ export class SignupPage extends View {
       signupForm?.removeEventListener('submit', handleSubmit)
 
       if (this.validateForm(login, password, passwordSecond, email)) {
-        store.dispatch(actionSignup({ login: login, password: password, email: email }))
+        store.dispatch(
+          actionSignup({ login: login, password: password, email: email })
+        )
         this.state.login = login
         this.state.password = password
       }
@@ -218,7 +233,12 @@ export class SignupPage extends View {
     const errorClassName = 'errorStringSignin'
     switch (this.state.statusSignup) {
       case responseStatuses.success:
-        store.dispatch(actionSignin({ login: this.state.login, password: this.state.password }))
+        store.dispatch(
+          actionSignin({
+            login: this.state.login,
+            password: this.state.password
+          })
+        )
         return true
       case responseStatuses.notAuthorized:
         returnError(errorInputs.LoginOrPasswordError, errorClassName)

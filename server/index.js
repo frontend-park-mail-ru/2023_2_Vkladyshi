@@ -27,7 +27,6 @@ app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));
 app.use(body.json());
 app.use(cookie());
 
-
 const port = process.env.PORT || 8001;
 
 const films = {
@@ -129,13 +128,14 @@ const ids = {};
 
 const { expressCspHeader, INLINE, NONE, SELF } = require('express-csp-header');
 // other app.use() options ...
-app.use(expressCspHeader({
-  policies: {
-    'default-src': [expressCspHeader.NONE],
-    'img-src': [expressCspHeader.SELF],
-  }
-}));
-
+app.use(
+  expressCspHeader({
+    policies: {
+      'default-src': [expressCspHeader.NONE],
+      'img-src': [expressCspHeader.SELF],
+    },
+  })
+);
 
 app.post('/signin', (req, res) => {
   const password = req.body.password;
@@ -152,7 +152,7 @@ app.post('/signin', (req, res) => {
   ids[id] = login;
 
   res.cookie('session_id', id, {
-    expires: new Date(Date.now() + 1000 * 60 * 10 )
+    expires: new Date(Date.now() + 1000 * 60 * 10),
   });
 
   // res.cookie('session_id', { httpOnly: true });

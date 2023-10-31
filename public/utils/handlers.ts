@@ -7,8 +7,14 @@ const handlers = [
   { type: 'auth', method: actionsUser.auth.bind(actionsUser) },
   { type: 'logout', method: actionsUser.logout.bind(actionsUser) },
 
-  { type: 'collectionMain', method: actionsFilm.getCollectionDataMain.bind(actionsFilm) },
-  { type: 'collectionMenu', method: actionsFilm.getCollectionDataMenu.bind(actionsFilm) }
+  {
+    type: 'collectionMain',
+    method: actionsFilm.getCollectionDataMain.bind(actionsFilm)
+  },
+  {
+    type: 'collectionMenu',
+    method: actionsFilm.getCollectionDataMenu.bind(actionsFilm)
+  }
 ]
 
 export { handlers }

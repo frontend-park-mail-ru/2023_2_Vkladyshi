@@ -3,7 +3,7 @@ import { methods } from '@utils/config'
 /**
  * get запрос
  * @param params параметры запроса
- * @returns {Promise} Promise ответ
+ * @return {Promise} Promise ответ
  */
 export async function get (params = {}) {
   const response = await fetch(

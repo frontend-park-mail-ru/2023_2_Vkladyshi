@@ -14,7 +14,7 @@ interface user extends anyObject {
 }
 
 interface collectionParams {
- // key: string,
+  // key: string,
   // countFilms: number,
-  collection_id?: string,
+  collection_id?: string;
 }

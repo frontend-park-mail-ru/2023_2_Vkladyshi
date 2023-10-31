@@ -5,5 +5,4 @@ import { Component } from '../components/component'
  * @class View
  * @typedef {View}
  */
-export class View extends Component {
-}
+export class View extends Component {}

@@ -1,8 +1,5 @@
 import { View } from '@views/view'
-import {
-  errorInputs, responseStatuses,
-  signin
-} from '@utils/config'
+import { errorInputs, responseStatuses, signin } from '@utils/config'
 import { store } from '@store/store'
 import { actionAuth, actionSignin } from '@store/action/actionTemplates'
 import { returnError } from '@utils/addError'
@@ -67,7 +64,8 @@ export class SigninPage extends View {
           path: '/',
           props: '/'
         },
-        { pushState: false, refresh: false })
+        { pushState: false, refresh: false }
+      )
       return
     }
 
@@ -87,7 +85,9 @@ export class SigninPage extends View {
   getForm () {
     const signin = document.querySelector('.signin')
     const loginHTML = document.querySelector('.loginInput') as HTMLInputElement
-    const passwordHTML = document.querySelector('.passwordInput') as HTMLInputElement
+    const passwordHTML = document.querySelector(
+      '.passwordInput'
+    ) as HTMLInputElement
 
     const handleSubmit = (event) => {
       event.preventDefault()

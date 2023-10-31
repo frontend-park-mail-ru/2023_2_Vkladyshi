@@ -1,5 +1,11 @@
 import { View } from '@views/view'
-import {contentBlock, filmSelection, footer, ROOT, selectCollection} from '@utils/config'
+import {
+  contentBlock,
+  filmSelection,
+  footer,
+  ROOT,
+  selectCollection
+} from '@utils/config'
 import { router } from '@router/router'
 import { store } from '@store/store'
 import { actionCollectionMenu } from '@store/action/actionTemplates'
@@ -7,8 +13,8 @@ import { getCollection } from '@utils/getCollection'
 
 export interface SelectCollectionPage {
   state: {
-    dataSection: string
-  }
+    dataSection: string;
+  };
 }
 
 /**
@@ -85,7 +91,9 @@ export class SelectCollectionPage extends View {
   }
 
   subscribeCollectionMenu () {
-    const result = filmSelection.render(getCollection(store.getState('collectionMenu')))
+    const result = filmSelection.render(
+      getCollection(store.getState('collectionMenu'))
+    )
 
     const main = document.querySelector('main')
 
@@ -93,6 +101,9 @@ export class SelectCollectionPage extends View {
     main?.insertAdjacentHTML('beforeend', footer.render())
     const contentBlockHTML = document.querySelector('.contentBlock')
     contentBlockHTML?.insertAdjacentHTML('beforeend', result)
-    router.navigate({ path: `/api/v1/films?collection_id=${this.state.dataSection}`, props: '/' })
+    router.navigate({
+      path: `/api/v1/films?collection_id=${this.state.dataSection}`,
+      props: '/'
+    })
   }
 }

@@ -53,10 +53,7 @@ class Router {
       const href = new URL(window.location.href).pathname
       // const prevView = this.mapViews.get(this.prevUrl);
 
-      this.go(
-        { path: href, props: href },
-        { pushState: true, refresh: false }
-      )
+      this.go({ path: href, props: href }, { pushState: true, refresh: false })
       this.prevUrl = href
     })
     this.refresh()

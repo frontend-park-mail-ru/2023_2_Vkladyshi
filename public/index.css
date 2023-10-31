@@ -6,6 +6,7 @@
 @import './components/Signup/signup.css';
 @import './components/Footer/footer.css';
 @import './components/Description/description.css';
+@import './components/AdditionalInfo/additionalInfo.css';
 
 :root {
   --background-color: #cdc6c6;

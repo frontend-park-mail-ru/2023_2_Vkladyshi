@@ -12,7 +12,7 @@ class ActionsFilm {
 
     const result = await response
     return {
-      'collectionMain': result
+      collectionMain: result
     }
   }
 
@@ -26,7 +26,7 @@ class ActionsFilm {
 
     const result = await response
     return {
-      'collectionMenu': result
+      collectionMenu: result
     }
   }
 }
