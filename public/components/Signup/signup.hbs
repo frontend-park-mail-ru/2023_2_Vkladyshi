@@ -1,16 +1,37 @@
 <div class='signup'>
   <div class='signupMain'>
-    <img class='signup-frame-img' src='../../icons/arrow_left.svg' />
+    <img class='sign-frame-img' src='../../icons/arrow_left.svg' />
     <form class='signupForm'>
-      <input class='loginInputSignup' placeholder='Логин' />
-      <input class='emailInput' placeholder='Электронная почта' />
-      <input class='passwordInputFirst' type='password' placeholder='Пароль' />
-      <input class='passwordInputSecond' type='password' placeholder='Пароль' />
-      <button class='signupButton' type='submit'>Войти</button>
+      <span class='signTitle'>Регистрация</span>
+      <span class='textForm'>Логин</span>
+      <div class='wrap'>
+        <input class='loginInputSignup' />
+        <span class='errorLogin'></span>
+      </div>
+      <span class='textForm'>Электронная почта</span>
+      <div class='wrap'>
+        <input class='emailInput' />
+        <span class='errorEmail'></span>
+      </div>
+      <span class='textForm'>Пароль</span>
+      <div class='wrap'>
+        <input class='passwordInputFirst' type='password' />
+        <span class='errorPassword'></span>
+      </div>
+      <span class='textForm'>Пароль</span>
+      <div class='wrap'>
+        <input class='passwordInputSecond' type='password' />
+        <span class='errorPassword'></span>
+      </div>
+
+      <div class='containerLogin'>
+        <button class='signupButton' type='submit'>Войти</button>
+        <div class='redirectToSignin' data-section='signin'>
+          Авторизоваться ?
+        </div>
+      </div>
+
     </form>
-    <div class='redirectToSignin' data-section='signin'>
-      Вы уже зарегистрированы ?
-    </div>
   </div>
   <div class='errorStringSignup'></div>
 
