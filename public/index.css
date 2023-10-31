@@ -9,8 +9,8 @@
 
 :root {
   --background-color: #cdc6c6;
-  --content-block-color: #f3f3f3;
-  /* --content-block-color: rgb(255, 255, 255); */
+  /* --content-block-color: #f3f3f3; */
+  --content-block-color: rgb(255, 255, 255);
 }
 
 body {
