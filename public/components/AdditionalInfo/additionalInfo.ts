@@ -1,6 +1,6 @@
-import { Component } from '@components/component';
-import * as templateAdditionalInfo from '@components/AdditionalInfo/additionalInfo.hbs';
-import { getFilmInfo } from '@utils/getCollection';
+import { Component } from '@components/component'
+import * as templateAdditionalInfo from '@components/AdditionalInfo/additionalInfo.hbs'
+import { getFilmInfo } from '@utils/getCollection'
 
 /**
  * Класс рендеринга авторизации
@@ -13,7 +13,7 @@ export class AddInfo extends Component {
    * @param result
    * @returns {string} html авторизации
    */
-  render(result) {
-    return templateAdditionalInfo(result);
+  render (result) {
+    return templateAdditionalInfo(result)
   }
 }

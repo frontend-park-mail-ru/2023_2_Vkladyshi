@@ -1,6 +1,6 @@
-import { Component } from '@components/component';
-import * as templateLikeStar from '@components/LikeStar/likeStar.hbs';
-import { getLikeOfStar } from '@utils/getCollection';
+import { Component } from '@components/component'
+import * as templateLikeStar from '@components/LikeStar/likeStar.hbs'
+import { getLikeOfStar } from '@utils/getCollection'
 
 /**
  * Класс рендеринга авторизации
@@ -13,7 +13,7 @@ export class LikeStar extends Component {
    * @param result
    * @returns {string} html авторизации
    */
-  render(result) {
-    return templateLikeStar(result);
+  render (result) {
+    return templateLikeStar(result)
   }
 }
