@@ -1,4 +1,4 @@
-import { handlers } from '@utils/handlers'
+import { handlers } from '@utils/handlers';
 
 interface Store {
   state: { [key: string]: any };
@@ -8,75 +8,75 @@ interface Store {
 
 class Store {
   constructor () {
-    this.state = {}
-    this.mapActionHandlers = new Map()
-    this.mapSubscribers = new Map()
+    this.state = {};
+    this.mapActionHandlers = new Map();
+    this.mapSubscribers = new Map();
 
     for (const handler of handlers) {
-      this.register(handler)
+      this.register(handler);
     }
   }
 
   register ({ type, method }) {
-    this.mapActionHandlers.set(type, method)
+    this.mapActionHandlers.set(type, method);
   }
 
   subscribe (type, callback) {
-    const arraySubs = this.mapSubscribers.get(type)
+    const arraySubs = this.mapSubscribers.get(type);
     if (arraySubs) {
-      arraySubs.push(callback)
+      arraySubs.push(callback);
     } else {
-      this.mapSubscribers.set(type, [callback])
+      this.mapSubscribers.set(type, [callback]);
     }
   }
 
   unsubscribe (type, activeFunc) {
-    const arraySubs = this.mapSubscribers.get(type)
+    const arraySubs = this.mapSubscribers.get(type);
     if (arraySubs) {
       this.mapSubscribers.set(
         type,
         arraySubs.filter((item) => item.name !== activeFunc.name)
-      )
+      );
     }
   }
 
   setState (newState: { [key: string]: any }) {
-    let subs
+    let subs;
     Object.keys(newState).forEach((key) => {
-      this.state[key] = newState[key]
-      subs = this.mapSubscribers.get(key)
+      this.state[key] = newState[key];
+      subs = this.mapSubscribers.get(key);
       if (subs && subs.length) {
         subs.forEach((subscriber) => {
-          subscriber()
-        })
+          subscriber();
+        });
       }
-    })
+    });
   }
 
   async dispatch (action) {
-    const storeReducer = this.mapActionHandlers.get(action.type)
+    const storeReducer = this.mapActionHandlers.get(action.type);
     if (!storeReducer) {
-      return
+      return;
     }
 
-    let newState = {}
+    let newState = {};
     if (Object.hasOwnProperty.call(action, 'value')) {
-      newState = await storeReducer(action.value)
+      newState = await storeReducer(action.value);
     } else {
-      newState = await storeReducer()
+      newState = await storeReducer();
     }
 
     if (newState) {
-      this.setState(newState)
+      this.setState(newState);
     }
   }
 
   getState (nameObject) {
     if (Object.hasOwnProperty.call(this.state, nameObject)) {
-      return this.state[nameObject]
+      return this.state[nameObject];
     }
-    return null
+    return null;
   }
 }
 
-export const store = new Store()
+export const store = new Store();

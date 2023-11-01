@@ -1,5 +1,5 @@
-import { actionsUser } from '@store/action/actionsUser'
-import { actionsFilm } from '@store/action/actionsFilm'
+import { actionsUser } from '@store/action/actionsUser';
+import { actionsFilm } from '@store/action/actionsFilm';
 
 const handlers = [
   { type: 'signin', method: actionsUser.signin.bind(actionsUser) },
@@ -9,6 +9,6 @@ const handlers = [
 
   { type: 'collectionMain', method: actionsFilm.getCollectionDataMain.bind(actionsFilm) },
   { type: 'collectionMenu', method: actionsFilm.getCollectionDataMenu.bind(actionsFilm) }
-]
+];
 
-export { handlers }
+export { handlers };

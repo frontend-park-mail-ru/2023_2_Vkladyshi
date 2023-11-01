@@ -1,7 +1,7 @@
-import { View } from '@views/view'
-import { ROOT, header, contentBlock, footer, filmSelectionPage } from '@utils/config'
-import { store } from '@store/store'
-import { actionAuth } from '@store/action/actionTemplates'
+import { View } from '@views/view';
+import { header, filmSelectionPage } from '@utils/config';
+import { store } from '@store/store';
+import { actionAuth } from '@store/action/actionTemplates';
 
 export interface MainPage {
   state: {
@@ -21,66 +21,46 @@ export class MainPage extends View {
    * @class
    */
   constructor (ROOT) {
-    super(ROOT)
+    super(ROOT);
     this.state = {
       isAuth: false
-    }
+    };
 
-    this.subscribeMainPageStatus = this.subscribeMainPageStatus.bind(this)
+    this.subscribeMainPageStatus = this.subscribeMainPageStatus.bind(this);
 
-    store.subscribe('statusAuth', this.subscribeMainPageStatus)
-    store.subscribe('logoutStatus', this.subscribeMainPageStatus)
-    store.subscribe('statusLogin', this.subscribeMainPageStatus)
+    store.subscribe('statusAuth', this.subscribeMainPageStatus);
+    store.subscribe('logoutStatus', this.subscribeMainPageStatus);
+    store.subscribe('statusLogin', this.subscribeMainPageStatus);
   }
 
   /**
    * Метод создания страницы
    */
   render () {
-    let main = document.querySelector('main')
+    this.renderDefaultPage();
 
-    if (main == null) {
-      main = document.createElement('main')
-      ROOT?.appendChild(main)
-    }
+    filmSelectionPage.render(false).then((response) => {
+      document.querySelector('.contentBlock')?.insertAdjacentHTML('beforeend', <string>response);
+    });
 
-    if (!document.querySelector('header')) {
-      ROOT?.insertAdjacentHTML('afterbegin', header.render())
-      header.componentDidMount()
-    } else {
-      main.innerHTML = ''
-    }
-
-    if (document.querySelector('.contentBlock') == null) {
-      main.insertAdjacentHTML('beforeend', contentBlock.render())
-      filmSelectionPage.render().then((response) => {
-        // @ts-ignore
-        document.querySelector('.contentBlock')?.insertAdjacentHTML('beforeend', response)
-      })
-    }
-
-    if (document.querySelector('.footer') == null) {
-      main.insertAdjacentHTML('beforeend', footer.render())
-    }
-
-    store.dispatch(actionAuth())
+    store.dispatch(actionAuth());
   }
 
   subscribeMainPageStatus () {
-    this.state.isAuth = store.getState('statusAuth') === 200
-    const isLogout = store.getState('logoutStatus') === 200
+    this.state.isAuth = store.getState('statusAuth') === 200;
+    const isLogout = store.getState('logoutStatus') === 200;
 
     if (isLogout) {
-      this.changeHeader(!isLogout)
-      return
+      this.changeHeader(!isLogout);
+      return;
     }
-    this.changeHeader(this.state.isAuth)
+    this.changeHeader(this.state.isAuth);
   }
 
   changeHeader (isAuth) {
-    const headerHTML = document.querySelector('header')
+    const headerHTML = document.querySelector('header');
 
-    headerHTML!.innerHTML = header.render(isAuth)
-    header.componentDidMount()
+    headerHTML!.innerHTML = header.render(isAuth);
+    header.componentDidMount();
   }
 }

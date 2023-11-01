@@ -1,4 +1,4 @@
-import { methods } from '@utils/config'
+import { methods } from '@utils/config';
 
 /**
  * get запрос
@@ -13,9 +13,9 @@ export async function get (params = {}) {
       credentials: 'include',
       mode: 'cors'
     }
-  )
-  const result = await response.text()
-  return JSON.parse(result)
+  );
+  const result = await response.text();
+  return JSON.parse(result);
 }
 
 /**
@@ -34,8 +34,8 @@ export async function post ({ url, body }) {
       'Content-Type': 'application/json; charset=utf-8'
     },
     body: JSON.stringify(body)
-  })
-  let result = await response.text()
-  result = JSON.parse(result)
-  return result
+  });
+  let result = await response.text();
+  result = JSON.parse(result);
+  return result;
 }

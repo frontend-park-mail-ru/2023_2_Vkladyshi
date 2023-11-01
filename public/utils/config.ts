@@ -1,19 +1,19 @@
-import { SigninPage } from '@views/SigninPage/SigninPage'
-import { SignupPage } from '@views/SignupPage/SignupPage'
-import { MainPage } from '@views/MainPage/MainPage'
-import { Header } from '@components/Header/header'
-import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage'
-import { SelectCollectionPage } from '@views/SelectCollectionPage/SelectCollectionPage'
-import { ContentBlock } from '@components/ContentBlock/contentBlock'
-import { FilmSelection } from '@components/FilmSelection/filmSelection'
-import { Signin } from '@components/Signin/signin'
-import { Footer } from '@components/Footer/footer'
-import { Signup } from '@components/Signup/signup'
-import { SelectCollection } from '@components/SelectCollection/selectCollection'
+import { SigninPage } from '@views/SigninPage/SigninPage';
+import { SignupPage } from '@views/SignupPage/SignupPage';
+import { MainPage } from '@views/MainPage/MainPage';
+import { Header } from '@components/Header/header';
+import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
+import { SelectCollectionPage } from '@views/SelectCollectionPage/SelectCollectionPage';
+import { ContentBlock } from '@components/ContentBlock/contentBlock';
+import { FilmSelection } from '@components/FilmSelection/filmSelection';
+import { Signin } from '@components/Signin/signin';
+import { Footer } from '@components/Footer/footer';
+import { Signup } from '@components/Signup/signup';
+import { SelectCollection } from '@components/SelectCollection/selectCollection';
 
-export const ROOT = document.querySelector('#root')
+export const ROOT = document.querySelector('#root');
 
-export const DOMAIN = 'http://127.0.0.1:8001'
+export const DOMAIN = 'http://127.0.0.1:8001';
 
 export const urls = {
   main: '/',
@@ -24,12 +24,12 @@ export const urls = {
   selection: '/selection',
   authorized: '/authcheck',
   logout: '/logout'
-}
+};
 
 export const methods = {
   post: 'POST',
   get: 'GET'
-}
+};
 
 export const responseStatuses = {
   success: 200,
@@ -38,7 +38,7 @@ export const responseStatuses = {
   serverError: 500,
   notFound: 404,
   alreadyExists: 409
-}
+};
 
 export const errorInputs = {
   LoginNoValid: 'Логин не валиден',
@@ -50,21 +50,21 @@ export const errorInputs = {
   NotAllElements: 'Нет всех полей',
   LoginExists: 'Логин уже используется',
   ServerError: 'Ошибка сервера'
-}
+};
 
-export const mainPage = new MainPage(ROOT)
-export const signinPage = new SigninPage(ROOT)
-export const signupPage = new SignupPage(ROOT)
-export const filmSelectionPage = new FilmSelectionPage(ROOT)
-export const selectCollectionPage = new SelectCollectionPage(ROOT)
-export const contentBlock = new ContentBlock(ROOT)
-export const signin = new Signin(ROOT)
+export const mainPage = new MainPage(ROOT);
+export const signinPage = new SigninPage(ROOT);
+export const signupPage = new SignupPage(ROOT);
+export const filmSelectionPage = new FilmSelectionPage(ROOT);
+export const selectCollectionPage = new SelectCollectionPage(ROOT);
+export const contentBlock = new ContentBlock(ROOT);
+export const signin = new Signin(ROOT);
 
-export const signup = new Signup(ROOT)
-export const footer = new Footer(ROOT)
-export const filmSelection = new FilmSelection(ROOT)
+export const signup = new Signup(ROOT);
+export const footer = new Footer(ROOT);
+export const filmSelection = new FilmSelection(ROOT);
 
-export const selectCollection = new SelectCollection(ROOT)
+export const selectCollection = new SelectCollection(ROOT);
 export const config = {
   menu: {
     basket: {
@@ -104,9 +104,9 @@ export const config = {
       renderObject: mainPage
     }
   }
-}
+};
 
-export const header = new Header(ROOT)
+export const header = new Header(ROOT);
 
 export const collections = {
   collections: {
@@ -132,11 +132,12 @@ export const collections = {
       ]
     }
   }
-}
+};
 
 export const routes = [
   { path: '/', view: mainPage },
   { path: '/signin', view: signinPage },
   { path: '/signup', view: signupPage },
-  { path: '/selection', view: selectCollectionPage }
-]
+  { path: '/selection', view: selectCollectionPage },
+  { path: '/films', view: filmSelectionPage }
+];

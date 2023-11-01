@@ -1,9 +1,9 @@
 export const getCollection = (response) => {
-  const haveFilms = checkFilms(Object.keys(response['body'].films))
+  const haveFilms = checkFilms(Object.keys(response['body'].films));
   return Object.assign({}, response['body'], {
     haveFilms
-  })
-}
+  });
+};
 
 /**
  * Проверка на наличие фильмов
@@ -11,5 +11,5 @@ export const getCollection = (response) => {
  * @return {boolean} результат наличия фильмов в списке
  */
 export const checkFilms = (films) => {
-  return films.length > 0
-}
+  return films.length > 0;
+};

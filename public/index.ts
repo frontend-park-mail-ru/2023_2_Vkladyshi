@@ -1,4 +1,4 @@
-import { router } from '@router/router'
+import { router } from '@router/router';
 
-import './index.css'
-router.start()
+import './index.css';
+router.start();

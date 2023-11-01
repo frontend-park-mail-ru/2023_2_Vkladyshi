@@ -1,5 +1,5 @@
-import { get } from '@utils/ajax'
-import { urls } from '@utils/config'
+import { get } from '@utils/ajax';
+import { urls } from '@utils/config';
 
 class ActionsFilm {
   // eslint-disable-next-line camelcase
@@ -8,12 +8,12 @@ class ActionsFilm {
       url: urls.basket,
       // eslint-disable-next-line camelcase
       query: { collection_id: collection_id }
-    })
+    });
 
-    const result = await response
+    const result = await response;
     return {
       'collectionMain': result
-    }
+    };
   }
 
   // eslint-disable-next-line camelcase
@@ -22,13 +22,13 @@ class ActionsFilm {
       url: urls.basket,
       // eslint-disable-next-line camelcase
       query: { collection_id: collection_id }
-    })
+    });
 
-    const result = await response
+    const result = await response;
     return {
       'collectionMenu': result
-    }
+    };
   }
 }
 
-export const actionsFilm = new ActionsFilm()
+export const actionsFilm = new ActionsFilm();

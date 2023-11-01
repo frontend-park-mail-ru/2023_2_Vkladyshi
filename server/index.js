@@ -27,7 +27,6 @@ app.use(express.static(path.resolve(__dirname, '..', 'node_modules')));
 app.use(body.json());
 app.use(cookie());
 
-
 const port = process.env.PORT || 8001;
 
 const films = {
@@ -127,19 +126,18 @@ const users = {
 };
 const ids = {};
 
-const { expressCspHeader, INLINE, NONE, SELF } = require('express-csp-header');
-// other app.use() options ...
-app.use(expressCspHeader({
-  policies: {
-    'default-src': [expressCspHeader.NONE],
-    'img-src': [expressCspHeader.SELF],
+app.use(express.static('dist'));
+
+app.use('/signin', (req, res) => {
+  if (req.method === 'GET') {
+    res.sendFile(__dirname + '/index.html');
+    return
   }
-}));
 
-
-app.post('/signin', (req, res) => {
   const password = req.body.password;
   const login = req.body.login;
+
+  res.header('Content-Security-Policy', "img-src 'self'");
 
   if (!password || !login) {
     return res.status(200).json({ status: 401 });
@@ -159,7 +157,12 @@ app.post('/signin', (req, res) => {
   res.status(200).json({ status: 200 });
 });
 
-app.post('/signup', (req, res) => {
+app.use('/signup', (req, res) => {
+  if (req.method === 'GET') {
+    res.sendFile(__dirname + '/index.html');
+    return
+  }
+
   const password = req.body.password;
   const login = req.body.login;
 
@@ -184,7 +187,13 @@ app.post('/signup', (req, res) => {
   return res;
 });
 
-app.get('/api/v1/films', (req, res) => {
+app.use('/api/v1/films', (req, res) => {
+  const secFetchSite = req.headers['sec-fetch-site'];
+  if (!secFetchSite) {
+    res.sendFile(__dirname + '/index.html');
+    return
+  }
+  console.log('/api/v1/films')
   if (req.query.collection_id !== 'new') {
     return res.status(200).json(films_tags);
   }
@@ -206,4 +215,18 @@ app.get('/logout', (req, res) => {
   delete ids[id];
 
   return res.status(200).json({ status: 200 });
+});
+
+app.get('/selection', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/films/', (req, res) => {
+  const collectionId = req.query.collection_id;
+  console.log('/films/')
+  if (collectionId !== 'new') {
+    res.sendFile(__dirname + '/index.html');
+  } else {
+    res.status(404).send('Страница не найдена');
+  }
 });

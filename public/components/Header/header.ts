@@ -1,9 +1,9 @@
-import { Component } from '@components/component'
-import { router } from '@router/router'
-import * as templateHeader from '@components/Header/header.hbs'
-import { config } from '@utils/config'
-import { store } from '@store/store'
-import { actionLogout } from '@store/action/actionTemplates'
+import { Component } from '@components/component';
+import { router } from '@router/router';
+import * as templateHeader from '@components/Header/header.hbs';
+import { config } from '@utils/config';
+import { store } from '@store/store';
+import { actionLogout } from '@store/action/actionTemplates';
 
 /**
  * Класс создания верхней шапки
@@ -19,12 +19,12 @@ export class Header extends Component {
    * @param ROOT
    */
   constructor (ROOT) {
-    super(ROOT)
-    this.config = config.menu
-    this.eventFunc = () => {}
+    super(ROOT);
+    this.config = config.menu;
+    this.eventFunc = () => {};
 
-    this.subscribeHeader = this.subscribeHeader.bind(this)
-    store.subscribe('user', this.subscribeHeader)
+    this.subscribeHeader = this.subscribeHeader.bind(this);
+    store.subscribe('user', this.subscribeHeader);
   }
 
   /**
@@ -43,7 +43,7 @@ export class Header extends Component {
         png_name,
         name
       })
-    )
+    );
   }
 
   /**
@@ -52,11 +52,11 @@ export class Header extends Component {
    * @return {string} - html шапки
    */
   render (isAuthorized = false) {
-    const brand = this.items.find((item) => item.key === 'main')
-    const signin = this.items.find((item) => item.key === 'signin')
-    const basket = this.items.find((item) => item.key === 'basket')
-    const profile = this.items.find((item) => item.key === 'profile')
-    const selection = this.items.find((item) => item.key === 'selection')
+    const brand = this.items.find((item) => item.key === 'main');
+    const signin = this.items.find((item) => item.key === 'signin');
+    const basket = this.items.find((item) => item.key === 'basket');
+    const profile = this.items.find((item) => item.key === 'profile');
+    const selection = this.items.find((item) => item.key === 'selection');
 
     return templateHeader({
       isAuthorized,
@@ -65,65 +65,64 @@ export class Header extends Component {
       profile,
       selection,
       brand
-    })
+    });
   }
 
   /**
    * Рендер шапки для зарегистрированного пользователя
    */
   componentDidMount () {
-    const headerContainer = document.querySelector('header')
-    headerContainer?.removeEventListener('click', this.eventFunc)
+    const headerContainer = document.querySelector('header');
+    headerContainer?.removeEventListener('click', this.eventFunc);
 
     this.eventFunc = (event) => {
-      const target = event.target
+      const target = event.target;
 
       switch (true) {
         case target.closest('.loginHeader') !== null:
-          console.log(target, '.loginHeader')
           router.go(
             {
               path: '/signin',
-              props: '/signin'
+              props: ''
             },
             { pushState: true, refresh: false }
-          )
-          break
+          );
+          break;
         case target.closest('.brandHeader') !== null:
           router.go(
             {
               path: '/',
-              props: '/'
+              props: ''
             },
             { pushState: true, refresh: false }
-          )
-          break
+          );
+          break;
         case target.closest('.logoutHeader') !== null:
-          store.dispatch(actionLogout())
-          break
+          store.dispatch(actionLogout());
+          break;
         case target.closest('.menuHeader') !== null:
           router.go(
             {
               path: '/selection',
-              props: '/selection'
+              props: ''
             },
             { pushState: true, refresh: false }
-          )
-          break
+          );
+          break;
         default:
-          break
+          break;
       }
-    }
+    };
 
-    headerContainer?.addEventListener('click', this.eventFunc)
+    headerContainer?.addEventListener('click', this.eventFunc);
   }
 
   componentWillUnmount () {
-    const headerContainer = document.querySelector('header')
-    headerContainer?.removeEventListener('click', this.eventFunc)
+    const headerContainer = document.querySelector('header');
+    headerContainer?.removeEventListener('click', this.eventFunc);
   }
 
   subscribeHeader () {
-    this.render()
+    this.render();
   }
 }
