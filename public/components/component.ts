@@ -11,6 +11,6 @@ export class Component {
    * @class
    */
   constructor (ROOT) {
-    this.rootNode = ROOT
+    this.rootNode = ROOT;
   }
 }

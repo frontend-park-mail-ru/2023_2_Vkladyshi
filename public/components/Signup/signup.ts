@@ -1,5 +1,5 @@
-import { Component } from '@components/component'
-import * as templateSignup from '@components/Signup/signup.hbs'
+import { Component } from '@components/component';
+import * as templateSignup from '@components/Signup/signup.hbs';
 
 export interface Signup {
   state: {
@@ -22,6 +22,6 @@ export class Signup extends Component {
    * @return {string} html авторизации
    */
   render () {
-    return templateSignup()
+    return templateSignup();
   }
 }

@@ -26,6 +26,7 @@
     "jsdoc": "^4.0.2",
     "mini-css-extract-plugin": "^2.7.6",
     "morgan": "^1.10.0",
+    "simple-csp": "^0.2.0",
     "ts-loader": "^9.5.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths-webpack-plugin": "^4.1.0",

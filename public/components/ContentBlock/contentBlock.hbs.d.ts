@@ -2,6 +2,6 @@ interface ContentBlock {
   (): string;
 }
 
-declare let contentBlock: ContentBlock
+declare let contentBlock: ContentBlock;
 
 export = contentBlock;

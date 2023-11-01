@@ -1,5 +1,5 @@
 type Footer = () => string;
 
-declare let footer: Footer
+declare let footer: Footer;
 
 export = footer;

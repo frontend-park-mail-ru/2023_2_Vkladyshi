@@ -1,5 +1,5 @@
 type Signup = () => string;
 
-declare let signup: Signup
+declare let signup: Signup;
 
 export = signup;

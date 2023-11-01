@@ -1,8 +1,8 @@
 import {
   collections
-} from '@utils/config'
-import { Component } from '@components/component'
-import * as templateSelectCollection from '@components/SelectCollection/selectCollection.hbs'
+} from '@utils/config';
+import { Component } from '@components/component';
+import * as templateSelectCollection from '@components/SelectCollection/selectCollection.hbs';
 
 /**
  * Класс формирования окна выбора подборки фильмов
@@ -15,6 +15,6 @@ export class SelectCollection extends Component {
    * @return {string} html авторизации
    */
   render () {
-    return templateSelectCollection(collections)
+    return templateSelectCollection(collections);
   }
 }

@@ -1,5 +1,5 @@
-import { Component } from '@components/component'
-import * as templateSignin from '@components/Signin/signin.hbs'
+import { Component } from '@components/component';
+import * as templateSignin from '@components/Signin/signin.hbs';
 
 /**
  * Класс рендеринга авторизации
@@ -12,6 +12,6 @@ export class Signin extends Component {
    * @return {string} html авторизации
    */
   render () {
-    return templateSignin()
+    return templateSignin();
   }
 }

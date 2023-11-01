@@ -1,6 +1,6 @@
-import { Component } from '@components/component'
+import { Component } from '@components/component';
 
-import * as templateFooter from '@components/Footer/footer.hbs'
+import * as templateFooter from '@components/Footer/footer.hbs';
 /**
  * Класс создания нижней панели
  * @class Footer
@@ -12,6 +12,6 @@ export class Footer extends Component {
    * @return {string} html нижней панели
    */
   render () {
-    return templateFooter()
+    return templateFooter();
   }
 }
