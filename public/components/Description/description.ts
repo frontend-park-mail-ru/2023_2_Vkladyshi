@@ -1,6 +1,5 @@
-import { Component } from '@components/component'
-import * as templateDescriptionFilm from '@components/Description/description.hbs'
-import { getActorDescrition } from '@utils/getCollection'
+import { Component } from '@components/component';
+import * as templateDescriptionFilm from '@components/Description/description.hbs';
 
 /**
  * Класс рендеринга авторизации
@@ -14,6 +13,6 @@ export class Description extends Component {
    * @returns {string} html авторизации
    */
   render (result) {
-    return templateDescriptionFilm(result)
+    return templateDescriptionFilm(result);
   }
 }

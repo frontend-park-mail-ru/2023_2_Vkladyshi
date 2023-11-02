@@ -1,5 +1,5 @@
-import { Component } from '@components/component'
-import * as templateFilmSelection from '@components/FilmSelection/filmSelection.hbs'
+import { Component } from '@components/component';
+import * as templateFilmSelection from '@components/FilmSelection/filmSelection.hbs';
 
 /**
  * Класс рендеринга формирования подборки фильмов
@@ -13,6 +13,6 @@ export class FilmSelection extends Component {
    * @return {string}
    */
   render (response) {
-    return templateFilmSelection(response)
+    return templateFilmSelection(response);
   }
 }

@@ -1,15 +1,11 @@
-import { View } from '@views/view'
+import { View } from '@views/view';
 import {
-  contentBlock,
-  filmSelection,
-  footer,
   ROOT,
   selectCollection
-} from '@utils/config'
-import { router } from '@router/router'
-import { store } from '@store/store'
-import { actionCollectionMenu } from '@store/action/actionTemplates'
-import { getCollection } from '@utils/getCollection'
+} from '@utils/config';
+import { router } from '@router/router';
+import { store } from '@store/store';
+import { actionCollectionMenu } from '@store/action/actionTemplates';
 
 export interface SelectCollectionPage {
   state: {
@@ -29,14 +25,14 @@ export class SelectCollectionPage extends View {
    * @param ROOT
    */
   constructor (ROOT) {
-    super(ROOT)
+    super(ROOT);
     this.state = {
       dataSection: ''
-    }
+    };
 
-    this.componentWillUnmount = this.componentWillUnmount.bind(this)
-    this.subscribeCollectionMenu = this.subscribeCollectionMenu.bind(this)
-    store.subscribe('collectionMenu', this.subscribeCollectionMenu)
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this.subscribeCollectionMenu = this.subscribeCollectionMenu.bind(this);
+    store.subscribe('collectionMenu', this.subscribeCollectionMenu);
   }
 
   /**
@@ -44,11 +40,11 @@ export class SelectCollectionPage extends View {
    */
   render () {
     if (!document.querySelector('.selectCollection-frame')) {
-      const result = ROOT?.querySelector('main')
+      const result = ROOT?.querySelector('main');
 
-      result!.innerHTML = selectCollection.render()
-      this.componentDidMount()
-      store.subscribe('collectionMenu', this.componentWillUnmount)
+      result!.innerHTML = selectCollection.render();
+      this.componentDidMount();
+      store.subscribe('collectionMenu', this.componentWillUnmount);
     }
   }
 
@@ -57,7 +53,7 @@ export class SelectCollectionPage extends View {
    * @returns {Promise} Promise ответа
    */
   componentDidMount () {
-    const popup = document.querySelector('.popupSelectCollection')
+    const popup = document.querySelector('.popupSelectCollection');
 
     this.popupEvent = (event) => {
       switch (true) {
@@ -68,42 +64,35 @@ export class SelectCollectionPage extends View {
               props: '/'
             },
             { pushState: true, refresh: false }
-          )
-          break
+          );
+          break;
         case event.target.closest('.selectCollection-frame-list-item') !== null:
-          const dataSection = event.target.getAttribute('data-section')
-          this.state.dataSection = dataSection
-          store.dispatch(actionCollectionMenu({ collection_id: dataSection }))
-          break
+          const dataSection = event.target.getAttribute('data-section');
+          this.state.dataSection = dataSection;
+          store.dispatch(actionCollectionMenu({ collection_id: dataSection }));
+          break;
         default:
-          break
+          break;
       }
-    }
+    };
 
-    popup?.addEventListener('click', this.popupEvent)
+    popup?.addEventListener('click', this.popupEvent);
   }
 
   componentWillUnmount () {
-    const popup = document.querySelector('.popupSign')
+    const popup = document.querySelector('.popupSign');
 
-    popup?.removeEventListener('click', this.popupEvent)
-    store.unsubscribe('collectionMenu', this.componentWillUnmount)
+    popup?.removeEventListener('click', this.popupEvent);
+    store.unsubscribe('collectionMenu', this.componentWillUnmount);
   }
 
   subscribeCollectionMenu () {
-    const result = filmSelection.render(
-      getCollection(store.getState('collectionMenu'))
-    )
-
-    const main = document.querySelector('main')
-
-    main!.innerHTML = contentBlock.render()
-    main?.insertAdjacentHTML('beforeend', footer.render())
-    const contentBlockHTML = document.querySelector('.contentBlock')
-    contentBlockHTML?.insertAdjacentHTML('beforeend', result)
-    router.navigate({
-      path: `/api/v1/films?collection_id=${this.state.dataSection}`,
-      props: '/'
-    })
+    router.go(
+      {
+        path: `/films`,
+        props: `?collection_id=${this.state.dataSection}`
+      },
+      { pushState: true, refresh: false }
+    );
   }
 }

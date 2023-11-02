@@ -8,7 +8,7 @@
 @import './components/Description/description.css';
 @import './components/AdditionalInfo/additionalInfo.css';
 @import './components/TableStyle/TableStyle.css';
-@import './components/LikeStar/likeStar.css';
+@import './components/countLikeActor/countLikeActor.css';
 @import './components/Button/button.css';
 
 :root {

@@ -1,24 +1,18 @@
 import { View } from '@views/view';
 import {
-  ROOT,
-  header,
-  contentBlock,
   footer,
-  filmSelectionPage,
   desc,
   info,
-  LkStar,
+  LkStar
 } from '@utils/config';
 import { store } from '@store/store';
-import { actionAuth } from '@store/action/actionTemplates';
+import { actionActor } from '@store/action/actionTemplates';
 
-import {
-  getActorDescrition,
-  getFilmInfo,
-  getLikeOfStar,
-} from '@utils/getCollection';
-
-export interface ActorDescritionPage {}
+export interface ActorDescritionPage {
+  state: {
+    actorInfo: null
+  }
+}
 
 /**
  * Класс формирования главной страницы
@@ -27,9 +21,25 @@ export interface ActorDescritionPage {}
  */
 export class ActorDescritionPage extends View {
   /**
+   * Конструктор класса
+   * @param ROOT
+   */
+  constructor (ROOT) {
+    super(ROOT);
+    this.state = {
+      actorInfo: null
+    };
+
+    this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
+  }
+
+  /**
    * Метод создания страницы
    */
-  render() {
+  render () {
+    store.dispatch(actionActor('NameActor'));
+    //store.subscribe('actor', this.subscribeActorStatus);
+
     const mainHTML = document.querySelector('main');
     const contentBlockHTML = document.querySelector('.contentBlock');
     if (document!.querySelector('.contentBlock') != null) {
@@ -39,23 +49,30 @@ export class ActorDescritionPage extends View {
     if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', desc.render(getActorDescrition()));
+        ?.insertAdjacentHTML('beforeend', desc.render(this.state.actorInfo));
     }
 
     if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', LkStar.render(getLikeOfStar()));
+        ?.insertAdjacentHTML('beforeend', LkStar.render(this.state.actorInfo));
     }
 
     if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', info.render(getFilmInfo()));
+        ?.insertAdjacentHTML('beforeend', info.render(this.state.actorInfo));
     }
 
     if (document.querySelector('.footer') == null) {
       mainHTML?.insertAdjacentHTML('beforeend', footer.render());
     }
+  }
+
+  subscribeActorStatus () {
+    this.state.actorInfo = store.getState('actorInfo');
+    console.log(this.state.actorInfo, 1111);
+    store.unsubscribe('actor', this.subscribeActorStatus);
+    this.render();
   }
 }

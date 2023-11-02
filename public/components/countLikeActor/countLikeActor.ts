@@ -1,18 +1,18 @@
 import { Component } from '@components/component';
-import * as templateAdditionalInfo from '@components/AdditionalInfo/additionalInfo.hbs';
+import * as templateLikeStar from '@components/countLikeActor/countLikeActor.hbs';
 
 /**
  * Класс рендеринга авторизации
- * @class AddInfo
- * @typedef {AddInfo}
+ * @class CountLikeActor
+ * @typedef {CountLikeActor}
  */
-export class AddInfo extends Component {
+export class CountLikeActor extends Component {
   /**
    * Метод рендеринга элемента
    * @param result
    * @returns {string} html авторизации
    */
   render (result) {
-    return templateAdditionalInfo(result);
+    return templateLikeStar(result);
   }
 }

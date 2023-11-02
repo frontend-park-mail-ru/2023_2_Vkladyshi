@@ -1,11 +1,11 @@
-.likeStar {
+.countLikeActor {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.likeStar__text {
+.countLikeActor__text {
   margin-left: 5%;
 
   color: #000;

@@ -1,5 +1,5 @@
-import { Component } from '@components/component'
-import * as templateContentBlock from '@components/ContentBlock/contentBlock.hbs'
+import { Component } from '@components/component';
+import * as templateContentBlock from '@components/ContentBlock/contentBlock.hbs';
 
 /**
  * Класс рейдера формирования подборки фильмов
@@ -12,6 +12,6 @@ export class ContentBlock extends Component {
    * @return {string} html авторизации
    */
   render () {
-    return templateContentBlock()
+    return templateContentBlock();
   }
 }

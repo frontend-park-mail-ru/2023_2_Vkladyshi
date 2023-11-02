@@ -4,7 +4,7 @@ import {
   header,
   contentBlock,
   footer,
-  filmSelectionPage,
+  filmSelectionPage
 } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth } from '@store/action/actionTemplates';
@@ -29,11 +29,11 @@ export class MainPage extends View {
    * @param ROOT
    * @class
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       isAuth: false,
-      isCurrentView: true,
+      isCurrentView: true
     };
 
     this.subscribeMainPageStatus = this.subscribeMainPageStatus.bind(this);
@@ -46,7 +46,7 @@ export class MainPage extends View {
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     let main = document.querySelector('main');
 
     this.state.isCurrentView = true;
@@ -65,12 +65,12 @@ export class MainPage extends View {
 
     if (document.querySelector('.contentBlock') == null) {
       main.insertAdjacentHTML('beforeend', contentBlock.render());
-      filmSelectionPage.render().then((response) => {
+      filmSelectionPage.render(false).then((response) => {
         if (this.state.isCurrentView) {
           // @ts-ignore
           document
             .querySelector('.contentBlock')
-            ?.insertAdjacentHTML('beforeend', response);
+            ?.insertAdjacentHTML('beforeend', <string>response);
         }
       });
     }
@@ -81,13 +81,13 @@ export class MainPage extends View {
 
     store.dispatch(actionAuth());
 
-    //Это заглушка для просмотра того, что ренедерить вьюха
+    // Это заглушка для просмотра того, что ренедерить вьюха
     this.state.isCurrentView = false;
     const actorPage = new ActorDescritionPage(ROOT);
     actorPage.render();
   }
 
-  subscribeMainPageStatus() {
+  subscribeMainPageStatus () {
     this.state.isAuth = store.getState('statusAuth') === 200;
     const isLogout = store.getState('logoutStatus') === 200;
 
@@ -98,7 +98,7 @@ export class MainPage extends View {
     this.changeHeader(this.state.isAuth);
   }
 
-  changeHeader(isAuth) {
+  changeHeader (isAuth) {
     const headerHTML = document.querySelector('header');
 
     headerHTML!.innerHTML = header.render(isAuth);

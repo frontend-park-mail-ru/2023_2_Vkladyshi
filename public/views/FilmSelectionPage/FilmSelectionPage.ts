@@ -1,8 +1,8 @@
-import { View } from '@views/view'
-import { store } from '@store/store'
-import { filmSelection } from '@utils/config'
-import { actionCollectionMain } from '@store/action/actionTemplates'
-import { getCollection } from '@utils/getCollection'
+import { View } from '@views/view';
+import { store } from '@store/store';
+import { filmSelection } from '@utils/config';
+import { actionCollectionMain } from '@store/action/actionTemplates';
+import { getCollection } from '@utils/getCollection';
 
 /**
  * Класс формирования подборки фильмов
@@ -12,27 +12,47 @@ import { getCollection } from '@utils/getCollection'
 
 export class FilmSelectionPage extends View {
   /**
-   * Конструктор для формирования родительского элемента
+   * Конструктор класса
    * @param ROOT
-   * @class
    */
-  // eslint-disable-next-line no-useless-constructor
   constructor (ROOT) {
-    super(ROOT)
+    super(ROOT);
+
+    this.subscribeCollectionMenu = this.subscribeCollectionMenu.bind(this);
+    store.subscribe('collectionMenu', this.subscribeCollectionMenu);
   }
 
   /**
    * Метод рендеринга элемента
-   * @param collectionName
    * @return {string} html авторизации
+   * @param isNotMain
    */
-  async render () {
-    return store
-      .dispatch(actionCollectionMain({ collection_id: 'new' }))
-      .then((response) => {
-        return filmSelection.render(
-          getCollection(store.getState('collectionMain'))
-        )
-      })
+  async render (isNotMain) {
+    if (isNotMain) {
+      this.renderDefaultPage();
+      const contentBlockHTML = document.querySelector('.contentBlock');
+      const url = new URL(window.location.href);
+
+      const result = store.getState('collectionMenu');
+
+      if (result === null) {
+        contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(url.search));
+        return;
+      }
+
+      contentBlockHTML?.insertAdjacentHTML('beforeend', filmSelection.render(getCollection(result)));
+    }
+
+    return this.returnTemplate('new');
+  }
+
+  returnTemplate (collectionId) {
+    return store.dispatch(actionCollectionMain({ collection_id: collectionId })).then(response => {
+      return filmSelection.render(getCollection(store.getState('collectionMain')));
+    });
+  }
+
+  subscribeCollectionMenu () {
+
   }
 }

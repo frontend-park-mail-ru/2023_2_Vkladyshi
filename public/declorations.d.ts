@@ -1,6 +1,6 @@
 declare module '*.hbs' {
-  const _: Function
-  export default _
+  const _: Function;
+  export default _;
 }
 
 interface anyObject {
@@ -17,4 +17,8 @@ interface collectionParams {
   // key: string,
   // countFilms: number,
   collection_id?: string;
+}
+
+interface actor {
+  actorName?: string;
 }
