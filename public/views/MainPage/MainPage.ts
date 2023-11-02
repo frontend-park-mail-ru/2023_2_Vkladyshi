@@ -1,5 +1,5 @@
 import { View } from '@views/view';
-import { header, filmSelectionPage } from '@utils/config';
+import {header, filmSelectionPage, config} from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth } from '@store/action/actionTemplates';
 
@@ -30,7 +30,8 @@ export class MainPage extends View {
 
     store.subscribe('statusAuth', this.subscribeMainPageStatus);
     store.subscribe('logoutStatus', this.subscribeMainPageStatus);
-    store.subscribe('statusLogin', this.subscribeMainPageStatus);
+    // store.subscribe('statusLogin', this.subscribeMainPageStatus);
+    // store.subscribe('statusSignup', this.subscribeMainPageStatus);
   }
 
   /**
@@ -44,10 +45,13 @@ export class MainPage extends View {
     });
 
     store.dispatch(actionAuth());
+
   }
 
   subscribeMainPageStatus () {
     this.state.isAuth = store.getState('statusAuth') === 200;
+
+    //this.state.isAuth = store.getState('statusLogin') === 200;
     const isLogout = store.getState('logoutStatus') === 200;
 
     if (isLogout) {
@@ -56,6 +60,7 @@ export class MainPage extends View {
     }
     this.changeHeader(this.state.isAuth);
   }
+
 
   changeHeader (isAuth) {
     const headerHTML = document.querySelector('header');

@@ -2,7 +2,7 @@ import { View } from '@views/view';
 import { errorInputs, responseStatuses, signup } from '@utils/config';
 import { router } from '@router/router';
 import { store } from '@store/store';
-import { actionSignin, actionSignup } from '@store/action/actionTemplates';
+import {actionAuth, actionSignin, actionSignup} from '@store/action/actionTemplates';
 import { returnError } from '@utils/addError';
 import { validateEmail, validateLogin, validatePassword } from '@utils/validate';
 
@@ -98,7 +98,7 @@ export class SignupPage extends View {
           this.componentWillUnmount();
           router.go(
             {
-              path: '/signin',
+              path: '/login/',
               props: ''
             },
             { pushState: true, refresh: false }

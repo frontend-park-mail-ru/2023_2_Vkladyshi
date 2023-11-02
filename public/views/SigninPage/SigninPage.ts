@@ -140,7 +140,7 @@ export class SigninPage extends View {
           this.componentWillUnmount();
           router.go(
             {
-              path: '/signup',
+              path: '/register/',
               props: ''
             },
             { pushState: true, refresh: false }

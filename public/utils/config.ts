@@ -13,7 +13,8 @@ import { SelectCollection } from '@components/SelectCollection/selectCollection'
 
 export const ROOT = document.querySelector('#root');
 
-export const DOMAIN = 'http://127.0.0.1:8001';
+//export const DOMAIN = 'http://127.0.0.1:8001';
+export const DOMAIN = 'http://84.23.54.189';
 
 export const urls = {
   main: '/',
@@ -136,8 +137,8 @@ export const collections = {
 
 export const routes = [
   { path: '/', view: mainPage },
-  { path: '/signin', view: signinPage },
-  { path: '/signup', view: signupPage },
-  { path: '/selection', view: selectCollectionPage },
-  { path: '/films', view: filmSelectionPage }
+  { path: '/login/', view: signinPage },
+  { path: '/register/', view: signupPage },
+  { path: '/selection/', view: selectCollectionPage },
+  { path: '/films/', view: filmSelectionPage }
 ];

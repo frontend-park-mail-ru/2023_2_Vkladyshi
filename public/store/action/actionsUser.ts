@@ -32,6 +32,7 @@ class ActionsUser {
   }
 
   async auth (isAuth = false) {
+
     if (isAuth) {
       return { statusAuth: 200 };
     }

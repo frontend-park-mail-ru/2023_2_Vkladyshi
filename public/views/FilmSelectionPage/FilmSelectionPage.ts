@@ -28,6 +28,7 @@ export class FilmSelectionPage extends View {
    * @param isNotMain
    */
   async render (isNotMain) {
+
     if (isNotMain) {
       this.renderDefaultPage();
       const contentBlockHTML = document.querySelector('.contentBlock');
@@ -36,7 +37,10 @@ export class FilmSelectionPage extends View {
       const result = store.getState('collectionMenu');
 
       if (result === null) {
-        contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(url.search));
+        const url = new URL(window.location.href);
+        const names = url.pathname.split('/');
+
+        contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(names[2]));
         return;
       }
 
@@ -47,6 +51,7 @@ export class FilmSelectionPage extends View {
   }
 
   returnTemplate (collectionId) {
+    console.log(collectionId)
     return store.dispatch(actionCollectionMain({ collection_id: collectionId })).then(response => {
       return filmSelection.render(getCollection(store.getState('collectionMain')));
     });

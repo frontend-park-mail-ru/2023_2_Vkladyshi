@@ -18,86 +18,86 @@ body.none-active {
   overflow: hidden;
 }
 
-@media (min-width: 1920px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 70%;
-  }
-  .signin,
-  .signup {
-    width: 20%;
-  }
-}
+/*@media (min-width: 1920px) {*/
+/*  .header,*/
+/*  .contentBlock,*/
+/*  .footer {*/
+/*    width: 70%;*/
+/*  }*/
+/*  .signin,*/
+/*  .signup {*/
+/*    width: 20%;*/
+/*  }*/
+/*}*/
 
-@media (min-width: 2120px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 60%;
-  }
-  .signin,
-  .signup {
-    width: 17%;
-  }
-}
+/*@media (min-width: 2120px) {*/
+/*  .header,*/
+/*  .contentBlock,*/
+/*  .footer {*/
+/*    width: 60%;*/
+/*  }*/
+/*  .signin,*/
+/*  .signup {*/
+/*    width: 17%;*/
+/*  }*/
+/*}*/
 
-@media (min-width: 2620px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 50%;
-  }
-  .signin,
-  .signup {
-    width: 14%;
-  }
-}
+/*@media (min-width: 2620px) {*/
+/*  .header,*/
+/*  .contentBlock,*/
+/*  .footer {*/
+/*    width: 50%;*/
+/*  }*/
+/*  .signin,*/
+/*  .signup {*/
+/*    width: 14%;*/
+/*  }*/
+/*}*/
 
-@media (min-width: 2920px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 40%;
-  }
-  .signin,
-  .signup {
-    width: 11%;
-  }
-}
+/*@media (min-width: 2920px) {*/
+/*  .header,*/
+/*  .contentBlock,*/
+/*  .footer {*/
+/*    width: 40%;*/
+/*  }*/
+/*  .signin,*/
+/*  .signup {*/
+/*    width: 11%;*/
+/*  }*/
+/*}*/
 
-@media (min-width: 3520px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 30%;
-  }
-  .signin,
-  .signup {
-    width: 8%;
-  }
-}
+/*@media (min-width: 3520px) {*/
+/*  .header,*/
+/*  .contentBlock,*/
+/*  .footer {*/
+/*    width: 30%;*/
+/*  }*/
+/*  .signin,*/
+/*  .signup {*/
+/*    width: 8%;*/
+/*  }*/
+/*}*/
 
-@media (min-width: 4520px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 20%;
-  }
-  .signin,
-  .signup {
-    width: 5%;
-  }
-}
+/*@media (min-width: 4520px) {*/
+/*  .header,*/
+/*  .contentBlock,*/
+/*  .footer {*/
+/*    width: 20%;*/
+/*  }*/
+/*  .signin,*/
+/*  .signup {*/
+/*    width: 5%;*/
+/*  }*/
+/*}*/
 
-@media (min-width: 5820px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 10%;
-  }
-  .signin,
-  .signup {
-    width: 2%;
-  }
-}
+/*@media (min-width: 5820px) {*/
+/*  .header,*/
+/*  .contentBlock,*/
+/*  .footer {*/
+/*    width: 10%;*/
+/*  }*/
+/*  .signin,*/
+/*  .signup {*/
+/*    width: 2%;*/
+/*  }*/
+/*}*/

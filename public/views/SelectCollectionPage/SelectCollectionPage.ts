@@ -88,8 +88,8 @@ export class SelectCollectionPage extends View {
   subscribeCollectionMenu () {
     router.go(
       {
-        path: `/films`,
-        props: `?collection_id=${this.state.dataSection}`
+        path: `/films/`,
+        props: `${this.state.dataSection}/`
       },
       { pushState: true, refresh: false }
     );

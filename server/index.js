@@ -61,7 +61,7 @@ const films = {
       },
       film6: {
         poster_href: '../../icons/Poster.jpg',
-        title: 'film_2',
+        title: 'film_211111111111111111111111',
         rating: 4.1,
       },
       film7: {
@@ -128,6 +128,12 @@ const ids = {};
 
 app.use(express.static('dist'));
 
+
+app.use('/login/', (req, res) => {
+  if (req.method === 'GET') {
+    res.sendFile(__dirname + '/index.html');
+  }
+})
 app.use('/signin', (req, res) => {
   if (req.method === 'GET') {
     res.sendFile(__dirname + '/index.html');
@@ -156,6 +162,13 @@ app.use('/signin', (req, res) => {
   // res.cookie('session_id', { httpOnly: true });
   res.status(200).json({ status: 200 });
 });
+
+
+app.use('/register/', (req, res) => {
+  if (req.method === 'GET') {
+    res.sendFile(__dirname + '/index.html');
+  }
+})
 
 app.use('/signup', (req, res) => {
   if (req.method === 'GET') {
@@ -193,7 +206,6 @@ app.use('/api/v1/films', (req, res) => {
     res.sendFile(__dirname + '/index.html');
     return
   }
-  console.log('/api/v1/films')
   if (req.query.collection_id !== 'new') {
     return res.status(200).json(films_tags);
   }
@@ -217,13 +229,12 @@ app.get('/logout', (req, res) => {
   return res.status(200).json({ status: 200 });
 });
 
-app.get('/selection', (req, res) => {
+app.get('/selection/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/films/', (req, res) => {
+app.get('/films/:collection_id/', (req, res) => {
   const collectionId = req.query.collection_id;
-  console.log('/films/')
   if (collectionId !== 'new') {
     res.sendFile(__dirname + '/index.html');
   } else {

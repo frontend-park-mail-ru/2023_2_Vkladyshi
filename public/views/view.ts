@@ -7,7 +7,7 @@ import { contentBlock, footer, header, ROOT } from '@utils/config';
  * @typedef {View}
  */
 export class View extends Component {
-     renderDefaultPage = () => {
+     renderDefaultPage = (isAuth = false) => {
        let main = document.querySelector('main');
 
        if (main == null) {
@@ -16,7 +16,7 @@ export class View extends Component {
        }
 
        if (!document.querySelector('header')) {
-         ROOT?.insertAdjacentHTML('afterbegin', header.render());
+         ROOT?.insertAdjacentHTML('afterbegin', header.render(isAuth));
          header.componentDidMount();
        } else {
          main.innerHTML = '';
