@@ -49,6 +49,7 @@ export const getCollection = (response) => {
 //   };
 // };
 
+
 /**
  * Проверка на наличие фильмов
  * @param {list} films список фильмов

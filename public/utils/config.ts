@@ -15,6 +15,7 @@ import { AddInfo } from '@components/AdditionalInfo/additionalInfo';
 import { CountLikeActor } from '@components/countLikeActor/countLikeActor';
 import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
 
+
 export const ROOT = document.querySelector('#root');
 
 export const DOMAIN = 'http://127.0.0.1:8001';
@@ -75,6 +76,7 @@ export const LkStar = new CountLikeActor(ROOT);
 export const selectCollection = new SelectCollection(ROOT);
 
 const actorPage = new ActorDescritionPage(ROOT);
+
 export const config = {
   menu: {
     basket: {

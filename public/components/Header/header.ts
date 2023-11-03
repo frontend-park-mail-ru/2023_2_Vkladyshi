@@ -83,7 +83,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/signin',
-              props: '/signin'
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -92,7 +92,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/',
-              props: '/'
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -104,7 +104,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/selection',
-              props: '/selection'
+              props: ''
             },
             { pushState: true, refresh: false }
           );

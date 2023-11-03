@@ -11,6 +11,7 @@ import { actionAuth } from '@store/action/actionTemplates';
 
 import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
 
+
 export interface MainPage {
   state: {
     isAuth: boolean;
@@ -41,62 +42,39 @@ export class MainPage extends View {
 
     store.subscribe('statusAuth', this.subscribeAuthStatus);
     store.subscribe('logoutStatus', this.subscribeLogoutStatus);
+
   }
 
   /**
    * Метод создания страницы
    */
   render () {
-    let main = document.querySelector('main');
+    this.renderDefaultPage();
 
-    this.state.isCurrentView = true;
-
-    if (main === null) {
-      main = document.createElement('main');
-      ROOT?.appendChild(main);
-    }
-
-    if (!document.querySelector('header')) {
-      ROOT?.insertAdjacentHTML('afterbegin', header.render(this.state.isAuth));
-      header.componentDidMount();
-    } else {
-      main.innerHTML = '';
-    }
-
-    if (document.querySelector('.contentBlock') == null) {
-      main.insertAdjacentHTML('beforeend', contentBlock.render());
-      filmSelectionPage.render(false)?.then((response) => {
-        if (this.state.isCurrentView) {
-          // @ts-ignore
-          document
-            .querySelector('.contentBlock')
-            ?.insertAdjacentHTML('beforeend', <string>response);
-        }
-      });
-    }
-
-    if (document.querySelector('.footer') == null) {
-      main.insertAdjacentHTML('beforeend', footer.render());
-    }
+    filmSelectionPage.render(false).then((response) => {
+      document.querySelector('.contentBlock')?.insertAdjacentHTML('beforeend', <string>response);
+    });
 
     // Это заглушка для просмотра того, что ренедерить вьюха
-    this.state.isCurrentView = false;
-    const actorPage = new ActorDescritionPage(ROOT);
-    actorPage.render();
+    //this.state.isCurrentView = false;
+    //const actorPage = new ActorDescritionPage(ROOT);
+    //actorPage.render();
+
 
     store.dispatch(actionAuth());
   }
 
-  subscribeAuthStatus () {
+  subscribeMainPageStatus () {
     this.state.isAuth = store.getState('statusAuth') === 200;
-    this.changeHeader(this.state.isAuth);
-  }
+    const isLogout = store.getState('logoutStatus') === 200;
 
   subscribeLogoutStatus () {
     const isLogout = store.getState('logoutStatus') === 200;
     if (isLogout) {
       this.changeHeader(!isLogout);
+      return;
     }
+    this.changeHeader(this.state.isAuth);
   }
 
   changeHeader (isAuth) {

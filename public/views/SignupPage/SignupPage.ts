@@ -10,6 +10,7 @@ import {
   validatePassword
 } from '@utils/validate';
 
+
 export interface SignupPage {
   state: {
     statusSignup: number;
@@ -52,6 +53,8 @@ export class SignupPage extends View {
    * Метод создания страницы
    */
   render () {
+    this.renderDefaultPage();
+
     if (document.querySelector('.popupSign') == null) {
       const mainHTML = document.querySelector('main');
       const popup = document.createElement('div');
@@ -70,10 +73,9 @@ export class SignupPage extends View {
       router.go(
         {
           path: '/',
-          props: '/'
+          props: ''
         },
-        { pushState: true, refresh: false }
-      );
+        { pushState: true, refresh: false });
       return;
     }
 
@@ -102,7 +104,7 @@ export class SignupPage extends View {
           router.go(
             {
               path: '/signin',
-              props: '/signin'
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -112,7 +114,7 @@ export class SignupPage extends View {
           router.go(
             {
               path: '/',
-              props: '/'
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -180,6 +182,7 @@ export class SignupPage extends View {
         store.dispatch(
           actionSignup({ login: login, password: password, email: email })
         );
+
         this.state.login = login;
         this.state.password = password;
       }
@@ -241,6 +244,7 @@ export class SignupPage extends View {
           })
         );
         store.dispatch(actionAuth(true));
+
         return true;
       case responseStatuses.notAuthorized:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);

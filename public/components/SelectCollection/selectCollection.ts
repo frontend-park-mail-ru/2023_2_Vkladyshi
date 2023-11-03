@@ -1,4 +1,6 @@
-import { collections } from '@utils/config';
+import {
+  collections
+} from '@utils/config';
 import { Component } from '@components/component';
 import * as templateSelectCollection from '@components/SelectCollection/selectCollection.hbs';
 

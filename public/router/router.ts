@@ -13,14 +13,12 @@ interface Router {
   root: Element;
   mapViews: Map<string, Class>;
   privateMapViews: Map<string, Class>;
-  prevUrl: string;
 }
 class Router {
   constructor (ROOT) {
     this.root = ROOT;
     this.mapViews = new Map();
     this.privateMapViews = new Map();
-    this.prevUrl = '';
   }
 
   register ({ path, view }, privatePAth = false) {
@@ -29,15 +27,19 @@ class Router {
   }
 
   refresh (redirect = false) {
-    const matchedHref = window.location.href.match('/')!.toString();
+    const parsedUrl = new URL(window.location.href);
+    const matchedHref = parsedUrl.pathname;
+
+    const url = new URL(window.location.href);
+
     if (
       this.mapViews.get(matchedHref) != null ||
       this.privateMapViews.get(matchedHref) != null
     ) {
       this.go(
         {
-          path: matchedHref,
-          props: matchedHref
+          path: url.pathname,
+          props: url.search
         },
         { pushState: !redirect, refresh: !redirect }
       );
@@ -51,11 +53,13 @@ class Router {
 
     window.addEventListener('popstate', () => {
       const href = new URL(window.location.href).pathname;
-      // const prevView = this.mapViews.get(this.prevUrl);
-
-      this.go({ path: href, props: href }, { pushState: true, refresh: false });
-      this.prevUrl = href;
+      
+      this.go(
+        { path: href, props: '' },
+        { pushState: false, refresh: false }
+      );
     });
+
     this.refresh();
   }
 
@@ -70,26 +74,21 @@ class Router {
   }
 
   navigate ({ path, props }: stateObject, pushState = false) {
-    // const location = window.location.href.replace(/\/$/, '')
-    const location = DOMAIN;
 
-    // const new1 = window.location.href.replace(DOMAIN,'');
-    // const location = new URL(window.location.href).pathname;
+    const location = DOMAIN;
 
     if (pushState) {
       if (props) {
-        window.history.pushState('', '', location + path);
+        window.history.pushState('', '', location + path + props);
       } else {
         window.history.pushState('', '', location + path);
       }
-      this.prevUrl = path;
     } else {
       if (props) {
-        window.history.replaceState('', '', `${location + path}`);
+        window.history.replaceState('', '', `${location + path + props}`);
       } else {
         window.history.replaceState('', '', location + path);
       }
-      this.prevUrl = path;
     }
   }
 }

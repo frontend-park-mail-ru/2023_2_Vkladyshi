@@ -1,5 +1,6 @@
 import { View } from '@views/view';
 import { errorInputs, responseStatuses, signin } from '@utils/config';
+
 import { store } from '@store/store';
 import { actionAuth, actionSignin } from '@store/action/actionTemplates';
 import { returnError } from '@utils/addError';
@@ -44,6 +45,8 @@ export class SigninPage extends View {
    * Метод создания страницы
    */
   render () {
+    this.renderDefaultPage();
+
     if (document.querySelector('.popupSign') == null) {
       const mainHTML = document.querySelector('main');
       const popup = document.createElement('div');
@@ -62,10 +65,10 @@ export class SigninPage extends View {
       router.go(
         {
           path: '/',
-          props: '/'
+          props: ''
         },
-        { pushState: false, refresh: false }
-      );
+        { pushState: true, refresh: false });
+
       return;
     }
 
@@ -139,7 +142,7 @@ export class SigninPage extends View {
           router.go(
             {
               path: '/signup',
-              props: '/signup'
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -150,7 +153,7 @@ export class SigninPage extends View {
           router.go(
             {
               path: '/',
-              props: '/'
+              props: ''
             },
             { pushState: true, refresh: false }
           );

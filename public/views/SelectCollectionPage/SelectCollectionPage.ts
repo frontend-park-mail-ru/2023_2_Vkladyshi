@@ -3,6 +3,7 @@ import {
   ROOT,
   selectCollection
 } from '@utils/config';
+
 import { router } from '@router/router';
 import { store } from '@store/store';
 import { actionCollectionMenu } from '@store/action/actionTemplates';
@@ -39,6 +40,8 @@ export class SelectCollectionPage extends View {
    * Метод создания страницы
    */
   render () {
+    this.renderDefaultPage();
+
     if (!document.querySelector('.selectCollection-frame')) {
       const result = ROOT?.querySelector('main');
 
@@ -61,7 +64,7 @@ export class SelectCollectionPage extends View {
           router.go(
             {
               path: '/',
-              props: '/'
+              props: ''
             },
             { pushState: true, refresh: false }
           );

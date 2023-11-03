@@ -6,7 +6,6 @@ const handlers = [
   { type: 'signup', method: actionsUser.signup.bind(actionsUser) },
   { type: 'auth', method: actionsUser.auth.bind(actionsUser) },
   { type: 'logout', method: actionsUser.logout.bind(actionsUser) },
-
   {
     type: 'collectionMain',
     method: actionsFilm.getCollectionDataMain.bind(actionsFilm)
@@ -19,6 +18,7 @@ const handlers = [
     type: 'actor',
     method: actionsFilm.getActor.bind(actionsFilm)
   }
+
 ];
 
 export { handlers };
