@@ -53,7 +53,7 @@ class Router {
 
     window.addEventListener('popstate', () => {
       const href = new URL(window.location.href).pathname;
-      
+
       this.go(
         { path: href, props: '' },
         { pushState: false, refresh: false }
@@ -74,7 +74,6 @@ class Router {
   }
 
   navigate ({ path, props }: stateObject, pushState = false) {
-
     const location = DOMAIN;
 
     if (pushState) {

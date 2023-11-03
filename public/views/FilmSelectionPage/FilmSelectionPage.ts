@@ -20,7 +20,6 @@ export class FilmSelectionPage extends View {
 
     this.componentDidMount = this.componentDidMount.bind(this);
     store.subscribe('collectionMenu', this.componentDidMount);
-
   }
 
   /**
@@ -60,6 +59,5 @@ export class FilmSelectionPage extends View {
     if (result === null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(url.search));
     }
-
   }
 }

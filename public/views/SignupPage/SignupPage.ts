@@ -10,7 +10,6 @@ import {
   validatePassword
 } from '@utils/validate';
 
-
 export interface SignupPage {
   state: {
     statusSignup: number;

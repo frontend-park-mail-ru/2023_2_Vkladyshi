@@ -11,7 +11,6 @@ import { actionAuth } from '@store/action/actionTemplates';
 
 import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
 
-
 export interface MainPage {
   state: {
     isAuth: boolean;
@@ -42,7 +41,6 @@ export class MainPage extends View {
 
     store.subscribe('statusAuth', this.subscribeAuthStatus);
     store.subscribe('logoutStatus', this.subscribeLogoutStatus);
-
   }
 
   /**
@@ -51,22 +49,23 @@ export class MainPage extends View {
   render () {
     this.renderDefaultPage();
 
-    filmSelectionPage.render(false).then((response) => {
+    filmSelectionPage.render(false)?.then((response) => {
       document.querySelector('.contentBlock')?.insertAdjacentHTML('beforeend', <string>response);
     });
 
     // Это заглушка для просмотра того, что ренедерить вьюха
-    //this.state.isCurrentView = false;
-    //const actorPage = new ActorDescritionPage(ROOT);
-    //actorPage.render();
-
+    // this.state.isCurrentView = false;
+    // const actorPage = new ActorDescritionPage(ROOT);
+    // actorPage.render();
 
     store.dispatch(actionAuth());
   }
 
-  subscribeMainPageStatus () {
+  subscribeAuthStatus () {
     this.state.isAuth = store.getState('statusAuth') === 200;
-    const isLogout = store.getState('logoutStatus') === 200;
+
+    this.changeHeader(this.state.isAuth);
+  }
 
   subscribeLogoutStatus () {
     const isLogout = store.getState('logoutStatus') === 200;

@@ -35,4 +35,3 @@ export const actionActor = (params: string) => ({
   type: 'actor',
   value: params
 });
-
