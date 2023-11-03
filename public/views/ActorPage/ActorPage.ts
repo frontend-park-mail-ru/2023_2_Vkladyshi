@@ -38,7 +38,7 @@ export class ActorDescritionPage extends View {
    */
   render () {
     store.dispatch(actionActor('NameActor'));
-    //store.subscribe('actor', this.subscribeActorStatus);
+    // store.subscribe('actor', this.subscribeActorStatus);
 
     const mainHTML = document.querySelector('main');
     const contentBlockHTML = document.querySelector('.contentBlock');
@@ -71,7 +71,6 @@ export class ActorDescritionPage extends View {
 
   subscribeActorStatus () {
     this.state.actorInfo = store.getState('actorInfo');
-    console.log(this.state.actorInfo, 1111);
     store.unsubscribe('actor', this.subscribeActorStatus);
     this.render();
   }

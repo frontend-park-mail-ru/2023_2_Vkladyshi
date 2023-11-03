@@ -36,11 +36,11 @@ export class MainPage extends View {
       isCurrentView: true
     };
 
-    this.subscribeMainPageStatus = this.subscribeMainPageStatus.bind(this);
+    this.subscribeAuthStatus = this.subscribeAuthStatus.bind(this);
+    this.subscribeLogoutStatus = this.subscribeLogoutStatus.bind(this);
 
-    store.subscribe('statusAuth', this.subscribeMainPageStatus);
-    store.subscribe('logoutStatus', this.subscribeMainPageStatus);
-    store.subscribe('statusLogin', this.subscribeMainPageStatus);
+    store.subscribe('statusAuth', this.subscribeAuthStatus);
+    store.subscribe('logoutStatus', this.subscribeLogoutStatus);
   }
 
   /**
@@ -51,13 +51,13 @@ export class MainPage extends View {
 
     this.state.isCurrentView = true;
 
-    if (main == null) {
+    if (main === null) {
       main = document.createElement('main');
       ROOT?.appendChild(main);
     }
 
     if (!document.querySelector('header')) {
-      ROOT?.insertAdjacentHTML('afterbegin', header.render());
+      ROOT?.insertAdjacentHTML('afterbegin', header.render(this.state.isAuth));
       header.componentDidMount();
     } else {
       main.innerHTML = '';
@@ -65,7 +65,7 @@ export class MainPage extends View {
 
     if (document.querySelector('.contentBlock') == null) {
       main.insertAdjacentHTML('beforeend', contentBlock.render());
-      filmSelectionPage.render(false).then((response) => {
+      filmSelectionPage.render(false)?.then((response) => {
         if (this.state.isCurrentView) {
           // @ts-ignore
           document
@@ -79,23 +79,24 @@ export class MainPage extends View {
       main.insertAdjacentHTML('beforeend', footer.render());
     }
 
-    store.dispatch(actionAuth());
-
     // Это заглушка для просмотра того, что ренедерить вьюха
     this.state.isCurrentView = false;
     const actorPage = new ActorDescritionPage(ROOT);
     actorPage.render();
+
+    store.dispatch(actionAuth());
   }
 
-  subscribeMainPageStatus () {
+  subscribeAuthStatus () {
     this.state.isAuth = store.getState('statusAuth') === 200;
-    const isLogout = store.getState('logoutStatus') === 200;
+    this.changeHeader(this.state.isAuth);
+  }
 
+  subscribeLogoutStatus () {
+    const isLogout = store.getState('logoutStatus') === 200;
     if (isLogout) {
       this.changeHeader(!isLogout);
-      return;
     }
-    this.changeHeader(this.state.isAuth);
   }
 
   changeHeader (isAuth) {

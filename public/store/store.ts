@@ -41,6 +41,7 @@ class Store {
   }
 
   setState (newState: { [key: string]: any }) {
+    // console.log(store.state, 'store')
     let subs;
     Object.keys(newState).forEach((key) => {
       this.state[key] = newState[key];

@@ -80,7 +80,6 @@ export class Header extends Component {
 
       switch (true) {
         case target.closest('.loginHeader') !== null:
-          console.log(target, '.loginHeader');
           router.go(
             {
               path: '/signin',

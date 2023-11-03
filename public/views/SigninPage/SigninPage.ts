@@ -196,7 +196,7 @@ export class SigninPage extends View {
     switch (this.state.statusLogin) {
       case responseStatuses.success:
         store.dispatch(actionAuth(true));
-        store.subscribe('statusLogin', this.subscribeLoginStatus);
+        store.unsubscribe('statusLogin', this.subscribeLoginStatus);
         return true;
       case responseStatuses.notAuthorized:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);
