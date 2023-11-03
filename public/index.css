@@ -5,6 +5,16 @@
 @import './components/ContentBlock/contentBlock.css';
 @import './components/Signup/signup.css';
 @import './components/Footer/footer.css';
+@import './components/Description/description.css';
+@import './components/AdditionalInfo/additionalInfo.css';
+@import './components/TableStyle/TableStyle.css';
+@import './components/countLikeActor/countLikeActor.css';
+@import './components/Button/button.css';
+
+:root {
+  --background-color: #cdc6c6;
+  --content-block-color: rgb(255, 255, 255);
+}
 
 body {
   background-color: #ebebe7;

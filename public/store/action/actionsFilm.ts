@@ -12,7 +12,7 @@ class ActionsFilm {
 
     const result = await response;
     return {
-      'collectionMain': result
+      collectionMain: result
     };
   }
 
@@ -26,7 +26,19 @@ class ActionsFilm {
 
     const result = await response;
     return {
-      'collectionMenu': result
+      collectionMenu: result
+    };
+  }
+
+  async getActor ({ actorName }: actor) {
+    const response = get({
+      url: urls.actor,
+      query: { actorName: actorName }
+    });
+
+    const result = await response;
+    return {
+      actorInfo: result
     };
   }
 }

@@ -30,3 +30,8 @@ export const actionCollectionMenu = (params: collectionParams) => ({
   type: 'collectionMenu',
   value: params
 });
+
+export const actionActor = (params: string) => ({
+  type: 'actor',
+  value: params
+});

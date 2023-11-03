@@ -29,6 +29,41 @@ app.use(cookie());
 
 const port = process.env.PORT || 8001;
 
+const getActorDescrition = {
+  status: 200,
+  body: {
+    isHeader: true,
+    header: 'Сильвестр Сталлоне',
+    subHeader: 'Sylvester Stallone',
+    number: '8 млн.',
+    headersItems: ['Биография', 'Фото'],
+    infoText: 'Родился 6 июля 1946 года в Нью-Йорке. Его отец, парикмахер Фрэнк Сталлоне-старший (англ. Frank Stallone, Sr., 1919—2011), — иммигрант из Сицилии; мать, Жаклин Лейбофиш (1921—2020).',
+    row: [
+      {
+        rowName: 'Карьера:',
+        rowText: 'Актер, Сценарист, Продюсер, Режиссер'
+      },
+      {
+        rowName: 'Рост:',
+        rowText: '1,77 м'
+      },
+      {
+        rowName: 'Дата рождения:',
+        rowText: '6 июля 1946 - 77 лет'
+      },
+      {
+        rowName: 'Место рождения:',
+        rowText: 'Нью-Йорк, США'
+      },
+      {
+        rowName: 'Жанры:',
+        rowText: 'боевик, драма, триллер'
+      }
+    ]
+  }
+};
+
+
 const films = {
   status: 200,
   body: {
@@ -126,6 +161,7 @@ const users = {
 };
 const ids = {};
 
+
 app.use(express.static('dist'));
 
 app.use('/signin', (req, res) => {
@@ -133,6 +169,7 @@ app.use('/signin', (req, res) => {
     res.sendFile(__dirname + '/index.html');
     return
   }
+
 
   const password = req.body.password;
   const login = req.body.login;
@@ -150,7 +187,7 @@ app.use('/signin', (req, res) => {
   ids[id] = login;
 
   res.cookie('session_id', id, {
-    expires: new Date(Date.now() + 1000 * 60 * 10 )
+    expires: new Date(Date.now() + 1000 * 60 * 10),
   });
 
   // res.cookie('session_id', { httpOnly: true });
@@ -217,6 +254,12 @@ app.get('/logout', (req, res) => {
   return res.status(200).json({ status: 200 });
 });
 
+
+app.get('/api/v1/actor', (req, res) => {
+  return res.status(200).json({ getActorDescrition });
+});
+
+
 app.get('/selection', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
@@ -230,3 +273,4 @@ app.get('/films/', (req, res) => {
     res.status(404).send('Страница не найдена');
   }
 });
+

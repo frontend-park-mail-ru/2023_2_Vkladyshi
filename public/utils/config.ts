@@ -10,6 +10,10 @@ import { Signin } from '@components/Signin/signin';
 import { Footer } from '@components/Footer/footer';
 import { Signup } from '@components/Signup/signup';
 import { SelectCollection } from '@components/SelectCollection/selectCollection';
+import { Description } from '@components/Description/description';
+import { AddInfo } from '@components/AdditionalInfo/additionalInfo';
+import { CountLikeActor } from '@components/countLikeActor/countLikeActor';
+import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
 
 export const ROOT = document.querySelector('#root');
 
@@ -18,6 +22,7 @@ export const DOMAIN = 'http://127.0.0.1:8001';
 export const urls = {
   main: '/',
   basket: '/api/v1/films',
+  actor: '/api/v1/actor',
   profile: '/profile',
   signin: '/signin',
   signup: '/signup',
@@ -60,11 +65,17 @@ export const selectCollectionPage = new SelectCollectionPage(ROOT);
 export const contentBlock = new ContentBlock(ROOT);
 export const signin = new Signin(ROOT);
 
+export const desc = new Description(ROOT);
+export const info = new AddInfo(ROOT);
+
 export const signup = new Signup(ROOT);
 export const footer = new Footer(ROOT);
 export const filmSelection = new FilmSelection(ROOT);
-
+export const LkStar = new CountLikeActor(ROOT);
 export const selectCollection = new SelectCollection(ROOT);
+
+const actorPage = new ActorDescritionPage(ROOT);
+
 export const config = {
   menu: {
     basket: {
@@ -139,5 +150,6 @@ export const routes = [
   { path: '/signin', view: signinPage },
   { path: '/signup', view: signupPage },
   { path: '/selection', view: selectCollectionPage },
-  { path: '/films', view: filmSelectionPage }
+  { path: '/films', view: filmSelectionPage },
+  { path: '/actor', view: actorPage }
 ];

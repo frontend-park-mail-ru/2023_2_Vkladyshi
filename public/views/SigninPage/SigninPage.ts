@@ -1,8 +1,6 @@
 import { View } from '@views/view';
-import {
-  errorInputs, responseStatuses,
-  signin
-} from '@utils/config';
+import { errorInputs, responseStatuses, signin } from '@utils/config';
+
 import { store } from '@store/store';
 import { actionAuth, actionSignin } from '@store/action/actionTemplates';
 import { returnError } from '@utils/addError';
@@ -70,6 +68,7 @@ export class SigninPage extends View {
           props: ''
         },
         { pushState: true, refresh: false });
+
       return;
     }
 
@@ -89,7 +88,9 @@ export class SigninPage extends View {
   getForm () {
     const signin = document.querySelector('.signin');
     const loginHTML = document.querySelector('.loginInput') as HTMLInputElement;
-    const passwordHTML = document.querySelector('.passwordInput') as HTMLInputElement;
+    const passwordHTML = document.querySelector(
+      '.passwordInput'
+    ) as HTMLInputElement;
 
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -198,7 +199,7 @@ export class SigninPage extends View {
     switch (this.state.statusLogin) {
       case responseStatuses.success:
         store.dispatch(actionAuth(true));
-        store.subscribe('statusLogin', this.subscribeLoginStatus);
+        store.unsubscribe('statusLogin', this.subscribeLoginStatus);
         return true;
       case responseStatuses.notAuthorized:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);

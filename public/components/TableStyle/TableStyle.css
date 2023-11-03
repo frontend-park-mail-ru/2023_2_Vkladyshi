@@ -1,0 +1,46 @@
+.table__header {
+  color: #000;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  letter-spacing: 2px;
+}
+
+/* .table__row {
+  margin-top: 2%;
+  margin-bottom: 2%;
+
+  display: flex;
+  align-items: flex-start;
+} */
+
+.table__row__img {
+  height: 90%;
+  width: auto;
+  margin-right: 5%;
+}
+
+.table__row__title {
+  color: #000;
+  font-family: Montserrat;
+  font-size: 30px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: 1.5px;
+  text-align: left;
+}
+
+.table__row__text {
+  color: #000;
+  text-align: left;
+  font-family: Montserrat;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: normal;
+  letter-spacing: 1.5px;
+}

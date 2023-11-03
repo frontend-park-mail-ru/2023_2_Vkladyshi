@@ -18,8 +18,8 @@ export class FilmSelectionPage extends View {
   constructor (ROOT) {
     super(ROOT);
 
-    this.subscribeCollectionMenu = this.subscribeCollectionMenu.bind(this);
-    store.subscribe('collectionMenu', this.subscribeCollectionMenu);
+    this.componentDidMount = this.componentDidMount.bind(this);
+    store.subscribe('collectionMenu', this.componentDidMount);
   }
 
   /**
@@ -27,7 +27,7 @@ export class FilmSelectionPage extends View {
    * @return {string} html авторизации
    * @param isNotMain
    */
-  async render (isNotMain) {
+  render (isNotMain) {
     if (isNotMain) {
       this.renderDefaultPage();
       const contentBlockHTML = document.querySelector('.contentBlock');
@@ -36,7 +36,6 @@ export class FilmSelectionPage extends View {
       const result = store.getState('collectionMenu');
 
       if (result === null) {
-        contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(url.search));
         return;
       }
 
@@ -52,7 +51,13 @@ export class FilmSelectionPage extends View {
     });
   }
 
-  subscribeCollectionMenu () {
+  async componentDidMount () {
+    const url = new URL(window.location.href);
+    const contentBlockHTML = document.querySelector('.contentBlock');
+    const result = store.getState('collectionMenu');
 
+    if (result === null) {
+      contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(url.search));
+    }
   }
 }
