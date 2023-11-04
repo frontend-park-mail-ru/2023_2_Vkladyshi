@@ -51,7 +51,8 @@ export class ActorDescritionPage extends View {
 
     const result = {
       body: this.state.actorInfo,
-      title: 'Основная информация'
+      title: 'Основная информация',
+      headersItems: ['Биография']
     };
 
     if (document.querySelector('.contentBlock') != null) {
@@ -61,11 +62,11 @@ export class ActorDescritionPage extends View {
 
       document
         ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', LkStar.render(this.state.actorInfo));
+        ?.insertAdjacentHTML('beforeend', LkStar.render(result));
 
       document
         ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', info.render(this.state.actorInfo));
+        ?.insertAdjacentHTML('beforeend', info.render(result));
     }
 
     if (document.querySelector('.footer') == null) {

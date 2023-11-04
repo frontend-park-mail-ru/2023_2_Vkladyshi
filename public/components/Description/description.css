@@ -100,3 +100,12 @@
   margin-left: 0;
   font-size: 25px;
 }
+
+.table__actor__text {
+  cursor: pointer;
+}
+
+.table__actor__text:hover {
+  color: #343333;
+
+}

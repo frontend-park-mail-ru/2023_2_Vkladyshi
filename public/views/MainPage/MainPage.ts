@@ -1,6 +1,6 @@
 import { View } from '@views/view';
 import {
-  header, filmSelectionPage
+  header, filmSelectionPage, actorPage
 } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth } from '@store/action/actionTemplates';
