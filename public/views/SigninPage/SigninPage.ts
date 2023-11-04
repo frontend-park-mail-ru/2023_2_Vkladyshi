@@ -67,7 +67,8 @@ export class SigninPage extends View {
           path: '/',
           props: ''
         },
-        { pushState: true, refresh: false });
+        { pushState: true, refresh: false }
+      );
 
       return;
     }

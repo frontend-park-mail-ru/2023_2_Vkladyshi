@@ -50,7 +50,9 @@ export class MainPage extends View {
     this.renderDefaultPage();
 
     filmSelectionPage.render(false)?.then((response) => {
-      document.querySelector('.contentBlock')?.insertAdjacentHTML('beforeend', <string>response);
+      document
+        .querySelector('.contentBlock')
+        ?.insertAdjacentHTML('beforeend', <string>response);
     });
 
     // Это заглушка для просмотра того, что ренедерить вьюха

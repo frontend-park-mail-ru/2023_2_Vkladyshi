@@ -54,10 +54,7 @@ class Router {
     window.addEventListener('popstate', () => {
       const href = new URL(window.location.href).pathname;
 
-      this.go(
-        { path: href, props: '' },
-        { pushState: false, refresh: false }
-      );
+      this.go({ path: href, props: '' }, { pushState: false, refresh: false });
     });
 
     this.refresh();

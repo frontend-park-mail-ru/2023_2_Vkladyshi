@@ -2,7 +2,11 @@ import { View } from '@views/view';
 import { errorInputs, responseStatuses, signup } from '@utils/config';
 import { router } from '@router/router';
 import { store } from '@store/store';
-import { actionAuth, actionSignin, actionSignup } from '@store/action/actionTemplates';
+import {
+  actionAuth,
+  actionSignin,
+  actionSignup
+} from '@store/action/actionTemplates';
 import { returnError } from '@utils/addError';
 import {
   validateEmail,
@@ -74,7 +78,8 @@ export class SignupPage extends View {
           path: '/',
           props: ''
         },
-        { pushState: true, refresh: false });
+        { pushState: true, refresh: false }
+      );
       return;
     }
 

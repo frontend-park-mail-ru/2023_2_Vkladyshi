@@ -1,8 +1,5 @@
 import { View } from '@views/view';
-import {
-  ROOT,
-  selectCollection
-} from '@utils/config';
+import { ROOT, selectCollection } from '@utils/config';
 
 import { router } from '@router/router';
 import { store } from '@store/store';

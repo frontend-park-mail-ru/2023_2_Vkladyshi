@@ -18,7 +18,6 @@ const handlers = [
     type: 'actor',
     method: actionsFilm.getActor.bind(actionsFilm)
   }
-
 ];
 
 export { handlers };

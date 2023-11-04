@@ -39,16 +39,23 @@ export class FilmSelectionPage extends View {
         return;
       }
 
-      contentBlockHTML?.insertAdjacentHTML('beforeend', filmSelection.render(getCollection(result)));
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        filmSelection.render(getCollection(result))
+      );
     }
 
     return this.returnTemplate('new');
   }
 
   returnTemplate (collectionId) {
-    return store.dispatch(actionCollectionMain({ collection_id: collectionId })).then(response => {
-      return filmSelection.render(getCollection(store.getState('collectionMain')));
-    });
+    return store
+      .dispatch(actionCollectionMain({ collection_id: collectionId }))
+      .then((response) => {
+        return filmSelection.render(
+          getCollection(store.getState('collectionMain'))
+        );
+      });
   }
 
   async componentDidMount () {
@@ -57,7 +64,10 @@ export class FilmSelectionPage extends View {
     const result = store.getState('collectionMenu');
 
     if (result === null) {
-      contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(url.search));
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        await this.returnTemplate(url.search)
+      );
     }
   }
 }
