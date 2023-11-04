@@ -10,6 +10,7 @@ export interface FilmPage {
   };
 }
 
+
 export class FilmPage extends View {
   private popupEvent: (event) => void;
   /**
@@ -69,6 +70,7 @@ export class FilmPage extends View {
         filmRating.render(result)
       );
       contentBlockHTML?.insertAdjacentHTML('beforeend', info.render(result));
+
     }
 
     if (document.querySelector('.footer') == null) {

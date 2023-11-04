@@ -1,0 +1,49 @@
+<!--
+  {
+  "stars_burning": [
+    true,
+    true,
+    true,
+    false,
+    false
+  ],
+  "mark": 5.7,
+  "mark_number": 11120
+}
+
+ -->
+
+<div class='countLikeActor'>
+  <div class='countLikeActor__star-box'>
+    {{#each stars_burning}}
+      {{#if this includeZero=false}}
+        <img
+          class='countLikeActor__star-box__star'
+          src='../../icons/Оценеено=Есть оценка.svg'
+          alt='Горящая звезда'
+        />
+      {{/if}}
+      {{#if this includeZero=true}}
+        <img
+          class='countLikeActor__star-box__star'
+          src='../../icons/Оценеено=Нет оценки.svg'
+          alt='Погасшая звезда'
+        />
+      {{/if}}
+    {{/each}}
+  </div>
+
+  <div class='countLikeActor__mark countLikeActor__mark_good table__header'>
+    {{mark}}
+  </div>
+  <div class='countLikeActor__mark-number table__row__text'>{{mark-number}}
+    оценок</div>
+  <img
+    class='countLikeActor__watched'
+    src='../../icons/Будут смотреть=Не смотрим.svg'
+  />
+  <img
+    class='countLikeActor__review'
+    src='../../icons/Иконка написать отзыв.svg'
+  />
+</div>

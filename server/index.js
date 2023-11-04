@@ -182,7 +182,7 @@ app.use('/login', (req, res) => {
 app.use('/signin', (req, res) => {
   if (req.method === 'GET') {
     res.sendFile(__dirname + '/index.html');
-    return
+    return;
   }
 
   const password = req.body.password;
@@ -218,7 +218,7 @@ app.use('/registration', (req, res) => {
 app.use('/signup', (req, res) => {
   if (req.method === 'GET') {
     res.sendFile(__dirname + '/index.html');
-    return
+    return;
   }
 
   const password = req.body.password;

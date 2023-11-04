@@ -45,7 +45,6 @@ export class FilmSelectionPage extends View {
         this.componentDidMount();
         return;
       }
-
       console.log(result, 1111, getCollection(result));
       contentBlockHTML?.insertAdjacentHTML('beforeend', filmSelection.render(getCollection(result)));
       this.componentDidMount();
@@ -56,9 +55,13 @@ export class FilmSelectionPage extends View {
   }
 
   returnTemplate (collectionId) {
-    return store.dispatch(actionCollectionMain({ collection_id: collectionId })).then(response => {
-      return filmSelection.render(getCollection(store.getState('collectionMain')));
-    });
+    return store
+      .dispatch(actionCollectionMain({ collection_id: collectionId }))
+      .then((response) => {
+        return filmSelection.render(
+          getCollection(store.getState('collectionMain'))
+        );
+      });
   }
 
   componentDidMount () {
@@ -91,6 +94,5 @@ export class FilmSelectionPage extends View {
   }
 
   subscribeCollectionMenu () {
-
   }
 }

@@ -1,0 +1,45 @@
+.button {
+  border-radius: 50px;
+  background: rgba(0, 0, 0, 0.5);
+
+  padding: 10px 20px;
+  margin: 1% auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.button__text {
+  color: #fff;
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 300;
+  line-height: normal;
+  letter-spacing: 0.6px;
+}
+
+.form {
+  display: flex;
+  width: 800px;
+  padding: 15px 30px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 50px;
+  background: #fff;
+
+  margin: 1% auto;
+}
+
+.form__text {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-family: Montserrat;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: 0.96px;
+}

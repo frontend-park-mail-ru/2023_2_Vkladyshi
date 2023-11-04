@@ -72,12 +72,11 @@ class Router {
         props = `/${names[2]}`;
       }
 
-      // console.log(url, url.pathname,  names, path, props, names[1])
-
       this.go(
         { path: path, props: props },
         { pushState: false, refresh: false }
       );
+
     });
     this.refresh();
   }

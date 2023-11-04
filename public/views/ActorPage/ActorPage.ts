@@ -1,17 +1,12 @@
 import { View } from '@views/view';
-import {
-  footer,
-  desc,
-  info,
-  LkStar
-} from '@utils/config';
+import { footer, desc, info, LkStar } from '@utils/config';
 import { store } from '@store/store';
 import { actionActor } from '@store/action/actionTemplates';
 
 export interface ActorDescritionPage {
   state: {
-    actorInfo: null
-  }
+    actorInfo: null;
+  };
 }
 
 /**

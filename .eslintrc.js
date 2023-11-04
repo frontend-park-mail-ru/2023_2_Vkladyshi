@@ -25,6 +25,6 @@ module.exports = {
   rules: {
     'require-jsdoc': 'warn',
     'valid-jsdoc': 'warn',
-    semi: ['error', 'always']
+    semi: ['error', 'always'],
   },
 };

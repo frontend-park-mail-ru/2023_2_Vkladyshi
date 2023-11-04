@@ -14,8 +14,12 @@ import { Description } from '@components/Description/description';
 import { AddInfo } from '@components/AdditionalInfo/additionalInfo';
 import { CountLikeActor } from '@components/countLikeActor/countLikeActor';
 import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
+
 import { FilmPage } from '@views/FilmPage/FilmPage';
 import { FilmRating } from '@components/FilmRating/filmRating';
+
+import { СountLikeFilm } from '@components/countLikeFilm/countLikeFilm';
+import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
 
 export const ROOT = document.querySelector('#root');
 
@@ -77,6 +81,9 @@ export const selectCollection = new SelectCollection(ROOT);
 export const actorPage = new ActorDescritionPage(ROOT);
 export const filmPage = new FilmPage(ROOT);
 export const filmRating = new FilmRating(ROOT);
+export const changeUserData = new ChangeUserData(ROOT);
+
+export const countLikeFilm = new СountLikeFilm(ROOT);
 
 export const config = {
   menu: {
