@@ -4,9 +4,9 @@ import { store } from '@store/store';
 import { actionFilm } from '@store/action/actionTemplates';
 
 export interface FilmPage {
-    state: {
-      filmInfo: null
-    };
+  state: {
+    filmInfo: null;
+  };
 }
 
 export class FilmPage extends View {
@@ -15,10 +15,10 @@ export class FilmPage extends View {
    * @param ROOT
    * @class
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
-      filmInfo: null
+      filmInfo: null,
     };
 
     this.subscribeFilmStatus = this.subscribeFilmStatus.bind(this);
@@ -29,7 +29,7 @@ export class FilmPage extends View {
    * Метод создания страницы
    * @param props
    */
-  render (props) {
+  render(props) {
     this.renderDefaultPage();
 
     if (props != null) {
@@ -39,7 +39,7 @@ export class FilmPage extends View {
     this.componentDidMount();
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const mainHTML = document.querySelector('main');
     const contentBlockHTML = document.querySelector('.contentBlock');
 
@@ -55,13 +55,17 @@ export class FilmPage extends View {
     const result = {
       body: this.state.filmInfo,
       actors: this.state.filmInfo!['actors'],
-      title: 'О фильме',
-      headersItems: ['Описание', 'Трейлер']
+      header: 'О фильме',
+      headersItems: ['Описание', 'Трейлер'],
+      isHeader: true,
     };
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
-      contentBlockHTML?.insertAdjacentHTML('beforeend', filmRating.render(result));
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        filmRating.render(result)
+      );
       contentBlockHTML?.insertAdjacentHTML('beforeend', info.render(result));
     }
 
@@ -70,7 +74,7 @@ export class FilmPage extends View {
     }
   }
 
-  subscribeFilmStatus () {
+  subscribeFilmStatus() {
     this.state.filmInfo = store.getState('filmInfo');
     store.unsubscribe('filmInfo', this.subscribeFilmStatus);
     this.componentDidMount();

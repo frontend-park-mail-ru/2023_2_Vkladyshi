@@ -5,9 +5,9 @@
     alt='description__img'
   />
   <div class='description__text'>
-    {{#if body.isHeader}}
+    {{#if isHeader}}
       <div class='description__text__header'>
-        <p class='description__text__header__header-string'>{{title.header}}</p>
+        <p class='description__text__header__header-string'>{{header}}</p>
         <p class='description__text__header__subheader-string'>
           {{body.subHeader}}
         </p>
@@ -15,27 +15,36 @@
     {{/if}}
 
     <div class='description__text__table'>
-      <div class='description__table table__header'>{{title}}</div>
-        <div class='description__table table__row'>
-          <span class='description__table__row table__row__title'>Жанр</span>
-          <span class='description__table__text table__row__text'>{{body.genre}}</span>
-        </div>
-        <div class='description__table table__row'>
-            <span class='description__table__row table__row__title'>Страна</span>
-            <span class='description__table__text table__row__text'>{{body.country}}</span>
-        </div>
-        <div class='description__table table__row'>
-            <span class='description__table__row table__row__title'>Год</span>
-            <span class='description__table__text table__row__text'>{{body.year}}</span>
-        </div>
-        <div class='description__table table__row'>
-            <span class='description__table__row table__row__title'>Актёры</span>
-        <div class='description__table table__row'>
-            {{#each actors}}
-            <span class='description__table__text table__row__text' data-section='{{this.id}}'>{{this}}</span>
-            {{/each}}
-        </div>
-        </div>
+      <div class='description__table table__header'>{{body.title}}</div>
+      <div class='description__table table__row'>
+        <span class='description__table__row table__row__title'>Жанр</span>
+        <span
+          class='description__table__text table__row__text'
+        >{{body.genre}}</span>
+      </div>
+      <div class='description__table table__row'>
+        <span class='description__table__row table__row__title'>Страна</span>
+        <span
+          class='description__table__text table__row__text'
+        >{{body.country}}</span>
+      </div>
+      <div class='description__table table__row'>
+        <span class='description__table__row table__row__title'>Год</span>
+        <span
+          class='description__table__text table__row__text'
+        >{{body.year}}</span>
+      </div>
+      <div class='description__table table__row'>
+        <span class='description__table__row table__row__title'>Актеры</span>
+        {{! <div class='description__table table__row'> }}
+        {{#each actors}}
+          <span
+            class='description__table__text table__row__text'
+            data-section='{{this.id}}'
+          >{{this}}</span>
+        {{/each}}
+        {{! </div> }}
+      </div>
     </div>
 
   </div>
