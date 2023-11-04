@@ -1,5 +1,5 @@
-type countLikeFilmHbs = (context: any, options?: any) => string;
+type changeUserDataHbs = (context: any, options?: any) => string;
 
-declare let countLikeFilm: countLikeFilmHbs;
+declare let changeUserData: changeUserDataHbs;
 
-export = countLikeFilm;
+export = changeUserData;

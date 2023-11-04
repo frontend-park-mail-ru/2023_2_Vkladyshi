@@ -30,6 +30,7 @@
   user-select: none;
 
   width: 0%;
+  margin: 0;
 }
 
 .ChangeUserData__form__img {
@@ -37,6 +38,7 @@
   height: auto;
 
   margin-right: 5%;
+  margin-left: 0;
 }
 
 .ChangeUserData__form__apply {

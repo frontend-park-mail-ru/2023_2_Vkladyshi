@@ -20,23 +20,23 @@ export class FilmPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       // filmInfo: null,
-      filmInfo: null,
+      filmInfo: null
     };
 
     // this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
-    //fix it
+    // fix it
   }
 
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     // store.dispatch(actionActor('NameActor'));
-    //fix it
+    // fix it
     // store.subscribe('actor', this.subscribeActorStatus);
 
     const mainHTML = document.querySelector('main');
@@ -76,5 +76,5 @@ export class FilmPage extends View {
   //   store.unsubscribe('film', this.subscribeActorStatus);
   //   this.render();
   // }
-  //fix it
+  // fix it
 }

@@ -1,37 +1,37 @@
 export const setUser = (user: user) => ({
   type: 'setUser',
-  value: user,
+  value: user
 });
 
 export const actionAuth = (isAuth = false) => ({
-  type: 'auth',
+  type: 'auth'
 });
 
 export const actionLogout = () => ({
-  type: 'logout',
+  type: 'logout'
 });
 
 export const actionSignin = (user: user) => ({
   type: 'signin',
-  value: user,
+  value: user
 });
 
 export const actionSignup = (user: user) => ({
   type: 'signup',
-  value: user,
+  value: user
 });
 
 export const actionCollectionMain = (params: collectionParams) => ({
   type: 'collectionMain',
-  value: params,
+  value: params
 });
 
 export const actionCollectionMenu = (params: collectionParams) => ({
   type: 'collectionMenu',
-  value: params,
+  value: params
 });
 
 export const actionActor = (params: string) => ({
   type: 'actor',
-  value: params,
+  value: params
 });
