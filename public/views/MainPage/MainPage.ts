@@ -4,12 +4,13 @@ import {
   header,
   contentBlock,
   footer,
-  filmSelectionPage
+  filmSelectionPage,
 } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth } from '@store/action/actionTemplates';
 
-import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
+// import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
+import { FilmPage } from '@views/FilmPage/FilmPage';
 
 export interface MainPage {
   state: {
@@ -29,11 +30,11 @@ export class MainPage extends View {
    * @param ROOT
    * @class
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       isAuth: false,
-      isCurrentView: true
+      isCurrentView: true,
     };
 
     this.subscribeAuthStatus = this.subscribeAuthStatus.bind(this);
@@ -46,7 +47,7 @@ export class MainPage extends View {
   /**
    * Метод создания страницы
    */
-  render () {
+  render() {
     this.renderDefaultPage();
 
     filmSelectionPage.render(false)?.then((response) => {
@@ -60,16 +61,21 @@ export class MainPage extends View {
     // const actorPage = new ActorDescritionPage(ROOT);
     // actorPage.render();
 
+    // Это заглушка для просмотра того, что ренедерить вьюха
+    this.state.isCurrentView = false;
+    const filmPage = new FilmPage(ROOT);
+    filmPage.render();
+
     store.dispatch(actionAuth());
   }
 
-  subscribeAuthStatus () {
+  subscribeAuthStatus() {
     this.state.isAuth = store.getState('statusAuth') === 200;
 
     this.changeHeader(this.state.isAuth);
   }
 
-  subscribeLogoutStatus () {
+  subscribeLogoutStatus() {
     const isLogout = store.getState('logoutStatus') === 200;
     if (isLogout) {
       this.changeHeader(!isLogout);
@@ -78,7 +84,7 @@ export class MainPage extends View {
     this.changeHeader(this.state.isAuth);
   }
 
-  changeHeader (isAuth) {
+  changeHeader(isAuth) {
     const headerHTML = document.querySelector('header');
 
     headerHTML!.innerHTML = header.render(isAuth);

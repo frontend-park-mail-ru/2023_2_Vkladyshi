@@ -9,8 +9,9 @@
 @import './components/AdditionalInfo/additionalInfo.css';
 @import './components/TableStyle/TableStyle.css';
 @import './components/countLikeActor/countLikeActor.css';
-@import './components/Button/button.css';
+@import './components/Button&Form/button&form.css';
 @import './components/countLikeFilm/countLikeFilm.css';
+@import './components/ChangeUserData/changeUserData.css';
 
 :root {
   --background-color: #cdc6c6;

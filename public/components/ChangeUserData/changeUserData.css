@@ -1,0 +1,44 @@
+.ChangeUserData {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+  width: var(--block-width);
+
+  margin: auto;
+}
+
+.ChangeUserData__header {
+  margin: 1% 0;
+  padding: 1% 0;
+  border-bottom: 1px solid black;
+  width: 100%;
+}
+
+.ChangeUserData__form {
+  display: flex;
+  flex-direction: column;
+
+  margin: 2% auto;
+}
+
+.ChangeUserData__form__file[type='file'] {
+  outline: 0;
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+
+  width: 0%;
+}
+
+.ChangeUserData__form__img {
+  width: 7%;
+  height: auto;
+
+  margin-right: 5%;
+}
+
+.ChangeUserData__form__apply {
+  width: 50%;
+}
