@@ -15,6 +15,7 @@ import { AddInfo } from '@components/AdditionalInfo/additionalInfo';
 import { CountLikeActor } from '@components/countLikeActor/countLikeActor';
 import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
 import { СountLikeFilm } from '@components/countLikeFilm/countLikeFilm';
+import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
 
 export const ROOT = document.querySelector('#root');
 
@@ -29,12 +30,12 @@ export const urls = {
   signup: '/signup',
   selection: '/selection',
   authorized: '/authcheck',
-  logout: '/logout'
+  logout: '/logout',
 };
 
 export const methods = {
   post: 'POST',
-  get: 'GET'
+  get: 'GET',
 };
 
 export const responseStatuses = {
@@ -43,7 +44,7 @@ export const responseStatuses = {
   notAuthorized: 401,
   serverError: 500,
   notFound: 404,
-  alreadyExists: 409
+  alreadyExists: 409,
 };
 
 export const errorInputs = {
@@ -55,7 +56,7 @@ export const errorInputs = {
   NotPassword: 'Нет пароля',
   NotAllElements: 'Нет всех полей',
   LoginExists: 'Логин уже используется',
-  ServerError: 'Ошибка сервера'
+  ServerError: 'Ошибка сервера',
 };
 
 export const mainPage = new MainPage(ROOT);
@@ -74,6 +75,7 @@ export const footer = new Footer(ROOT);
 export const filmSelection = new FilmSelection(ROOT);
 export const LkStar = new CountLikeActor(ROOT);
 export const selectCollection = new SelectCollection(ROOT);
+export const changeUserData = new ChangeUserData(ROOT);
 
 export const countLikeFilm = new СountLikeFilm(ROOT);
 
@@ -85,39 +87,39 @@ export const config = {
       href: urls.basket,
       png_name: 'VectorMyFilms.svg',
       name: 'Мои фильмы',
-      renderObject: ''
+      renderObject: '',
     },
     profile: {
       href: urls.profile,
       png_name: 'profileIcon.svg',
       name: 'Мой профиль',
-      renderObject: ''
+      renderObject: '',
     },
     signin: {
       href: urls.signin,
       png_name: 'profileIcon.svg',
       name: 'Войти',
-      renderObject: signinPage
+      renderObject: signinPage,
     },
     signup: {
       href: urls.signup,
       png_name: 'profileIcon.svg',
       name: 'Зарегистрироваться',
-      renderObject: signupPage
+      renderObject: signupPage,
     },
     selection: {
       href: urls.selection,
       png_name: 'VectorTags.svg',
       name: 'Меню',
-      renderObject: selectCollectionPage
+      renderObject: selectCollectionPage,
     },
     main: {
       href: urls.main,
       png_name: 'titleIcon.png',
       name: 'MovieHub',
-      renderObject: mainPage
-    }
-  }
+      renderObject: mainPage,
+    },
+  },
 };
 
 export const header = new Header(ROOT);
@@ -135,17 +137,17 @@ export const collections = {
         { key: 'Комедии', value: 'comedy' },
         { key: 'Криминальные', value: 'crime' },
         { key: 'Ужасы', value: 'horror' },
-        { key: 'Мелодрама', value: 'melodrama' }
-      ]
+        { key: 'Мелодрама', value: 'melodrama' },
+      ],
     },
     collection2: {
       collection_name: 'Страны',
       collection_items: [
         { key: 'Российские', value: 'ru' },
-        { key: 'Зарубежные', value: 'eu' }
-      ]
-    }
-  }
+        { key: 'Зарубежные', value: 'eu' },
+      ],
+    },
+  },
 };
 
 export const routes = [
@@ -154,5 +156,5 @@ export const routes = [
   { path: '/signup', view: signupPage },
   { path: '/selection', view: selectCollectionPage },
   { path: '/films', view: filmSelectionPage },
-  { path: '/actor', view: actorPage }
+  { path: '/actor', view: actorPage },
 ];
