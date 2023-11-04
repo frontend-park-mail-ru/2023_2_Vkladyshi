@@ -7,6 +7,10 @@ const handlers = [
   { type: 'auth', method: actionsUser.auth.bind(actionsUser) },
   { type: 'logout', method: actionsUser.logout.bind(actionsUser) },
   {
+    type: 'settings',
+    method: actionsUser.getSettings.bind(actionsUser)
+  },
+  {
     type: 'collectionMain',
     method: actionsFilm.getCollectionDataMain.bind(actionsFilm)
   },

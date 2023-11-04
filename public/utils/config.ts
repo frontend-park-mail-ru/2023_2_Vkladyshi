@@ -20,6 +20,7 @@ import { FilmRating } from '@components/FilmRating/filmRating';
 
 import { СountLikeFilm } from '@components/countLikeFilm/countLikeFilm';
 import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
+import { UserPage } from '@views/userPage/userPage';
 
 export const ROOT = document.querySelector('#root');
 
@@ -83,6 +84,7 @@ export const filmPage = new FilmPage(ROOT);
 export const filmRating = new FilmRating(ROOT);
 export const changeUserData = new ChangeUserData(ROOT);
 
+export const userPage = new UserPage(ROOT);
 export const countLikeFilm = new СountLikeFilm(ROOT);
 
 export const config = {
@@ -161,5 +163,6 @@ export const routes = [
   { path: '/selection', view: selectCollectionPage },
   { path: '/films', view: filmSelectionPage },
   { path: '/actor', view: actorPage },
-  { path: '/film', view: filmPage }
+  { path: '/film', view: filmPage },
+  { path: '/settings', view: userPage }
 ];

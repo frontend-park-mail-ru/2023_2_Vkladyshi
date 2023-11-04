@@ -40,3 +40,8 @@ export const actionFilm = (params: film) => ({
   type: 'film',
   value: params
 });
+
+export const actionSettings = (params: number) => ({
+  type: 'settings',
+  value: params
+});

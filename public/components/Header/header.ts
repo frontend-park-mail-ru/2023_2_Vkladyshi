@@ -3,7 +3,7 @@ import { router } from '@router/router';
 import * as templateHeader from '@components/Header/header.hbs';
 import { config } from '@utils/config';
 import { store } from '@store/store';
-import { actionLogout } from '@store/action/actionTemplates';
+import { actionLogout, actionSettings } from '@store/action/actionTemplates';
 
 /**
  * Класс создания верхней шапки
@@ -99,6 +99,16 @@ export class Header extends Component {
           break;
         case target.closest('.logoutHeader') !== null:
           store.dispatch(actionLogout());
+          break;
+        case target.closest('.settingsHeader') !== null:
+          console.log(1111);
+          router.go(
+            {
+              path: '/settings',
+              props: ''
+            },
+            { pushState: true, refresh: false }
+          );
           break;
         case target.closest('.menuHeader') !== null:
           router.go(

@@ -35,6 +35,7 @@ export class UserPage extends View {
    * Метод создания страницы
    */
   render () {
+    console.log('userPAge');
     // store.dispatch(actionActor('NameActor'));
     // fix it
     // store.subscribe('actor', this.subscribeActorStatus);

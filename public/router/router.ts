@@ -76,7 +76,6 @@ class Router {
         { path: path, props: props },
         { pushState: false, refresh: false }
       );
-
     });
     this.refresh();
   }
@@ -86,6 +85,7 @@ class Router {
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
     const view = this.mapViews.get(stateObject.path);
+    console.log(view, 1212);
     view?.render(stateObject.props);
     this.navigate(stateObject, pushState);
   }

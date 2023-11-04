@@ -45,6 +45,7 @@ export class ActorDescritionPage extends View {
     }
 
     const result = {
+      actor: true,
       body: this.state.actorInfo,
       title: 'Основная информация',
       headersItems: ['Биография']

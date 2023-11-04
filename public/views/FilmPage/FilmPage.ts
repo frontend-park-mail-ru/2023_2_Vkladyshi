@@ -1,5 +1,5 @@
 import { View } from '@views/view';
-import { desc, info, footer, filmRating } from '@utils/config';
+import { desc, info, footer, countLikeFilm } from '@utils/config';
 import { store } from '@store/store';
 import { actionFilm } from '@store/action/actionTemplates';
 import { router } from '@router/router';
@@ -9,7 +9,6 @@ export interface FilmPage {
     filmInfo: null;
   };
 }
-
 
 export class FilmPage extends View {
   private popupEvent: (event) => void;
@@ -50,8 +49,13 @@ export class FilmPage extends View {
     }
 
     let actors = null;
+    let mark = null;
+    let count = null;
+
     if (this.state.filmInfo) {
       actors = this.state.filmInfo!['actors'];
+      mark = this.state.filmInfo!['rating'];
+      count = this.state.filmInfo!['number'];
     }
 
     const result = {
@@ -60,17 +64,26 @@ export class FilmPage extends View {
       actors: actors,
       header: 'О фильме',
       headersItems: ['Описание', 'Отзывы'],
-      isHeader: true
+      isHeader: true,
+
+      stars_burning: [
+        true,
+        true,
+        true,
+        false,
+        false
+      ],
+      mark: mark,
+      mark_number: count
+
     };
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
       contentBlockHTML?.insertAdjacentHTML(
-        'beforeend',
-        filmRating.render(result)
+        'beforeend', countLikeFilm.render(result)
       );
       contentBlockHTML?.insertAdjacentHTML('beforeend', info.render(result));
-
     }
 
     if (document.querySelector('.footer') == null) {

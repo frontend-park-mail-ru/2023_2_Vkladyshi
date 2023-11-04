@@ -1,6 +1,6 @@
 import { View } from '@views/view';
 import {
-  header, filmSelectionPage, ROOT
+  header, filmSelectionPage, ROOT, userPage
 } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth } from '@store/action/actionTemplates';
@@ -57,6 +57,7 @@ export class MainPage extends View {
 
     // actorPage.render();
     // filmPage.render();
+    // userPage.render();
   }
 
   subscribeMainPageStatus () {

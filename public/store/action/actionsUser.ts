@@ -51,6 +51,10 @@ class ActionsUser {
     const result = await response;
     return { logoutStatus: result['status'] };
   }
+
+  async getSettings () {
+    return { settingsStatus: true };
+  }
 }
 
 export const actionsUser = new ActionsUser();

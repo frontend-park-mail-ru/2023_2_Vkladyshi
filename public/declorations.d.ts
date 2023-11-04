@@ -26,3 +26,7 @@ interface actor {
 interface film {
   filmId?: number;
 }
+
+interface settings {
+  userId: number;
+}
