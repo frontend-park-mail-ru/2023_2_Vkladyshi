@@ -6,7 +6,7 @@ import { footer, desc, info, changeUserData } from '@utils/config';
 
 export interface UserPage {
   state: {
-    filmInfo: null;
+    userInfo: null;
   };
 }
 
@@ -20,11 +20,11 @@ export class UserPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       // filmInfo: null,
-      filmInfo: null,
+      userInfo: null
     };
 
     // this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -34,7 +34,7 @@ export class UserPage extends View {
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     // store.dispatch(actionActor('NameActor'));
     // fix it
     // store.subscribe('actor', this.subscribeActorStatus);
@@ -48,7 +48,7 @@ export class UserPage extends View {
     if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', desc.render(this.state.filmInfo));
+        ?.insertAdjacentHTML('beforeend', desc.render(this.state.userInfo));
     }
 
     if (document.querySelector('.contentBlock') != null) {
@@ -56,14 +56,14 @@ export class UserPage extends View {
         ?.querySelector('.contentBlock')
         ?.insertAdjacentHTML(
           'beforeend',
-          changeUserData.render(this.state.filmInfo)
+          changeUserData.render(this.state.userInfo)
         );
     }
 
     if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', info.render(this.state.filmInfo));
+        ?.insertAdjacentHTML('beforeend', info.render(this.state.userInfo));
     }
 
     if (document.querySelector('.footer') == null) {
