@@ -22,3 +22,7 @@ interface collectionParams {
 interface actor {
   actorName?: string;
 }
+
+interface film {
+  filmId?: number;
+}

@@ -15,10 +15,10 @@ const webpackConfig = require('../webpack.config.ts');
 
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 app.use(
-  cors({
-    origin: ['http://localhost:8001', 'http://127.0.0.1:8001'],
-    credentials: true,
-  })
+    cors({
+      origin: ['http://localhost:8001', 'http://127.0.0.1:8001'],
+      credentials: true,
+    })
 );
 
 app.use(morgan('dev'));
@@ -29,15 +29,24 @@ app.use(cookie());
 
 const port = process.env.PORT || 8001;
 
-const getActorDescrition = {
+const findFilmByTitle = (films, title) => {
+  // eslint-disable-next-line guard-for-in
+  for (const filmKey in films) {
+    const film = films[filmKey];
+    if (film.title === title) {
+      return film;
+    }
+  }
+  return null;
+}
+
+const actor = {
   status: 200,
   body: {
     isHeader: true,
+    poster_href: '/icons/star.png',
     header: 'Сильвестр Сталлоне',
     subHeader: 'Sylvester Stallone',
-    number: '8 млн.',
-    headersItems: ['Биография', 'Фото'],
-    infoText: 'Родился 6 июля 1946 года в Нью-Йорке. Его отец, парикмахер Фрэнк Сталлоне-старший (англ. Frank Stallone, Sr., 1919—2011), — иммигрант из Сицилии; мать, Жаклин Лейбофиш (1921—2020).',
     row: [
       {
         rowName: 'Карьера:',
@@ -59,10 +68,12 @@ const getActorDescrition = {
         rowName: 'Жанры:',
         rowText: 'боевик, драма, триллер'
       }
-    ]
+    ],
+    headersItems: ['Биография', 'Фото'],
+    infoText: 'Родился 6 июля 1946 года в Нью-Йорке. Его отец, парикмахер Фрэнк Сталлоне-старший (англ. Frank Stallone, Sr., 1919—2011), — иммигрант из Сицилии; мать, Жаклин Лейбофиш (1921—2020).',
+    number: '8 млн.',
   }
-};
-
+}
 
 const films = {
   status: 200,
@@ -70,41 +81,55 @@ const films = {
     collection_name: 'Новинки',
     films: {
       film1: {
+        filmId: 10,
         poster_href: '../../icons/bastards.jpg',
         title: 'film_1 111111',
         rating: 4.5,
       },
       film2: {
+        filmId: 9,
         poster_href: '../../icons/Poster.jpg',
         title: 'film_2',
         rating: 4.1,
       },
       film3: {
+        filmId: 7,
         poster_href: '../../icons/Poster.jpg',
-        title: 'film_3',
+        title: 'film',
+        number: 12467,
         rating: 4.5,
-      },
+        genre: 'Боевики',
+        country: 'США',
+        year: '2023',
+        actors: ['Джейсон Стэйтем', 'Фифти Сент', 'Меган Фокс', 'Сильвестр Сталлоне', 'Энди Гарсиа', 'Дольф Лундгрен', 'Тони Джа', 'Ико Уайс', 'Рэнди Кутюр', 'Джейкоб Скипио'],
+        infoText: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
+    },
       film4: {
+        filmId: 7,
         poster_href: '../../icons/Poster.jpg',
         title: 'film_4',
         rating: 3,
       },
       film5: {
+        filmId: 5,
         poster_href: '../../icons/Poster.jpg',
         title: 'film_1',
         rating: 4.5,
       },
       film6: {
+        filmId: 3,
         poster_href: '../../icons/Poster.jpg',
-        title: 'film_2',
+        title: 'film_211111111111111111111111',
         rating: 4.1,
       },
       film7: {
+        filmId: 2,
         poster_href: '../../icons/Poster.jpg',
         title: 'film_3',
         rating: 4.5,
       },
       film8: {
+        filmId: 1,
         poster_href: '../../icons/Poster.jpg',
         title: 'film_4',
         rating: 3,
@@ -112,6 +137,7 @@ const films = {
     },
   },
 };
+
 
 // eslint-disable-next-line camelcase
 const films_tags = {
@@ -123,11 +149,13 @@ const films_tags = {
         poster_href: '../../icons/bastards.jpg',
         title: 'film_1 111110000000000000000000000000000000000000000001',
         rating: 1,
+        filmId: 11,
       },
       film2: {
         poster_href: '/',
         title: 'film_2',
         rating: 2,
+        filmId: 15,
       },
     },
   },
@@ -161,15 +189,19 @@ const users = {
 };
 const ids = {};
 
-
 app.use(express.static('dist'));
 
+
+app.use('/login', (req, res) => {
+  if (req.method === 'GET') {
+    res.sendFile(__dirname + '/index.html');
+  }
+})
 app.use('/signin', (req, res) => {
   if (req.method === 'GET') {
     res.sendFile(__dirname + '/index.html');
     return
   }
-
 
   const password = req.body.password;
   const login = req.body.login;
@@ -187,12 +219,19 @@ app.use('/signin', (req, res) => {
   ids[id] = login;
 
   res.cookie('session_id', id, {
-    expires: new Date(Date.now() + 1000 * 60 * 10),
+    expires: new Date(Date.now() + 1000 * 60 * 10 )
   });
 
   // res.cookie('session_id', { httpOnly: true });
   res.status(200).json({ status: 200 });
 });
+
+
+app.use('/registration', (req, res) => {
+  if (req.method === 'GET') {
+    res.sendFile(__dirname + '/index.html');
+  }
+})
 
 app.use('/signup', (req, res) => {
   if (req.method === 'GET') {
@@ -224,19 +263,6 @@ app.use('/signup', (req, res) => {
   return res;
 });
 
-app.use('/api/v1/films', (req, res) => {
-  const secFetchSite = req.headers['sec-fetch-site'];
-  if (!secFetchSite) {
-    res.sendFile(__dirname + '/index.html');
-    return
-  }
-  console.log('/api/v1/films')
-  if (req.query.collection_id !== 'new') {
-    return res.status(200).json(films_tags);
-  }
-  return res.status(200).json(films);
-});
-
 app.get('/authcheck', (req, res) => {
   const id = req.cookies.session_id;
   const login = ids[id];
@@ -254,23 +280,53 @@ app.get('/logout', (req, res) => {
   return res.status(200).json({ status: 200 });
 });
 
-
-app.get('/api/v1/actor', (req, res) => {
-  return res.status(200).json({ getActorDescrition });
-});
-
-
 app.get('/selection', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/films/', (req, res) => {
+app.get('/actor', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+  res.status(200).json({ actor }).end();
+});
+
+app.get('/films/:collection_id', (req, res) => {
   const collectionId = req.query.collection_id;
-  console.log('/films/')
   if (collectionId !== 'new') {
     res.sendFile(__dirname + '/index.html');
   } else {
     res.status(404).send('Страница не найдена');
   }
+});
+
+app.get('/film/:filmId', (req, res) => {
+  const filmId = req.query.filmId;
+    res.sendFile(__dirname + '/index.html');
+});
+
+app.use('/api/v1/actor', (req, res) => {
+  return res.status(200).json(actor);
+});
+
+app.use('/api/v1/films', (req, res) => {
+  const secFetchSite = req.headers['sec-fetch-site'];
+  if (!secFetchSite) {
+    res.sendFile(__dirname + '/index.html');
+    return
+  }
+  if (req.query.collection_id !== 'new') {
+    return res.status(200).json(films_tags);
+  }
+  return res.status(200).json(films);
+});
+
+app.use('/api/v1/film', (req, res) => {
+  const secFetchSite = req.headers['sec-fetch-site'];
+  if (!secFetchSite) {
+    res.sendFile(__dirname + '/index.html');
+    return
+  }
+  const filmTitle = 'film';
+  const film = findFilmByTitle(films.body.films, filmTitle);
+  return res.status(200).json({body : film});
 });
 

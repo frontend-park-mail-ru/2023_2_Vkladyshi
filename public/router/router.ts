@@ -27,19 +27,22 @@ class Router {
   }
 
   refresh (redirect = false) {
-    const parsedUrl = new URL(window.location.href);
-    const matchedHref = parsedUrl.pathname;
-
     const url = new URL(window.location.href);
+    const names = url.pathname.split('/');
 
-    if (
-      this.mapViews.get(matchedHref) != null ||
-      this.privateMapViews.get(matchedHref) != null
-    ) {
+    if (this.mapViews.get(url.pathname) || this.privateMapViews.get(url.pathname)) {
       this.go(
         {
           path: url.pathname,
           props: url.search
+        },
+        { pushState: !redirect, refresh: !redirect }
+      );
+    } else if (this.mapViews.get(`/${names[1]}`)) {
+      this.go(
+        {
+          path: `/${names[1]}`,
+          props: `/${names[2]}`
         },
         { pushState: !redirect, refresh: !redirect }
       );
@@ -52,14 +55,30 @@ class Router {
     }
 
     window.addEventListener('popstate', () => {
-      const href = new URL(window.location.href).pathname;
+      const url = new URL(window.location.href);
+      const names = url.pathname.split('/');
+
+      let path = '';
+      let props = '';
+
+      console.log(names);
+      if (names[1] === '') {
+        path = '/';
+      } else {
+        path = `/${names[1]}`;
+      }
+
+      if (names[2]) {
+        props = `/${names[2]}`;
+      }
+
+      // console.log(url, url.pathname,  names, path, props, names[1])
 
       this.go(
-        { path: href, props: '' },
+        { path: path, props: props },
         { pushState: false, refresh: false }
       );
     });
-
     this.refresh();
   }
 
@@ -68,7 +87,6 @@ class Router {
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
     const view = this.mapViews.get(stateObject.path);
-
     view?.render(stateObject.props);
     this.navigate(stateObject, pushState);
   }

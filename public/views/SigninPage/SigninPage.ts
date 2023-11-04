@@ -2,7 +2,7 @@ import { View } from '@views/view';
 import { errorInputs, responseStatuses, signin } from '@utils/config';
 
 import { store } from '@store/store';
-import { actionAuth, actionSignin } from '@store/action/actionTemplates';
+import { actionSignin } from '@store/action/actionTemplates';
 import { returnError } from '@utils/addError';
 import { validateLogin, validatePassword } from '@utils/validate';
 import { router } from '@router/router';
@@ -38,16 +38,16 @@ export class SigninPage extends View {
 
     this.subscribeLoginStatus = this.subscribeLoginStatus.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
-    this.subscribeLogin = this.subscribeLogin.bind(this);
+
+    store.subscribe('statusLogin', this.subscribeLoginStatus);
   }
 
   /**
    * Метод создания страницы
    */
   render () {
-    this.renderDefaultPage();
-
     if (document.querySelector('.popupSign') == null) {
+      this.renderDefaultPage();
       const mainHTML = document.querySelector('main');
       const popup = document.createElement('div');
       popup.className = 'popupSign';
@@ -56,24 +56,7 @@ export class SigninPage extends View {
       mainHTML?.appendChild(popup);
     }
 
-    if (this.handlerStatus()) {
-      const popup = document.querySelector('.popupSign');
-      popup?.removeEventListener('click', this.popupEvent);
-
-      this.state.statusLogin = 0;
-      this.componentWillUnmount();
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false });
-
-      return;
-    }
-
     if (!this.state.isUserSubscriber) {
-      store.subscribe('user', this.subscribeLoginStatus);
       this.state.isUserSubscriber = true;
     }
 
@@ -141,7 +124,7 @@ export class SigninPage extends View {
           this.componentWillUnmount();
           router.go(
             {
-              path: '/signup',
+              path: '/registration',
               props: ''
             },
             { pushState: true, refresh: false }
@@ -158,13 +141,10 @@ export class SigninPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-
         case event.target.closest('.buttonLogin') !== null:
           if (!this.state.isSubscribed) {
-            store.subscribe('statusLogin', this.subscribeLoginStatus);
             this.state.isSubscribed = true;
           }
-          errorString?.classList.remove('active');
           this.getForm();
           break;
 
@@ -176,9 +156,7 @@ export class SigninPage extends View {
   }
 
   componentWillUnmount () {
-    const errorElement = document.querySelector(`.errorStringSignin`);
     const popup = document.querySelector('.popupSign');
-    errorElement?.classList.remove('active');
 
     if (this.state.isSubscribed) {
       store.unsubscribe('statusLogin', this.subscribeLoginStatus);
@@ -186,7 +164,6 @@ export class SigninPage extends View {
       this.state.isSubscribed = false;
     }
     if (this.state.isUserSubscriber) {
-      store.unsubscribe('user', this.subscribeLogin);
       this.state.isUserSubscriber = false;
     }
 
@@ -198,8 +175,6 @@ export class SigninPage extends View {
 
     switch (this.state.statusLogin) {
       case responseStatuses.success:
-        store.dispatch(actionAuth(true));
-        store.unsubscribe('statusLogin', this.subscribeLoginStatus);
         return true;
       case responseStatuses.notAuthorized:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);
@@ -212,10 +187,19 @@ export class SigninPage extends View {
 
   subscribeLoginStatus () {
     this.state.statusLogin = store.getState('statusLogin');
-    this.render();
-  }
 
-  subscribeLogin () {
-    this.render();
+    if (this.handlerStatus()) {
+      const popup = document.querySelector('.popupSign');
+      popup?.removeEventListener('click', this.popupEvent);
+
+      this.state.statusLogin = 0;
+      this.componentWillUnmount();
+      router.go(
+        {
+          path: '/',
+          props: ''
+        },
+        { pushState: true, refresh: false });
+    }
   }
 }

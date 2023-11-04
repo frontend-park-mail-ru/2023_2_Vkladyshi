@@ -38,7 +38,19 @@ class ActionsFilm {
 
     const result = await response;
     return {
-      actorInfo: result
+      actorInfo: result['body']
+    };
+  }
+
+  async getFilm ({ filmId }: film) {
+    const response = get({
+      url: urls.film,
+      query: { filmId: filmId }
+    });
+
+    const result = await response;
+    return {
+      filmInfo: result['body']
     };
   }
 }

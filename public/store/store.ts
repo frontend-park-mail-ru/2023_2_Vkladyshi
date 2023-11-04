@@ -69,6 +69,7 @@ class Store {
     if (newState) {
       this.setState(newState);
     }
+    return newState;
   }
 
   getState (nameObject) {

@@ -31,7 +31,12 @@ export const actionCollectionMenu = (params: collectionParams) => ({
   value: params
 });
 
-export const actionActor = (params: string) => ({
+export const actionActor = (params: actor) => ({
   type: 'actor',
+  value: params
+});
+
+export const actionFilm = (params: film) => ({
+  type: 'film',
   value: params
 });

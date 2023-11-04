@@ -3,6 +3,7 @@ import { store } from '@store/store';
 import { filmSelection } from '@utils/config';
 import { actionCollectionMain } from '@store/action/actionTemplates';
 import { getCollection } from '@utils/getCollection';
+import { router } from '@router/router';
 
 /**
  * Класс формирования подборки фильмов
@@ -11,6 +12,7 @@ import { getCollection } from '@utils/getCollection';
  */
 
 export class FilmSelectionPage extends View {
+  private popupEvent: (event) => void;
   /**
    * Конструктор класса
    * @param ROOT
@@ -18,8 +20,8 @@ export class FilmSelectionPage extends View {
   constructor (ROOT) {
     super(ROOT);
 
-    this.componentDidMount = this.componentDidMount.bind(this);
-    store.subscribe('collectionMenu', this.componentDidMount);
+    this.subscribeCollectionMenu = this.subscribeCollectionMenu.bind(this);
+    store.subscribe('collectionMenu', this.subscribeCollectionMenu);
   }
 
   /**
@@ -27,7 +29,7 @@ export class FilmSelectionPage extends View {
    * @return {string} html авторизации
    * @param isNotMain
    */
-  render (isNotMain) {
+  async render (isNotMain) {
     if (isNotMain) {
       this.renderDefaultPage();
       const contentBlockHTML = document.querySelector('.contentBlock');
@@ -36,10 +38,18 @@ export class FilmSelectionPage extends View {
       const result = store.getState('collectionMenu');
 
       if (result === null) {
+        const url = new URL(window.location.href);
+        const names = url.pathname.split('/');
+
+        contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(names[2]));
+        this.componentDidMount();
         return;
       }
 
+      console.log(result, 1111, getCollection(result));
       contentBlockHTML?.insertAdjacentHTML('beforeend', filmSelection.render(getCollection(result)));
+      this.componentDidMount();
+      return;
     }
 
     return this.returnTemplate('new');
@@ -51,13 +61,36 @@ export class FilmSelectionPage extends View {
     });
   }
 
-  async componentDidMount () {
-    const url = new URL(window.location.href);
-    const contentBlockHTML = document.querySelector('.contentBlock');
-    const result = store.getState('collectionMenu');
+  componentDidMount () {
+    const popup = document.querySelector('.filmSelection_films');
+    const popupEvent = (event) => {
+      this.popupEvent = popupEvent;
+      switch (true) {
+        case event.target.closest('.filmSelection_film') !== null:
+          const filmId = event.target.closest('.filmSelection_film').getAttribute('data-section');
+          this.componentWillUnmount();
+          router.go(
+            {
+              path: '/film',
+              props: `/${filmId}`
+            },
+            { pushState: true, refresh: false }
+          );
+          break;
+        default:
+          break;
+      }
+    };
+    popup?.addEventListener('click', popupEvent);
+  }
 
-    if (result === null) {
-      contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(url.search));
-    }
+  componentWillUnmount () {
+    const popup = document.querySelector('.filmSelection_films');
+
+    popup?.removeEventListener('click', this.popupEvent);
+  }
+
+  subscribeCollectionMenu () {
+
   }
 }

@@ -31,14 +31,17 @@ export class ActorDescritionPage extends View {
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
+
+    store.subscribe('actorInfo', this.subscribeActorStatus);
   }
 
   /**
    * Метод создания страницы
    */
   render () {
-    store.dispatch(actionActor('NameActor'));
-    // store.subscribe('actor', this.subscribeActorStatus);
+    this.renderDefaultPage();
+
+    store.dispatch(actionActor({ actorName: 'NameActor' }));
 
     const mainHTML = document.querySelector('main');
     const contentBlockHTML = document.querySelector('.contentBlock');
@@ -46,19 +49,20 @@ export class ActorDescritionPage extends View {
       document!.querySelector('.contentBlock')!.innerHTML = '';
     }
 
+    const result = {
+      body: this.state.actorInfo,
+      title: 'Основная информация'
+    };
+
     if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', desc.render(this.state.actorInfo));
-    }
+        ?.insertAdjacentHTML('beforeend', desc.render(result));
 
-    if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
         ?.insertAdjacentHTML('beforeend', LkStar.render(this.state.actorInfo));
-    }
 
-    if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
         ?.insertAdjacentHTML('beforeend', info.render(this.state.actorInfo));
@@ -71,7 +75,7 @@ export class ActorDescritionPage extends View {
 
   subscribeActorStatus () {
     this.state.actorInfo = store.getState('actorInfo');
-    store.unsubscribe('actor', this.subscribeActorStatus);
+    store.unsubscribe('actorInfo', this.subscribeActorStatus);
     this.render();
   }
 }

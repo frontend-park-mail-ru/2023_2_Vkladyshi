@@ -17,6 +17,10 @@ const handlers = [
   {
     type: 'actor',
     method: actionsFilm.getActor.bind(actionsFilm)
+  },
+  {
+    type: 'film',
+    method: actionsFilm.getFilm.bind(actionsFilm)
   }
 
 ];

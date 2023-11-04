@@ -5,7 +5,7 @@
   <div class='filmSelection_films'>
     {{#if haveFilms}}
       {{#each films}}
-        <div class='filmSelection_film'>
+        <div class='filmSelection_film' data-section='{{filmId}}'>
           <img class='filmSelection_film_poster' src='{{poster_href}}' />
           <p class='filmSelection_film_name'>{{title}}</p>
           <div class='filmSelection_film_rating'>
