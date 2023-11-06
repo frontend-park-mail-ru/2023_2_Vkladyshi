@@ -1,7 +1,7 @@
 <div class='description'>
   <img
     class='description__img'
-    src={{body.film.poster}}
+    src={{poster}}
     alt='description__img'
   />
   <div class='description__text'>
@@ -13,7 +13,7 @@
 
     {{#if film}}
     <div class='description__text__table'>
-      <div class='description__table table__header'>{{body.film.title}}</div>
+      <div class='description__table table__header'>{{title}}</div>
       <div class='description__table table__row'>
         <span class='description__table__row table__row__title'>Жанры</span>
           {{#each body.genre}}
@@ -25,13 +25,13 @@
         <span class='description__table__row table__row__title'>Страна</span>
         <span
           class='description__table__text table__row__text'
-        >{{body.film.country}}</span>
+        >{{country}}</span>
       </div>
       <div class='description__table table__row'>
         <span class='description__table__row table__row__title'>Год</span>
         <span
           class='description__table__text table__row__text'
-        >{{body.film.release_date}}</span>
+        >{{date}}</span>
       </div>
       <div class='description__table table__row'>
         <span class='description__table__row table__row__title'>Актеры</span>
@@ -43,23 +43,23 @@
     {{/if}}
     {{#if actor}}
         <div class='description__text__table'>
-            <div class='description__table table__header'>{{body.name}}</div>
+            <div class='description__table table__header'>{{name}}</div>
             <div class='description__table table__row'>
                 <span class='description__table__row table__row__title'>Карьера</span>
                 <span class='description__table__text table__row__text'
-                >{{body.career}}</span>
+                >{{career}}</span>
             </div>
             <div class='description__table table__row'>
                 <span class='description__table__row table__row__title'>Страна</span>
                 <span
                         class='description__table__text table__row__text'
-                >{{body.country}}</span>
+                >{{country}}</span>
             </div>
             <div class='description__table table__row'>
                 <span class='description__table__row table__row__title'>Год рождения</span>
                 <span
                         class='description__table__text table__row__text'
-                >{{body.year}}</span>
+                >{{date}}</span>
             </div>
             <div class='description__table table__row'>
                 <span class='description__table__row table__row__title'>Жанры</span>

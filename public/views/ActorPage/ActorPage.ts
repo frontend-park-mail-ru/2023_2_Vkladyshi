@@ -43,13 +43,31 @@ export class ActorDescritionPage extends View {
     if (document!.querySelector('.contentBlock') != null) {
       document!.querySelector('.contentBlock')!.innerHTML = '';
     }
+    let result = {};
 
-    const result = {
-      actor: true,
-      body: this.state.actorInfo,
-      title: 'Основная информация',
-      headerAbout: 'Биография'
-    };
+    const res = this.state.actorInfo;
+    if (res) {
+      const fullDate = new Date(res['birth_date']);
+      const dateYear = fullDate.getFullYear().toString();
+
+      console.log(res['birth_date'], 1111112);
+
+      result = {
+        actor: true,
+        body: this.state.actorInfo,
+        isHeader: true,
+        header: res['name'],
+        title: 'Основная информация',
+        headerAbout: 'Биография',
+        date: dateYear,
+        poster: res['poster'],
+        infoText: res['info'],
+        country: res['country'],
+        career: res['career'],
+      };
+    }
+
+
 
     if (document.querySelector('.contentBlock') != null) {
       document

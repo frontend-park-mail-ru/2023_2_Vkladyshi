@@ -48,41 +48,52 @@ export class FilmPage extends View {
       contentBlockHTML!.innerHTML = '';
     }
 
-    let actors = null;
-    let mark = null;
-    let count = null;
-    let genre = null;
+    let actors: string | null = null;
+    let mark: number | null = null;
+    let count: number | null = null;
+    let genre: string | null = null;
+    let poster: string | null = null;
+    let title: string | null = null;
+    let country: string | null = null;
+    let date: string | null = null;
+    let infoText: string | null = null;
 
     if (this.state.filmInfo) {
-      actors = this.state.filmInfo!['actors'];
-      mark = this.state.filmInfo!['rating'];
-      count = this.state.filmInfo!['number'];
-      genre = this.state.filmInfo!['genre'];
+      const filmInfo = this.state.filmInfo;
+      actors = filmInfo['actors'];
+      mark = filmInfo['rating'];
+      count = filmInfo['number'];
+      genre = filmInfo['genre'];
+      poster = filmInfo['film']['poster'];
+      title = filmInfo['film']['title'];
+      country = filmInfo['film']['country'];
+
+      const fullDate = new Date(filmInfo['film']['release_date']);
+      date = fullDate.getFullYear().toString();
+      infoText = filmInfo['film']['info'];
     }
 
     const result = {
       film: true,
       body: this.state.filmInfo,
-      genre: genre,
-      actors: actors,
+      genre,
+      actors,
+      poster,
+      country,
+      date,
+      title,
+      infoText,
       header: 'О фильме',
       headerAbout: 'Описание',
       headerComment: 'Отзывы',
       isHeader: true,
-
-      stars_burning: [
-        true,
-        true,
-        true,
-        false,
-        false
-      ],
-      mark: mark,
+      stars_burning: [true, true, true, false, false],
+      mark,
       mark_number: count
-
     };
 
-    console.log(result.genre);
+
+    console.log(result.date);
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
