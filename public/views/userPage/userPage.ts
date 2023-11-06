@@ -35,11 +35,8 @@ export class UserPage extends View {
    * Метод создания страницы
    */
   render () {
-    const mainHTML = document.querySelector('main');
-    // const contentBlockHTML = document.querySelector('.contentBlock');
-    if (document!.querySelector('.contentBlock') != null) {
-      document!.querySelector('.contentBlock')!.innerHTML = '';
-    }
+    this.renderDefaultPage();
+
 
     if (document.querySelector('.contentBlock') != null) {
       document
@@ -62,9 +59,6 @@ export class UserPage extends View {
         ?.insertAdjacentHTML('beforeend', info.render(this.state.userInfo));
     }
 
-    if (document.querySelector('.footer') == null) {
-      mainHTML?.insertAdjacentHTML('beforeend', footer.render());
-    }
   }
 
   // subscribeActorStatus() {
