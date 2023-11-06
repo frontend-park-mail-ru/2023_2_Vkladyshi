@@ -20,7 +20,10 @@ import { FilmRating } from '@components/FilmRating/filmRating';
 
 import { СountLikeFilm } from '@components/countLikeFilm/countLikeFilm';
 import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
+
 import { UserPage } from '@views/userPage/userPage';
+
+import { RewiewForm } from '@components/RewiewForm/rewiewForm';
 
 export const ROOT = document.querySelector('#root');
 
@@ -88,6 +91,8 @@ export const changeUserData = new ChangeUserData(ROOT);
 
 export const userPage = new UserPage(ROOT);
 export const countLikeFilm = new СountLikeFilm(ROOT);
+
+export const rewiewForm = new RewiewForm(ROOT);
 
 export const config = {
   menu: {

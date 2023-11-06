@@ -17,7 +17,7 @@ export class FilmPage extends View {
    * @param ROOT
    * @class
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       filmInfo: null

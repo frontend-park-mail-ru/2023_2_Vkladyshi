@@ -1,0 +1,38 @@
+.rewiew {
+  width: var(--block-width);
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  margin: 0 auto;
+}
+
+.rewiew__header {
+  width: 100%;
+  height: auto;
+
+  margin: 2% 0;
+  border-bottom: 3px black solid;
+  padding: 2% 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.rewiew__header__img {
+  height: auto;
+  width: 10%;
+}
+
+.rewiew__header__user-name {
+  display: inline;
+  margin: 3%;
+  width: 30%;
+}
+
+.rewiew__header__rewiew-data {
+  text-align: end;
+  width: 40%;
+}

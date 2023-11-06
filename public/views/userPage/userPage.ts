@@ -2,7 +2,7 @@ import { View } from '@views/view';
 import { footer, desc, info, changeUserData } from '@utils/config';
 // import { store } from '@store/store';
 // import { actionActor } from '@store/action/actionTemplates';
-// fix it
+// TODO
 
 export interface UserPage {
   state: {
@@ -28,7 +28,7 @@ export class UserPage extends View {
     };
 
     // this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
-    // fix it
+    // TODO
   }
 
   /**
@@ -36,7 +36,6 @@ export class UserPage extends View {
    */
   render () {
     this.renderDefaultPage();
-
     if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
@@ -57,7 +56,6 @@ export class UserPage extends View {
         ?.querySelector('.contentBlock')
         ?.insertAdjacentHTML('beforeend', info.render(this.state.userInfo));
     }
-
   }
 
   // subscribeActorStatus() {
@@ -65,5 +63,5 @@ export class UserPage extends View {
   //   store.unsubscribe('film', this.subscribeActorStatus);
   //   this.render();
   // }
-  // fix it
+  // TODO
 }
