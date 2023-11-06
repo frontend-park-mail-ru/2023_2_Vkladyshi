@@ -35,11 +35,6 @@ export class UserPage extends View {
    * Метод создания страницы
    */
   render () {
-    console.log('userPAge');
-    // store.dispatch(actionActor('NameActor'));
-    // fix it
-    // store.subscribe('actor', this.subscribeActorStatus);
-
     const mainHTML = document.querySelector('main');
     // const contentBlockHTML = document.querySelector('.contentBlock');
     if (document!.querySelector('.contentBlock') != null) {

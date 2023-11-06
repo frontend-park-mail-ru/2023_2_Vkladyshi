@@ -101,7 +101,6 @@ export class Header extends Component {
           store.dispatch(actionLogout());
           break;
         case target.closest('.settingsHeader') !== null:
-          console.log(1111);
           router.go(
             {
               path: '/settings',

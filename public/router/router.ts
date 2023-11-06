@@ -1,4 +1,6 @@
 import { DOMAIN, routes } from '@utils/config';
+import { store } from '@store/store';
+import { actionCSRF } from '@store/action/actionTemplates';
 
 interface Class {
   render: Function;
@@ -50,6 +52,7 @@ class Router {
   }
 
   start () {
+    store.dispatch(actionCSRF());
     for (const rout of routes) {
       this.register(rout);
     }
@@ -61,7 +64,6 @@ class Router {
       let path = '';
       let props = '';
 
-      console.log(names);
       if (names[1] === '') {
         path = '/';
       } else {
@@ -85,7 +87,7 @@ class Router {
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
     const view = this.mapViews.get(stateObject.path);
-    console.log(view, 1212);
+
     view?.render(stateObject.props);
     this.navigate(stateObject, pushState);
   }

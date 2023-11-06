@@ -1,4 +1,4 @@
-import { post, get } from '@utils/ajax';
+import { post, get, getCsrf } from '@utils/ajax';
 import { urls } from '@utils/config';
 
 class ActionsUser {
@@ -54,6 +54,17 @@ class ActionsUser {
 
   async getSettings () {
     return { settingsStatus: true };
+  }
+
+  async getCsrf () {
+    const response = getCsrf({
+      url: urls.csrf
+    });
+
+    const result = await response;
+    return {
+      csrf: result
+    };
   }
 }
 

@@ -7,6 +7,10 @@ export const actionAuth = (isAuth = false) => ({
   type: 'auth'
 });
 
+export const actionCSRF = () => ({
+  type: 'csrf'
+});
+
 export const actionLogout = () => ({
   type: 'logout'
 });

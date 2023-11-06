@@ -64,19 +64,19 @@ const films = {
     films: {
       film1: {
         filmId: 10,
-        poster_href: '../../icons/bastards.jpg',
+        poster_href: '/icons/bastards.jpg',
         title: 'film_1 111111',
         rating: 4.5,
       },
       film2: {
         filmId: 9,
-        poster_href: '../../icons/Poster.jpg',
+        poster_href: '/icons/Poster.jpg',
         title: 'film_2',
         rating: 4.1,
       },
       film3: {
         filmId: 7,
-        poster_href: '../../icons/Poster.jpg',
+        poster_href: '/icons/Poster.jpg',
         title: 'film',
         number: 12467,
         rating: 4.5,
@@ -88,31 +88,31 @@ const films = {
     },
       film4: {
         filmId: 7,
-        poster_href: '../../icons/Poster.jpg',
+        poster_href: '/icons/Poster.jpg',
         title: 'film_4',
         rating: 3,
       },
       film5: {
         filmId: 5,
-        poster_href: '../../icons/Poster.jpg',
+        poster_href: '/icons/Poster.jpg',
         title: 'film_1',
         rating: 4.5,
       },
       film6: {
         filmId: 3,
-        poster_href: '../../icons/Poster.jpg',
+        poster_href: '/icons/Poster.jpg',
         title: 'film_211111111111111111111111',
         rating: 4.1,
       },
       film7: {
         filmId: 2,
-        poster_href: '../../icons/Poster.jpg',
+        poster_href: '/icons/Poster.jpg',
         title: 'film_3',
         rating: 4.5,
       },
       film8: {
         filmId: 1,
-        poster_href: '../../icons/Poster.jpg',
+        poster_href: '/icons/Poster.jpg',
         title: 'film_4',
         rating: 3,
       },
@@ -214,6 +214,17 @@ app.use('/registration', (req, res) => {
     res.sendFile(__dirname + '/index.html');
   }
 })
+
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: true });
+
+app.use(csrfProtection);
+app.get('/api/v1/csrf', (req, res) => {
+  res.set('x-csrf-token', req.csrfToken());
+  return res.status(200).json({
+    status: 200,
+  });
+});
 
 app.use('/signup', (req, res) => {
   if (req.method === 'GET') {

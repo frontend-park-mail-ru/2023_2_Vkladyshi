@@ -45,7 +45,7 @@ export class FilmSelectionPage extends View {
         this.componentDidMount();
         return;
       }
-      console.log(result, 1111, getCollection(result));
+
       contentBlockHTML?.insertAdjacentHTML('beforeend', filmSelection.render(getCollection(result)));
       this.componentDidMount();
       return;

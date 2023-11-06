@@ -11,6 +11,10 @@ const handlers = [
     method: actionsUser.getSettings.bind(actionsUser)
   },
   {
+    type: 'csrf',
+    method: actionsUser.getCsrf.bind(actionsUser)
+  },
+  {
     type: 'collectionMain',
     method: actionsFilm.getCollectionDataMain.bind(actionsFilm)
   },

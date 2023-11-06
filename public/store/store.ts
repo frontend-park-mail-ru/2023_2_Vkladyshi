@@ -4,6 +4,7 @@ interface Store {
   state: { [key: string]: any };
   mapActionHandlers: Map<string, Function>;
   mapSubscribers: Map<string, Array<Function>>;
+  csrfToken: string;
 }
 
 class Store {
@@ -11,6 +12,7 @@ class Store {
     this.state = {};
     this.mapActionHandlers = new Map();
     this.mapSubscribers = new Map();
+    this.csrfToken = '';
 
     for (const handler of handlers) {
       this.register(handler);

@@ -3,7 +3,7 @@ import {
   header, filmSelectionPage, ROOT, userPage
 } from '@utils/config';
 import { store } from '@store/store';
-import { actionAuth } from '@store/action/actionTemplates';
+import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 
 export interface MainPage {
