@@ -11,7 +11,7 @@ export class RewiewForm extends Component {
    * Метод рендеринга элемента
    * @return {string} html форма заполенения отзыва
    */
-  render() {
+  render () {
     return templateRewiewForm();
   }
 }

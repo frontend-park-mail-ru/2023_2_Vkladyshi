@@ -2,7 +2,7 @@ import { View } from '@views/view';
 import { footer, desc, info, countLikeFilm } from '@utils/config';
 // import { store } from '@store/store';
 // import { actionActor } from '@store/action/actionTemplates';
-// fix it
+// TODO
 
 export interface FilmPage {
   state: {
@@ -20,23 +20,23 @@ export class FilmPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       // filmInfo: null,
-      filmInfo: null
+      filmInfo: null,
     };
 
     // this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
-    // fix it
+    // TODO
   }
 
   /**
    * Метод создания страницы
    */
-  render () {
+  render() {
     // store.dispatch(actionActor('NameActor'));
-    // fix it
+    // TODO
     // store.subscribe('actor', this.subscribeActorStatus);
 
     const mainHTML = document.querySelector('main');
@@ -76,5 +76,5 @@ export class FilmPage extends View {
   //   store.unsubscribe('film', this.subscribeActorStatus);
   //   this.render();
   // }
-  // fix it
+  // TODO
 }
