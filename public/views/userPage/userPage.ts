@@ -37,7 +37,6 @@ export class UserPage extends View {
   render () {
     this.renderDefaultPage();
 
-
     if (document.querySelector('.contentBlock') != null) {
       document
         ?.querySelector('.contentBlock')
