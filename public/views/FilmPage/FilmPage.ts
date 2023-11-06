@@ -82,8 +82,7 @@ export class FilmPage extends View {
 
     };
 
-    console.log(result.genre)
-
+    console.log(result.genre);
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
@@ -134,7 +133,7 @@ export class FilmPage extends View {
     this.componentDidMount();
   }
 
-  renderComments() {
+  renderComments () {
 
   }
 }

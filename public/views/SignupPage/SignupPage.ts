@@ -2,7 +2,7 @@ import { View } from '@views/view';
 import { errorInputs, responseStatuses, signup } from '@utils/config';
 import { router } from '@router/router';
 import { store } from '@store/store';
-import { actionSignin, actionSignup } from '@store/action/actionTemplates';
+import { actionCSRF, actionSignin, actionSignup } from '@store/action/actionTemplates';
 
 import { returnError } from '@utils/addError';
 import {
@@ -18,6 +18,7 @@ export interface SignupPage {
     isUserSubscriber: boolean;
     login: string;
     password: string;
+    email: string;
     haveEvent: boolean;
   };
 }
@@ -41,7 +42,8 @@ export class SignupPage extends View {
       isUserSubscriber: false,
       haveEvent: false,
       login: '',
-      password: ''
+      password: '',
+      email: ''
     };
 
     this.subscribeSignupStatus = this.subscribeSignupStatus.bind(this);
@@ -157,11 +159,13 @@ export class SignupPage extends View {
       signupForm?.removeEventListener('submit', handleSubmit);
 
       if (this.validateForm(login, password, passwordSecond, email)) {
+        this.state.login = login;
+        this.state.password = password;
+        this.state.email = email;
+
         store.dispatch(
           actionSignup({ login: login, password: password, email: email })
         );
-        this.state.login = login;
-        this.state.password = password;
       }
     };
 
@@ -246,6 +250,11 @@ export class SignupPage extends View {
         break;
       case responseStatuses.alreadyExists:
         returnError(errorInputs.LoginExists, errorClassName);
+        break;
+      case responseStatuses.csrfError:
+        store.dispatch(actionCSRF()).then(response => {
+          store.dispatch(actionSignup({ login: this.state.login, password: this.state.password, email: this.state.email }));
+        });
         break;
       default:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);

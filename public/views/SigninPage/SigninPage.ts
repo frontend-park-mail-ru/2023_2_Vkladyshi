@@ -2,10 +2,11 @@ import { View } from '@views/view';
 import { errorInputs, responseStatuses, signin } from '@utils/config';
 
 import { store } from '@store/store';
-import { actionSignin } from '@store/action/actionTemplates';
+import { actionCSRF, actionSignin } from '@store/action/actionTemplates';
 import { returnError } from '@utils/addError';
 import { validateLogin, validatePassword } from '@utils/validate';
 import { router } from '@router/router';
+import { response } from 'express';
 
 export interface SigninPage {
   state: {
@@ -13,6 +14,8 @@ export interface SigninPage {
     isSubscribed: boolean;
     isUserSubscriber: boolean;
     haveEvent: boolean;
+    login: string;
+    password: string;
   };
 }
 
@@ -33,7 +36,9 @@ export class SigninPage extends View {
       statusLogin: 0,
       isSubscribed: false,
       isUserSubscriber: false,
-      haveEvent: false
+      haveEvent: false,
+      login: '',
+      password: ''
     };
 
     this.subscribeLoginStatus = this.subscribeLoginStatus.bind(this);
@@ -83,6 +88,8 @@ export class SigninPage extends View {
       signin?.removeEventListener('submit', handleSubmit);
 
       if (this.validateForm(login, password)) {
+        this.state.login = login;
+        this.state.password = password;
         store.dispatch(actionSignin({ login: login, password: password }));
       }
     };
@@ -178,6 +185,11 @@ export class SigninPage extends View {
         return true;
       case responseStatuses.notAuthorized:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);
+        break;
+      case responseStatuses.csrfError:
+        store.dispatch(actionCSRF()).then(response => {
+          store.dispatch(actionSignin({ login: this.state.login, password: this.state.password }));
+        });
         break;
       default:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);

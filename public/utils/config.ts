@@ -55,7 +55,8 @@ export const responseStatuses = {
   notAuthorized: 401,
   serverError: 500,
   notFound: 404,
-  alreadyExists: 409
+  alreadyExists: 409,
+  csrfError: 412
 };
 
 export const errorInputs = {
