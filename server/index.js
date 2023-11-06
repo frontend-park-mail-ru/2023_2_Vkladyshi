@@ -44,7 +44,7 @@ const actor = {
   status: 200,
   body: {
     isHeader: true,
-    poster_href: '/icons/star.png',
+    poster: '/icons/star.png',
     name: 'Сильвестр Сталлоне',
 
     genres: ['боевик', 'драма', 'триллер'],
@@ -63,62 +63,98 @@ const films = {
     collection_name: 'Новинки',
     films: {
       film1: {
-        filmId: 10,
-        poster_href: '/icons/bastards.jpg',
+        film_id: 10,
+        poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
         rating: 4.5,
       },
       film2: {
-        filmId: 9,
-        poster_href: '/icons/Poster.jpg',
+        film_id: 9,
+        poster: '/icons/Poster.jpg',
         title: 'film_2',
         rating: 4.1,
       },
       film3: {
-        filmId: 7,
-        poster_href: '/icons/Poster.jpg',
+        film_id: 7,
+        poster: '/icons/Poster.jpg',
         title: 'film',
         number: 12467,
         rating: 4.5,
         genre: 'Боевики',
         country: 'США',
         year: '2023',
-        actors: [{ actor_id: 1 ,actorName: 'Джейсон Стэйтем'}, { actor_id: 2 ,actorName: 'Фифти Сент'}, { actor_id: 3 ,actorName:'Меган Фокс' }, { actor_id: 4 ,actorName:'Сильвестр Сталлоне'}],
+        actors: [{ actor_id: 1 ,actor_name: 'Джейсон Стэйтем'}, { actor_id: 2 ,actor_name: 'Фифти Сент'}, { actor_id: 3 ,actor_name:'Меган Фокс' }, { actor_id: 4 ,actor_name:'Сильвестр Сталлоне'}],
         infoText: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
     },
+      film9: {
+        film: {
+          id: 10,
+          title: 'film',
+          poster: '/icons/Poster.jpg',
+          release_date: '2023-12-30',
+          country: 'USA',
+          mpaa: 'R',
+          info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
+        },
+        genre: [{id: 0, title: "war"}],
+        rating: 10,
+        number: 11,
+        actors: [{ id_actor: 1 ,actor_name: 'Джейсон Стэйтем'}, { id_actor: 2 ,actor_name: 'Фифти Сент'}, { id_actor: 3 ,actor_name:'Меган Фокс' }, { id_actor: 4 ,actor_name:'Сильвестр Сталлоне'}],
+        directors: [{directors_id:1, directors_name: 'POHUI'}],
+      },
       film4: {
-        filmId: 7,
-        poster_href: '/icons/Poster.jpg',
+        film_id: 7,
+        poster: '/icons/Poster.jpg',
         title: 'film_4',
         rating: 3,
       },
       film5: {
-        filmId: 5,
-        poster_href: '/icons/Poster.jpg',
+        film_id: 5,
+        poster: '/icons/Poster.jpg',
         title: 'film_1',
         rating: 4.5,
       },
       film6: {
-        filmId: 3,
-        poster_href: '/icons/Poster.jpg',
+        film_id: 3,
+        poster: '/icons/Poster.jpg',
         title: 'film_211111111111111111111111',
         rating: 4.1,
       },
       film7: {
-        filmId: 2,
-        poster_href: '/icons/Poster.jpg',
+        film_id: 2,
+        poster: '/icons/Poster.jpg',
         title: 'film_3',
         rating: 4.5,
       },
       film8: {
-        filmId: 1,
-        poster_href: '/icons/Poster.jpg',
+        film_id: 1,
+        poster: '/icons/Poster.jpg',
         title: 'film_4',
         rating: 3,
       },
     },
   },
 };
+
+const film = {
+  status: 200,
+  body: {
+    film: {
+      id: 10,
+          title: 'film',
+          poster: '/icons/Poster.jpg',
+          release_date: '2023-12-30',
+          country: 'USA',
+          mpaa: 'R',
+          info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
+    },
+    genre: [{id: 0, title: "war"}],
+        rating: 10,
+        number: 11,
+        actors: [{ id_actor: 1 ,actor_name: 'Джейсон Стэйтем'}, { id_actor: 2 ,actor_name: 'Фифти Сент'}, { id_actor: 3 ,actor_name:'Меган Фокс' }, { id_actor: 4 ,actor_name:'Сильвестр Сталлоне'}],
+        directors: [{directors_id:1, directors_name: 'POHUI'}],
+  }
+}
 
 
 // eslint-disable-next-line camelcase
@@ -128,16 +164,16 @@ const films_tags = {
     collection_name: 'Новинки',
     films: {
       film1: {
-        poster_href: '../../icons/bastards.jpg',
+        poster: '../../icons/bastards.jpg',
         title: 'film_1 111110000000000000000000000000000000000000000001',
         rating: 1,
-        filmId: 11,
+        film_id: 11,
       },
       film2: {
-        poster_href: '/',
+        poster: '/',
         title: 'film_2',
         rating: 2,
-        filmId: 15,
+        film_id: 15,
       },
     },
   },
@@ -322,8 +358,8 @@ app.use('/api/v1/film', (req, res) => {
     res.sendFile(__dirname + '/index.html');
     return
   }
-  const filmTitle = 'film';
-  const film = findFilmByTitle(films.body.films, filmTitle);
-  return res.status(200).json({body : film});
+  //const filmTitle = 'film';
+  //const film = findFilmByTitle(films.body.films.film9, filmTitle);
+  return res.status(200).json({body : films.body.films.film9});
 });
 

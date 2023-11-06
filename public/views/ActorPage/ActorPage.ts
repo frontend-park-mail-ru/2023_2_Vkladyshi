@@ -48,7 +48,7 @@ export class ActorDescritionPage extends View {
       actor: true,
       body: this.state.actorInfo,
       title: 'Основная информация',
-      headersItems: ['Биография']
+      headerAbout: 'Биография'
     };
 
     if (document.querySelector('.contentBlock') != null) {

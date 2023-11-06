@@ -17,7 +17,7 @@ export class FilmPage extends View {
    * @param ROOT
    * @class
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       filmInfo: null
@@ -51,19 +51,23 @@ export class FilmPage extends View {
     let actors = null;
     let mark = null;
     let count = null;
+    let genre = null;
 
     if (this.state.filmInfo) {
       actors = this.state.filmInfo!['actors'];
       mark = this.state.filmInfo!['rating'];
       count = this.state.filmInfo!['number'];
+      genre = this.state.filmInfo!['genre'];
     }
 
     const result = {
       film: true,
       body: this.state.filmInfo,
+      genre: genre,
       actors: actors,
       header: 'О фильме',
-      headersItems: ['Описание', 'Отзывы'],
+      headerAbout: 'Описание',
+      headerComment: 'Отзывы',
       isHeader: true,
 
       stars_burning: [
@@ -77,6 +81,9 @@ export class FilmPage extends View {
       mark_number: count
 
     };
+
+    console.log(result.genre)
+
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
@@ -105,6 +112,9 @@ export class FilmPage extends View {
             { pushState: true, refresh: false }
           );
           break;
+        case event.target.closest('.about-film') !== null:
+          this.renderComments();
+          break;
         default:
           break;
       }
@@ -122,5 +132,9 @@ export class FilmPage extends View {
     this.state.filmInfo = store.getState('filmInfo');
     store.unsubscribe('filmInfo', this.subscribeActorStatus);
     this.componentDidMount();
+  }
+
+  renderComments() {
+
   }
 }

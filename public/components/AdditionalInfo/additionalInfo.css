@@ -35,3 +35,12 @@
   margin-left: 0;
   margin-right: 0;
 }
+
+.about-film, .comments-film, .table__actor__text, .about-actor, .table__genre__text {
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.about-film:hover, .comments-film:hover, .table__actor__text:hover , .about-actor:hover, .table__genre__text:hover {
+ opacity: 0.6;
+}

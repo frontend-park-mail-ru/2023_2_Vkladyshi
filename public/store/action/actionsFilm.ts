@@ -45,7 +45,7 @@ class ActionsFilm {
   async getFilm ({ filmId }: film) {
     const response = get({
       url: urls.film,
-      query: { filmId: filmId }
+      query: { film_id: filmId }
     });
 
     const result = await response;
