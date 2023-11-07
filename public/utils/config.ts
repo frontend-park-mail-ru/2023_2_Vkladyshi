@@ -24,6 +24,8 @@ import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
 import { UserPage } from '@views/userPage/userPage';
 
 import { RewiewForm } from '@components/RewiewForm/rewiewForm';
+import { CommentsPage } from '@views/CommentsPage/CommentsPage';
+import { Review } from '@components/Review/review';
 
 export const ROOT = document.querySelector('#root');
 
@@ -36,6 +38,7 @@ export const urls = {
   film: '/api/v1/film',
   csrf: '/api/v1/csrf',
   actor: '/api/v1/actor',
+  comments: 'api/v1/comment/search',
   settings: '/api/v1/settings',
   profile: '/profile',
   signin: '/signin',
@@ -90,11 +93,11 @@ export const actorPage = new ActorDescritionPage(ROOT);
 export const filmPage = new FilmPage(ROOT);
 export const filmRating = new FilmRating(ROOT);
 export const changeUserData = new ChangeUserData(ROOT);
-
 export const userPage = new UserPage(ROOT);
 export const countLikeFilm = new СountLikeFilm(ROOT);
-
-export const rewiewForm = new RewiewForm(ROOT);
+export const reviewForm = new RewiewForm(ROOT);
+export const review = new Review(ROOT);
+export const commentsPage = new CommentsPage(ROOT);
 
 export const config = {
   menu: {
@@ -173,5 +176,6 @@ export const routes = [
   { path: '/films', view: filmSelectionPage },
   { path: '/actor', view: actorPage },
   { path: '/film', view: filmPage },
-  { path: '/settings', view: userPage }
+  { path: '/settings', view: userPage },
+  { path: '/comments/search', view: commentsPage }
 ];

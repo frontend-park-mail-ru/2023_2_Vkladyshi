@@ -53,3 +53,8 @@ export const actionPutSettings = (params: settings) => ({
 export const actionGetSettings = () => ({
   type: 'getSettings'
 });
+
+export const actionGetCommentsUser = (params: paginator) => ({
+  type: 'userComments',
+  value: params
+});

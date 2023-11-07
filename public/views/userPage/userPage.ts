@@ -4,10 +4,12 @@ import { store } from '@store/store';
 import { actionCSRF, actionGetSettings, actionPutSettings, actionSignup } from '@store/action/actionTemplates';
 import { returnError } from '@utils/addError';
 import { validateEmail, validateLogin, validatePassword } from '@utils/validate';
+import { router } from '@router/router';
 
 export interface UserPage {
   state: {
     userInfo: Number;
+    fileData: FormData;
   };
 }
 
@@ -26,7 +28,8 @@ export class UserPage extends View {
   constructor (ROOT) {
     super(ROOT);
     this.state = {
-      userInfo: 0
+      userInfo: 0,
+      fileData: new FormData()
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -44,6 +47,33 @@ export class UserPage extends View {
   }
 
   componentDidMount () {
+    const contentBlockHTML = document.querySelector('.contentBlock');
+
+    const popupEvent = (event) => {
+      this.popupEvent = popupEvent;
+      switch (true) {
+        case event.target.closest('.check__all_comments') !== null:
+          this.componentWillUnmount();
+          router.go(
+            {
+              path: '/comments/search',
+              props: ''
+            },
+            { pushState: true, refresh: false }
+          );
+          break;
+        case event.target.closest('.ChangeUserData__form__apply') !== null:
+          this.getForm();
+          break;
+
+        default:
+          break;
+      }
+    };
+    contentBlockHTML?.addEventListener('click', popupEvent);
+  }
+
+  getForm () {
     const loginInputHTML = document.querySelector(
       '.login__input__signup'
     ) as HTMLInputElement;
@@ -66,17 +96,19 @@ export class UserPage extends View {
       const password = passwordInputFirstHTML.value;
       const passwordSecond = passwordInputSecondHTML.value;
 
+      popup?.removeEventListener('submit', handleSubmit);
+
       const fileInput = document.querySelector('.settings_file') as HTMLInputElement;
       const file = fileInput.files![0];
-      const formData = new FormData();
+      const data = this.state.fileData;
 
-      formData.append('login', login);
-      formData.append('email', email);
-      formData.append('password', password);
-      formData.append('file', file);
+      data.append('login', login);
+      data.append('email', email);
+      data.append('password', password);
+      data.append('file', file);
 
       if (this.validateForm(login, email, password, passwordSecond)) {
-        store.dispatch(actionPutSettings({ file: formData }));
+        store.dispatch(actionPutSettings({ file: data }));
       }
     };
 
@@ -118,8 +150,8 @@ export class UserPage extends View {
     return true;
   }
 
-  componentDidUnmount () {
-    const popup = document.querySelector('.ChangeUserData');
+  componentWillUnmount () {
+    const popup = document.querySelector('.contentBlock');
 
     popup?.removeEventListener('submit', this.popupEvent);
   }
@@ -136,7 +168,9 @@ export class UserPage extends View {
         returnError(errorInputs.LoginExists, errorClassName);
         break;
       case responseStatuses.csrfError:
-        store.dispatch(actionCSRF());
+        store.dispatch(actionCSRF()).then((response) => {
+          store.dispatch(actionPutSettings({ file: this.state.fileData }));
+        });
         break;
       default:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);
@@ -157,6 +191,7 @@ export class UserPage extends View {
     const res = status.body;
     if (res) {
       result = {
+        userSettings: true,
         header: res['name'],
         email: res['email'],
         login: res['login'],

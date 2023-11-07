@@ -1,14 +1,14 @@
-.rewiew {
+.review {
   width: var(--block-width);
 
   display: flex;
   flex-direction: column;
   align-items: stretch;
 
-  margin: 0 auto;
+  margin: 0 auto 50px;
 }
 
-.rewiew__header {
+.review__header {
   width: 100%;
   height: auto;
 
@@ -21,18 +21,18 @@
   align-items: center;
 }
 
-.rewiew__header__img {
+.review__header__img {
   height: auto;
   width: 10%;
 }
 
-.rewiew__header__user-name {
+.review__header__user-name,  .review__header__film-name{
   display: inline;
   margin: 3%;
   width: 30%;
 }
 
-.rewiew__header__rewiew-data {
+.review__header__review-data {
   text-align: end;
   width: 40%;
 }

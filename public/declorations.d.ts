@@ -33,3 +33,12 @@ interface settings {
 interface putSettings {
   file: any;
 }
+
+interface paginator {
+  page: number,
+  per_page: number
+}
+
+// interface userComments {
+//   file: any;
+// }

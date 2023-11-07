@@ -11,6 +11,10 @@ const handlers = [
     method: actionsUser.updateSettings.bind(actionsUser)
   },
   {
+    type: 'userComments',
+    method: actionsUser.userComments.bind(actionsUser)
+  },
+  {
     type: 'getSettings',
     method: actionsUser.getSettings.bind(actionsUser)
   },

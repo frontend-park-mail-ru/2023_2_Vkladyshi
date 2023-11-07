@@ -86,6 +86,20 @@ class ActionsUser {
       postStatusSettings: result['status']
     };
   }
+
+  // eslint-disable-next-line camelcase
+  async userComments ({ page, per_page } : paginator) {
+    const response = get({
+      url: urls.comments,
+      // eslint-disable-next-line camelcase
+      query: { page: page, per_page: per_page }
+    });
+
+    const result = await response;
+    return {
+      userCommentsStatus: result
+    };
+  }
 }
 
 export const actionsUser = new ActionsUser();
