@@ -73,7 +73,7 @@ const actor = {
 const comments = {
   status: 200,
   body: [
-      {
+    {
       name: 'Login_User',
       rating: 3,
       text: 'Фильм отличный 11/10',
@@ -364,7 +364,7 @@ app.use('/signup', (req, res) => {
   users[login] = { login, password, age: 20 };
 
   const id = uuid();
-  idsids[id] = login;
+  ids[id] = login;
 
   // res.cookie('session_id', id, {
   //   expires: new Date(Date.now() + 1000 * 60 * 10),

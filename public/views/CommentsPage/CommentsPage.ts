@@ -45,6 +45,7 @@ export class CommentsPage extends View {
 
       result.forEach(res => {
         const table = {
+          user: true,
           name: res['film_name'],
           rating: res['rating'],
           text: res['text']
