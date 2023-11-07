@@ -19,14 +19,14 @@
       {{#if this includeZero=false}}
         <img
           class='countLikeActor__star-box__star'
-          src='../../icons/Оценеено=Есть оценка.svg'
+          src='/icons/Оценеено=Есть оценка.svg'
           alt='Горящая звезда'
         />
       {{/if}}
       {{#if this includeZero=true}}
         <img
           class='countLikeActor__star-box__star'
-          src='../../icons/Оценеено=Нет оценки.svg'
+          src='/icons/Оценеено=Нет оценки.svg'
           alt='Погасшая звезда'
         />
       {{/if}}
@@ -36,14 +36,11 @@
   <div class='countLikeActor__mark countLikeActor__mark_good table__header'>
     {{mark}}
   </div>
-  <div class='countLikeActor__mark-number table__row__text'>{{mark-number}}
+  <div class='countLikeActor__mark-number table__row__text'>{{mark_number}}
     оценок</div>
   <img
     class='countLikeActor__watched'
-    src='../../icons/Будут смотреть=Не смотрим.svg'
+    src='/icons/Будут смотреть=Не смотрим.svg'
   />
-  <img
-    class='countLikeActor__review'
-    src='../../icons/Иконка написать отзыв.svg'
-  />
+  <img class='countLikeActor__review' src='/icons/Иконка написать отзыв.svg' />
 </div>

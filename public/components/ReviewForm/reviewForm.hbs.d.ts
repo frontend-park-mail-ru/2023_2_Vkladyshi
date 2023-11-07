@@ -1,4 +1,4 @@
-type rewiewFormTemplate = () => string;
+type rewiewFormTemplate = (params) => string;
 
 declare let rewiewForm: rewiewFormTemplate;
 

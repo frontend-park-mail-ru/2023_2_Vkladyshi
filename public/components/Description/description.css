@@ -3,23 +3,19 @@
   flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-
-  margin-left: 5%;
-  margin-right: 5%;
-  padding-left: 5%;
-  padding-right: 5%;
-  padding-top: 7%;
-  padding-bottom: 3%;
-
-  background-color: var(--content-block-color);
+  position: relative;
+  padding: 30px;
+  /*background-color: var(--content-block-color);*/
 }
 
 .description__img {
-  width: 40%;
+  width: 270px;
   height: auto;
 
   margin-left: 5%;
   margin-right: 5%;
+
+  border-radius: 30px;
 }
 .description__text {
   display: flex;
@@ -28,7 +24,7 @@
   align-items: center;
   flex-wrap: wrap;
 
-  width: 60%;
+  /*width: 60%;*/
   height: auto;
 
   margin: 0;
@@ -107,5 +103,4 @@
 
 .table__actor__text:hover {
   color: #343333;
-
 }

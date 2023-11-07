@@ -33,20 +33,20 @@ export async function get (params = {}) {
  */
 export async function post ({ url, body, contentType = false }) {
   let data;
+  const header = { 'x-csrf-token': <string>localStorage.getItem('csrf') };
+
   if (contentType) {
-    data = body;
+    data = body.file;
   } else {
     data = JSON.stringify(body);
+    header['Content-Type'] = 'application/json';
   }
 
   const response = await fetch(url, {
     method: methods.post,
     credentials: 'include',
     mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'x-csrf-token': <string>localStorage.getItem('csrf')
-    },
+    headers: header,
     body: data
   });
   let result = await response.text();
@@ -80,7 +80,10 @@ export async function getCsrf (params = {}) {
   try {
     const result = await response.text();
     if (response.headers.get('x-csrf-token') !== null) {
-      localStorage.setItem('csrf', <string>response.headers.get('x-csrf-token'));
+      localStorage.setItem(
+        'csrf',
+        <string>response.headers.get('x-csrf-token')
+      );
     }
 
     return JSON.parse(result);

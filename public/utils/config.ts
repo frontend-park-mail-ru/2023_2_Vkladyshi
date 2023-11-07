@@ -23,7 +23,7 @@ import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
 
 import { UserPage } from '@views/userPage/userPage';
 
-import { RewiewForm } from '@components/RewiewForm/rewiewForm';
+import { ReviewForm } from '@components/ReviewForm/reviewForm';
 import { CommentsPage } from '@views/CommentsPage/CommentsPage';
 import { Review } from '@components/Review/review';
 
@@ -38,7 +38,8 @@ export const urls = {
   film: '/api/v1/film',
   csrf: '/api/v1/csrf',
   actor: '/api/v1/actor',
-  comments: 'api/v1/comment/search',
+  comments: '/api/v1/comment',
+  addComment: '/api/v1/comment/add',
   settings: '/api/v1/settings',
   profile: '/profile',
   signin: '/signin',
@@ -70,9 +71,10 @@ export const errorInputs = {
   PasswordNoValid: 'Пароль не валиден',
   PasswordsNoEqual: 'Пароли не одинаковые',
   NotPassword: 'Нет пароля',
-  NotAllElements: 'Нет всех полей',
+  NotAllElement: '* Обязательно поле',
   LoginExists: 'Логин уже используется',
-  ServerError: 'Ошибка сервера'
+  ServerError: 'Ошибка сервера',
+  badRequest: 'Почта уже используется'
 };
 
 export const mainPage = new MainPage(ROOT);
@@ -95,7 +97,7 @@ export const filmRating = new FilmRating(ROOT);
 export const changeUserData = new ChangeUserData(ROOT);
 export const userPage = new UserPage(ROOT);
 export const countLikeFilm = new СountLikeFilm(ROOT);
-export const reviewForm = new RewiewForm(ROOT);
+export const reviewForm = new ReviewForm(ROOT);
 export const review = new Review(ROOT);
 export const commentsPage = new CommentsPage(ROOT);
 
@@ -103,37 +105,37 @@ export const config = {
   menu: {
     basket: {
       href: urls.basket,
-      png_name: 'VectorMyFilms.svg',
+      png_name: 'myTags.svg',
       name: 'Мои фильмы',
       renderObject: ''
     },
     profile: {
       href: urls.profile,
-      png_name: 'profileIcon.svg',
+      png_name: 'iconPerson.svg',
       name: 'Мой профиль',
       renderObject: ''
     },
     signin: {
       href: urls.signin,
-      png_name: 'profileIcon.svg',
+      png_name: 'iconPerson.svg',
       name: 'Войти',
       renderObject: signinPage
     },
     signup: {
       href: urls.signup,
-      png_name: 'profileIcon.svg',
+      png_name: 'iconPerson.svg',
       name: 'Зарегистрироваться',
       renderObject: signupPage
     },
     selection: {
       href: urls.selection,
-      png_name: 'VectorTags.svg',
+      png_name: 'vectorTags.svg',
       name: 'Меню',
       renderObject: selectCollectionPage
     },
     main: {
       href: urls.main,
-      png_name: 'titleIcon.png',
+      png_name: 'brandIcon.svg',
       name: 'MovieHub',
       renderObject: mainPage
     }
@@ -147,22 +149,21 @@ export const collections = {
     collection1: {
       collection_name: 'Жанры',
       collection_items: [
-        { key: 'Боевики', value: 'action' },
-        { key: 'Военные', value: 'war' },
-        { key: 'Детские', value: 'kids' },
-        { key: 'Детективы', value: 'detective' },
-        { key: 'Драмы', value: 'drama' },
-        { key: 'Комедии', value: 'comedy' },
-        { key: 'Криминальные', value: 'crime' },
-        { key: 'Ужасы', value: 'horror' },
-        { key: 'Мелодрама', value: 'melodrama' }
-      ]
-    },
-    collection2: {
-      collection_name: 'Страны',
-      collection_items: [
-        { key: 'Российские', value: 'ru' },
-        { key: 'Зарубежные', value: 'eu' }
+        { key: 'Боевики', value: 5 },
+        { key: 'Военные', value: 6 },
+        { key: 'Детективы', value: 7 },
+        { key: 'Драмы', value: 8 },
+        { key: 'Комедии', value: 9 },
+        { key: 'Криминальные', value: 10 },
+        { key: 'Аниме', value: 1 },
+        { key: 'Дорама', value: 2 },
+        { key: 'Мультфильм', value: 3 },
+        { key: 'Детские', value: 4 },
+        { key: 'Ужасы', value: 11 },
+        { key: 'Мелодрама', value: 12 },
+        { key: 'Фантастика', value: 13 },
+        { key: 'Триллер', value: 14 },
+        { key: 'Фэнтези', value: 15 }
       ]
     }
   }
@@ -177,5 +178,5 @@ export const routes = [
   { path: '/actor', view: actorPage },
   { path: '/film', view: filmPage },
   { path: '/settings', view: userPage },
-  { path: '/comments/search', view: commentsPage }
+  { path: '/comments', view: commentsPage }
 ];

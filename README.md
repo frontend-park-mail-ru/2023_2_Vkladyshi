@@ -38,4 +38,4 @@
 
 [Деплой](http://84.23.54.189/)
 
-[API в Swagger](https://app.swaggerhub.com/apis/ALEKSEJY60/VKladishi/1.0.0)
+[API в Swagger](https://app.swaggerhub.com/apis/ALEKSEJY60/Andrey/1.0.0#)

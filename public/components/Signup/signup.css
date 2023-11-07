@@ -1,30 +1,3 @@
-/*@media (min-width: 1200px) {*/
-/*  .redirectToSignin,*/
-/*  .errorStringSignup {*/
-/*    font-size: 16px;*/
-/*  }*/
-/*}*/
-
-/*@media (max-width: 1200px) {*/
-/*  .redirectToSignin,*/
-/*  .errorStringSignup {*/
-/*    font-size: 10px;*/
-/*  }*/
-/*}*/
-
-/*@media (max-width: 500px) {*/
-/*  .redirectToSignin,*/
-/*  .errorStringSignup {*/
-/*    font-size: 7px;*/
-/*  }*/
-/*}*/
-
-/*@media (max-width: 700px) {*/
-/*  .signupButton {*/
-/*    font-size: 7px;*/
-/*  }*/
-/*}*/
-
 .signup {
   width: 400px;
   background-color: rgb(255, 255, 255);
@@ -44,44 +17,31 @@
   /*visibility: visible;*/
 }
 
-.signupMain {
+.signup__main {
   width: 100%;
   height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  /*margin-left: auto;*/
-  /*margin-right: auto;*/
   position: relative;
   transition: all 1s ease 0s;
 }
 
-.signupForm {
+.signup-form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /*align-items: center;*/
 
   width: 90%;
   height: 60%;
   padding: 55px 85px;
 }
 
-.loginInputSignup,
-.emailInput,
-.passwordInputFirst,
-.passwordInputSecond {
-  width: 90%;
-  height: 45px;
-  border: solid white;
-  font-size: 19px;
-  border-radius: 5px;
-  padding: 0 10% 0 10%;
-}
-
-.signupButton {
-  width: 100px;
+.signup-button {
+  /*width: 100px;*/
+  padding-left: 30px;
+  padding-right: 30px;
   height: 35px;
   border-radius: 24px;
   border: white;
@@ -91,11 +51,11 @@
   transition: background 0.3s ease;
 }
 
-.signupButton:hover {
+.signup-button:hover {
   background: #57b846;
 }
 
-.redirectToSignin {
+.redirect-to-signin {
   cursor: pointer;
   text-align: center;
   font-size: 13px;
@@ -103,7 +63,7 @@
   transition: color 0.3s ease;
 }
 
-.redirectToSignin:hover {
+.redirect-to-signin:hover {
   color: #57b846;
 }
 
@@ -115,9 +75,7 @@
   margin-right: auto;
   position: relative;
   transition: all 1s ease 0s;
-
 }
-
 
 .popupSignup {
   background-color: rgba(255, 255, 255, 0);

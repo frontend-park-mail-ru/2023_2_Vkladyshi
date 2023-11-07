@@ -11,7 +11,7 @@ export const actionCSRF = () => ({
   type: 'csrf'
 });
 
-export const actionLogout = () => ({
+export const actionLogout = (redirect) => ({
   type: 'logout'
 });
 
@@ -35,7 +35,7 @@ export const actionCollectionMenu = (params: collectionParams) => ({
   value: params
 });
 
-export const actionActor = (params: actor) => ({
+export const actionActor = (params: { actorName: number }) => ({
   type: 'actor',
   value: params
 });
@@ -56,5 +56,15 @@ export const actionGetSettings = () => ({
 
 export const actionGetCommentsUser = (params: paginator) => ({
   type: 'userComments',
+  value: params
+});
+
+export const actionGetCommentsFilm = (params: paginatorFilm) => ({
+  type: 'filmComments',
+  value: params
+});
+
+export const actionAddComment = (params: addComment) => ({
+  type: 'addComment',
   value: params
 });

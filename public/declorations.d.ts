@@ -16,7 +16,7 @@ interface user extends anyObject {
 interface collectionParams {
   // key: string,
   // countFilms: number,
-  collection_id?: string;
+  collection_id?: number;
 }
 
 interface actor {
@@ -28,15 +28,27 @@ interface film {
 }
 
 interface settings {
-  file: any;
+  file: FormData;
 }
 interface putSettings {
   file: any;
 }
 
 interface paginator {
-  page: number,
-  per_page: number
+  page: number;
+  per_page: number;
+}
+
+interface paginatorFilm {
+  film_id: number;
+  page: number;
+  per_page: number;
+}
+
+interface addComment {
+  film_id: number;
+  rating: number;
+  text: string;
 }
 
 // interface userComments {

@@ -2,12 +2,16 @@ import { View } from '@views/view';
 import { ROOT, selectCollection } from '@utils/config';
 import { router } from '@router/router';
 import { store } from '@store/store';
-import { actionCollectionMenu } from '@store/action/actionTemplates';
+import {
+  actionAuth,
+  actionCollectionMenu
+} from '@store/action/actionTemplates';
+import { image } from '@components/Image/image';
 
 export interface SelectCollectionPage {
   state: {
-    dataSection: string
-  }
+    dataSection: string;
+  };
 }
 
 /**
@@ -40,9 +44,17 @@ export class SelectCollectionPage extends View {
     this.renderDefaultPage();
 
     if (!document.querySelector('.selectCollection-frame')) {
-      const result = ROOT?.querySelector('main');
+      const main = ROOT?.querySelector('main');
+      main!.innerHTML = '';
 
-      result!.innerHTML = selectCollection.render();
+      const popup = document.querySelector('.popupSelectCollection');
+      main?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'ocean.jpg' }));
+
+      const containerHTML = document.querySelector('.image-container');
+      // containerHTML?.appendChild(popup!);
+
+      containerHTML?.insertAdjacentHTML('beforeend', selectCollection.render());
+
       this.componentDidMount();
       store.subscribe('collectionMenu', this.componentWillUnmount);
     }

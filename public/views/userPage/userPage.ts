@@ -1,15 +1,43 @@
 import { View } from '@views/view';
-import { desc, info, changeUserData, errorInputs, responseStatuses } from '@utils/config';
+import {
+  errorInputs,
+  responseStatuses
+} from '@utils/config';
 import { store } from '@store/store';
-import { actionCSRF, actionGetSettings, actionPutSettings, actionSignup } from '@store/action/actionTemplates';
-import { returnError } from '@utils/addError';
-import { validateEmail, validateLogin, validatePassword } from '@utils/validate';
+import {
+  actionCSRF,
+  actionGetSettings,
+  actionLogout,
+  actionPutSettings
+} from '@store/action/actionTemplates';
+import {
+  addErrorsActive,
+  insertInInput,
+  insertText,
+  removeErrors,
+  removeErrorsActive,
+  returnError
+} from '@utils/addError';
+import {
+  validateEmail,
+  validateLogin,
+  validatePassword
+} from '@utils/validate';
+import { dateConverter } from '@utils/dateConverter';
 import { router } from '@router/router';
+import { inputButton } from '@components/inputButton/inputButton';
+import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
+import { image } from '@components/Image/image';
+import { settings } from '@components/Settings/settings';
 
 export interface UserPage {
   state: {
-    userInfo: Number;
-    fileData: FormData;
+    userStatus: Number;
+    result: {};
+    userInfo: {};
+    inputsHTML: {};
+    errorsHTML: {};
+    wraps: {};
   };
 }
 
@@ -28,14 +56,23 @@ export class UserPage extends View {
   constructor (ROOT) {
     super(ROOT);
     this.state = {
-      userInfo: 0,
-      fileData: new FormData()
+      errorsHTML: {},
+      inputsHTML: {},
+      wraps: {},
+      userInfo: {},
+      userStatus: 0,
+      result: {
+        fileData: new FormData(),
+        email: '',
+        birthday: '',
+        login: '',
+        poster: '',
+        password: ''
+      }
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
-
     store.subscribe('getSettingsStatus', this.subscribeActorStatus);
-    // store.subscribe('postSettingsStatus', this.subscribeActorStatus);
   }
 
   /**
@@ -47,129 +84,159 @@ export class UserPage extends View {
   }
 
   componentDidMount () {
-    const contentBlockHTML = document.querySelector('.contentBlock');
-
+    const blockHTML = document.querySelector('.description');
     const popupEvent = (event) => {
-      this.popupEvent = popupEvent;
       switch (true) {
-        case event.target.closest('.check__all_comments') !== null:
-          this.componentWillUnmount();
-          router.go(
-            {
-              path: '/comments/search',
-              props: ''
-            },
-            { pushState: true, refresh: false }
-          );
-          break;
-        case event.target.closest('.ChangeUserData__form__apply') !== null:
+        case event.target.closest('.button-submit') !== null:
+          event.preventDefault();
+          removeErrors(this.state.errorsHTML);
+          removeErrorsActive(this.state.wraps);
           this.getForm();
           break;
-
         default:
           break;
       }
     };
-    contentBlockHTML?.addEventListener('click', popupEvent);
+
+    this.popupEvent = popupEvent;
+    blockHTML?.addEventListener('click', popupEvent);
   }
 
   getForm () {
-    const loginInputHTML = document.querySelector(
-      '.login__input__signup'
-    ) as HTMLInputElement;
-    const emailInputHTML = document.querySelector(
-      '.email__input__signup'
-    ) as HTMLInputElement;
-    const passwordInputFirstHTML = document.querySelector(
-      '.password__input__signup'
-    ) as HTMLInputElement;
-    const passwordInputSecondHTML = document.querySelector(
-      '.second_password__input__signup'
-    ) as HTMLInputElement;
-    const popup = document.querySelector('.ChangeUserData');
+    const elements = this.state.inputsHTML;
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
+    const login = elements['login'].value.trim();
+    const email = elements['email'].value;
+    const birthday = dateConverter(elements['birthday'].value);
+    const password = elements['passwordFirst'].value;
+    const passwordSecond = elements['passwordSecond'].value;
+    const file = elements['file']?.files[0];
+    const data = new FormData();
 
-      const login = loginInputHTML.value.trim();
-      const email = emailInputHTML.value.trim();
-      const password = passwordInputFirstHTML.value;
-      const passwordSecond = passwordInputSecondHTML.value;
+    data.append('login', login);
+    data.append('email', email);
+    data.append('password', password);
+    data.append('birthday', birthday);
+    data.append('photo', file);
 
-      popup?.removeEventListener('submit', handleSubmit);
-
-      const fileInput = document.querySelector('.settings_file') as HTMLInputElement;
-      const file = fileInput.files![0];
-      const data = this.state.fileData;
-
-      data.append('login', login);
-      data.append('email', email);
-      data.append('password', password);
-      data.append('file', file);
-
-      if (this.validateForm(login, email, password, passwordSecond)) {
-        store.dispatch(actionPutSettings({ file: data }));
-      }
-    };
-
-    this.popupEvent = handleSubmit;
-    popup?.addEventListener('submit', handleSubmit);
+    if (
+      this.validateForm(login, password, passwordSecond, email, file, birthday)
+    ) {
+      store.dispatch(actionPutSettings({ file: data })).then(response => {
+        if (response!['postStatusSettings'] === 200) {
+          router.refresh();
+          this.setUserInfo();
+          if (login !== this.state.userInfo['login'] || password.length > 0) {
+            store.dispatch(actionLogout({ redirect: false }));
+          }
+        }
+      });
+    }
   }
 
-  validateForm (login, email, password, passwordSecond) {
-    const errorClassName = 'error_string_settings';
+  validateForm (login, password, passwordSecond, email, file, birthday) {
+    const elements = this.state.errorsHTML;
+    const object = this.state.userInfo;
+    const wraps = this.state.wraps;
+    let result = true;
 
-    if (password !== passwordSecond) {
-      returnError(errorInputs.PasswordsNoEqual, errorClassName);
+    if (
+      object['login'] === login &&
+      object['email'] === email &&
+      password === '' &&
+      passwordSecond === '' &&
+      file === undefined &&
+      object['birthday'] === birthday
+    ) {
+      insertText(elements, 'Ничего не изменено');
+      addErrorsActive(wraps);
       return false;
     }
 
-    const isValidate = validatePassword(password);
-    if (!isValidate.result) {
-      returnError(isValidate.error, errorClassName);
-      return false;
+    if (!login) {
+      insertText(elements['login'], errorInputs.NotAllElement);
+      addErrorsActive(wraps['login']);
+      result = false;
     }
 
-    if (!validateEmail(email)) {
-      returnError(errorInputs.EmailNoValid, errorClassName);
-      return false;
+    if (!email) {
+      insertText(elements['email'], errorInputs.NotAllElement);
+      addErrorsActive(wraps['email']);
+      result = false;
+    }
+
+    if ((!password && passwordSecond) || (password && !passwordSecond)) {
+      insertText([elements['passwordFirst'], elements['passwordSecond']], errorInputs.NotAllElement);
+      addErrorsActive([wraps['passwordFirst'], wraps['passwordSecond']]);
+      result = false;
+    } else {
+      const passwordValidate = validatePassword(password);
+      if (!passwordValidate.result && password.length > 0) {
+        insertText(elements['passwordFirst'], passwordValidate.error);
+        addErrorsActive(wraps['passwordFirst']);
+        result = false;
+      }
+    }
+
+    if (!birthday) {
+      insertText(elements['birthday'], errorInputs.NotAllElement);
+      addErrorsActive(wraps['birthday']);
+      result = false;
+    }
+
+    if (!validateEmail(email) && email.length > 0) {
+      insertText(elements['email'], errorInputs.EmailNoValid);
+      result = false;
     }
 
     const loginValidate = validateLogin(login);
-    if (!loginValidate.result) {
-      returnError(loginValidate.error, errorClassName);
-      return false;
+    if (!loginValidate.result && login.length > 0) {
+      insertText(elements['login'], loginValidate.error);
+      result = false;
     }
 
-    const passwordValidate = validatePassword(password);
-    if (!passwordValidate.result) {
-      returnError(passwordValidate.error, errorClassName);
-      return false;
+    if (
+      password !== passwordSecond &&
+      password.length > 0 &&
+      passwordSecond.length > 0
+    ) {
+      insertText(
+        [elements['passwordFirst'], elements['passwordSecond']],
+        <string>errorInputs.PasswordsNoEqual
+      );
+      addErrorsActive([wraps['passwordFirst'], wraps['passwordSecond']]);
+      result = false;
     }
 
-    return true;
+    return result;
   }
 
   componentWillUnmount () {
     const popup = document.querySelector('.contentBlock');
-
     popup?.removeEventListener('submit', this.popupEvent);
   }
 
   handlerStatus () {
     const errorClassName = 'error_string_settings';
-    switch (this.state.userInfo) {
+
+    switch (this.state.userStatus) {
       case responseStatuses.success:
         return true;
       case responseStatuses.notAuthorized:
-        returnError(errorInputs.LoginOrPasswordError, errorClassName);
+        router.go(
+          {
+            path: '/login',
+            props: ``
+          },
+          { pushState: true, refresh: false }
+        );
         break;
       case responseStatuses.alreadyExists:
         returnError(errorInputs.LoginExists, errorClassName);
         break;
       case responseStatuses.csrfError:
         store.dispatch(actionCSRF()).then((response) => {
-          store.dispatch(actionPutSettings({ file: this.state.fileData }));
+          store.dispatch(actionPutSettings({ file: this.state.userInfo['fileData'] }));
         });
         break;
       default:
@@ -179,36 +246,137 @@ export class UserPage extends View {
   }
 
   subscribeActorStatus () {
-    const status = store.getState('getSettingsStatus');
-    this.state.userInfo = status.status;
+    const mainHTML = document.querySelector('main');
+    mainHTML!.innerHTML = '';
+    const result = store.getState('getSettingsStatus');
+    this.state.userStatus = result.status;
 
     if (!this.handlerStatus()) {
       return;
     }
 
-    let result;
-
-    const res = status.body;
-    if (res) {
-      result = {
+    const userInfo = result.body;
+    if (userInfo) {
+      this.state.userInfo = {
         userSettings: true,
-        header: res['name'],
-        email: res['email'],
-        login: res['login'],
-        poster: res['photo'],
-        infoText: res['info_text'],
-        country: res['country'],
-        career: res['career']
+        header: userInfo['name'],
+        email: userInfo['email'],
+        birthday: dateConverter(userInfo['birthday']),
+        login: userInfo['login'],
+        poster: userInfo['photo'],
+        infoText: userInfo['info_text'],
+        country: userInfo['country'],
+        career: userInfo['career']
       };
     }
-    const contentBlockHTML = document.querySelector('.contentBlock');
-    if (contentBlockHTML != null) {
-      contentBlockHTML.insertAdjacentHTML('beforeend', desc.render(result));
 
-      contentBlockHTML.insertAdjacentHTML('beforeend', changeUserData.render(result));
-      contentBlockHTML.insertAdjacentHTML('beforeend', info.render(result));
-    }
+    mainHTML?.insertAdjacentHTML(
+      'beforeend',
+      settings.render(this.state.userInfo)
+    );
 
+    const descHTML = document.querySelector('.description');
+    mainHTML?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'loginImage.jpg' }));
+
+    const containerHTML = document.querySelector('.image-container');
+    containerHTML?.appendChild(descHTML!);
+
+    const loginText = document.querySelector('.login-text');
+    const passwordFirstText = document.querySelector('.login-first-text');
+    const passwordSecondText = document.querySelector('.login-second-text');
+    const dateText = document.querySelector('.date-text');
+    const emailText = document.querySelector('.email-text');
+    const buttons = document.querySelector('.user-data-buttons');
+
+    loginText!.insertAdjacentHTML(
+      'beforeend',
+      inputButton.render({ wrap: 'login', module: 'user-data' })
+    );
+
+    passwordFirstText!.insertAdjacentHTML(
+      'beforeend',
+      inputButton.render({
+        wrap: 'password-first',
+        module: 'user-data',
+        type: 'password'
+      })
+    );
+    passwordSecondText!.insertAdjacentHTML(
+      'beforeend',
+      inputButton.render({
+        wrap: 'password-second',
+        module: 'user-data',
+        type: 'password'
+      })
+    );
+    dateText?.insertAdjacentHTML(
+      'beforeend',
+      inputButton.render({ wrap: 'birthday', module: 'user-data', type: 'date' })
+    );
+    emailText?.insertAdjacentHTML(
+      'beforeend',
+      inputButton.render({ wrap: 'email', module: 'user-data' })
+    );
+
+    buttons?.insertAdjacentHTML('beforeend', buttonSubmit.render({ text: 'Сохранить' }));
+
+    this.init();
     this.componentDidMount();
+    this.setUserInfo();
+  }
+
+  setUserInfo () {
+    insertInInput(this.state.inputsHTML, this.state.userInfo);
+  }
+
+  init () {
+    const loginHTML = document.querySelector('.login-input-user-data');
+    const emailHTML = document.querySelector('.email-input-user-data');
+    const passwordFirstHTML = document.querySelector(
+      '.password-first-input-user-data'
+    );
+    const passwordSecondHTML = document.querySelector(
+      '.password-second-input-user-data'
+    );
+    const birthdayHTML = document.querySelector('.birthday-input-user-data');
+
+    const wrapLogin = document.querySelector('.wrap.login');
+    const wrapEmailHTML = document.querySelector('.wrap.email');
+    const wrapPassword = document.querySelector('.wrap.password-first');
+    const wrapSecondPassword = document.querySelector('.wrap.password-second');
+    const wrapBirthdayHTML = document.querySelector('.wrap.birthday');
+
+    const fileInputHTML = document.querySelector('.settings_file');
+
+    const loginError = document.querySelector('.error-login');
+    const passwordFirstError = document.querySelector('.error-password-first');
+    const passwordSecondError = document.querySelector(
+      '.error-password-second'
+    );
+    const emailError = document.querySelector('.error-email');
+    const dateError = document.querySelector('.error-birthday');
+
+    this.state.inputsHTML = {
+      login: loginHTML,
+      email: emailHTML,
+      passwordFirst: passwordFirstHTML,
+      passwordSecond: passwordSecondHTML,
+      birthday: birthdayHTML,
+      file: fileInputHTML
+    };
+    this.state.wraps = {
+      login: wrapLogin,
+      email: wrapEmailHTML,
+      passwordFirst: wrapPassword,
+      passwordSecond: wrapSecondPassword,
+      birthday: wrapBirthdayHTML
+    };
+    this.state.errorsHTML = {
+      login: loginError,
+      email: emailError,
+      passwordFirst: passwordFirstError,
+      passwordSecond: passwordSecondError,
+      birthday: dateError
+    };
   }
 }

@@ -1,5 +1,7 @@
 import { Component } from '@components/component';
 import { contentBlock, footer, header, ROOT } from '@utils/config';
+import { store } from '@store/store';
+import { actionAuth } from '@store/action/actionTemplates';
 
 /**
  * Родитель всех страниц
@@ -16,8 +18,14 @@ export class View extends Component {
     }
 
     if (!document.querySelector('header')) {
+      store.dispatch(actionAuth());
       ROOT?.insertAdjacentHTML('afterbegin', header.render());
       header.componentDidMount();
+      // @ts-ignore
+      // document.querySelector('header')?.style.opacity = 1;
+      // @ts-ignore
+      // header?.style.visibility = 'visible';
+      // document.querySelector('header')?.style.visibility = 'visible';
     } else {
       main.innerHTML = '';
     }
@@ -29,5 +37,10 @@ export class View extends Component {
     if (document.querySelector('.footer') == null) {
       main.insertAdjacentHTML('beforeend', footer.render());
     }
+
+    // @ts-ignore
+    document.querySelector('header')?.style.opacity = 1;
+    // @ts-ignore
+    document.querySelector('header')?.style.visibility = 'visible';
   };
 }

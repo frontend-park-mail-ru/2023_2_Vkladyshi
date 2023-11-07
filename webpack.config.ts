@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-const isDev = process.env.NODE_ENV === 'production';
+const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
 
 module.exports = {
@@ -29,6 +29,14 @@ module.exports = {
           from: path.resolve(__dirname, './public/icons'),
           to: path.resolve(__dirname, 'dist/icons'),
         },
+        {
+          from: path.resolve(__dirname, './public/avatars'),
+          to: path.resolve(__dirname, 'dist/avatars'),
+        },
+        {
+          from: path.resolve(__dirname, './public/actors'),
+          to: path.resolve(__dirname, 'dist/actors'),
+        },
       ],
     }),
   ],
@@ -41,7 +49,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
+        use: ['style-loader', 'css-loader', 'postcss-loader'],
       },
       {
         test: /\.js$/,

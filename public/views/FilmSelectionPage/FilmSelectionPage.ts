@@ -1,9 +1,13 @@
 import { View } from '@views/view';
 import { store } from '@store/store';
 import { filmSelection } from '@utils/config';
-import { actionCollectionMain } from '@store/action/actionTemplates';
+import {
+  actionAuth,
+  actionCollectionMain
+} from '@store/action/actionTemplates';
 import { getCollection } from '@utils/getCollection';
 import { router } from '@router/router';
+import { image } from '@components/Image/image';
 
 /**
  * Класс формирования подборки фильмов
@@ -32,6 +36,7 @@ export class FilmSelectionPage extends View {
   async render (isNotMain) {
     if (isNotMain) {
       this.renderDefaultPage();
+
       const contentBlockHTML = document.querySelector('.contentBlock');
       const url = new URL(window.location.href);
 
@@ -41,17 +46,23 @@ export class FilmSelectionPage extends View {
         const url = new URL(window.location.href);
         const names = url.pathname.split('/');
 
-        contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(names[2]));
+        contentBlockHTML?.insertAdjacentHTML(
+          'beforeend',
+          await this.returnTemplate(names[2])
+        );
         this.componentDidMount();
         return;
       }
 
-      contentBlockHTML?.insertAdjacentHTML('beforeend', filmSelection.render(getCollection(result)));
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        filmSelection.render(getCollection(result))
+      );
       this.componentDidMount();
       return;
     }
 
-    return this.returnTemplate('new');
+    return this.returnTemplate(0);
   }
 
   returnTemplate (collectionId) {
@@ -70,7 +81,9 @@ export class FilmSelectionPage extends View {
       this.popupEvent = popupEvent;
       switch (true) {
         case event.target.closest('.filmSelection_film') !== null:
-          const filmId = event.target.closest('.filmSelection_film').getAttribute('data-section');
+          const filmId = event.target
+            .closest('.filmSelection_film')
+            .getAttribute('data-section');
           this.componentWillUnmount();
           router.go(
             {
@@ -93,6 +106,5 @@ export class FilmSelectionPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  subscribeCollectionMenu () {
-  }
+  subscribeCollectionMenu () {}
 }

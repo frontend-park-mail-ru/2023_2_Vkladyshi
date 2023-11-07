@@ -1,6 +1,7 @@
 import { DOMAIN, routes } from '@utils/config';
 import { store } from '@store/store';
-import { actionCSRF } from '@store/action/actionTemplates';
+import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
+import { page404 } from '@router/Page404/page404';
 
 interface Class {
   render: Function;
@@ -23,7 +24,7 @@ class Router {
     this.privateMapViews = new Map();
   }
 
-  register ({ path, view }, privatePAth = false) {
+  register ({ path, view }, privatePath = false) {
     this.privateMapViews.set(path, view);
     this.mapViews.set(path, view);
   }
@@ -32,7 +33,10 @@ class Router {
     const url = new URL(window.location.href);
     const names = url.pathname.split('/');
 
-    if (this.mapViews.get(url.pathname) || this.privateMapViews.get(url.pathname)) {
+    if (
+      this.mapViews.get(url.pathname) ||
+      this.privateMapViews.get(url.pathname)
+    ) {
       this.go(
         {
           path: url.pathname,
@@ -48,6 +52,8 @@ class Router {
         },
         { pushState: !redirect, refresh: !redirect }
       );
+    } else {
+      page404.render();
     }
   }
 
@@ -74,10 +80,7 @@ class Router {
         props = `/${names[2]}`;
       }
 
-      this.go(
-        { path: path, props: props },
-        { pushState: false, refresh: false }
-      );
+      this.go({ path, props }, { pushState: false, refresh: false });
     });
     this.refresh();
   }

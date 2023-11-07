@@ -4,7 +4,7 @@
  * @typedef {Component}
  */
 export class Component {
-  private readonly rootNode;
+  protected readonly rootNode;
   /**
    * Конструктор для формирования родительского элемента
    * @param ROOT
