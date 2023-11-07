@@ -1,7 +1,10 @@
 import { View } from '@views/view';
 import { desc, info, footer, countLikeFilm, reviewForm } from '@utils/config';
 import { store } from '@store/store';
-import { actionFilm, actionGetCommentsUser } from '@store/action/actionTemplates';
+import {
+  actionFilm,
+  actionGetCommentsUser
+} from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { response } from 'express';
 
@@ -83,7 +86,9 @@ export class FilmPage extends View {
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
-      contentBlockHTML?.insertAdjacentHTML('beforeend', countLikeFilm.render(result)
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        countLikeFilm.render(result)
       );
       contentBlockHTML?.insertAdjacentHTML('beforeend', info.render(result));
     }
@@ -126,7 +131,6 @@ export class FilmPage extends View {
 
     infoHTML?.appendChild(comments);
 
-
     store.dispatch(actionGetCommentsUser({ page: 1, per_page: 5 }));
 
     if (!document.querySelector('.reviewForm')) {
@@ -135,7 +139,9 @@ export class FilmPage extends View {
   }
 
   redirectToAbout () {
-    const infoHTML = document.querySelector('.additional-info__content.table__row__text');
+    const infoHTML = document.querySelector(
+      '.additional-info__content.table__row__text'
+    );
     infoHTML!.innerHTML = '';
   }
 

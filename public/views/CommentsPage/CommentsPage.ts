@@ -30,7 +30,7 @@ export class CommentsPage extends View {
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
 
     store.subscribe('userCommentsStatus', this.subscribeCommentsStatrus);
-    //store.subscribe('removeView', this.componentWillUnmount);
+    // store.subscribe('removeView', this.componentWillUnmount);
   }
 
   /**
