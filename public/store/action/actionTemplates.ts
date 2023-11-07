@@ -45,7 +45,11 @@ export const actionFilm = (params: film) => ({
   value: params
 });
 
-export const actionSettings = (params: number) => ({
-  type: 'settings',
+export const actionPutSettings = (params: settings) => ({
+  type: 'putSettings',
   value: params
+});
+
+export const actionGetSettings = () => ({
+  type: 'getSettings'
 });

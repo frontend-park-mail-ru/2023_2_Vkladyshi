@@ -13,6 +13,6 @@ export class ChangeUserData extends Component {
    * @returns {string} html элемента блока изменения данных
    */
   render (result) {
-    return templatechangeUserData();
+    return templatechangeUserData(result);
   }
 }

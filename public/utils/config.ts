@@ -36,6 +36,7 @@ export const urls = {
   film: '/api/v1/film',
   csrf: '/api/v1/csrf',
   actor: '/api/v1/actor',
+  settings: '/api/v1/settings',
   profile: '/profile',
   signin: '/signin',
   signup: '/signup',

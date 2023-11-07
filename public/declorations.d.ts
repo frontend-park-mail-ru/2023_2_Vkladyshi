@@ -28,5 +28,8 @@ interface film {
 }
 
 interface settings {
-  userId: number;
+  file: any;
+}
+interface putSettings {
+  file: any;
 }

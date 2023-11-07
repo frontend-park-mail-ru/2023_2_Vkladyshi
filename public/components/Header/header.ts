@@ -3,7 +3,7 @@ import { router } from '@router/router';
 import * as templateHeader from '@components/Header/header.hbs';
 import { config } from '@utils/config';
 import { store } from '@store/store';
-import { actionLogout, actionSettings } from '@store/action/actionTemplates';
+import { actionLogout } from '@store/action/actionTemplates';
 
 /**
  * Класс создания верхней шапки

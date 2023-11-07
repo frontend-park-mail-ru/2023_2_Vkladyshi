@@ -70,7 +70,7 @@ export class FilmPage extends View {
 
       const fullDate = new Date(filmInfo['film']['release_date']);
       date = fullDate.getFullYear().toString();
-      infoText = filmInfo['film']['info'];
+      infoText = filmInfo['film']['info_text'];
     }
 
     const result = {
@@ -91,9 +91,6 @@ export class FilmPage extends View {
       mark,
       mark_number: count
     };
-
-
-    console.log(result.date);
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));

@@ -28,9 +28,17 @@ export async function get (params = {}) {
  * @param root0
  * @param root0.url
  * @param root0.body
- * @return {Promise} Promise ответ
+ * @param root0.contentType
+ * @returns {Promise} Promise ответ
  */
-export async function post ({ url, body }) {
+export async function post ({ url, body, contentType = false }) {
+  let data;
+  if (contentType) {
+    data = body;
+  } else {
+    data = JSON.stringify(body);
+  }
+
   const response = await fetch(url, {
     method: methods.post,
     credentials: 'include',
@@ -39,12 +47,17 @@ export async function post ({ url, body }) {
       'Content-Type': 'application/json; charset=utf-8',
       'x-csrf-token': <string>localStorage.getItem('csrf')
     },
-    body: JSON.stringify(body)
+    body: data
   });
   let result = await response.text();
 
-  result = JSON.parse(result);
-  return result;
+  try {
+    result = JSON.parse(result);
+    return result;
+  } catch (error) {
+    console.error(`Error: ${methods.post} ${url}`);
+    return { status: 400 };
+  }
 }
 
 /**

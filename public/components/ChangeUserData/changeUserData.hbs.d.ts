@@ -1,4 +1,4 @@
-type countLikeFilmHbs = () => string;
+type countLikeFilmHbs = (result) => string;
 
 declare let countLikeFilm: countLikeFilmHbs;
 

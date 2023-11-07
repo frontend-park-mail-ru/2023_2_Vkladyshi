@@ -61,13 +61,11 @@ export class ActorDescritionPage extends View {
         headerAbout: 'Биография',
         date: dateYear,
         poster: res['poster'],
-        infoText: res['info'],
+        infoText: res['info_text'],
         country: res['country'],
-        career: res['career'],
+        career: res['career']
       };
     }
-
-
 
     if (document.querySelector('.contentBlock') != null) {
       document

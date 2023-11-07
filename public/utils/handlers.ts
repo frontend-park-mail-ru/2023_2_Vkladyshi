@@ -7,7 +7,11 @@ const handlers = [
   { type: 'auth', method: actionsUser.auth.bind(actionsUser) },
   { type: 'logout', method: actionsUser.logout.bind(actionsUser) },
   {
-    type: 'settings',
+    type: 'putSettings',
+    method: actionsUser.updateSettings.bind(actionsUser)
+  },
+  {
+    type: 'getSettings',
     method: actionsUser.getSettings.bind(actionsUser)
   },
   {

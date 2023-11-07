@@ -53,7 +53,14 @@ class ActionsUser {
   }
 
   async getSettings () {
-    return { settingsStatus: true };
+    const response = get({
+      url: urls.settings
+    });
+
+    const result = await response;
+    return {
+      getSettingsStatus: result
+    };
   }
 
   async getCsrf () {
@@ -64,6 +71,19 @@ class ActionsUser {
     const result = await response;
     return {
       csrf: result
+    };
+  }
+
+  async updateSettings (putSettings) {
+    const response = post({
+      url: urls.settings,
+      body: putSettings.file,
+      contentType: true
+    });
+
+    const result = await response;
+    return {
+      postStatusSettings: result['status']
     };
   }
 }

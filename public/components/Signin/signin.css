@@ -150,7 +150,7 @@
   margin-top: 5%;
 }
 
-.errorStringSignin {
+.errorStringSignin, .error_string_settings {
   margin-bottom: 10px;
   color: red;
   display: block;

@@ -2,43 +2,52 @@
   <h1 class='ChangeUserData__header table__header'>
     Хотите изменить свои данные?
   </h1>
-  <form class='ChangeUserData__form'>
-    <input
-      type='text'
-      class='ChangeUserData__form__new-pass form form__text'
-      placeholder='ваш новый логин'
-    />
+  <form class='ChangeUserData__form' enctype="multipart/form-data">
+      <label>
+          <input
+            type='text'
+            class='ChangeUserData__form__new-pass form form__text login__input__signup'
+            value='{{login}}'
+            placeholder='ваш новый логин'
+          />
+      </label>
+      <div class="login__input__signup"></div>
+      <label>
+          <input
+                  type='email'
+                  class='ChangeUserData__form__new-pass form form__text email__input__signup'
+                  placeholder='ваш email'
+                  value='{{email}}'
+          />
+      </label>
       <input
-              type='email'
-              class='ChangeUserData__form__new-pass form form__text'
-              placeholder='ваш email'
-      />
-
-    <input
       type='password'
-      class='ChangeUserData__form__new-pass form form__text'
+      class='ChangeUserData__form__new-pass form form__text password__input__signup'
       placeholder='ваш новый пароль'
     />
 
-    <input
-      type='password'
-      class='ChangeUserData__form__repeat-new-pass form form__text'
-      placeholder='повторите пароль'
-    />
+      <label>
+          <input
+            type='password'
+            class='ChangeUserData__form__repeat-new-pass form form__text second_password__input__signup'
+            placeholder='повторите пароль'
+          />
+      </label>
 
-    <label class='ChangeUserData__form__file button button__text'>
+      <label class='ChangeUserData__form__file button button__text'>
       <img
         class='ChangeUserData__form__img'
         src='../../icons/Иконка файлов.svg'
-      />
-      <input class='ChangeUserData__form__file' type='file' />
+       alt=""/>
+      <input class='ChangeUserData__form__file settings_file' type='file' />
       Новое фото
     </label>
 
-    <input
+    <button
       type='submit'
       class='ChangeUserData__form__apply button button__text'
-      value='Применить изменения'
-    />
+     >Применить изменения</button>
   </form>
+    <div class="error_string_settings"></div>
+    <div class="success_string_settings"></div>
 </div>
