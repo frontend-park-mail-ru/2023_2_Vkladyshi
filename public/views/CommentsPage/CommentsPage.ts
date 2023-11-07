@@ -46,40 +46,45 @@ export class CommentsPage extends View {
       result.forEach(res => {
         const table = {
           user: true,
-          name: res['film_name'],
+          film_id: res['film_id'],
+          film_name: res['film_name'],
           rating: res['rating'],
           text: res['text']
         };
 
-        contentBlockHTML?.insertAdjacentHTML('beforeend', review.render(res));
+        contentBlockHTML?.insertAdjacentHTML('beforeend', review.render(table));
       });
+
+      this.componentDidMount();
     }
 
-    // componentDidMount () {
-    //   const popup = document.querySelector('.filmSelection_films');
-    //   const popupEvent = (event) => {
-    //     this.popupEvent = popupEvent;
-    //     switch (true) {
-    //       case event.target.closest('.filmSelection_film') !== null:
-    //         const filmId = event.target.closest('.filmSelection_film').getAttribute('data-section');
-    //         this.componentWillUnmount();
-    //         router.go(
-    //           {
-    //             path: '/film',
-    //             props: `/${filmId}`
-    //           },
-    //           { pushState: true, refresh: false }
-    //         );
-    //         break;
-    //       default:
-    //         break;
-    //     }
-    //   };
-    //   popup?.addEventListener('click', popupEvent);
-    // }
+    componentDidMount () {
+      const popup = document.querySelector('.contentBlock');
+      const popupEvent = (event) => {
+        this.popupEvent = popupEvent;
+        switch (true) {
+          case event.target.closest('.review__header__film-name.table__header') !== null:
+            console.log(2112);
+            const filmId = event.target.closest('.review__header__film-name.table__header').getAttribute('data-section');
+            this.componentWillUnmount();
+            router.go(
+              {
+                path: '/film',
+                props: `/${filmId}`
+              },
+              { pushState: true, refresh: false }
+            );
+            break;
+          default:
+            console.log(99);
+            break;
+        }
+      };
+      popup?.addEventListener('click', popupEvent);
+    }
 
     componentWillUnmount () {
-      const popup = document.querySelector('.filmSelection_films');
+      const popup = document.querySelector('.contentBlock');
       popup?.removeEventListener('click', this.popupEvent);
     }
 

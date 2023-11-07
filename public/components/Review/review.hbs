@@ -1,17 +1,10 @@
-<!-- {
-    name:"Строгий критик",
-    date:"12.02.2023",
-    text:"dsflkgjsdfkhgkldshgsdfkjhgljkdshggkjfhsdfbvdjfbdfksrhakaFHYOUFIASBDFJASGBISBDAKJ;JHFBSAKJFJHABDSAHGVJFGFSDAGBDJSAKSAUHSDFKJASBHFD"
-
-}; -->
-
 <div class='review'>
   <div class='review__header'>
     <img class='review__header__img' src='../../icons/avatar.png' />
-      {{#if film}}
-        <h1 class='review__header__film-name table__header'>{{film_name}}</h1>
-      {{/if}}
       {{#if user}}
+        <h1 class='review__header__film-name table__header' data-section="{{film_id}}">{{film_name}}</h1>
+      {{/if}}
+      {{#if film}}
           <h1 class='review__header__user-name table__header'>{{name}}</h1>
       {{/if}}
 <!--    <span class='review__header__review-data table__row__text'>{{date}}</span>-->

@@ -366,9 +366,7 @@ app.use('/signup', (req, res) => {
   const id = uuid();
   ids[id] = login;
 
-  // res.cookie('session_id', id, {
-  //   expires: new Date(Date.now() + 1000 * 60 * 10),
-  // });
+
   res.status(200).json({ status: 200 });
   return res;
 });
