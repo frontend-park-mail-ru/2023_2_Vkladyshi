@@ -34,7 +34,8 @@ export class CommentsPage extends View {
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
 
     store.subscribe('userCommentsStatus', this.subscribeCommentsStatrus);
-    // store.subscribe('removeView', this.componentWillUnmount);
+    store.subscribe('removeView', this.componentWillUnmount);
+
   }
 
   /**
@@ -126,14 +127,13 @@ export class CommentsPage extends View {
     window?.removeEventListener('scroll', this.scrollEvent);
 
     store.unsubscribe('userCommentsStatus', this.subscribeCommentsStatrus);
+    store.unsubscribe('removeView', this.componentWillUnmount);
   }
 
   subscribeCommentsStatrus() {
     const result = store.getState('userCommentsStatus');
 
-    console.log(1);
     if (result?.status === 200) {
-      console.log(2);
       this.state.commentsInfo = result.body;
       this.insertComments();
     }

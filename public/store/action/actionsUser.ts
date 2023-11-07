@@ -100,6 +100,13 @@ class ActionsUser {
       userCommentsStatus: result
     };
   }
+
+  async removeView () {
+    return {
+      removeView: true
+    };
+  }
+
 }
 
 export const actionsUser = new ActionsUser();

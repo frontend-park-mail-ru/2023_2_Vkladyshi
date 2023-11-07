@@ -70,6 +70,7 @@
 
 .loginInputSignup,
 .emailInput,
+.dateInput,
 .passwordInputFirst,
 .passwordInputSecond {
   width: 90%;

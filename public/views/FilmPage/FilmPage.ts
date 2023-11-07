@@ -1,5 +1,5 @@
 import { View } from '@views/view';
-import { desc, info, footer, countLikeFilm, reviewForm } from '@utils/config';
+import {desc, info, footer, countLikeFilm, reviewForm, review} from '@utils/config';
 import { store } from '@store/store';
 import {
   actionFilm,
@@ -28,17 +28,17 @@ export class FilmPage extends View {
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
-
-    store.subscribe('filmInfo', this.subscribeActorStatus);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
   }
   /**
    * Метод создания страницы
    * @param props
    */
   render (props) {
-    this.renderDefaultPage();
+    store.subscribe('filmInfo', this.subscribeActorStatus);
+    store.subscribe('removeView', this.componentWillUnmount);
 
-    console.log(props, 1212121);
+    this.renderDefaultPage();
 
     if (props != null) {
       store.dispatch(actionFilm({ filmId: props.replace('/', '') }));
@@ -126,28 +126,63 @@ export class FilmPage extends View {
 
   redirectToComments () {
     const infoHTML = document.querySelector('.contentBlock');
-    const comments = document.createElement('div');
-    comments.className = 'popupSign';
 
-    infoHTML?.appendChild(comments);
+    if (!document.querySelector('.comments__block')) {
+      const comments = document.createElement('div');
+      comments.className = 'comments__block';
 
-    store.dispatch(actionGetCommentsUser({ page: 1, per_page: 5 }));
+      const div1 = document.createElement('div');
+      div1.className = 'comments__all';
 
-    if (!document.querySelector('.reviewForm')) {
-      infoHTML?.insertAdjacentHTML('beforeend', reviewForm.render());
+      const div2 = document.createElement('div');
+      div2.className = 'input__form';
+
+      comments.appendChild(div1);
+      comments.appendChild(div2);
+
+      const divElement = document.querySelector('.additional-info__content.table__row__text') as HTMLDivElement;
+      divElement.style.display = 'none';
+
+      infoHTML?.appendChild(comments);
+
+      store.dispatch(actionGetCommentsUser({ page: 1, per_page: 5 })).then(response => {
+        const result = store.getState('userCommentsStatus').body;
+
+        result.forEach((res) => {
+          const table = {
+            user: true,
+            film_id: res['film_id'],
+            film_name: res['film_name'],
+            rating: res['rating'],
+            text: res['text']
+          };
+
+          div1?.insertAdjacentHTML('beforeend', review.render(table));
+        });
+
+        if (!document.querySelector('.reviewForm')) {
+          div2?.insertAdjacentHTML('beforeend', reviewForm.render());
+        }
+      });
     }
   }
 
   redirectToAbout () {
-    const infoHTML = document.querySelector(
-      '.additional-info__content.table__row__text'
-    );
-    infoHTML!.innerHTML = '';
+    const commentsBlock = document.querySelector('.comments__block');
+    const infoHTML = document.querySelector('.contentBlock');
+
+    if (commentsBlock) {
+      infoHTML?.removeChild(commentsBlock);
+    }
+
+    const divElement = document.querySelector('.additional-info__content.table__row__text') as HTMLDivElement;
+    divElement.style.display = 'block';
   }
 
   componentWillUnmount () {
+    store.unsubscribe('removeView', this.componentWillUnmount);
+    store.unsubscribe('filmInfo', this.subscribeActorStatus);
     const popup = document.querySelector('.filmSelection');
-
     popup?.addEventListener('click', this.popupEvent);
   }
 
