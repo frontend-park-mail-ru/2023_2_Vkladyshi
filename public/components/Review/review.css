@@ -28,10 +28,12 @@
   width: 10%;
 }
 
-.review__header__user-name,  .review__header__film-name{
+.review__header__user-name,
+.review__header__film-name {
   display: inline;
   margin: 3%;
   width: 30%;
+  cursor: pointer;
 }
 
 .review__header__review-data {

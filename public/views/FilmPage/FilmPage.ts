@@ -1,8 +1,9 @@
 import { View } from '@views/view';
 import { desc, info, footer, countLikeFilm } from '@utils/config';
 import { store } from '@store/store';
-import { actionFilm } from '@store/action/actionTemplates';
+import { actionFilm, actionGetCommentsUser } from '@store/action/actionTemplates';
 import { router } from '@router/router';
+import { response } from 'express';
 
 export interface FilmPage {
   state: {
@@ -34,6 +35,8 @@ export class FilmPage extends View {
   render (props) {
     this.renderDefaultPage();
 
+    console.log(props, 1212121);
+
     if (props != null) {
       store.dispatch(actionFilm({ filmId: props.replace('/', '') }));
     }
@@ -41,76 +44,58 @@ export class FilmPage extends View {
   }
 
   componentDidMount () {
-    const mainHTML = document.querySelector('main');
     const contentBlockHTML = document.querySelector('.contentBlock');
 
     if (contentBlockHTML != null) {
       contentBlockHTML!.innerHTML = '';
     }
 
-    let actors: string | null = null;
-    let mark: number | null = null;
-    let count: number | null = null;
-    let genre: string | null = null;
-    let poster: string | null = null;
-    let title: string | null = null;
-    let country: string | null = null;
-    let date: string | null = null;
-    let infoText: string | null = null;
+    let result;
 
     if (this.state.filmInfo) {
-      const filmInfo = this.state.filmInfo;
-      actors = filmInfo['actors'];
-      mark = filmInfo['rating'];
-      count = filmInfo['number'];
-      genre = filmInfo['genre'];
-      poster = filmInfo['film']['poster'];
-      title = filmInfo['film']['title'];
-      country = filmInfo['film']['country'];
+      const { actors, rating, number, genre, film } = this.state.filmInfo;
+      // eslint-disable-next-line camelcase
+      const { poster, title, country, release_date, info_text } = film;
 
-      const fullDate = new Date(filmInfo['film']['release_date']);
-      date = fullDate.getFullYear().toString();
-      infoText = filmInfo['film']['info_text'];
+      const fullDate = new Date(release_date);
+      const date = fullDate.getFullYear().toString();
+
+      result = {
+        film: true,
+        body: this.state.filmInfo,
+        genre,
+        actors,
+        poster,
+        country,
+        date,
+        title,
+        // eslint-disable-next-line camelcase
+        infoText: info_text,
+        header: 'О фильме',
+        headerAbout: 'Описание',
+        headerComment: 'Отзывы',
+        isHeader: true,
+        stars_burning: [true, true, true, false, false],
+        mark: rating,
+        mark_number: number
+      };
     }
-
-    const result = {
-      film: true,
-      body: this.state.filmInfo,
-      genre,
-      actors,
-      poster,
-      country,
-      date,
-      title,
-      infoText,
-      header: 'О фильме',
-      headerAbout: 'Описание',
-      headerComment: 'Отзывы',
-      isHeader: true,
-      stars_burning: [true, true, true, false, false],
-      mark,
-      mark_number: count
-    };
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
-      contentBlockHTML?.insertAdjacentHTML(
-        'beforeend', countLikeFilm.render(result)
+      contentBlockHTML?.insertAdjacentHTML('beforeend', countLikeFilm.render(result)
       );
       contentBlockHTML?.insertAdjacentHTML('beforeend', info.render(result));
     }
 
-    if (document.querySelector('.footer') == null) {
-      mainHTML?.insertAdjacentHTML('beforeend', footer.render());
-    }
-
-    const popup = document.querySelector('.description');
+    const popup = document.querySelector('.contentBlock');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
         case event.target.closest('.table__actor__text') !== null:
-          const actorId = event.target.closest('.table__actor__text').getAttribute('data-section');
-          this.componentWillUnmount();
+          const actorId = event.target
+            .closest('.table__actor__text')
+            .getAttribute('data-section');
           router.go(
             {
               path: '/actor',
@@ -120,13 +105,40 @@ export class FilmPage extends View {
           );
           break;
         case event.target.closest('.about-film') !== null:
-          this.renderComments();
+          break;
+        case event.target.closest('.comments-film') !== null:
+          this.redirectToComments();
+          //
+          // // @ts-ignore
+          // const id = this.state.filmInfo.film.id;
+          //
+          // router.go(
+          //   {
+          //     path: '/comments',
+          //     props: `/${id}`
+          //   },
+          //   { pushState: true, refresh: false }
+          // );
           break;
         default:
           break;
       }
+
+      this.componentWillUnmount();
     };
     popup?.addEventListener('click', popupEvent);
+  }
+
+  redirectToComments () {
+    const infoHTML = document.querySelector('.additional-info__content.table__row__text');
+    store.dispatch(actionGetCommentsUser({ page: 1, per_page: 5 })).then(response => {
+      infoHTML!.innerHTML = '';
+      console.log(response)
+    });
+  }
+
+  redirectToAbout () {
+
   }
 
   componentWillUnmount () {
@@ -139,9 +151,5 @@ export class FilmPage extends View {
     this.state.filmInfo = store.getState('filmInfo');
     store.unsubscribe('filmInfo', this.subscribeActorStatus);
     this.componentDidMount();
-  }
-
-  renderComments () {
-
   }
 }

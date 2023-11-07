@@ -50,7 +50,7 @@
   /*width: auto;*/
   /*height: 20px;*/
   padding: 5px 15px;
-//margin-bottom: 15%;
+  //margin-bottom: 15%;
   border-radius: 8px;
   border: 1px solid #cdc6c6;
   background: rgba(217, 217, 217, 0.3);
@@ -63,5 +63,3 @@
 .check__all_comments:hover {
   cursor: pointer;
 }
-
-

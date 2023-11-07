@@ -32,7 +32,10 @@ class Router {
     const url = new URL(window.location.href);
     const names = url.pathname.split('/');
 
-    if (this.mapViews.get(url.pathname) || this.privateMapViews.get(url.pathname)) {
+    if (
+      this.mapViews.get(url.pathname) ||
+      this.privateMapViews.get(url.pathname)
+    ) {
       this.go(
         {
           path: url.pathname,

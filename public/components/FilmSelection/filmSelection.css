@@ -107,8 +107,8 @@
   justify-content: center;
   align-items: center;
   transition:
-          width,
-          background 0.3s ease;
+    width,
+    background 0.3s ease;
 }
 .filmSelection_film_select:hover {
   background: rgba(107, 103, 103, 0.3);

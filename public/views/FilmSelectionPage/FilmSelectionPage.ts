@@ -41,12 +41,18 @@ export class FilmSelectionPage extends View {
         const url = new URL(window.location.href);
         const names = url.pathname.split('/');
 
-        contentBlockHTML?.insertAdjacentHTML('beforeend', await this.returnTemplate(names[2]));
+        contentBlockHTML?.insertAdjacentHTML(
+          'beforeend',
+          await this.returnTemplate(names[2])
+        );
         this.componentDidMount();
         return;
       }
 
-      contentBlockHTML?.insertAdjacentHTML('beforeend', filmSelection.render(getCollection(result)));
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        filmSelection.render(getCollection(result))
+      );
       this.componentDidMount();
       return;
     }
@@ -70,7 +76,9 @@ export class FilmSelectionPage extends View {
       this.popupEvent = popupEvent;
       switch (true) {
         case event.target.closest('.filmSelection_film') !== null:
-          const filmId = event.target.closest('.filmSelection_film').getAttribute('data-section');
+          const filmId = event.target
+            .closest('.filmSelection_film')
+            .getAttribute('data-section');
           this.componentWillUnmount();
           router.go(
             {
@@ -93,6 +101,5 @@ export class FilmSelectionPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  subscribeCollectionMenu () {
-  }
+  subscribeCollectionMenu () {}
 }

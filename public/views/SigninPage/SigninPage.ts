@@ -187,8 +187,13 @@ export class SigninPage extends View {
         returnError(errorInputs.LoginOrPasswordError, errorClassName);
         break;
       case responseStatuses.csrfError:
-        store.dispatch(actionCSRF()).then(response => {
-          store.dispatch(actionSignin({ login: this.state.login, password: this.state.password }));
+        store.dispatch(actionCSRF()).then((response) => {
+          store.dispatch(
+            actionSignin({
+              login: this.state.login,
+              password: this.state.password
+            })
+          );
         });
         break;
       default:
@@ -211,7 +216,8 @@ export class SigninPage extends View {
           path: '/',
           props: ''
         },
-        { pushState: true, refresh: false });
+        { pushState: true, refresh: false }
+      );
     }
   }
 }

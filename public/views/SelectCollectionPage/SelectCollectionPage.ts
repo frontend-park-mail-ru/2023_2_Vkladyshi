@@ -6,8 +6,8 @@ import { actionCollectionMenu } from '@store/action/actionTemplates';
 
 export interface SelectCollectionPage {
   state: {
-    dataSection: string
-  }
+    dataSection: string;
+  };
 }
 
 /**

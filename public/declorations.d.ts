@@ -35,8 +35,8 @@ interface putSettings {
 }
 
 interface paginator {
-  page: number,
-  per_page: number
+  page: number;
+  per_page: number;
 }
 
 // interface userComments {

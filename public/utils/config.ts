@@ -38,7 +38,9 @@ export const urls = {
   film: '/api/v1/film',
   csrf: '/api/v1/csrf',
   actor: '/api/v1/actor',
-  comments: 'api/v1/comment/search',
+  commentByFilm: '/api/v1/comment',
+  addComment: '/api/v1/comment/add',
+  comments: '/api/v1/comment/user',
   settings: '/api/v1/settings',
   profile: '/profile',
   signin: '/signin',
@@ -177,5 +179,5 @@ export const routes = [
   { path: '/actor', view: actorPage },
   { path: '/film', view: filmPage },
   { path: '/settings', view: userPage },
-  { path: '/comments/search', view: commentsPage }
+  { path: '/comments', view: commentsPage }
 ];

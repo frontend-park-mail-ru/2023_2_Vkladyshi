@@ -1,9 +1,24 @@
 import { View } from '@views/view';
-import { desc, info, changeUserData, errorInputs, responseStatuses } from '@utils/config';
+import {
+  desc,
+  info,
+  changeUserData,
+  errorInputs,
+  responseStatuses
+} from '@utils/config';
 import { store } from '@store/store';
-import { actionCSRF, actionGetSettings, actionPutSettings, actionSignup } from '@store/action/actionTemplates';
+import {
+  actionCSRF,
+  actionGetSettings,
+  actionPutSettings,
+  actionSignup
+} from '@store/action/actionTemplates';
 import { returnError } from '@utils/addError';
-import { validateEmail, validateLogin, validatePassword } from '@utils/validate';
+import {
+  validateEmail,
+  validateLogin,
+  validatePassword
+} from '@utils/validate';
 import { router } from '@router/router';
 
 export interface UserPage {
@@ -56,8 +71,8 @@ export class UserPage extends View {
           this.componentWillUnmount();
           router.go(
             {
-              path: '/comments/search',
-              props: ''
+              path: '/comments',
+              props: '/user'
             },
             { pushState: true, refresh: false }
           );
@@ -98,7 +113,9 @@ export class UserPage extends View {
 
       popup?.removeEventListener('submit', handleSubmit);
 
-      const fileInput = document.querySelector('.settings_file') as HTMLInputElement;
+      const fileInput = document.querySelector(
+        '.settings_file'
+      ) as HTMLInputElement;
       const file = fileInput.files![0];
       const data = this.state.fileData;
 
@@ -205,7 +222,10 @@ export class UserPage extends View {
     if (contentBlockHTML != null) {
       contentBlockHTML.insertAdjacentHTML('beforeend', desc.render(result));
 
-      contentBlockHTML.insertAdjacentHTML('beforeend', changeUserData.render(result));
+      contentBlockHTML.insertAdjacentHTML(
+        'beforeend',
+        changeUserData.render(result)
+      );
       contentBlockHTML.insertAdjacentHTML('beforeend', info.render(result));
     }
 

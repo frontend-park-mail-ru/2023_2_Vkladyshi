@@ -1,7 +1,5 @@
 import { View } from '@views/view';
-import {
-  header, filmSelectionPage, ROOT, userPage
-} from '@utils/config';
+import { header, filmSelectionPage, ROOT, userPage } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
 import { router } from '@router/router';
@@ -72,7 +70,9 @@ export class MainPage extends View {
       this.popupEvent = popupEvent;
       switch (true) {
         case event.target.closest('.filmSelection_film') !== null:
-          const filmId = event.target.closest('.filmSelection_film').getAttribute('data-section');
+          const filmId = event.target
+            .closest('.filmSelection_film')
+            .getAttribute('data-section');
           this.componentWillUnmount();
           router.go(
             {

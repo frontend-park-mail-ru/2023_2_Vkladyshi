@@ -88,7 +88,7 @@ class ActionsUser {
   }
 
   // eslint-disable-next-line camelcase
-  async userComments ({ page, per_page } : paginator) {
+  async userComments ({ page, per_page }: paginator) {
     const response = get({
       url: urls.comments,
       // eslint-disable-next-line camelcase

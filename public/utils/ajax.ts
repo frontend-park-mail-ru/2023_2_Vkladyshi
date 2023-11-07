@@ -80,7 +80,10 @@ export async function getCsrf (params = {}) {
   try {
     const result = await response.text();
     if (response.headers.get('x-csrf-token') !== null) {
-      localStorage.setItem('csrf', <string>response.headers.get('x-csrf-token'));
+      localStorage.setItem(
+        'csrf',
+        <string>response.headers.get('x-csrf-token')
+      );
     }
 
     return JSON.parse(result);

@@ -2,7 +2,11 @@ import { View } from '@views/view';
 import { errorInputs, responseStatuses, signup } from '@utils/config';
 import { router } from '@router/router';
 import { store } from '@store/store';
-import { actionCSRF, actionSignin, actionSignup } from '@store/action/actionTemplates';
+import {
+  actionCSRF,
+  actionSignin,
+  actionSignup
+} from '@store/action/actionTemplates';
 
 import { returnError } from '@utils/addError';
 import {
@@ -252,8 +256,14 @@ export class SignupPage extends View {
         returnError(errorInputs.LoginExists, errorClassName);
         break;
       case responseStatuses.csrfError:
-        store.dispatch(actionCSRF()).then(response => {
-          store.dispatch(actionSignup({ login: this.state.login, password: this.state.password, email: this.state.email }));
+        store.dispatch(actionCSRF()).then((response) => {
+          store.dispatch(
+            actionSignup({
+              login: this.state.login,
+              password: this.state.password,
+              email: this.state.email
+            })
+          );
         });
         break;
       default:
