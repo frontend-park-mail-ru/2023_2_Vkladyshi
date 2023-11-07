@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { store } from '@store/store';
 import { router } from '@router/router';
@@ -7,6 +8,7 @@ import { review } from '@utils/config';
 export interface CommentsPage {
   state: {
     commentsInfo: [];
+    rewiewBunch: number;
   };
 }
 /**
@@ -16,14 +18,16 @@ export interface CommentsPage {
  */
 export class CommentsPage extends View {
   private popupEvent: (event) => void;
+  private scrollEvent: () => void;
   /**
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
-      commentsInfo: []
+      commentsInfo: [],
+      rewiewBunch: 1,
     };
 
     this.subscribeCommentsStatrus = this.subscribeCommentsStatrus.bind(this);
@@ -38,12 +42,14 @@ export class CommentsPage extends View {
    * @param props
    * @returns {string} html авторизации
    */
-  render (props) {
+  render(props) {
     this.renderDefaultPage();
-    store.dispatch(actionGetCommentsUser({ page: 1, per_page: 5 }));
+    store.dispatch(
+      actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
+    );
   }
 
-  insertComments () {
+  insertComments() {
     const contentBlockHTML = document.querySelector('.contentBlock');
     const result = this.state.commentsInfo;
 
@@ -53,7 +59,7 @@ export class CommentsPage extends View {
         film_id: res['film_id'],
         film_name: res['film_name'],
         rating: res['rating'],
-        text: res['text']
+        text: res['text'],
       };
 
       contentBlockHTML?.insertAdjacentHTML('beforeend', review.render(table));
@@ -62,7 +68,7 @@ export class CommentsPage extends View {
     this.componentDidMount();
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const popup = document.querySelector('.contentBlock');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
@@ -77,7 +83,7 @@ export class CommentsPage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`
+              props: `/${filmId}`,
             },
             { pushState: true, refresh: false }
           );
@@ -87,17 +93,42 @@ export class CommentsPage extends View {
           break;
       }
     };
+
+    const handleScroll = () => {
+      this.scrollEvent = handleScroll;
+      if (
+        Math.floor(window.innerHeight + document.documentElement.scrollTop) /
+          10 ===
+        Math.floor(document.documentElement.offsetHeight - 1) / 10
+      ) {
+        this.state.rewiewBunch += 1;
+        console.log('inIF');
+        console.log(this.state.rewiewBunch);
+        store.dispatch(
+          actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
+        );
+      }
+      console.log('height');
+      console.log(
+        Math.floor(window.innerHeight + document.documentElement.scrollTop) / 10
+      );
+      console.log(Math.floor(document.documentElement.offsetHeight - 1) / 10);
+    };
+
+    console.log('handleScroll');
     popup?.addEventListener('click', popupEvent);
+    window?.addEventListener('scroll', handleScroll);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const popup = document.querySelector('.contentBlock');
     popup?.removeEventListener('click', this.popupEvent);
+    window?.removeEventListener('scroll', this.scrollEvent);
 
     store.unsubscribe('userCommentsStatus', this.subscribeCommentsStatrus);
   }
 
-  subscribeCommentsStatrus () {
+  subscribeCommentsStatrus() {
     const result = store.getState('userCommentsStatus');
 
     console.log(1);
