@@ -1,17 +1,17 @@
 import { Component } from '@components/component';
-import * as templateRewiewForm from '@components/RewiewForm/rewiewForm.hbs';
+import * as templateReviewForm from '@components/ReviewForm/reviewForm.hbs';
 
 /**
  * Класс рендеринга формы заполенения отзыва
- * @class RewiewForm
- * @typedef {RewiewForm}
+ * @class ReviewForm
+ * @typedef {ReviewForm}
  */
-export class RewiewForm extends Component {
+export class ReviewForm extends Component {
   /**
    * Метод рендеринга элемента
    * @return {string} html форма заполенения отзыва
    */
   render () {
-    return templateRewiewForm();
+    return templateReviewForm();
   }
 }

@@ -1,5 +1,5 @@
 import { View } from '@views/view';
-import { desc, info, footer, countLikeFilm } from '@utils/config';
+import { desc, info, footer, countLikeFilm, reviewForm } from '@utils/config';
 import { store } from '@store/store';
 import { actionFilm, actionGetCommentsUser } from '@store/action/actionTemplates';
 import { router } from '@router/router';
@@ -105,20 +105,10 @@ export class FilmPage extends View {
           );
           break;
         case event.target.closest('.about-film') !== null:
+          this.redirectToAbout();
           break;
         case event.target.closest('.comments-film') !== null:
           this.redirectToComments();
-          //
-          // // @ts-ignore
-          // const id = this.state.filmInfo.film.id;
-          //
-          // router.go(
-          //   {
-          //     path: '/comments',
-          //     props: `/${id}`
-          //   },
-          //   { pushState: true, refresh: false }
-          // );
           break;
         default:
           break;
@@ -130,15 +120,23 @@ export class FilmPage extends View {
   }
 
   redirectToComments () {
-    const infoHTML = document.querySelector('.additional-info__content.table__row__text');
-    store.dispatch(actionGetCommentsUser({ page: 1, per_page: 5 })).then(response => {
-      infoHTML!.innerHTML = '';
-      console.log(response)
-    });
+    const infoHTML = document.querySelector('.contentBlock');
+    const comments = document.createElement('div');
+    comments.className = 'popupSign';
+
+    infoHTML?.appendChild(comments);
+
+
+    store.dispatch(actionGetCommentsUser({ page: 1, per_page: 5 }));
+
+    if (!document.querySelector('.reviewForm')) {
+      infoHTML?.insertAdjacentHTML('beforeend', reviewForm.render());
+    }
   }
 
   redirectToAbout () {
-
+    const infoHTML = document.querySelector('.additional-info__content.table__row__text');
+    infoHTML!.innerHTML = '';
   }
 
   componentWillUnmount () {

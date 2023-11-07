@@ -13,7 +13,7 @@
 @import './components/countLikeFilm/countLikeFilm.css';
 @import './components/ChangeUserData/changeUserData.css';
 @import './components/Review/review.css';
-@import './components/RewiewForm/rewiewForm.css';
+@import './components/ReviewForm/reviewForm.css';
 
 :root {
   --background-color: #cdc6c6;

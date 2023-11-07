@@ -23,7 +23,7 @@ import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
 
 import { UserPage } from '@views/userPage/userPage';
 
-import { RewiewForm } from '@components/RewiewForm/rewiewForm';
+import { ReviewForm } from '@components/ReviewForm/reviewForm';
 import { CommentsPage } from '@views/CommentsPage/CommentsPage';
 import { Review } from '@components/Review/review';
 
@@ -97,7 +97,7 @@ export const filmRating = new FilmRating(ROOT);
 export const changeUserData = new ChangeUserData(ROOT);
 export const userPage = new UserPage(ROOT);
 export const countLikeFilm = new СountLikeFilm(ROOT);
-export const reviewForm = new RewiewForm(ROOT);
+export const reviewForm = new ReviewForm(ROOT);
 export const review = new Review(ROOT);
 export const commentsPage = new CommentsPage(ROOT);
 

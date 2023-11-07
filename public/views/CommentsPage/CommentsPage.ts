@@ -27,7 +27,10 @@ export class CommentsPage extends View {
     };
 
     this.subscribeCommentsStatrus = this.subscribeCommentsStatrus.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
+
     store.subscribe('userCommentsStatus', this.subscribeCommentsStatrus);
+    //store.subscribe('removeView', this.componentWillUnmount);
   }
 
   /**
@@ -90,6 +93,8 @@ export class CommentsPage extends View {
   componentWillUnmount () {
     const popup = document.querySelector('.contentBlock');
     popup?.removeEventListener('click', this.popupEvent);
+
+    store.unsubscribe('userCommentsStatus', this.subscribeCommentsStatrus);
   }
 
   subscribeCommentsStatrus () {
