@@ -31,16 +31,6 @@ app.use(cookie());
 
 const port = process.env.PORT || 8001;
 
-const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    // Укажите папку назначения, где будет сохранен файл
-    cb(null, '/icons/');
-  },
-  filename: function (req, file, cb) {
-    // Укажите имя файла, который был загружен
-    cb(null, file.originalname);
-  },
-});
 
 const findFilmByTitle = (films, title) => {
   // eslint-disable-next-line guard-for-in
@@ -419,9 +409,21 @@ app.get('/api/v1/settings', (req, res) => {
   return res.status(200).json(settings);
 });
 
+const formidableMiddleware = require('express-formidable');
+
+app.use(formidableMiddleware({
+  encoding: 'utf-8',
+  uploadDir: '/home/andr/go',
+  multiples: true, // req.files to be arrays of files
+}));
+
+
 app.post('/api/v1/settings', (req, res) => {
   console.log(req.body);
-  res.status(200).json({status: 200}).end();
+  console.log(req.file);
+  console.log(req.fields);
+
+  res.status(200).json({ status: 200 }).end();
 });
 
 app.get('/actor', (req, res) => {

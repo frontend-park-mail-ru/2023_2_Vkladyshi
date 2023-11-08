@@ -28,7 +28,7 @@ interface film {
 }
 
 interface settings {
-  file: any;
+  file: FormData;
 }
 interface putSettings {
   file: any;

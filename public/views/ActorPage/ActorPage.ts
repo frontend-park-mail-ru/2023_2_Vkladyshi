@@ -40,18 +40,13 @@ export class ActorDescritionPage extends View {
     store.subscribe('removeView', this.componentWillUnmount);
 
     if (props !== null) {
-      console.log(111);
-      // @ts-ignore
       // @ts-ignore
       store.dispatch(actionActor({ actorName: parseInt(props.replace('/', '')) })
       );
     }
+  }
 
-    const mainHTML = document.querySelector('main');
-    const contentBlockHTML = document.querySelector('.contentBlock');
-    if (document!.querySelector('.contentBlock') != null) {
-      document!.querySelector('.contentBlock')!.innerHTML = '';
-    }
+  componentDidMount () {
     let result = {};
 
     const res = this.state.actorInfo;
@@ -92,20 +87,14 @@ export class ActorDescritionPage extends View {
         ?.querySelector('.contentBlock')
         ?.insertAdjacentHTML('beforeend', info.render(result));
     }
-
-    if (document.querySelector('.footer') == null) {
-      mainHTML?.insertAdjacentHTML('beforeend', footer.render());
-    }
   }
 
   componentWillUnmount () {
-    store.unsubscribe('actorInfo', this.subscribeActorStatus);
     store.unsubscribe('removeView', this.subscribeActorStatus);
   }
 
   subscribeActorStatus () {
     this.state.actorInfo = store.getState('actorInfo');
-    store.unsubscribe('actorInfo', this.subscribeActorStatus);
-    this.render();
+    this.componentDidMount();
   }
 }

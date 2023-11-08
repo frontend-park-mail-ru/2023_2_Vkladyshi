@@ -2,7 +2,7 @@ import { View } from '@views/view';
 import { desc, info, countLikeFilm, reviewForm, review } from '@utils/config';
 import { store } from '@store/store';
 import {
-  actionAddComment,
+  actionAddComment, actionAuth,
   actionFilm, actionGetCommentsFilm,
   actionGetCommentsUser
 } from '@store/action/actionTemplates';
@@ -39,13 +39,14 @@ export class FilmPage extends View {
   render (props) {
     store.subscribe('filmInfo', this.subscribeActorStatus);
     store.subscribe('removeView', this.componentWillUnmount);
+    store.dispatch(actionAuth());
 
     this.renderDefaultPage();
 
     if (props != null) {
       store.dispatch(actionFilm({ filmId: props.replace('/', '') }));
     }
-    //this.componentDidMount();
+    // this.componentDidMount();
   }
 
   componentDidMount () {
@@ -61,7 +62,6 @@ export class FilmPage extends View {
       const { actors, rating, number, genre, film } = this.state.filmInfo;
       // eslint-disable-next-line camelcase
       const { poster, title, country, release_date, info } = film;
-
 
       // @ts-ignore
       this.state.fildId = film.id;
@@ -154,7 +154,7 @@ export class FilmPage extends View {
       infoHTML?.appendChild(comments);
 
       // @ts-ignore
-      store.dispatch(actionGetCommentsFilm({film_id: this.state.fildId, page: 1, per_page: 10 }))
+      store.dispatch(actionGetCommentsFilm({ film_id: this.state.fildId, page: 1, per_page: 10 }))
         .then((response) => {
           const result = store.getState('filmCommentsStatus').body.comment;
 
@@ -170,9 +170,8 @@ export class FilmPage extends View {
             div1?.insertAdjacentHTML('beforeend', review.render(table));
           });
 
-          if (!document.querySelector('.reviewForm')) {
-            div2?.insertAdjacentHTML('beforeend', reviewForm.render());
-            console.log(55555)
+          if (!document.querySelector('.reviewForm') && store.getState('statusAuth') === 200) {
+            div2?.insertAdjacentHTML('beforeend', reviewForm.render({ login: true }));
 
             const Event = (event) => {
               event.preventDefault();
@@ -185,9 +184,15 @@ export class FilmPage extends View {
               const text = textHTML.value;
 
               store.dispatch(actionAddComment({ film_id: this.state.fildId, rating: select, text: text }));
-            }
-            const kek = document.querySelector('.reviewForm');
-            kek?.addEventListener('submit', Event);
+            };
+            const review = document.querySelector('.reviewForm');
+            review?.addEventListener('submit', Event);
+          } else if (store.getState('statusAuth') !== 200) {
+            div2?.insertAdjacentHTML('beforeend', reviewForm.render({ login: false }));
+
+            div2.addEventListener('click', (event) => {
+              router.go({ path: '/login', props: `` }, { pushState: true, refresh: false });
+            });
           }
         });
     }

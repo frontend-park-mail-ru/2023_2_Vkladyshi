@@ -9,9 +9,10 @@ import * as templateReviewForm from '@components/ReviewForm/reviewForm.hbs';
 export class ReviewForm extends Component {
   /**
    * Метод рендеринга элемента
-   * @return {string} html форма заполенения отзыва
+   * @param params
+   * @returns {string} html форма заполенения отзыва
    */
-  render () {
-    return templateReviewForm();
+  render (params) {
+    return templateReviewForm(params);
   }
 }

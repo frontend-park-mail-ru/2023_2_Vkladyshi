@@ -35,6 +35,12 @@
   margin: auto;
 }
 
+.redirect__signin {
+  cursor: pointer;
+  font-size: 19px;
+  padding: 30px 50px;
+}
+
 .reviewForm__body__text {
   width: 90%;
   height: 200px;

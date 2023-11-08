@@ -78,7 +78,7 @@ class ActionsUser {
   async updateSettings (putSettings) {
     const response = post({
       url: urls.settings,
-      body: putSettings.file,
+      body: putSettings,
       contentType: true
     });
 
@@ -103,11 +103,11 @@ class ActionsUser {
   }
 
   // eslint-disable-next-line camelcase
-  async filmComments ({film_id, page, per_page }: paginatorFilm) {
+  async filmComments ({ film_id, page, per_page }: paginatorFilm) {
     const response = get({
       url: urls.comments,
       // eslint-disable-next-line camelcase
-      query: {film_id: film_id, page: page, per_page: per_page }
+      query: { film_id: film_id, page: page, per_page: per_page }
     });
 
     const result = await response;
@@ -117,7 +117,7 @@ class ActionsUser {
   }
 
   // eslint-disable-next-line camelcase
-  async addComment ({ film_id, rating, text}: addComment) {
+  async addComment ({ film_id, rating, text }: addComment) {
     const response = post({
       url: urls.addComment,
       // eslint-disable-next-line camelcase

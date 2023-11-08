@@ -32,27 +32,23 @@ export async function get (params = {}) {
  * @returns {Promise} Promise ответ
  */
 export async function post ({ url, body, contentType = false }) {
-  // let data;
-  // let type;
-  //
-  // if (contentType) {
-  //   data = body;
-  //   type = 'multipart/form-data';
-  // } else {
-  //   data = JSON.stringify(body);
-  //   type = 'application/json; charset=utf-8';
-  // }
+  let data;
+  const header = { 'x-csrf-token': <string>localStorage.getItem('csrf') };
 
-  //console.log(data, JSON.stringify(body), 1211, body);
+  if (contentType) {
+    data = body.file;
+  } else {
+    data = JSON.stringify(body);
+    header['Content-Type'] = 'application/json';
+  }
+
+  console.log(data, JSON.stringify(body), 1211, body);
   const response = await fetch(url, {
     method: methods.post,
     credentials: 'include',
     mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8',
-      'x-csrf-token': <string>localStorage.getItem('csrf')
-    },
-    body: JSON.stringify(body)
+    headers: header,
+    body: data
   });
   let result = await response.text();
 

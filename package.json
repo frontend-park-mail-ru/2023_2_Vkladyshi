@@ -23,6 +23,7 @@
     "express": "^4.18.2",
     "express-csp-header": "^5.2.1",
     "express-form-data": "^2.0.22",
+    "express-formidable": "^1.2.0",
     "fs": "^0.0.1-security",
     "html-webpack-plugin": "^5.5.3",
     "jsdoc": "^4.0.2",

@@ -4,7 +4,7 @@ import {
   info,
   changeUserData,
   errorInputs,
-  responseStatuses, urls
+  responseStatuses
 } from '@utils/config';
 import { store } from '@store/store';
 import {
@@ -19,7 +19,6 @@ import {
   validatePassword
 } from '@utils/validate';
 import { router } from '@router/router';
-import * as url from "url";
 
 export interface UserPage {
   state: {
@@ -122,7 +121,7 @@ export class UserPage extends View {
       popup?.removeEventListener('submit', handleSubmit);
 
       const fileInput = document.querySelector(
-          '.settings_file'
+        '.settings_file'
       ) as HTMLInputElement;
 
       // @ts-ignore
@@ -134,15 +133,8 @@ export class UserPage extends View {
       data.append('password', password);
       data.append('photo', file);
 
-      console.log(data)
-
-      const reader = new FileReader();
-      // @ts-ignore
-      reader.readAsDataURL(file);
-
-
       if (this.validateForm(login, email, password, passwordSecond, file)) {
-        store.dispatch(actionPutSettings({file: reader}));
+        store.dispatch(actionPutSettings({ file: data }));
       }
     };
 
@@ -208,7 +200,13 @@ export class UserPage extends View {
       case responseStatuses.success:
         return true;
       case responseStatuses.notAuthorized:
-        returnError(errorInputs.LoginOrPasswordError, errorClassName);
+        router.go(
+          {
+            path: '/login',
+            props: ``
+          },
+          { pushState: true, refresh: false }
+        );
         break;
       case responseStatuses.alreadyExists:
         returnError(errorInputs.LoginExists, errorClassName);

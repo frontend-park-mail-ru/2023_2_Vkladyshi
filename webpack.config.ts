@@ -33,6 +33,10 @@ module.exports = {
           from: path.resolve(__dirname, './public/avatars'),
           to: path.resolve(__dirname, 'dist/avatars'),
         },
+        {
+          from: path.resolve(__dirname, './public/actors'),
+          to: path.resolve(__dirname, 'dist/actors'),
+        },
       ],
     }),
   ],
