@@ -34,7 +34,10 @@
         <div class='description__table table__row'>
           <span class='description__table__row table__row__title'>Актеры</span>
           {{#each actors}}
-            <span class='description__table__text table__row__text table__actor__text' data-section='{{actor_id}}'>{{actor_name}}</span>
+            <span
+              class='description__table__text table__row__text table__actor__text'
+              data-section='{{actor_id}}'
+            >{{actor_name}}</span>
           {{/each}}
         </div>
       </div>
@@ -45,7 +48,9 @@
         <div class='description__table table__row'>
           <span class='description__table__row table__row__title'>Карьера</span>
           {{#each career}}
-            <span class='description__table__text table__row__text'>{{profession}}</span>
+            <span
+              class='description__table__text table__row__text'
+            >{{profession}}</span>
           {{/each}}
         </div>
         <div class='description__table table__row'>

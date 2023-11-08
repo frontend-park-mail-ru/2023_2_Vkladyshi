@@ -41,7 +41,8 @@ export class ActorDescritionPage extends View {
 
     if (props !== null) {
       // @ts-ignore
-      store.dispatch(actionActor({ actorName: parseInt(props.replace('/', '')) })
+      store.dispatch(
+        actionActor({ actorName: parseInt(props.replace('/', '')) })
       );
     }
   }

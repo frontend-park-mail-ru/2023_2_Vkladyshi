@@ -77,10 +77,7 @@ class Router {
         props = `/${names[2]}`;
       }
 
-      this.go(
-        { path: path, props: props },
-        { pushState: false, refresh: false }
-      );
+      this.go({ path, props }, { pushState: false, refresh: false });
     });
     this.refresh();
   }

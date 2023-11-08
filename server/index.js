@@ -31,7 +31,6 @@ app.use(cookie());
 
 const port = process.env.PORT || 8001;
 
-
 const findFilmByTitle = (films, title) => {
   // eslint-disable-next-line guard-for-in
   for (const filmKey in films) {
@@ -411,12 +410,13 @@ app.get('/api/v1/settings', (req, res) => {
 
 const formidableMiddleware = require('express-formidable');
 
-app.use(formidableMiddleware({
-  encoding: 'utf-8',
-  uploadDir: '/home/andr/go',
-  multiples: true, // req.files to be arrays of files
-}));
-
+app.use(
+  formidableMiddleware({
+    encoding: 'utf-8',
+    uploadDir: '/home/andr/go',
+    multiples: true, // req.files to be arrays of files
+  })
+);
 
 app.post('/api/v1/settings', (req, res) => {
   console.log(req.body);

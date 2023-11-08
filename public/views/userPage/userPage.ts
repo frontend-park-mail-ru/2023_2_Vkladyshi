@@ -110,7 +110,7 @@ export class UserPage extends View {
     ) as HTMLInputElement;
     const popup = document.querySelector('.ChangeUserData');
 
-    const handleSubmit = async (event) => {
+    const handleSubmit = (event) => {
       event.preventDefault();
 
       const login = loginInputHTML.value.trim();
@@ -141,6 +141,8 @@ export class UserPage extends View {
     this.popupEvent = handleSubmit;
     popup?.addEventListener('submit', handleSubmit);
   }
+
+  addEvent () {}
 
   validateForm (login, email, password, passwordSecond, file) {
     const errorClassName = 'error_string_settings';
