@@ -95,6 +95,16 @@ export class MainPage extends View {
     this.state.isAuth = store.getState('logoutStatus') === 200;
 
     this.changeHeader(!this.state.isAuth);
+
+    if (this.state.isAuth) {
+      router.go(
+        {
+          path: '/',
+          props: ``
+        },
+        { pushState: true, refresh: false }
+      );
+    }
   }
 
   changeHeader (isAuth) {

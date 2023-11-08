@@ -58,8 +58,6 @@ export class ActorDescritionPage extends View {
       const day = ('0' + dateTime.getDate()).slice(-2);
       const formattedDate = `${year}-${month}-${day}`;
 
-      console.log(formattedDate, this.state.actorInfo, 121212);
-
       result = {
         actor: true,
         body: this.state.actorInfo,

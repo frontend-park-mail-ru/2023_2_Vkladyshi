@@ -2,7 +2,10 @@
 import { View } from '@views/view';
 import { store } from '@store/store';
 import { router } from '@router/router';
-import { actionGetCommentsUser } from '@store/action/actionTemplates';
+import {
+  actionAuth,
+  actionGetCommentsUser
+} from '@store/action/actionTemplates';
 import { review } from '@utils/config';
 
 export interface CommentsPage {
@@ -44,6 +47,19 @@ export class CommentsPage extends View {
    */
   render (props) {
     this.renderDefaultPage();
+    store.dispatch(actionAuth()).then((response) => {
+      // @ts-ignore
+      if (response.status !== 200) {
+        router.go(
+          {
+            path: '/login',
+            props: ``
+          },
+          { pushState: true, refresh: false }
+        );
+      }
+    });
+
     store.dispatch(
       actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
     );
@@ -89,7 +105,6 @@ export class CommentsPage extends View {
           );
           break;
         default:
-          console.log(99);
           break;
       }
     };
