@@ -29,8 +29,8 @@ import { Review } from '@components/Review/review';
 
 export const ROOT = document.querySelector('#root');
 
-export const DOMAIN = 'http://127.0.0.1:8001';
-// export const DOMAIN = 'http://84.23.54.189';
+// export const DOMAIN = 'http://127.0.0.1:8001';
+export const DOMAIN = 'http://84.23.54.189';
 
 export const urls = {
   main: '/',
@@ -38,9 +38,8 @@ export const urls = {
   film: '/api/v1/film',
   csrf: '/api/v1/csrf',
   actor: '/api/v1/actor',
-  commentByFilm: '/api/v1/comment',
+  comments: '/api/v1/comment',
   addComment: '/api/v1/comment/add',
-  comments: '/api/v1/comment/user',
   settings: '/api/v1/settings',
   profile: '/profile',
   signin: '/signin',
@@ -149,22 +148,21 @@ export const collections = {
     collection1: {
       collection_name: 'Жанры',
       collection_items: [
-        { key: 'Боевики', value: 'action' },
-        { key: 'Военные', value: 'war' },
-        { key: 'Детские', value: 'kids' },
-        { key: 'Детективы', value: 'detective' },
-        { key: 'Драмы', value: 'drama' },
-        { key: 'Комедии', value: 'comedy' },
-        { key: 'Криминальные', value: 'crime' },
-        { key: 'Ужасы', value: 'horror' },
-        { key: 'Мелодрама', value: 'melodrama' }
-      ]
-    },
-    collection2: {
-      collection_name: 'Страны',
-      collection_items: [
-        { key: 'Российские', value: 'ru' },
-        { key: 'Зарубежные', value: 'eu' }
+        { key: 'Боевики', value: 5 },
+        { key: 'Военные', value: 6 },
+        { key: 'Детективы', value: 7 },
+        { key: 'Драмы', value: 8 },
+        { key: 'Комедии', value: 9 },
+        { key: 'Криминальные', value: 10 },
+        { key: 'Аниме', value: 1 },
+        { key: 'Дорама', value: 2 },
+        { key: 'Мультфильм', value: 3 },
+        { key: 'Детские', value: 4 },
+        { key: 'Ужасы', value: 11 },
+        { key: 'Мелодрама', value: 12 },
+        { key: 'Фантастика', value: 13 },
+        { key: 'Триллер', value: 14 },
+        { key: 'Фэнтези', value: 15 }
       ]
     }
   }

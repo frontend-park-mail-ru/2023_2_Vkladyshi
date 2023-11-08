@@ -21,7 +21,8 @@ class ActionsUser {
       body: {
         login: user['login'],
         password: user['password'],
-        email: user['email']
+        email: user['email'],
+        birth_date: user['birthday']
       }
     });
 
@@ -101,12 +102,39 @@ class ActionsUser {
     };
   }
 
+  // eslint-disable-next-line camelcase
+  async filmComments ({film_id, page, per_page }: paginatorFilm) {
+    const response = get({
+      url: urls.comments,
+      // eslint-disable-next-line camelcase
+      query: {film_id: film_id, page: page, per_page: per_page }
+    });
+
+    const result = await response;
+    return {
+      filmCommentsStatus: result
+    };
+  }
+
+  // eslint-disable-next-line camelcase
+  async addComment ({ film_id, rating, text}: addComment) {
+    const response = post({
+      url: urls.addComment,
+      // eslint-disable-next-line camelcase
+      body: { film_id: film_id, rating: rating, text: text }
+    });
+
+    const result = await response;
+    return {
+      addCommentStatus: result['status']
+    };
+  }
+
   async removeView () {
     return {
       removeView: true
     };
   }
-
 }
 
 export const actionsUser = new ActionsUser();

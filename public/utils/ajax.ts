@@ -32,13 +32,18 @@ export async function get (params = {}) {
  * @returns {Promise} Promise ответ
  */
 export async function post ({ url, body, contentType = false }) {
-  let data;
-  if (contentType) {
-    data = body;
-  } else {
-    data = JSON.stringify(body);
-  }
+  // let data;
+  // let type;
+  //
+  // if (contentType) {
+  //   data = body;
+  //   type = 'multipart/form-data';
+  // } else {
+  //   data = JSON.stringify(body);
+  //   type = 'application/json; charset=utf-8';
+  // }
 
+  //console.log(data, JSON.stringify(body), 1211, body);
   const response = await fetch(url, {
     method: methods.post,
     credentials: 'include',
@@ -47,7 +52,7 @@ export async function post ({ url, body, contentType = false }) {
       'Content-Type': 'application/json; charset=utf-8',
       'x-csrf-token': <string>localStorage.getItem('csrf')
     },
-    body: data
+    body: JSON.stringify(body)
   });
   let result = await response.text();
 

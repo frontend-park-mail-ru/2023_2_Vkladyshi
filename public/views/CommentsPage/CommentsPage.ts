@@ -23,19 +23,18 @@ export class CommentsPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       commentsInfo: [],
-      rewiewBunch: 1,
+      rewiewBunch: 1
     };
 
     this.subscribeCommentsStatrus = this.subscribeCommentsStatrus.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
 
-    store.subscribe('userCommentsStatus', this.subscribeCommentsStatrus);
+    // store.subscribe('userCommentsStatus', this.subscribeCommentsStatrus);
     store.subscribe('removeView', this.componentWillUnmount);
-
   }
 
   /**
@@ -43,14 +42,14 @@ export class CommentsPage extends View {
    * @param props
    * @returns {string} html авторизации
    */
-  render(props) {
+  render (props) {
     this.renderDefaultPage();
     store.dispatch(
       actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
     );
   }
 
-  insertComments() {
+  insertComments () {
     const contentBlockHTML = document.querySelector('.contentBlock');
     const result = this.state.commentsInfo;
 
@@ -60,7 +59,7 @@ export class CommentsPage extends View {
         film_id: res['film_id'],
         film_name: res['film_name'],
         rating: res['rating'],
-        text: res['text'],
+        text: res['text']
       };
 
       contentBlockHTML?.insertAdjacentHTML('beforeend', review.render(table));
@@ -69,7 +68,7 @@ export class CommentsPage extends View {
     this.componentDidMount();
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const popup = document.querySelector('.contentBlock');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
@@ -84,7 +83,7 @@ export class CommentsPage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`,
+              props: `/${filmId}`
             },
             { pushState: true, refresh: false }
           );
@@ -121,7 +120,7 @@ export class CommentsPage extends View {
     window?.addEventListener('scroll', handleScroll);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const popup = document.querySelector('.contentBlock');
     popup?.removeEventListener('click', this.popupEvent);
     window?.removeEventListener('scroll', this.scrollEvent);
@@ -130,7 +129,7 @@ export class CommentsPage extends View {
     store.unsubscribe('removeView', this.componentWillUnmount);
   }
 
-  subscribeCommentsStatrus() {
+  subscribeCommentsStatrus () {
     const result = store.getState('userCommentsStatus');
 
     if (result?.status === 200) {

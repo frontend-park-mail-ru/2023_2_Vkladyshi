@@ -33,7 +33,7 @@ class ActionsFilm {
   async getActor ({ actorName }: actor) {
     const response = get({
       url: urls.actor,
-      query: { actorName: actorName }
+      query: { actor_id: actorName }
     });
 
     const result = await response;

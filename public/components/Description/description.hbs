@@ -34,19 +34,19 @@
         <div class='description__table table__row'>
           <span class='description__table__row table__row__title'>Актеры</span>
           {{#each actors}}
-            <span
-              class='description__table__text table__row__text table__actor__text'
-              data-section='{{id_actor}}'
-            >{{actor_name}}</span>
+            <span class='description__table__text table__row__text table__actor__text' data-section='{{actor_id}}'>{{actor_name}}</span>
           {{/each}}
         </div>
       </div>
     {{/if}}
     {{#if actor}}
       <div class='description__text__table'>
-        <div class='description__table table__header'>{{name}}</div>
+        <div class='description__table table__header'>{{title}}</div>
         <div class='description__table table__row'>
           <span class='description__table__row table__row__title'>Карьера</span>
+<!--          {{#each career}}-->
+<!--            <span class='description__table__text table__row__text'>{{profession}}</span>-->
+<!--          {{/each}}-->
           <span
             class='description__table__text table__row__text'
           >{{career}}</span>
@@ -64,12 +64,6 @@
           >{{date}}</span>
         </div>
         <div class='description__table table__row'>
-          <span class='description__table__row table__row__title'>Жанры</span>
-          {{#each body.genres}}
-            <span
-              class='description__table__text table__row__text'
-            >{{this}}</span>
-          {{/each}}
         </div>
       </div>
     {{/if}}

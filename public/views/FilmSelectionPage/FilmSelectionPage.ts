@@ -57,7 +57,7 @@ export class FilmSelectionPage extends View {
       return;
     }
 
-    return this.returnTemplate('new');
+    return this.returnTemplate(0);
   }
 
   returnTemplate (collectionId) {

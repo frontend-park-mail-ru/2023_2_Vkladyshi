@@ -2,7 +2,7 @@
   <h1 class='ChangeUserData__header table__header'>
     Хотите изменить свои данные?
   </h1>
-  <form class='ChangeUserData__form' enctype='multipart/form-data'>
+  <form class='ChangeUserData__form' enctype="multipart/form-data">
     <label>
       <input
         type='text'
@@ -19,7 +19,13 @@
         placeholder='ваш email'
         value='{{email}}'
       />
-    </label>
+    </label><label for='birthday'></label><input
+      class='ChangeUserData__form__new-pass form form__text date_input'
+      type='date'
+      id='birthday'
+      name='birthday'
+      value='{{birthdate}}'
+    />
     <input
       type='password'
       class='ChangeUserData__form__new-pass form form__text password__input__signup'
@@ -40,6 +46,7 @@
         src='../../icons/Иконка файлов.svg'
         alt=''
       />
+
       <input class='ChangeUserData__form__file settings_file' type='file' />
       Новое фото
     </label>

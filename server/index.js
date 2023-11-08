@@ -156,7 +156,7 @@ const films = {
         title: 'film',
         number: 12467,
         rating: 4.5,
-        genre: 'Боевики',
+        genre: 5,
         country: 'США',
         year: '2023',
         actors: [
@@ -257,7 +257,7 @@ const films_tags = {
     collection_name: 'Новинки',
     films: {
       film1: {
-        poster: '../../icons/bastards.jpg',
+        poster: '/icons/bastards.jpg',
         title: 'film_1 111110000000000000000000000000000000000000000001',
         rating: 1,
         film_id: 11,
@@ -306,6 +306,7 @@ const settings = {
     login: 'login_11',
     email: '1111@1111',
     photo: '/icons/star.png',
+    birthdate: '2020-01-01',
   },
 };
 
@@ -419,7 +420,8 @@ app.get('/api/v1/settings', (req, res) => {
 });
 
 app.post('/api/v1/settings', (req, res) => {
-  console.log(req);
+  console.log(req.body);
+  res.status(200).json({status: 200}).end();
 });
 
 app.get('/actor', (req, res) => {
@@ -433,7 +435,7 @@ app.get('/actor/:actor_id', (req, res) => {
 
 app.get('/films/:collection_id', (req, res) => {
   const collectionId = req.query.collection_id;
-  if (collectionId !== 'new') {
+  if (collectionId !== 0) {
     res.sendFile(__dirname + '/index.html');
   } else {
     res.status(404).send('Страница не найдена');
@@ -455,7 +457,7 @@ app.use('/api/v1/films', (req, res) => {
     res.sendFile(__dirname + '/index.html');
     return;
   }
-  if (req.query.collection_id !== 'new') {
+  if (req.query.collection_id !== 0) {
     return res.status(200).json(films_tags);
   }
   return res.status(200).json(films);
@@ -480,7 +482,7 @@ app.get('/comments', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/api/v1/comment/user', (req, res) => {
+app.get('/api/v1/comment', (req, res) => {
   const secFetchSite = req.headers['sec-fetch-site'];
   if (!secFetchSite) {
     res.sendFile(__dirname + '/index.html');

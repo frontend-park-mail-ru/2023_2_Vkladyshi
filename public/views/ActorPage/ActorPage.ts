@@ -26,17 +26,26 @@ export class ActorDescritionPage extends View {
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
+    this.componentWillUnmount = this.componentWillUnmount.bind(this);
 
     store.subscribe('actorInfo', this.subscribeActorStatus);
   }
 
   /**
    * Метод создания страницы
+   * @param props
    */
-  render () {
+  render (props = null) {
     this.renderDefaultPage();
+    store.subscribe('removeView', this.componentWillUnmount);
 
-    store.dispatch(actionActor({ actorName: 'NameActor' }));
+    if (props !== null) {
+      console.log(111);
+      // @ts-ignore
+      // @ts-ignore
+      store.dispatch(actionActor({ actorName: parseInt(props.replace('/', '')) })
+      );
+    }
 
     const mainHTML = document.querySelector('main');
     const contentBlockHTML = document.querySelector('.contentBlock');
@@ -47,10 +56,13 @@ export class ActorDescritionPage extends View {
 
     const res = this.state.actorInfo;
     if (res) {
-      const fullDate = new Date(res['birth_date']);
-      const dateYear = fullDate.getFullYear().toString();
+      const dateTime = new Date(res['birthday']);
+      const year = dateTime.getFullYear();
+      const month = ('0' + (dateTime.getMonth() + 1)).slice(-2);
+      const day = ('0' + dateTime.getDate()).slice(-2);
+      const formattedDate = `${year}-${month}-${day}`;
 
-      console.log(res['birth_date'], 1111112);
+      console.log(formattedDate, this.state.actorInfo, 121212);
 
       result = {
         actor: true,
@@ -59,8 +71,8 @@ export class ActorDescritionPage extends View {
         header: res['name'],
         title: 'Основная информация',
         headerAbout: 'Биография',
-        date: dateYear,
-        poster: res['poster'],
+        date: formattedDate,
+        poster: res['poster_href'],
         infoText: res['info_text'],
         country: res['country'],
         career: res['career']
@@ -84,6 +96,11 @@ export class ActorDescritionPage extends View {
     if (document.querySelector('.footer') == null) {
       mainHTML?.insertAdjacentHTML('beforeend', footer.render());
     }
+  }
+
+  componentWillUnmount () {
+    store.unsubscribe('actorInfo', this.subscribeActorStatus);
+    store.unsubscribe('removeView', this.subscribeActorStatus);
   }
 
   subscribeActorStatus () {

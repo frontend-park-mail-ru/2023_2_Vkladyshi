@@ -4,14 +4,13 @@ import {
   info,
   changeUserData,
   errorInputs,
-  responseStatuses
+  responseStatuses, urls
 } from '@utils/config';
 import { store } from '@store/store';
 import {
   actionCSRF,
   actionGetSettings,
-  actionPutSettings,
-  actionSignup
+  actionPutSettings
 } from '@store/action/actionTemplates';
 import { returnError } from '@utils/addError';
 import {
@@ -20,11 +19,16 @@ import {
   validatePassword
 } from '@utils/validate';
 import { router } from '@router/router';
+import * as url from "url";
 
 export interface UserPage {
   state: {
     userInfo: Number;
     fileData: FormData;
+    email: string;
+    birthdate: string;
+    login: string;
+    poster: string;
   };
 }
 
@@ -44,7 +48,11 @@ export class UserPage extends View {
     super(ROOT);
     this.state = {
       userInfo: 0,
-      fileData: new FormData()
+      fileData: new FormData(),
+      email: '',
+      birthdate: '',
+      login: '',
+      poster: ''
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -103,7 +111,7 @@ export class UserPage extends View {
     ) as HTMLInputElement;
     const popup = document.querySelector('.ChangeUserData');
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
       event.preventDefault();
 
       const login = loginInputHTML.value.trim();
@@ -114,18 +122,27 @@ export class UserPage extends View {
       popup?.removeEventListener('submit', handleSubmit);
 
       const fileInput = document.querySelector(
-        '.settings_file'
+          '.settings_file'
       ) as HTMLInputElement;
-      const file = fileInput.files![0];
-      const data = this.state.fileData;
+
+      // @ts-ignore
+      const file = fileInput.files[0];
+      const data = new FormData();
 
       data.append('login', login);
       data.append('email', email);
       data.append('password', password);
-      data.append('file', file);
+      data.append('photo', file);
 
-      if (this.validateForm(login, email, password, passwordSecond)) {
-        store.dispatch(actionPutSettings({ file: data }));
+      console.log(data)
+
+      const reader = new FileReader();
+      // @ts-ignore
+      reader.readAsDataURL(file);
+
+
+      if (this.validateForm(login, email, password, passwordSecond, file)) {
+        store.dispatch(actionPutSettings({file: reader}));
       }
     };
 
@@ -133,8 +150,20 @@ export class UserPage extends View {
     popup?.addEventListener('submit', handleSubmit);
   }
 
-  validateForm (login, email, password, passwordSecond) {
+  validateForm (login, email, password, passwordSecond, file) {
     const errorClassName = 'error_string_settings';
+    const object = this.state;
+
+    if (
+      object.login === login &&
+      object.email === email &&
+      password === '' &&
+      passwordSecond === '' &&
+      file === undefined
+    ) {
+      returnError('Ничего не изменено', errorClassName);
+      return false;
+    }
 
     if (password !== passwordSecond) {
       returnError(errorInputs.PasswordsNoEqual, errorClassName);
@@ -142,24 +171,24 @@ export class UserPage extends View {
     }
 
     const isValidate = validatePassword(password);
-    if (!isValidate.result) {
+    if (!isValidate.result && password.length > 0) {
       returnError(isValidate.error, errorClassName);
       return false;
     }
 
-    if (!validateEmail(email)) {
+    if (!validateEmail(email) && email.length > 0) {
       returnError(errorInputs.EmailNoValid, errorClassName);
       return false;
     }
 
     const loginValidate = validateLogin(login);
-    if (!loginValidate.result) {
+    if (!loginValidate.result && login.length > 0) {
       returnError(loginValidate.error, errorClassName);
       return false;
     }
 
     const passwordValidate = validatePassword(password);
-    if (!passwordValidate.result) {
+    if (!passwordValidate.result && password.length > 0) {
       returnError(passwordValidate.error, errorClassName);
       return false;
     }
@@ -207,16 +236,30 @@ export class UserPage extends View {
 
     const res = status.body;
     if (res) {
+      const object = this.state;
+
+      const dateTime = new Date(res['birthday']);
+      const year = dateTime.getFullYear();
+      const month = ('0' + (dateTime.getMonth() + 1)).slice(-2);
+      const day = ('0' + dateTime.getDate()).slice(-2);
+      const formattedDate = `${year}-${month}-${day}`;
+
       result = {
         userSettings: true,
         header: res['name'],
         email: res['email'],
+        birthdate: formattedDate,
         login: res['login'],
         poster: res['photo'],
         infoText: res['info_text'],
         country: res['country'],
         career: res['career']
       };
+
+      object.birthdate = formattedDate;
+      object.login = res['login'];
+      object.email = res['email'];
+      object.poster = res['photo'];
     }
     const contentBlockHTML = document.querySelector('.contentBlock');
     if (contentBlockHTML != null) {

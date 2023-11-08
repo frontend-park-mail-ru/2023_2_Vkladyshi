@@ -52,10 +52,6 @@ export class MainPage extends View {
     }
 
     store.dispatch(actionAuth());
-
-    // actorPage.render();
-    // filmPage.render();
-    // userPage.render();
   }
 
   subscribeMainPageStatus () {

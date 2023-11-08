@@ -1,16 +1,17 @@
 import { View } from '@views/view';
-import {desc, info, footer, countLikeFilm, reviewForm, review} from '@utils/config';
+import { desc, info, countLikeFilm, reviewForm, review } from '@utils/config';
 import { store } from '@store/store';
 import {
-  actionFilm,
+  actionAddComment,
+  actionFilm, actionGetCommentsFilm,
   actionGetCommentsUser
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
-import { response } from 'express';
 
 export interface FilmPage {
   state: {
     filmInfo: null;
+    fildId: number;
   };
 }
 
@@ -24,7 +25,8 @@ export class FilmPage extends View {
   constructor (ROOT) {
     super(ROOT);
     this.state = {
-      filmInfo: null
+      filmInfo: null,
+      fildId: 0
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -43,7 +45,7 @@ export class FilmPage extends View {
     if (props != null) {
       store.dispatch(actionFilm({ filmId: props.replace('/', '') }));
     }
-    this.componentDidMount();
+    //this.componentDidMount();
   }
 
   componentDidMount () {
@@ -58,8 +60,11 @@ export class FilmPage extends View {
     if (this.state.filmInfo) {
       const { actors, rating, number, genre, film } = this.state.filmInfo;
       // eslint-disable-next-line camelcase
-      const { poster, title, country, release_date, info_text } = film;
+      const { poster, title, country, release_date, info } = film;
 
+
+      // @ts-ignore
+      this.state.fildId = film.id;
       const fullDate = new Date(release_date);
       const date = fullDate.getFullYear().toString();
 
@@ -73,7 +78,7 @@ export class FilmPage extends View {
         date,
         title,
         // eslint-disable-next-line camelcase
-        infoText: info_text,
+        infoText: info,
         header: 'О фильме',
         headerAbout: 'Описание',
         headerComment: 'Отзывы',
@@ -98,6 +103,8 @@ export class FilmPage extends View {
       this.popupEvent = popupEvent;
       switch (true) {
         case event.target.closest('.table__actor__text') !== null:
+
+          this.componentWillUnmount();
           const actorId = event.target
             .closest('.table__actor__text')
             .getAttribute('data-section');
@@ -118,9 +125,8 @@ export class FilmPage extends View {
         default:
           break;
       }
-
-      this.componentWillUnmount();
     };
+
     popup?.addEventListener('click', popupEvent);
   }
 
@@ -140,30 +146,50 @@ export class FilmPage extends View {
       comments.appendChild(div1);
       comments.appendChild(div2);
 
-      const divElement = document.querySelector('.additional-info__content.table__row__text') as HTMLDivElement;
+      const divElement = document.querySelector(
+        '.additional-info__content.table__row__text'
+      ) as HTMLDivElement;
       divElement.style.display = 'none';
 
       infoHTML?.appendChild(comments);
 
-      store.dispatch(actionGetCommentsUser({ page: 1, per_page: 5 })).then(response => {
-        const result = store.getState('userCommentsStatus').body;
+      // @ts-ignore
+      store.dispatch(actionGetCommentsFilm({film_id: this.state.fildId, page: 1, per_page: 10 }))
+        .then((response) => {
+          const result = store.getState('filmCommentsStatus').body.comment;
 
-        result.forEach((res) => {
-          const table = {
-            user: true,
-            film_id: res['film_id'],
-            film_name: res['film_name'],
-            rating: res['rating'],
-            text: res['text']
-          };
+          result.forEach((res) => {
+            const table = {
+              user: true,
+              film_id: res['film_id'],
+              film_name: res['film_name'],
+              rating: res['rating'],
+              text: res['text']
+            };
 
-          div1?.insertAdjacentHTML('beforeend', review.render(table));
+            div1?.insertAdjacentHTML('beforeend', review.render(table));
+          });
+
+          if (!document.querySelector('.reviewForm')) {
+            div2?.insertAdjacentHTML('beforeend', reviewForm.render());
+            console.log(55555)
+
+            const Event = (event) => {
+              event.preventDefault();
+              const selectHTML = document.querySelector('.rating__form');
+              const textHTML = document.querySelector('.reviewForm__body__text');
+
+              // @ts-ignore
+              const select = selectHTML.value;
+              // @ts-ignore
+              const text = textHTML.value;
+
+              store.dispatch(actionAddComment({ film_id: this.state.fildId, rating: select, text: text }));
+            }
+            const kek = document.querySelector('.reviewForm');
+            kek?.addEventListener('submit', Event);
+          }
         });
-
-        if (!document.querySelector('.reviewForm')) {
-          div2?.insertAdjacentHTML('beforeend', reviewForm.render());
-        }
-      });
     }
   }
 
@@ -175,15 +201,18 @@ export class FilmPage extends View {
       infoHTML?.removeChild(commentsBlock);
     }
 
-    const divElement = document.querySelector('.additional-info__content.table__row__text') as HTMLDivElement;
+    const divElement = document.querySelector(
+      '.additional-info__content.table__row__text'
+    ) as HTMLDivElement;
     divElement.style.display = 'block';
   }
 
   componentWillUnmount () {
     store.unsubscribe('removeView', this.componentWillUnmount);
     store.unsubscribe('filmInfo', this.subscribeActorStatus);
+
     const popup = document.querySelector('.filmSelection');
-    popup?.addEventListener('click', this.popupEvent);
+    popup?.removeEventListener('click', this.popupEvent);
   }
 
   subscribeActorStatus () {

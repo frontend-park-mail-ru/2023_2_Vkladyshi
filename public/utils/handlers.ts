@@ -15,6 +15,14 @@ const handlers = [
     method: actionsUser.userComments.bind(actionsUser)
   },
   {
+    type: 'addComment',
+    method: actionsUser.addComment.bind(actionsUser)
+  },
+  {
+    type: 'filmComments',
+    method: actionsUser.filmComments.bind(actionsUser)
+  },
+  {
     type: 'getSettings',
     method: actionsUser.getSettings.bind(actionsUser)
   },

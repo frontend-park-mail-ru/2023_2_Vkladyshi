@@ -24,6 +24,7 @@ export interface SignupPage {
     password: string;
     email: string;
     haveEvent: boolean;
+    birthday: string;
   };
 }
 /**
@@ -47,7 +48,8 @@ export class SignupPage extends View {
       haveEvent: false,
       login: '',
       password: '',
-      email: ''
+      email: '',
+      birthday: ''
     };
 
     this.subscribeSignupStatus = this.subscribeSignupStatus.bind(this);
@@ -151,24 +153,34 @@ export class SignupPage extends View {
     const passwordInputSecondHTML = document.querySelector(
       '.passwordInputSecond'
     ) as HTMLInputElement;
+    const birthdayInputHTML = document.querySelector(
+      '.dateInput'
+    ) as HTMLInputElement;
 
     const handleSubmit = (event) => {
       event.preventDefault();
 
       const login = loginInputHTML.value.trim();
       const email = emailInputHTML.value.trim();
+      const birthday = birthdayInputHTML.value.trim();
       const password = passwordInputFirstHTML.value;
       const passwordSecond = passwordInputSecondHTML.value;
 
       signupForm?.removeEventListener('submit', handleSubmit);
 
-      if (this.validateForm(login, password, passwordSecond, email)) {
+      if (this.validateForm(login, password, passwordSecond, email, birthday)) {
         this.state.login = login;
         this.state.password = password;
         this.state.email = email;
+        this.state.birthday = birthday;
 
         store.dispatch(
-          actionSignup({ login: login, password: password, email: email })
+          actionSignup({
+            login: login,
+            password: password,
+            email: email,
+            birthday: birthday
+          })
         );
       }
     };
@@ -176,10 +188,10 @@ export class SignupPage extends View {
     signupForm?.addEventListener('submit', handleSubmit);
   }
 
-  validateForm (login, password, passwordSecond, email) {
+  validateForm (login, password, passwordSecond, email, birthday) {
     const errorClassName = 'errorStringSignup';
 
-    if (!login || !email || !password || !passwordSecond) {
+    if (!login || !email || !password || !passwordSecond || !birthday) {
       returnError(errorInputs.NotAllElements, errorClassName);
       return false;
     }
