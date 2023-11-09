@@ -1,48 +1,50 @@
 <header>
   <div class='header'>
-    <div class='brandHeader' data-section='{{brand.key}}'>
-      <img src='/icons/{{brand.png_name}}' class='brand_icon' />
+    <div class='header__brand-header' data-section='{{brand.key}}'>
+      <img src='/icons/{{brand.png_name}}' class='brand-icon' />
       <span>{{brand.name}}</span>
     </div>
 
-    <div class='menuHeader' data-section='{{selection.key}}'>
+    <div class='header__menu-header' data-section='{{selection.key}}'>
       <img src='/icons/{{selection.png_name}}' class='icon' />
       <span>{{selection.name}}</span>
     </div>
 
-    <input class='header_search_item' placeholder='Поиск фильмов' />
+    <input class='header__header-search-item' placeholder='Поиск фильмов' />
 
-    <div class='headerItem' data-section='{{basket.key}}'>
+    <div class='header__header-item' data-section='{{basket.key}}'>
       <img src='/icons/{{basket.png_name}}' class='icon' />
       <span>{{basket.name}}</span>
     </div>
 
     {{#if isAuthorized}}
       <div>
-        <nav class='navigationProfile' role='navigation'>
-          <ul class='ulNavProfile'>
-            <li class='liNavProfile'>
+        <nav class='header__navigation-profile' role='navigation'>
+          <ul class='header__navigation-profile__ul-nav-profile'>
+            <li
+              class='header__navigation-profile__ul-nav-profile__li-nav-profile'
+            >
               <ul>
-                <div class='headerItem'>
+                <div class='header__header-item'>
                   <img src='/icons/{{profile.png_name}}' class='icon' />
                   <span>{{profile.name}}</span>
                 </div>
               </ul>
               <ul class='dropdown'>
                 <li
-                  class='settingsHeader'
+                  class='dropdown__settings-header'
                   data-section='{{profile.key}}'
                 >Настройки</li>
-                <li class='logoutHeader'>Выйти</li>
+                <li class='dropdown__logout-header'>Выйти</li>
               </ul>
             </li>
           </ul>
         </nav>
       </div>
     {{else}}
-      <div class='loginHeader' data-section='{{signin.key}}'>
+      <div class='header__login-header' data-section='{{signin.key}}'>
         <img src='/icons/{{signin.png_name}}' class='icon' alt='' />
-        <span class='loginText'>{{signin.name}}</span>
+        <span class='header__login-header__login-text'>{{signin.name}}</span>
       </div>
     {{/if}}
   </div>

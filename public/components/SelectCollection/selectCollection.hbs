@@ -1,21 +1,21 @@
-<div class='popupSelectCollection'>
-  <div class='selectCollection'>
-    <div class='selectCollection-frame'>
-      <div class='selectCollection-frame-header'>
+<div class='popup-select-collection'>
+  <div class='select-collection'>
+    <div class='select-collection__frame'>
+      <div class='select-collection__frame__header'>
         <img
-          class='selectCollection-frame-img'
+          class='select-collection__frame-img'
           src='../../icons/arrow_left.svg'
         />
-        <p class='selectCollection-frame-header-name'> MovieHub</p>
+        <p class='select-collection__frame__header-name'> MovieHub</p>
       </div>
-      <div class='selectCollection-frame-lists'>
+      <div class='select-collection__frame__lists'>
         {{#each collections}}
-          <div class='selectCollection-frame-list'>
-            <p class='selectCollection-frame-list-header'>
+          <div class='select-collection__frame__list'>
+            <p class='select-collection__frame__list__header'>
               {{collection_name}}</p>
             {{#each collection_items}}
               <p
-                class='selectCollection-frame-list-item'
+                class='select-collection__frame__list__item'
                 data-section='{{this.value}}'
               >{{this.key}}</p>
             {{/each}}

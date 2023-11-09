@@ -12,13 +12,13 @@ import { Signup } from '@components/Signup/signup';
 import { SelectCollection } from '@components/SelectCollection/selectCollection';
 import { Description } from '@components/Description/description';
 import { AddInfo } from '@components/AdditionalInfo/additionalInfo';
-import { CountLikeActor } from '@components/countLikeActor/countLikeActor';
+import { CountLikeActor } from '@/components/CountLikeActor/countLikeActor';
 import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
 
 import { FilmPage } from '@views/FilmPage/FilmPage';
 import { FilmRating } from '@components/FilmRating/filmRating';
 
-import { СountLikeFilm } from '@components/countLikeFilm/countLikeFilm';
+import { СountLikeFilm } from '@/components/CountLikeFilm/countLikeFilm';
 import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
 
 import { UserPage } from '@views/userPage/userPage';

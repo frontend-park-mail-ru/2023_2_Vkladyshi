@@ -1,5 +1,5 @@
 .footer {
-  background: #000;
+  background: var(--color-footer-background);
   height: 70px;
   width: 80%;
   display: flex;
@@ -17,20 +17,20 @@
   margin-right: auto;
 }
 
-.left_text {
+.footer__left-text {
   width: 40%;
   text-align: center;
   color: #a29f9f;
 }
 
-.center_image {
+.footer__center-image {
   width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.right_text {
+.footer__right-text {
   width: 40%;
   text-align: left;
   color: #a29f9f;

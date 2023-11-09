@@ -1,0 +1,31 @@
+.count-like-actor {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: var(--block-width);
+  margin: auto;
+}
+
+.count-like-actor__mark {
+  margin-left: 3%;
+  margin-right: 3%;
+  font-size: 50px;
+}
+
+.count-like-actor__mark_good {
+  color: var(--color-good);
+}
+
+.count-like-actor__mark_mid {
+  color: var(--color-mid);
+}
+
+.count-like-actor__mark_bad {
+  color: var(--color-bad);
+}
+
+.count-like-actor__watched {
+  margin-left: 8%;
+  margin-right: 2%;
+}

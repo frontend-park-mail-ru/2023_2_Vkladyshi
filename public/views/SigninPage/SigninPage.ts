@@ -65,7 +65,7 @@ export class SigninPage extends View {
       this.state.isUserSubscriber = true;
     }
 
-    if (!document.querySelector('.loginForm')) {
+    if (!document.querySelector('.signin__main__login-form')) {
       const result = document.querySelector('.popupSign');
       result!.innerHTML = <string>signin.render();
 
@@ -75,9 +75,11 @@ export class SigninPage extends View {
 
   getForm () {
     const signin = document.querySelector('.signin');
-    const loginHTML = document.querySelector('.loginInput') as HTMLInputElement;
+    const loginHTML = document.querySelector(
+      '.login-input'
+    ) as HTMLInputElement;
     const passwordHTML = document.querySelector(
-      '.passwordInput'
+      '.password-input'
     ) as HTMLInputElement;
 
     const handleSubmit = (event) => {
@@ -98,7 +100,7 @@ export class SigninPage extends View {
   }
 
   validateForm (login, password) {
-    const errorClassName = 'errorStringSignin';
+    const errorClassName = 'signin__error';
 
     if (!login || !password) {
       returnError(errorInputs.NotAllElements, errorClassName);
@@ -121,13 +123,13 @@ export class SigninPage extends View {
   }
 
   componentDidMount () {
-    const errorString = document.querySelector('.errorStringSignin');
+    const errorString = document.querySelector('.signin__error');
     const popup = document.querySelector('.popupSign');
 
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
-        case event.target.closest('.redirectToSignup') !== null:
+        case event.target.closest('.redirect-to-signup') !== null:
           this.componentWillUnmount();
           router.go(
             {
@@ -138,7 +140,7 @@ export class SigninPage extends View {
           );
           break;
 
-        case event.target.closest('.sign-frame-img') !== null:
+        case event.target.closest('.back-img') !== null:
           this.componentWillUnmount();
           router.go(
             {
@@ -148,7 +150,7 @@ export class SigninPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-        case event.target.closest('.buttonLogin') !== null:
+        case event.target.closest('.button-login') !== null:
           if (!this.state.isSubscribed) {
             this.state.isSubscribed = true;
           }
@@ -178,7 +180,7 @@ export class SigninPage extends View {
   }
 
   handlerStatus () {
-    const errorClassName = 'errorStringSignin';
+    const errorClassName = 'signin__error';
 
     switch (this.state.statusLogin) {
       case responseStatuses.success:

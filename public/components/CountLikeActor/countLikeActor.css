@@ -1,14 +1,14 @@
-.countLikeActor {
+.count-like-actor {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.countLikeActor__text {
+.count-like-actor__text {
   margin-left: 5%;
 
-  color: #000;
+  color: var(--color-text);
   text-align: center;
   font-family: Montserrat;
   font-size: 30px;

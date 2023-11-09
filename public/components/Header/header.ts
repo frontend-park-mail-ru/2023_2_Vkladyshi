@@ -79,7 +79,7 @@ export class Header extends Component {
       const target = event.target;
 
       switch (true) {
-        case target.closest('.loginHeader') !== null:
+        case target.closest('.header__login-header') !== null:
           router.go(
             {
               path: '/login',
@@ -88,7 +88,7 @@ export class Header extends Component {
             { pushState: true, refresh: false }
           );
           break;
-        case target.closest('.brandHeader') !== null:
+        case target.closest('.header__brand-header') !== null:
           router.go(
             {
               path: '/',
@@ -97,10 +97,10 @@ export class Header extends Component {
             { pushState: true, refresh: false }
           );
           break;
-        case target.closest('.logoutHeader') !== null:
+        case target.closest('.dropdown__logout-header') !== null:
           store.dispatch(actionLogout());
           break;
-        case target.closest('.settingsHeader') !== null:
+        case target.closest('.dropdown__settings-header') !== null:
           router.go(
             {
               path: '/settings',
@@ -109,7 +109,7 @@ export class Header extends Component {
             { pushState: true, refresh: false }
           );
           break;
-        case target.closest('.menuHeader') !== null:
+        case target.closest('.header__menu-header') !== null:
           router.go(
             {
               path: '/selection',

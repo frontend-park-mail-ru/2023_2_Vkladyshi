@@ -184,7 +184,7 @@ export class FilmPage extends View {
           });
 
           if (
-            !document.querySelector('.reviewForm') &&
+            !document.querySelector('.review-form') &&
             store.getState('statusAuth') === 200
           ) {
             div2?.insertAdjacentHTML(
@@ -196,7 +196,7 @@ export class FilmPage extends View {
               event.preventDefault();
               const selectHTML = document.querySelector('.rating__form');
               const textHTML = document.querySelector(
-                '.reviewForm__body__text'
+                '.review-form__body__text'
               );
 
               // @ts-ignore
@@ -212,7 +212,7 @@ export class FilmPage extends View {
                 })
               );
             };
-            const review = document.querySelector('.reviewForm');
+            const review = document.querySelector('.review-form');
             review?.addEventListener('submit', Event);
           } else if (store.getState('statusAuth') !== 200) {
             div2?.insertAdjacentHTML(
@@ -249,7 +249,7 @@ export class FilmPage extends View {
     store.unsubscribe('removeView', this.componentWillUnmount);
     store.unsubscribe('filmInfo', this.subscribeActorStatus);
 
-    const popup = document.querySelector('.filmSelection');
+    const popup = document.querySelector('.film-selection');
     popup?.removeEventListener('click', this.popupEvent);
   }
 

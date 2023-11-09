@@ -8,9 +8,9 @@
 @import './components/Description/description.css';
 @import './components/AdditionalInfo/additionalInfo.css';
 @import './components/TableStyle/TableStyle.css';
-@import './components/countLikeActor/countLikeActor.css';
+@import './components/CountLikeActor/countLikeActor.css';
 @import './components/Button&Form/button&form.css';
-@import './components/countLikeFilm/countLikeFilm.css';
+@import './components/CountLikeFilm/countLikeFilm.css';
 @import './components/ChangeUserData/changeUserData.css';
 @import './components/Review/review.css';
 @import './components/ReviewForm/reviewForm.css';
@@ -18,6 +18,11 @@
 :root {
   --background-color: rgb(81, 82, 58, 0.1);
   --content-block-color: rgb(255, 255, 255);
+  --color-text: #000;
+  --color-footer-background: #000;
+  --color-good: #57b846;
+  --color-mid: #fcc400;
+  --color-bad: #cb3202;
   --block-width: 80%;
 }
 

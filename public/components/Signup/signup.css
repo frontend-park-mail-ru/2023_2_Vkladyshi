@@ -1,26 +1,26 @@
 /*@media (min-width: 1200px) {*/
-/*  .redirectToSignin,*/
-/*  .errorStringSignup {*/
+/*  .redirect-to-signin,*/
+/*  .signup__main__error {*/
 /*    font-size: 16px;*/
 /*  }*/
 /*}*/
 
 /*@media (max-width: 1200px) {*/
-/*  .redirectToSignin,*/
-/*  .errorStringSignup {*/
+/*  .redirect-to-signin,*/
+/*  .signup__main__error {*/
 /*    font-size: 10px;*/
 /*  }*/
 /*}*/
 
 /*@media (max-width: 500px) {*/
-/*  .redirectToSignin,*/
-/*  .errorStringSignup {*/
+/*  .redirect-to-signin,*/
+/*  .signup__main__error {*/
 /*    font-size: 7px;*/
 /*  }*/
 /*}*/
 
 /*@media (max-width: 700px) {*/
-/*  .signupButton {*/
+/*  .signup-button {*/
 /*    font-size: 7px;*/
 /*  }*/
 /*}*/
@@ -44,7 +44,7 @@
   /*visibility: visible;*/
 }
 
-.signupMain {
+.signup__main {
   width: 100%;
   height: 100%;
   display: flex;
@@ -57,7 +57,7 @@
   transition: all 1s ease 0s;
 }
 
-.signupForm {
+.signup__main__signup-form {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -68,11 +68,11 @@
   padding: 55px 85px;
 }
 
-.loginInputSignup,
+.login-inputSignup,
 .emailInput,
 .dateInput,
-.passwordInputFirst,
-.passwordInputSecond {
+.password-input-first,
+.password-input-second {
   width: 90%;
   height: 45px;
   border: solid white;
@@ -81,7 +81,7 @@
   padding: 0 10% 0 10%;
 }
 
-.signupButton {
+.signup-button {
   width: 100px;
   height: 35px;
   border-radius: 24px;
@@ -92,11 +92,11 @@
   transition: background 0.3s ease;
 }
 
-.signupButton:hover {
-  background: #57b846;
+.signup-button:hover {
+  background: var(--color-good);
 }
 
-.redirectToSignin {
+.redirect-to-signin {
   cursor: pointer;
   text-align: center;
   font-size: 13px;
@@ -104,11 +104,11 @@
   transition: color 0.3s ease;
 }
 
-.redirectToSignin:hover {
-  color: #57b846;
+.redirect-to-signin:hover {
+  color: var(--color-good);
 }
 
-.errorStringSignup {
+.signup__main__error {
   color: red;
   display: block;
   text-align: center;

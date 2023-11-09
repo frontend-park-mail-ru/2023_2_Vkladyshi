@@ -1,33 +1,33 @@
 /*@media screen and (max-width: 1370px) {*/
-/*  .filmSelection_film_select {*/
+/*  .film-selection_film_select {*/
 /*    width: 40%;*/
 /*  }*/
-/*  .filmSelection_film_select_p {*/
+/*  .film-selection_film_select_p {*/
 /*    display: none;*/
 /*  }*/
 /*}*/
 
-.filmSelection {
+.film-selection {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
 }
 
-.filmSelection_films {
+.film-selection_films {
   display: flex;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
 }
-.filmSelection_name {
+.film-selection_name {
   width: 85%;
   margin-top: 5%;
   padding-bottom: 2%;
   padding-left: 5%;
   border-bottom: 1px solid black;
-  color: #000;
+  color: var(--color-text);
   font-family: Montserrat, serif;
   font-size: 32px;
   font-style: normal;
@@ -37,7 +37,7 @@
   text-align: left;
 }
 
-.filmSelection_film {
+.film-selection_film {
   cursor: pointer;
   width: 250px;
   height: 100%;
@@ -50,18 +50,18 @@
   transition: all 0.5s ease;
 }
 
-.filmSelection_film:hover {
+.film-selection_film:hover {
   transform: scale(1.1);
 }
 
-.filmSelection_film_poster {
+.film-selection_film_poster {
   width: 60%;
   height: 170px;
   margin-top: 15%;
   margin-bottom: 10%;
 }
 
-.filmSelection_film_rating {
+.film-selection_film_rating {
   height: 50%;
   width: 75%;
   margin-top: 5%;
@@ -71,13 +71,13 @@
   align-items: center;
 }
 
-.filmSelection_film_rating_p {
+.film-selection_film_rating_p {
   margin-top: 0;
   margin-bottom: 0;
   /*width: 20%;*/
 }
 
-.filmSelection_film_name {
+.film-selection_film_name {
   width: 80%;
   /*white-space: nowrap;*/
   overflow: hidden;
@@ -94,7 +94,7 @@
   margin-bottom: 0;
 }
 
-.filmSelection_film_select {
+.film-selection_film_select {
   width: 65%;
   height: auto;
   padding-top: 5%;
@@ -110,21 +110,21 @@
     width,
     background 0.3s ease;
 }
-.filmSelection_film_select:hover {
+.film-selection_film_select:hover {
   background: rgba(107, 103, 103, 0.3);
 }
 
-.filmSelection_film_select_img {
+.film-selection_film_select_img {
   width: 10%;
   height: auto;
 }
 
-.filmSelection_film_select_p {
+.film-selection_film_select_p {
   width: 80%;
   height: auto;
   margin-top: 0;
   margin-bottom: 0;
-  color: #000;
+  color: var(--color-text);
   font-family: Montserrat;
   font-size: 14px;
   font-style: normal;
@@ -135,6 +135,6 @@
   vertical-align: middle;
 }
 
-.selectCollection-frame-list-item:hover {
+.select-collection__frame__list__item:hover {
   cursor: pointer;
 }

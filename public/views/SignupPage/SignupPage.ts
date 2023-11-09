@@ -74,7 +74,7 @@ export class SignupPage extends View {
       this.state.isUserSubscriber = true;
     }
 
-    if (!document.querySelector('.signupForm')) {
+    if (!document.querySelector('.signup__main__signup-form')) {
       const result = document.querySelector('.popupSign');
       result!.innerHTML = <string>signup.render();
       this.componentDidMount();
@@ -82,12 +82,12 @@ export class SignupPage extends View {
   }
 
   componentDidMount () {
-    const errorString = document.querySelector('.errorStringSignup');
+    const errorString = document.querySelector('.signup__main__error');
     const popup = document.querySelector('.popupSign');
 
     const popupEvent = (event) => {
       switch (true) {
-        case event.target.closest('.redirectToSignin') !== null:
+        case event.target.closest('.redirect-to-signin') !== null:
           errorString?.classList.remove('active');
           popup?.removeEventListener('click', popupEvent);
           this.componentWillUnmount();
@@ -99,7 +99,7 @@ export class SignupPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-        case event.target.closest('.sign-frame-img') !== null:
+        case event.target.closest('.back-img') !== null:
           this.componentWillUnmount();
           router.go(
             {
@@ -109,7 +109,7 @@ export class SignupPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-        case event.target.closest('.signupButton') !== null:
+        case event.target.closest('.signup-button') !== null:
           if (!this.state.isSubscribed) {
             store.subscribe('statusSignup', this.subscribeSignupStatus);
             this.state.isSubscribed = true;
@@ -140,18 +140,18 @@ export class SignupPage extends View {
   }
 
   getForm () {
-    const signupForm = document.querySelector('.signupForm');
+    const signupForm = document.querySelector('.signup__main__signup-form');
     const loginInputHTML = document.querySelector(
-      '.loginInputSignup'
+      '.login-inputSignup'
     ) as HTMLInputElement;
     const emailInputHTML = document.querySelector(
       '.emailInput'
     ) as HTMLInputElement;
     const passwordInputFirstHTML = document.querySelector(
-      '.passwordInputFirst'
+      '.password-input-first'
     ) as HTMLInputElement;
     const passwordInputSecondHTML = document.querySelector(
-      '.passwordInputSecond'
+      '.password-input-second'
     ) as HTMLInputElement;
     const birthdayInputHTML = document.querySelector(
       '.dateInput'
@@ -189,7 +189,7 @@ export class SignupPage extends View {
   }
 
   validateForm (login, password, passwordSecond, email, birthday) {
-    const errorClassName = 'errorStringSignup';
+    const errorClassName = 'signup__main__error';
 
     if (!login || !email || !password || !passwordSecond || !birthday) {
       returnError(errorInputs.NotAllElements, errorClassName);
@@ -257,7 +257,7 @@ export class SignupPage extends View {
   }
 
   handlerStatus () {
-    const errorClassName = 'errorStringSignup';
+    const errorClassName = 'signup__main__error';
     switch (this.state.statusSignup) {
       case responseStatuses.success:
         return true;

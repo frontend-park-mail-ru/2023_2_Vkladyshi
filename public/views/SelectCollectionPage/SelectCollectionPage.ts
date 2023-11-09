@@ -39,7 +39,7 @@ export class SelectCollectionPage extends View {
   render () {
     this.renderDefaultPage();
 
-    if (!document.querySelector('.selectCollection-frame')) {
+    if (!document.querySelector('.select-collection__frame')) {
       const result = ROOT?.querySelector('main');
 
       result!.innerHTML = selectCollection.render();
@@ -53,11 +53,11 @@ export class SelectCollectionPage extends View {
    * @returns {Promise} Promise ответа
    */
   componentDidMount () {
-    const popup = document.querySelector('.popupSelectCollection');
+    const popup = document.querySelector('.popup-select-collection');
 
     this.popupEvent = (event) => {
       switch (true) {
-        case event.target.closest('.selectCollection-frame-img') !== null:
+        case event.target.closest('.select-collection__frame-img') !== null:
           router.go(
             {
               path: '/',
@@ -66,7 +66,8 @@ export class SelectCollectionPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-        case event.target.closest('.selectCollection-frame-list-item') !== null:
+        case event.target.closest('.select-collection__frame__list__item') !==
+          null:
           const dataSection = event.target.getAttribute('data-section');
           this.state.dataSection = dataSection;
           store.dispatch(actionCollectionMenu({ collection_id: dataSection }));

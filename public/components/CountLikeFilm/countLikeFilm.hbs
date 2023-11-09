@@ -13,19 +13,19 @@
 
  -->
 
-<div class='countLikeActor'>
-  <div class='countLikeActor__star-box'>
+<div class='count-like-actor'>
+  <div class='count-like-actor__star-box'>
     {{#each stars_burning}}
       {{#if this includeZero=false}}
         <img
-          class='countLikeActor__star-box__star'
+          class='count-like-actor__star-box__star'
           src='/icons/Оценеено=Есть оценка.svg'
           alt='Горящая звезда'
         />
       {{/if}}
       {{#if this includeZero=true}}
         <img
-          class='countLikeActor__star-box__star'
+          class='count-like-actor__star-box__star'
           src='/icons/Оценеено=Нет оценки.svg'
           alt='Погасшая звезда'
         />
@@ -33,14 +33,17 @@
     {{/each}}
   </div>
 
-  <div class='countLikeActor__mark countLikeActor__mark_good table__header'>
+  <div class='count-like-actor__mark count-like-actor__mark_good table__header'>
     {{mark}}
   </div>
-  <div class='countLikeActor__mark-number table__row__text'>{{mark_number}}
+  <div class='count-like-actor__mark-number table__row__text'>{{mark_number}}
     оценок</div>
   <img
-    class='countLikeActor__watched'
+    class='count-like-actor__watched'
     src='/icons/Будут смотреть=Не смотрим.svg'
   />
-  <img class='countLikeActor__review' src='/icons/Иконка написать отзыв.svg' />
+  <img
+    class='count-like-actor__review'
+    src='/icons/Иконка написать отзыв.svg'
+  />
 </div>

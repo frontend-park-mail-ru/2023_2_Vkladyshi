@@ -1,5 +1,5 @@
 import { Component } from '@components/component';
-import * as templateСountLikeFilm from '@components/countLikeFilm/countLikeFilm.hbs';
+import * as templateСountLikeFilm from '@components/CountLikeFilm/countLikeFilm.hbs';
 
 /**
  * Класс рендеринга элемента оценки фильма

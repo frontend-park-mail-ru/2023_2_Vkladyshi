@@ -84,7 +84,7 @@ export class UserPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-        case event.target.closest('.ChangeUserData__form__apply') !== null:
+        case event.target.closest('.change-user-data__form__apply') !== null:
           this.getForm();
           break;
 
@@ -108,7 +108,7 @@ export class UserPage extends View {
     const passwordInputSecondHTML = document.querySelector(
       '.second_password__input__signup'
     ) as HTMLInputElement;
-    const popup = document.querySelector('.ChangeUserData');
+    const popup = document.querySelector('.change-user-data');
 
     const handleSubmit = (event) => {
       event.preventDefault();
