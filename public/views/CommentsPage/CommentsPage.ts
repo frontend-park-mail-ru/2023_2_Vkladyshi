@@ -47,19 +47,6 @@ export class CommentsPage extends View {
    */
   render (props) {
     this.renderDefaultPage();
-    store.dispatch(actionAuth()).then((response) => {
-      // @ts-ignore
-      if (response.status !== 200) {
-        router.go(
-          {
-            path: '/login',
-            props: ``
-          },
-          { pushState: true, refresh: false }
-        );
-      }
-    });
-
     store.dispatch(
       actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
     );
@@ -123,14 +110,13 @@ export class CommentsPage extends View {
           actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
         );
       }
-      console.log('height');
+
       console.log(
         Math.floor(window.innerHeight + document.documentElement.scrollTop) / 10
       );
       console.log(Math.floor(document.documentElement.offsetHeight - 1) / 10);
     };
 
-    console.log('handleScroll');
     popup?.addEventListener('click', popupEvent);
     window?.addEventListener('scroll', handleScroll);
   }

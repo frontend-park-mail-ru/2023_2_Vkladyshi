@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { desc, info, countLikeFilm, reviewForm, review } from '@utils/config';
 import { store } from '@store/store';
@@ -5,16 +6,15 @@ import {
   actionAddComment,
   actionAuth,
   actionFilm,
-  actionGetCommentsFilm,
-  actionGetCommentsUser
+  actionGetCommentsFilm
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
-import { response } from 'express';
 
 export interface FilmPage {
   state: {
     filmInfo: null;
     fildId: number;
+    mapFilms: {};
   };
 }
 
@@ -29,7 +29,8 @@ export class FilmPage extends View {
     super(ROOT);
     this.state = {
       filmInfo: null,
-      fildId: 0
+      fildId: 0,
+      mapFilms: {}
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -42,8 +43,6 @@ export class FilmPage extends View {
   render (props) {
     store.subscribe('filmInfo', this.subscribeActorStatus);
     store.subscribe('removeView', this.componentWillUnmount);
-    store.dispatch(actionAuth());
-
     this.renderDefaultPage();
 
     if (props != null) {
@@ -86,7 +85,7 @@ export class FilmPage extends View {
         headerAbout: 'Описание',
         headerComment: 'Отзывы',
         isHeader: true,
-        stars_burning: [true, true, true, false, false],
+        stars_burning: [false, false, false, false, false, false, false, false, false, false],
         mark: rating,
         mark_number: number
       };
@@ -94,11 +93,30 @@ export class FilmPage extends View {
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
+
+      // TODO
+      // если 10 шкала - изменить пороги
+      for (let i = 0; i < result.mark; i++) {
+        result.stars_burning[i] = true;
+      }
+
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
         countLikeFilm.render(result)
       );
-      contentBlockHTML?.insertAdjacentHTML('beforeend', info.render(result));
+
+      // TODO
+      // если 10 шкала - изменить пороги
+      const markElement = document.querySelector('.countLikeActor__mark');
+      if (markElement) {
+        if (result.mark >= 7) {
+          markElement.classList.add('countLikeActor__mark_good');
+        } else if (result.mark > 4 && result.mark < 7) {
+          markElement.classList.add('countLikeActor__mark_mid');
+        } else {
+          markElement.classList.add('countLikeActor__mark_bad');
+        }
+      }
     }
 
     this.addEvents();
@@ -173,9 +191,9 @@ export class FilmPage extends View {
 
           result.forEach((res) => {
             const table = {
-              user: true,
+              film: true,
               film_id: res['film_id'],
-              film_name: res['film_name'],
+              name: res['name'],
               rating: res['rating'],
               text: res['text']
             };
@@ -185,7 +203,8 @@ export class FilmPage extends View {
 
           if (
             !document.querySelector('.reviewForm') &&
-            store.getState('statusAuth') === 200
+            store.getState('statusAuth') === 200 &&
+            this.state.mapFilms[this.state.fildId] === undefined
           ) {
             div2?.insertAdjacentHTML(
               'beforeend',
@@ -204,6 +223,14 @@ export class FilmPage extends View {
               // @ts-ignore
               const text = textHTML.value;
 
+              console.log(this.state.fildId, this.state.mapFilms);
+              if (this.state.mapFilms[this.state.fildId] == null) {
+                this.state.mapFilms[this.state.fildId] = true;
+
+                // @ts-ignore
+                document.querySelector('.input__form').innerHTML = '';
+              }
+
               store.dispatch(
                 actionAddComment({
                   film_id: this.state.fildId,
@@ -215,11 +242,6 @@ export class FilmPage extends View {
             const review = document.querySelector('.reviewForm');
             review?.addEventListener('submit', Event);
           } else if (store.getState('statusAuth') !== 200) {
-            div2?.insertAdjacentHTML(
-              'beforeend',
-              reviewForm.render({ login: false })
-            );
-
             div2.addEventListener('click', (event) => {
               router.go(
                 { path: '/login', props: `` },
@@ -258,4 +280,11 @@ export class FilmPage extends View {
     store.unsubscribe('filmInfo', this.subscribeActorStatus);
     this.componentDidMount();
   }
+}
+/**
+ *
+ * @param arg0
+ */
+function elseif (arg0: boolean) {
+  throw new Error('Function not implemented.');
 }

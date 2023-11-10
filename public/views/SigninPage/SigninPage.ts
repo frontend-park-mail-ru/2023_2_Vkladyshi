@@ -1,21 +1,27 @@
 import { View } from '@views/view';
 import { errorInputs, responseStatuses, signin } from '@utils/config';
-
 import { store } from '@store/store';
 import { actionCSRF, actionSignin } from '@store/action/actionTemplates';
-import { returnError } from '@utils/addError';
+import {
+  addErrorsActive,
+  insertInInput,
+  insertText,
+  removeErrors,
+  removeErrorsActive
+} from '@utils/addError';
 import { validateLogin, validatePassword } from '@utils/validate';
 import { router } from '@router/router';
-import { response } from 'express';
+import { inputButton } from '@components/inputButton/inputButton';
+import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 
 export interface SigninPage {
   state: {
     statusLogin: number;
-    isSubscribed: boolean;
-    isUserSubscriber: boolean;
     haveEvent: boolean;
-    login: string;
-    password: string;
+    userInfo: {};
+    wraps: {};
+    inputsHTML: {};
+    errorsHTML: {};
   };
 }
 
@@ -34,17 +40,15 @@ export class SigninPage extends View {
     super(ROOT);
     this.state = {
       statusLogin: 0,
-      isSubscribed: false,
-      isUserSubscriber: false,
       haveEvent: false,
-      login: '',
-      password: ''
+      wraps: {},
+      inputsHTML: {},
+      errorsHTML: {},
+      userInfo: {}
     };
 
     this.subscribeLoginStatus = this.subscribeLoginStatus.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
-
-    store.subscribe('statusLogin', this.subscribeLoginStatus);
   }
 
   /**
@@ -55,79 +59,97 @@ export class SigninPage extends View {
       this.renderDefaultPage();
       const mainHTML = document.querySelector('main');
       const popup = document.createElement('div');
-      popup.className = 'popupSign';
+      popup.classList.add('popupSign');
 
       mainHTML!.innerHTML = '';
       mainHTML?.appendChild(popup);
     }
 
-    if (!this.state.isUserSubscriber) {
-      this.state.isUserSubscriber = true;
-    }
-
-    if (!document.querySelector('.loginForm')) {
+    if (!document.querySelector('.login-form')) {
       const result = document.querySelector('.popupSign');
       result!.innerHTML = <string>signin.render();
 
+      const loginText = document.querySelector('.login-text');
+      const passwordText = document.querySelector('.password-text');
+      const button = document.querySelector('.container-login');
+
+      loginText!.insertAdjacentHTML(
+        'beforeend',
+        inputButton.render({ wrap: 'login', module: 'signin' })
+      );
+      passwordText!.insertAdjacentHTML(
+        'beforeend',
+        inputButton.render({
+          wrap: 'password',
+          module: 'signin',
+          type: 'password'
+        })
+      );
+      button!.insertAdjacentHTML(
+        'afterbegin',
+        buttonSubmit.render({ text: 'Войти' })
+      );
+
       this.componentDidMount();
+      this.init();
+      this.setUserInfo();
+      store.subscribe('statusLogin', this.subscribeLoginStatus);
     }
   }
 
   getForm () {
     const signin = document.querySelector('.signin');
-    const loginHTML = document.querySelector('.loginInput') as HTMLInputElement;
-    const passwordHTML = document.querySelector(
-      '.passwordInput'
-    ) as HTMLInputElement;
 
-    const handleSubmit = (event) => {
-      event.preventDefault();
+    const login = this.state.userInfo['login'];
+    const password = this.state.userInfo['password'];
 
-      const login = loginHTML.value.trim();
-      const password = passwordHTML.value;
-      signin?.removeEventListener('submit', handleSubmit);
-
-      if (this.validateForm(login, password)) {
-        this.state.login = login;
-        this.state.password = password;
-        store.dispatch(actionSignin({ login: login, password: password }));
-      }
-    };
-
-    signin?.addEventListener('submit', handleSubmit);
+    if (this.validateForm(login, password)) {
+      store.dispatch(actionSignin({ login: login, password: password }));
+    }
   }
 
   validateForm (login, password) {
-    const errorClassName = 'errorStringSignin';
+    const elements = this.state.errorsHTML;
+    const wraps = this.state.wraps;
+    let result = true;
 
-    if (!login || !password) {
-      returnError(errorInputs.NotAllElements, errorClassName);
-      return false;
+    if (!login) {
+      insertText(elements['login'], errorInputs.NotAllElement);
+      addErrorsActive(wraps['login']);
+      result = false;
+    }
+
+    if (!password) {
+      insertText(elements['password'], errorInputs.NotAllElement);
+      addErrorsActive(wraps['password']);
+      result = false;
     }
 
     const loginValidate = validateLogin(login);
-    if (!loginValidate.result) {
-      returnError(loginValidate.error, errorClassName);
-      return false;
+    if (!loginValidate.result && login.length > 0) {
+      insertText(elements['login'], loginValidate.error);
+      addErrorsActive(wraps['login']);
+      result = false;
     }
 
     const passwordValidate = validatePassword(password);
-    if (!passwordValidate.result) {
-      returnError(passwordValidate.error, errorClassName);
-      return false;
+    if (!passwordValidate.result && password.length > 0) {
+      insertText(elements['password'], passwordValidate.error);
+      addErrorsActive(wraps['password']);
+      result = false;
     }
 
-    return true;
+    return result;
   }
 
   componentDidMount () {
-    const errorString = document.querySelector('.errorStringSignin');
     const popup = document.querySelector('.popupSign');
 
     const popupEvent = (event) => {
-      this.popupEvent = popupEvent;
+      this.getUserInfo();
       switch (true) {
-        case event.target.closest('.redirectToSignup') !== null:
+        case event.target.closest('.redirect-to-signup') !== null:
+          store.unsubscribe('statusLogin', this.subscribeLoginStatus);
           this.componentWillUnmount();
           router.go(
             {
@@ -137,8 +159,8 @@ export class SigninPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-
         case event.target.closest('.sign-frame-img') !== null:
+          store.unsubscribe('statusLogin', this.subscribeLoginStatus);
           this.componentWillUnmount();
           router.go(
             {
@@ -148,69 +170,78 @@ export class SigninPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-        case event.target.closest('.buttonLogin') !== null:
-          if (!this.state.isSubscribed) {
-            this.state.isSubscribed = true;
-          }
+        case event.target.closest('.button-submit') !== null:
+          event.preventDefault();
+          removeErrors(this.state.errorsHTML);
+          removeErrorsActive(this.state.wraps);
           this.getForm();
           break;
-
         default:
           break;
       }
     };
+
+    this.popupEvent = popupEvent;
     popup?.addEventListener('click', popupEvent);
   }
 
   componentWillUnmount () {
     const popup = document.querySelector('.popupSign');
-
-    if (this.state.isSubscribed) {
-      store.unsubscribe('statusLogin', this.subscribeLoginStatus);
-      this.state.statusLogin = 0;
-      this.state.isSubscribed = false;
-    }
-    if (this.state.isUserSubscriber) {
-      this.state.isUserSubscriber = false;
-    }
-
+    this.state.statusLogin = 0;
     popup?.removeEventListener('click', this.popupEvent);
   }
 
   handlerStatus () {
-    const errorClassName = 'errorStringSignin';
-
     switch (this.state.statusLogin) {
       case responseStatuses.success:
         return true;
       case responseStatuses.notAuthorized:
-        returnError(errorInputs.LoginOrPasswordError, errorClassName);
+        insertText(this.state.errorsHTML, errorInputs.LoginOrPasswordError);
         break;
       case responseStatuses.csrfError:
         store.dispatch(actionCSRF()).then((response) => {
           store.dispatch(
             actionSignin({
-              login: this.state.login,
-              password: this.state.password
+              login: this.state.userInfo['login'],
+              password: this.state.userInfo['password']
             })
           );
         });
         break;
       default:
-        returnError(errorInputs.LoginOrPasswordError, errorClassName);
+        insertText(
+          document.querySelector('.error-login'),
+          errorInputs.ServerError
+        );
+        break;
     }
+
     return false;
+  }
+
+  getUserInfo () {
+    this.state.userInfo['login'] = this.state.inputsHTML['login'].value.trim();
+    this.state.userInfo['password'] = this.state.inputsHTML['password'].value;
+  }
+
+  setUserInfo () {
+    insertInInput(this.state.inputsHTML, this.state.userInfo);
   }
 
   subscribeLoginStatus () {
     this.state.statusLogin = store.getState('statusLogin');
 
     if (this.handlerStatus()) {
+      store.unsubscribe('statusLogin', this.subscribeLoginStatus);
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
 
       this.state.statusLogin = 0;
       this.componentWillUnmount();
+
+      this.state.userInfo['login'] = '';
+      this.state.userInfo['password'] = '';
+
       router.go(
         {
           path: '/',
@@ -219,5 +250,18 @@ export class SigninPage extends View {
         { pushState: true, refresh: false }
       );
     }
+  }
+
+  init () {
+    const errorLogin = document.querySelector('.error-login');
+    const errorPassword = document.querySelector('.error-password');
+    const login = document.querySelector('.login-input-signin');
+    const password = document.querySelector('.password-input-signin');
+    const wrapLogin = document.querySelector('.wrap.login');
+    const wrapPassword = document.querySelector('.wrap.password');
+
+    this.state.inputsHTML = { login: login, password: password };
+    this.state.wraps = { login: wrapLogin, password: wrapPassword };
+    this.state.errorsHTML = { login: errorLogin, password: errorPassword };
   }
 }

@@ -1,64 +1,35 @@
 <div class='ChangeUserData'>
-  <h1 class='ChangeUserData__header table__header'>
-    Хотите изменить свои данные?
-  </h1>
+  <h6 class='ChangeUserData__header table__header'>
+    Ваш профиль
+  </h6>
   <form
     class='ChangeUserData__form'
     enctype='multipart/form-data'
     method='post'
   >
-    <label>
-      <input
-        type='text'
-        class='ChangeUserData__form__new-pass form form__text login__input__signup'
-        value='{{login}}'
-        placeholder='ваш новый логин'
-      />
-    </label>
-    <div class='login__input__signup'></div>
-    <label>
-      <input
-        type='email'
-        class='ChangeUserData__form__new-pass form form__text email__input__signup'
-        placeholder='ваш email'
-        value='{{email}}'
-      />
-    </label><label for='birthday'></label><input
-      class='ChangeUserData__form__new-pass form form__text date_input'
-      type='date'
-      id='birthday'
-      name='birthday'
-      value='{{birthdate}}'
-    />
-    <input
-      type='password'
-      class='ChangeUserData__form__new-pass form form__text password__input__signup'
-      placeholder='ваш новый пароль'
-    />
-
-    <label>
-      <input
-        type='password'
-        class='ChangeUserData__form__repeat-new-pass form form__text second_password__input__signup'
-        placeholder='повторите пароль'
-      />
-    </label>
-
-    <label class='ChangeUserData__form__file button button__text'>
-      <img
-        class='ChangeUserData__form__img'
-        src='../../icons/Иконка файлов.svg'
-        alt=''
-      />
-
-      <input class='ChangeUserData__form__file settings_file' type='file' />
-      Новое фото
-    </label>
-
-    <button
-      type='submit'
-      class='ChangeUserData__form__apply button button__text'
-    >Применить изменения</button>
+    <span class='text-form login-text'>Логин</span>
+    <span class='error-login error-string'></span>
+    <span class='text-form email-text'>Электронная почта</span>
+    <span class='error-email error-string'></span>
+    <span class='text-form date-text'>Дата рождения</span>
+    <span class='error-birthday error-string'></span>
+    <span class='text-form login-first-text'>Пароль</span>
+    <span class='error-password-first error-string'></span>
+    <span class='text-form login-second-text'>Пароль</span>
+    <div>
+      <span class='error-password-second error-string'></span>
+    </div>
+    <div class='ChangeUserData__form user-data-buttons'>
+      <label class='ChangeUserData__form__file button button__text'>
+        <img
+          class='ChangeUserData__form__img'
+          src='/icons/Иконка файлов.svg'
+          alt=''
+        />
+        <input class='ChangeUserData__form__file settings_file' type='file' />
+        Новое фото
+      </label>
+    </div>
   </form>
   <div class='error_string_settings'></div>
   <div class='success_string_settings'></div>
