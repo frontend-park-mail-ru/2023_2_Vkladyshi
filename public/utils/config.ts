@@ -29,7 +29,7 @@ import { Review } from '@components/Review/review';
 
 export const ROOT = document.querySelector('#root');
 
-// export const DOMAIN = 'http://127.0.0.1:8001';
+//export const DOMAIN = 'http://127.0.0.1:8001';
 export const DOMAIN = 'http://84.23.54.189';
 
 export const urls = {
@@ -71,9 +71,10 @@ export const errorInputs = {
   PasswordNoValid: 'Пароль не валиден',
   PasswordsNoEqual: 'Пароли не одинаковые',
   NotPassword: 'Нет пароля',
-  NotAllElements: 'Нет всех полей',
+  NotAllElement: '* Обязательно поле',
   LoginExists: 'Логин уже используется',
-  ServerError: 'Ошибка сервера'
+  ServerError: 'Ошибка сервера',
+  badRequest: 'Почта уже используется'
 };
 
 export const mainPage = new MainPage(ROOT);

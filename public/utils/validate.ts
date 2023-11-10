@@ -1,3 +1,8 @@
+import { errorInputs, responseStatuses } from '@utils/config';
+import { returnError } from '@utils/addError';
+import { store } from '@store/store';
+import { actionCSRF, actionSignin } from '@store/action/actionTemplates';
+
 /**
  * валидация почты
  * @param {string} email почта
@@ -14,6 +19,13 @@ export function validateEmail (email) {
  * @return {{}} результат проверки на валидацию
  */
 export function validatePassword (password) {
+  if (!password) {
+    return {
+      result: false,
+      error:
+          errorInputs.NotAllElement
+    };
+  }
   if (
     password.length < 8 ||
     !/[A-Z]/.test(password) ||
@@ -23,7 +35,7 @@ export function validatePassword (password) {
     return {
       result: false,
       error:
-        'Пароль должен содержать не менее 8 символов, иметь хотя бы одну заглавную букву, строчную букву и цифру'
+        'Пароль должен содержать не менее 8 символов, иметь хотя бы одну заглавную букву, строчную латинскую букву и цифру'
     };
   }
   return { result: true };

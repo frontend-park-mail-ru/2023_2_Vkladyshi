@@ -1,7 +1,10 @@
 import { View } from '@views/view';
 import { store } from '@store/store';
 import { filmSelection } from '@utils/config';
-import { actionCollectionMain } from '@store/action/actionTemplates';
+import {
+  actionAuth,
+  actionCollectionMain
+} from '@store/action/actionTemplates';
 import { getCollection } from '@utils/getCollection';
 import { router } from '@router/router';
 
@@ -32,6 +35,7 @@ export class FilmSelectionPage extends View {
   async render (isNotMain) {
     if (isNotMain) {
       this.renderDefaultPage();
+
       const contentBlockHTML = document.querySelector('.contentBlock');
       const url = new URL(window.location.href);
 

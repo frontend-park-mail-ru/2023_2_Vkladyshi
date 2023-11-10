@@ -5,16 +5,15 @@ import {
   actionAddComment,
   actionAuth,
   actionFilm,
-  actionGetCommentsFilm,
-  actionGetCommentsUser
+  actionGetCommentsFilm
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
-import { response } from 'express';
 
 export interface FilmPage {
   state: {
     filmInfo: null;
     fildId: number;
+    mapFilms: {};
   };
 }
 
@@ -29,7 +28,8 @@ export class FilmPage extends View {
     super(ROOT);
     this.state = {
       filmInfo: null,
-      fildId: 0
+      fildId: 0,
+      mapFilms: {}
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -42,8 +42,6 @@ export class FilmPage extends View {
   render (props) {
     store.subscribe('filmInfo', this.subscribeActorStatus);
     store.subscribe('removeView', this.componentWillUnmount);
-    store.dispatch(actionAuth());
-
     this.renderDefaultPage();
 
     if (props != null) {
@@ -173,9 +171,9 @@ export class FilmPage extends View {
 
           result.forEach((res) => {
             const table = {
-              user: true,
+              film: true,
               film_id: res['film_id'],
-              film_name: res['film_name'],
+              name: res['name'],
               rating: res['rating'],
               text: res['text']
             };
@@ -185,7 +183,8 @@ export class FilmPage extends View {
 
           if (
             !document.querySelector('.reviewForm') &&
-            store.getState('statusAuth') === 200
+            store.getState('statusAuth') === 200 &&
+            this.state.mapFilms[this.state.fildId] === undefined
           ) {
             div2?.insertAdjacentHTML(
               'beforeend',
@@ -204,6 +203,14 @@ export class FilmPage extends View {
               // @ts-ignore
               const text = textHTML.value;
 
+              console.log(this.state.fildId, this.state.mapFilms);
+              if (this.state.mapFilms[this.state.fildId] == null) {
+                this.state.mapFilms[this.state.fildId] = true;
+
+                // @ts-ignore
+                document.querySelector('.input__form').innerHTML = '';
+              }
+
               store.dispatch(
                 actionAddComment({
                   film_id: this.state.fildId,
@@ -215,11 +222,6 @@ export class FilmPage extends View {
             const review = document.querySelector('.reviewForm');
             review?.addEventListener('submit', Event);
           } else if (store.getState('statusAuth') !== 200) {
-            div2?.insertAdjacentHTML(
-              'beforeend',
-              reviewForm.render({ login: false })
-            );
-
             div2.addEventListener('click', (event) => {
               router.go(
                 { path: '/login', props: `` },

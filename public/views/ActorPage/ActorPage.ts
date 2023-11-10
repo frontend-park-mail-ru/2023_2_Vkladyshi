@@ -1,5 +1,5 @@
 import { View } from '@views/view';
-import { footer, desc, info, LkStar } from '@utils/config';
+import { desc, info, LkStar } from '@utils/config';
 import { store } from '@store/store';
 import { actionActor } from '@store/action/actionTemplates';
 
@@ -41,9 +41,7 @@ export class ActorDescritionPage extends View {
 
     if (props !== null) {
       // @ts-ignore
-      store.dispatch(
-        actionActor({ actorName: parseInt(props.replace('/', '')) })
-      );
+      store.dispatch(actionActor({ actorName: parseInt(props.replace('/', '')) }));
     }
   }
 
