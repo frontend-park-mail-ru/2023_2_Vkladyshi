@@ -99,7 +99,6 @@ export class FilmPage extends View {
       for (let i = 0; i < result.mark; i++) {
         result.stars_burning[i] = true;
       }
-  
 
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
@@ -116,8 +115,8 @@ export class FilmPage extends View {
           markElement.classList.add('countLikeActor__mark_mid');
         } else {
           markElement.classList.add('countLikeActor__mark_bad');
-        };
-      };
+        }
+      }
     }
 
     this.addEvents();
@@ -282,7 +281,10 @@ export class FilmPage extends View {
     this.componentDidMount();
   }
 }
-function elseif(arg0: boolean) {
+/**
+ *
+ * @param arg0
+ */
+function elseif (arg0: boolean) {
   throw new Error('Function not implemented.');
 }
-

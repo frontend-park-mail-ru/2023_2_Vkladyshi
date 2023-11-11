@@ -22,8 +22,7 @@ export function validatePassword (password) {
   if (!password) {
     return {
       result: false,
-      error:
-          errorInputs.NotAllElement
+      error: errorInputs.NotAllElement
     };
   }
   if (

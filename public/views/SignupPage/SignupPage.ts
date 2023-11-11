@@ -122,7 +122,10 @@ export class SignupPage extends View {
         'beforeend',
         inputButton.render({ wrap: 'email', module: 'signup' })
       );
-      button!.insertAdjacentHTML('afterbegin', buttonSubmit.render({ text: 'Войти' }));
+      button!.insertAdjacentHTML(
+        'afterbegin',
+        buttonSubmit.render({ text: 'Войти' })
+      );
 
       this.componentDidMount();
       this.init();

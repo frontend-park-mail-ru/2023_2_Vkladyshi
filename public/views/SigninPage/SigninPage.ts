@@ -85,7 +85,10 @@ export class SigninPage extends View {
           type: 'password'
         })
       );
-      button!.insertAdjacentHTML('afterbegin', buttonSubmit.render({ text: 'Войти' }));
+      button!.insertAdjacentHTML(
+        'afterbegin',
+        buttonSubmit.render({ text: 'Войти' })
+      );
 
       this.componentDidMount();
       this.init();

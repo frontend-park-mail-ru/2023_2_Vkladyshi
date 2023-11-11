@@ -11,7 +11,8 @@ import {
   // actionCSRF,
   actionGetSettings,
   actionLogout,
-  actionPutSettings, actionSignin
+  actionPutSettings,
+  actionSignin
 } from '@store/action/actionTemplates';
 import {
   addErrorsActive,
@@ -124,12 +125,12 @@ export class UserPage extends View {
     if (
       this.validateForm(login, password, passwordSecond, email, file, birthday)
     ) {
-      store.dispatch(actionPutSettings({ file: data })).then(response => {
+      store.dispatch(actionPutSettings({ file: data })).then((response) => {
         if (response!['postStatusSettings'] === 200) {
           router.refresh();
           this.setUserInfo();
           if (login !== this.state.userInfo['login'] || password.length > 0) {
-            store.dispatch(actionLogout())
+            store.dispatch(actionLogout());
           }
         }
       });
@@ -168,7 +169,10 @@ export class UserPage extends View {
     }
 
     if ((!password && passwordSecond) || (password && !passwordSecond)) {
-      insertText([elements['passwordFirst'], elements['passwordSecond']], errorInputs.NotAllElement);
+      insertText(
+        [elements['passwordFirst'], elements['passwordSecond']],
+        errorInputs.NotAllElement
+      );
       addErrorsActive([wraps['passwordFirst'], wraps['passwordSecond']]);
       result = false;
     } else {
@@ -275,10 +279,12 @@ export class UserPage extends View {
       'beforeend',
       desc.render(this.state.userInfo)
     );
-    document.querySelector('.description')?.insertAdjacentHTML(
-      'beforeend',
-      changeUserData.render(this.state.userInfo)
-    );
+    document
+      .querySelector('.description')
+      ?.insertAdjacentHTML(
+        'beforeend',
+        changeUserData.render(this.state.userInfo)
+      );
 
     const loginText = document.querySelector('.login-text');
     const passwordFirstText = document.querySelector('.login-first-text');
@@ -310,14 +316,21 @@ export class UserPage extends View {
     );
     dateText?.insertAdjacentHTML(
       'beforeend',
-      inputButton.render({ wrap: 'birthday', module: 'user-data', type: 'date' })
+      inputButton.render({
+        wrap: 'birthday',
+        module: 'user-data',
+        type: 'date'
+      })
     );
     emailText?.insertAdjacentHTML(
       'beforeend',
       inputButton.render({ wrap: 'email', module: 'user-data' })
     );
 
-    buttons?.insertAdjacentHTML('beforeend', buttonSubmit.render({ text: 'Сохранить' }));
+    buttons?.insertAdjacentHTML(
+      'beforeend',
+      buttonSubmit.render({ text: 'Сохранить' })
+    );
 
     this.init();
     this.componentDidMount();
