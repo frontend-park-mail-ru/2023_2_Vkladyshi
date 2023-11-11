@@ -14,8 +14,13 @@ export async function get (params = {}) {
       mode: 'cors'
     }
   );
-  const result = await response.text();
-  return JSON.parse(result);
+
+  try {
+    const result = await response.text();
+    return JSON.parse(result);
+  } catch (error) {
+    console.error(params['url'] + ' error');
+  }
 }
 
 /**
@@ -23,19 +28,67 @@ export async function get (params = {}) {
  * @param root0
  * @param root0.url
  * @param root0.body
- * @return {Promise} Promise ответ
+ * @param root0.contentType
+ * @returns {Promise} Promise ответ
  */
-export async function post ({ url, body }) {
+export async function post ({ url, body, contentType = false }) {
+  let data;
+  const header = { 'x-csrf-token': <string>localStorage.getItem('csrf') };
+
+  if (contentType) {
+    data = body.file;
+  } else {
+    data = JSON.stringify(body);
+    header['Content-Type'] = 'application/json';
+  }
+
+  console.log(data, JSON.stringify(body), 1211, body);
   const response = await fetch(url, {
     method: methods.post,
     credentials: 'include',
     mode: 'cors',
-    headers: {
-      'Content-Type': 'application/json; charset=utf-8'
-    },
-    body: JSON.stringify(body)
+    headers: header,
+    body: data
   });
   let result = await response.text();
-  result = JSON.parse(result);
-  return result;
+
+  try {
+    result = JSON.parse(result);
+    return result;
+  } catch (error) {
+    console.error(`Error: ${methods.post} ${url}`);
+    return { status: 400 };
+  }
+}
+
+/**
+ *
+ * @param params
+ */
+export async function getCsrf (params = {}) {
+  const response = await fetch(
+    params['url'] + '?' + new URLSearchParams(params['query'] || {}),
+    {
+      method: methods.get,
+      credentials: 'include',
+      mode: 'cors',
+      headers: {
+        'x-csrf-token': <string>localStorage.getItem('csrf')
+      }
+    }
+  );
+
+  try {
+    const result = await response.text();
+    if (response.headers.get('x-csrf-token') !== null) {
+      localStorage.setItem(
+        'csrf',
+        <string>response.headers.get('x-csrf-token')
+      );
+    }
+
+    return JSON.parse(result);
+  } catch (error) {
+    console.error(params['url'] + ' error');
+  }
 }

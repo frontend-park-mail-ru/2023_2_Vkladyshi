@@ -7,6 +7,30 @@ const handlers = [
   { type: 'auth', method: actionsUser.auth.bind(actionsUser) },
   { type: 'logout', method: actionsUser.logout.bind(actionsUser) },
   {
+    type: 'putSettings',
+    method: actionsUser.updateSettings.bind(actionsUser)
+  },
+  {
+    type: 'userComments',
+    method: actionsUser.userComments.bind(actionsUser)
+  },
+  {
+    type: 'addComment',
+    method: actionsUser.addComment.bind(actionsUser)
+  },
+  {
+    type: 'filmComments',
+    method: actionsUser.filmComments.bind(actionsUser)
+  },
+  {
+    type: 'getSettings',
+    method: actionsUser.getSettings.bind(actionsUser)
+  },
+  {
+    type: 'csrf',
+    method: actionsUser.getCsrf.bind(actionsUser)
+  },
+  {
     type: 'collectionMain',
     method: actionsFilm.getCollectionDataMain.bind(actionsFilm)
   },
@@ -17,8 +41,11 @@ const handlers = [
   {
     type: 'actor',
     method: actionsFilm.getActor.bind(actionsFilm)
+  },
+  {
+    type: 'film',
+    method: actionsFilm.getFilm.bind(actionsFilm)
   }
-
 ];
 
 export { handlers };

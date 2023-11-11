@@ -1,4 +1,6 @@
 import { DOMAIN, routes } from '@utils/config';
+import { store } from '@store/store';
+import { actionCSRF } from '@store/action/actionTemplates';
 
 interface Class {
   render: Function;
@@ -27,14 +29,12 @@ class Router {
   }
 
   refresh (redirect = false) {
-    const parsedUrl = new URL(window.location.href);
-    const matchedHref = parsedUrl.pathname;
-
     const url = new URL(window.location.href);
+    const names = url.pathname.split('/');
 
     if (
-      this.mapViews.get(matchedHref) != null ||
-      this.privateMapViews.get(matchedHref) != null
+      this.mapViews.get(url.pathname) ||
+      this.privateMapViews.get(url.pathname)
     ) {
       this.go(
         {
@@ -43,23 +43,42 @@ class Router {
         },
         { pushState: !redirect, refresh: !redirect }
       );
+    } else if (this.mapViews.get(`/${names[1]}`)) {
+      this.go(
+        {
+          path: `/${names[1]}`,
+          props: `/${names[2]}`
+        },
+        { pushState: !redirect, refresh: !redirect }
+      );
     }
   }
 
   start () {
+    store.dispatch(actionCSRF());
     for (const rout of routes) {
       this.register(rout);
     }
 
     window.addEventListener('popstate', () => {
-      const href = new URL(window.location.href).pathname;
+      const url = new URL(window.location.href);
+      const names = url.pathname.split('/');
 
-      this.go(
-        { path: href, props: '' },
-        { pushState: false, refresh: false }
-      );
+      let path = '';
+      let props = '';
+
+      if (names[1] === '') {
+        path = '/';
+      } else {
+        path = `/${names[1]}`;
+      }
+
+      if (names[2]) {
+        props = `/${names[2]}`;
+      }
+
+      this.go({ path, props }, { pushState: false, refresh: false });
     });
-
     this.refresh();
   }
 

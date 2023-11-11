@@ -70,6 +70,7 @@
 
 .loginInputSignup,
 .emailInput,
+.dateInput,
 .passwordInputFirst,
 .passwordInputSecond {
   width: 90%;
@@ -109,17 +110,12 @@
 
 .errorStringSignup {
   color: red;
-  display: none;
+  display: block;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   transition: all 1s ease 0s;
-}
-
-.errorStringSignup.active {
-  display: block;
-  margin-bottom: 10px;
 }
 
 .popupSignup {

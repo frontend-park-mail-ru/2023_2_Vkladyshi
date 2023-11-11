@@ -15,14 +15,32 @@ import { AddInfo } from '@components/AdditionalInfo/additionalInfo';
 import { CountLikeActor } from '@components/countLikeActor/countLikeActor';
 import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
 
+import { FilmPage } from '@views/FilmPage/FilmPage';
+import { FilmRating } from '@components/FilmRating/filmRating';
+
+import { СountLikeFilm } from '@components/countLikeFilm/countLikeFilm';
+import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
+
+import { UserPage } from '@views/userPage/userPage';
+
+import { ReviewForm } from '@components/ReviewForm/reviewForm';
+import { CommentsPage } from '@views/CommentsPage/CommentsPage';
+import { Review } from '@components/Review/review';
+
 export const ROOT = document.querySelector('#root');
 
-export const DOMAIN = 'http://127.0.0.1:8001';
+// export const DOMAIN = 'http://127.0.0.1:8001';
+export const DOMAIN = 'http://84.23.54.189';
 
 export const urls = {
   main: '/',
   basket: '/api/v1/films',
+  film: '/api/v1/film',
+  csrf: '/api/v1/csrf',
   actor: '/api/v1/actor',
+  comments: '/api/v1/comment',
+  addComment: '/api/v1/comment/add',
+  settings: '/api/v1/settings',
   profile: '/profile',
   signin: '/signin',
   signup: '/signup',
@@ -42,7 +60,8 @@ export const responseStatuses = {
   notAuthorized: 401,
   serverError: 500,
   notFound: 404,
-  alreadyExists: 409
+  alreadyExists: 409,
+  csrfError: 412
 };
 
 export const errorInputs = {
@@ -64,17 +83,22 @@ export const filmSelectionPage = new FilmSelectionPage(ROOT);
 export const selectCollectionPage = new SelectCollectionPage(ROOT);
 export const contentBlock = new ContentBlock(ROOT);
 export const signin = new Signin(ROOT);
-
 export const desc = new Description(ROOT);
 export const info = new AddInfo(ROOT);
-
 export const signup = new Signup(ROOT);
 export const footer = new Footer(ROOT);
 export const filmSelection = new FilmSelection(ROOT);
 export const LkStar = new CountLikeActor(ROOT);
 export const selectCollection = new SelectCollection(ROOT);
-
-const actorPage = new ActorDescritionPage(ROOT);
+export const actorPage = new ActorDescritionPage(ROOT);
+export const filmPage = new FilmPage(ROOT);
+export const filmRating = new FilmRating(ROOT);
+export const changeUserData = new ChangeUserData(ROOT);
+export const userPage = new UserPage(ROOT);
+export const countLikeFilm = new СountLikeFilm(ROOT);
+export const reviewForm = new ReviewForm(ROOT);
+export const review = new Review(ROOT);
+export const commentsPage = new CommentsPage(ROOT);
 
 export const config = {
   menu: {
@@ -124,22 +148,21 @@ export const collections = {
     collection1: {
       collection_name: 'Жанры',
       collection_items: [
-        { key: 'Боевики', value: 'action' },
-        { key: 'Военные', value: 'war' },
-        { key: 'Детские', value: 'kids' },
-        { key: 'Детективы', value: 'detective' },
-        { key: 'Драмы', value: 'drama' },
-        { key: 'Комедии', value: 'comedy' },
-        { key: 'Криминальные', value: 'crime' },
-        { key: 'Ужасы', value: 'horror' },
-        { key: 'Мелодрама', value: 'melodrama' }
-      ]
-    },
-    collection2: {
-      collection_name: 'Страны',
-      collection_items: [
-        { key: 'Российские', value: 'ru' },
-        { key: 'Зарубежные', value: 'eu' }
+        { key: 'Боевики', value: 5 },
+        { key: 'Военные', value: 6 },
+        { key: 'Детективы', value: 7 },
+        { key: 'Драмы', value: 8 },
+        { key: 'Комедии', value: 9 },
+        { key: 'Криминальные', value: 10 },
+        { key: 'Аниме', value: 1 },
+        { key: 'Дорама', value: 2 },
+        { key: 'Мультфильм', value: 3 },
+        { key: 'Детские', value: 4 },
+        { key: 'Ужасы', value: 11 },
+        { key: 'Мелодрама', value: 12 },
+        { key: 'Фантастика', value: 13 },
+        { key: 'Триллер', value: 14 },
+        { key: 'Фэнтези', value: 15 }
       ]
     }
   }
@@ -147,9 +170,12 @@ export const collections = {
 
 export const routes = [
   { path: '/', view: mainPage },
-  { path: '/signin', view: signinPage },
-  { path: '/signup', view: signupPage },
+  { path: '/login', view: signinPage },
+  { path: '/registration', view: signupPage },
   { path: '/selection', view: selectCollectionPage },
   { path: '/films', view: filmSelectionPage },
-  { path: '/actor', view: actorPage }
+  { path: '/actor', view: actorPage },
+  { path: '/film', view: filmPage },
+  { path: '/settings', view: userPage },
+  { path: '/comments', view: commentsPage }
 ];

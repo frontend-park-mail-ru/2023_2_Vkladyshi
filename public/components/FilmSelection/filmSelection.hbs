@@ -5,16 +5,13 @@
   <div class='filmSelection_films'>
     {{#if haveFilms}}
       {{#each films}}
-        <div class='filmSelection_film'>
-          <img class='filmSelection_film_poster' src='{{poster_href}}' />
+        <div class='filmSelection_film' data-section='{{id}}'>
+          <img class='filmSelection_film_poster' src='{{poster}}' />
           <p class='filmSelection_film_name'>{{title}}</p>
           <div class='filmSelection_film_rating'>
-            <img
-              class='filmSelection_film_rating_img'
-              src='../../icons/star.svg'
-            />
+            <img class='filmSelection_film_rating_img' src='/icons/star.svg' />
             <p class='filmSelection_film_rating_p'>
-              {{rating}}
+              {{film.rating}}
             </p>
           </div>
           <div class='filmSelection_film_select'>

@@ -1,15 +1,8 @@
 import { View } from '@views/view';
-import {
-  ROOT,
-  header,
-  contentBlock,
-  footer,
-  filmSelectionPage
-} from '@utils/config';
+import { header, filmSelectionPage, ROOT, userPage } from '@utils/config';
 import { store } from '@store/store';
-import { actionAuth } from '@store/action/actionTemplates';
-
-import { ActorDescritionPage } from '@views/ActorPage/ActorPage';
+import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
+import { router } from '@router/router';
 
 export interface MainPage {
   state: {
@@ -17,13 +10,13 @@ export interface MainPage {
     isCurrentView: boolean;
   };
 }
-
 /**
  * Класс формирования главной страницы
  * @class MainPage
  * @typedef {MainPage}
  */
 export class MainPage extends View {
+  private popupEvent: (event) => void;
   /**
    * Конструктор для формирования родительского элемента
    * @param ROOT
@@ -36,44 +29,82 @@ export class MainPage extends View {
       isCurrentView: true
     };
 
-    this.subscribeAuthStatus = this.subscribeAuthStatus.bind(this);
+    this.subscribeMainPageStatus = this.subscribeMainPageStatus.bind(this);
     this.subscribeLogoutStatus = this.subscribeLogoutStatus.bind(this);
 
-    store.subscribe('statusAuth', this.subscribeAuthStatus);
+    store.subscribe('statusAuth', this.subscribeMainPageStatus);
     store.subscribe('logoutStatus', this.subscribeLogoutStatus);
   }
-
   /**
    * Метод создания страницы
    */
   render () {
     this.renderDefaultPage();
+    const contentBlockHTML = document.querySelector('.contentBlock');
 
-    filmSelectionPage.render(false)?.then((response) => {
-      document.querySelector('.contentBlock')?.insertAdjacentHTML('beforeend', <string>response);
-    });
-
-    // Это заглушка для просмотра того, что ренедерить вьюха
-    // this.state.isCurrentView = false;
-    // const actorPage = new ActorDescritionPage(ROOT);
-    // actorPage.render();
+    if (contentBlockHTML) {
+      filmSelectionPage.render(false).then((response) => {
+        if (this.state.isCurrentView) {
+          contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
+          this.componentDidMount();
+        }
+      });
+    }
 
     store.dispatch(actionAuth());
   }
 
-  subscribeAuthStatus () {
+  subscribeMainPageStatus () {
     this.state.isAuth = store.getState('statusAuth') === 200;
 
     this.changeHeader(this.state.isAuth);
   }
 
+  componentDidMount () {
+    const popup = document.querySelector('.filmSelection');
+    const popupEvent = (event) => {
+      this.popupEvent = popupEvent;
+      switch (true) {
+        case event.target.closest('.filmSelection_film') !== null:
+          const filmId = event.target
+            .closest('.filmSelection_film')
+            .getAttribute('data-section');
+          this.componentWillUnmount();
+          router.go(
+            {
+              path: '/film',
+              props: `/${filmId}`
+            },
+            { pushState: true, refresh: false }
+          );
+          break;
+        default:
+          break;
+      }
+    };
+    popup?.addEventListener('click', popupEvent);
+  }
+
+  componentWillUnmount () {
+    const popup = document.querySelector('.filmSelection');
+
+    popup?.removeEventListener('click', this.popupEvent);
+  }
+
   subscribeLogoutStatus () {
-    const isLogout = store.getState('logoutStatus') === 200;
-    if (isLogout) {
-      this.changeHeader(!isLogout);
-      return;
+    this.state.isAuth = store.getState('logoutStatus') === 200;
+
+    this.changeHeader(!this.state.isAuth);
+
+    if (this.state.isAuth) {
+      router.go(
+        {
+          path: '/',
+          props: ``
+        },
+        { pushState: true, refresh: false }
+      );
     }
-    this.changeHeader(this.state.isAuth);
   }
 
   changeHeader (isAuth) {

@@ -54,7 +54,7 @@ header {
 }
 
 .headerItem {
-  cursor: not-allowed;
+  /*cursor: not-allowed;*/
 }
 
 .brandHeader,

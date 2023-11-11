@@ -2,7 +2,12 @@ import { View } from '@views/view';
 import { errorInputs, responseStatuses, signup } from '@utils/config';
 import { router } from '@router/router';
 import { store } from '@store/store';
-import { actionAuth, actionSignin, actionSignup } from '@store/action/actionTemplates';
+import {
+  actionCSRF,
+  actionSignin,
+  actionSignup
+} from '@store/action/actionTemplates';
+
 import { returnError } from '@utils/addError';
 import {
   validateEmail,
@@ -17,10 +22,11 @@ export interface SignupPage {
     isUserSubscriber: boolean;
     login: string;
     password: string;
+    email: string;
     haveEvent: boolean;
+    birthday: string;
   };
 }
-
 /**
  * Класс регистрации пользователя
  * @class SignupPage
@@ -41,20 +47,21 @@ export class SignupPage extends View {
       isUserSubscriber: false,
       haveEvent: false,
       login: '',
-      password: ''
+      password: '',
+      email: '',
+      birthday: ''
     };
 
     this.subscribeSignupStatus = this.subscribeSignupStatus.bind(this);
-    this.subscribeSignup = this.subscribeSignup.bind(this);
+    this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
   }
 
   /**
    * Метод создания страницы
    */
   render () {
-    this.renderDefaultPage();
-
     if (document.querySelector('.popupSign') == null) {
+      this.renderDefaultPage();
       const mainHTML = document.querySelector('main');
       const popup = document.createElement('div');
       popup.className = 'popupSign';
@@ -63,23 +70,7 @@ export class SignupPage extends View {
       mainHTML?.appendChild(popup);
     }
 
-    if (this.handlerStatus()) {
-      const popup = document.querySelector('.popupSign');
-      popup?.removeEventListener('click', this.popupEvent);
-
-      this.state.statusSignup = 0;
-      this.componentWillUnmount();
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false });
-      return;
-    }
-
     if (!this.state.isUserSubscriber) {
-      store.subscribe('user', this.subscribeSignupStatus);
       this.state.isUserSubscriber = true;
     }
 
@@ -102,7 +93,7 @@ export class SignupPage extends View {
           this.componentWillUnmount();
           router.go(
             {
-              path: '/signin',
+              path: '/login',
               props: ''
             },
             { pushState: true, refresh: false }
@@ -119,7 +110,6 @@ export class SignupPage extends View {
           );
           break;
         case event.target.closest('.signupButton') !== null:
-          errorString?.classList.remove('active');
           if (!this.state.isSubscribed) {
             store.subscribe('statusSignup', this.subscribeSignupStatus);
             this.state.isSubscribed = true;
@@ -136,8 +126,6 @@ export class SignupPage extends View {
   }
   componentWillUnmount () {
     const popup = document.querySelector('.popupSign');
-    const errorElement = document.querySelector(`.errorStringSignup`);
-    errorElement?.classList.remove('active');
 
     if (this.state.isSubscribed) {
       store.unsubscribe('statusSignup', this.subscribeSignupStatus);
@@ -145,7 +133,6 @@ export class SignupPage extends View {
       this.state.isSubscribed = false;
     }
     if (this.state.isUserSubscriber) {
-      store.unsubscribe('user', this.subscribeSignup);
       this.state.isUserSubscriber = false;
     }
 
@@ -154,7 +141,7 @@ export class SignupPage extends View {
 
   getForm () {
     const signupForm = document.querySelector('.signupForm');
-    const loginInoutHTML = document.querySelector(
+    const loginInputHTML = document.querySelector(
       '.loginInputSignup'
     ) as HTMLInputElement;
     const emailInputHTML = document.querySelector(
@@ -166,34 +153,45 @@ export class SignupPage extends View {
     const passwordInputSecondHTML = document.querySelector(
       '.passwordInputSecond'
     ) as HTMLInputElement;
+    const birthdayInputHTML = document.querySelector(
+      '.dateInput'
+    ) as HTMLInputElement;
 
     const handleSubmit = (event) => {
       event.preventDefault();
 
-      const login = loginInoutHTML.value.trim();
+      const login = loginInputHTML.value.trim();
       const email = emailInputHTML.value.trim();
+      const birthday = birthdayInputHTML.value.trim();
       const password = passwordInputFirstHTML.value;
       const passwordSecond = passwordInputSecondHTML.value;
 
       signupForm?.removeEventListener('submit', handleSubmit);
 
-      if (this.validateForm(login, password, passwordSecond, email)) {
-        store.dispatch(
-          actionSignup({ login: login, password: password, email: email })
-        );
-
+      if (this.validateForm(login, password, passwordSecond, email, birthday)) {
         this.state.login = login;
         this.state.password = password;
+        this.state.email = email;
+        this.state.birthday = birthday;
+
+        store.dispatch(
+          actionSignup({
+            login: login,
+            password: password,
+            email: email,
+            birthday: birthday
+          })
+        );
       }
     };
 
     signupForm?.addEventListener('submit', handleSubmit);
   }
 
-  validateForm (login, password, passwordSecond, email) {
+  validateForm (login, password, passwordSecond, email, birthday) {
     const errorClassName = 'errorStringSignup';
 
-    if (!login || !email || !password || !passwordSecond) {
+    if (!login || !email || !password || !passwordSecond || !birthday) {
       returnError(errorInputs.NotAllElements, errorClassName);
       return false;
     }
@@ -225,10 +223,36 @@ export class SignupPage extends View {
 
   subscribeSignupStatus () {
     this.state.statusSignup = store.getState('statusSignup');
-    this.render();
+
+    if (this.handlerStatus()) {
+      store.subscribe('statusLogin', this.subscribeSigninStatus);
+      store.dispatch(
+        actionSignin({
+          login: this.state.login,
+          password: this.state.password
+        })
+      );
+    }
   }
 
-  subscribeSignup () {
+  subscribeSigninStatus () {
+    if (store.getState('statusLogin')) {
+      store.unsubscribe('statusLogin', this.subscribeSigninStatus);
+      const popup = document.querySelector('.popupSign');
+      popup?.removeEventListener('click', this.popupEvent);
+
+      this.state.statusSignup = 0;
+      this.componentWillUnmount();
+      router.go(
+        {
+          path: '/',
+          props: ''
+        },
+        { pushState: true, refresh: false }
+      );
+      return;
+    }
+
     this.render();
   }
 
@@ -236,20 +260,23 @@ export class SignupPage extends View {
     const errorClassName = 'errorStringSignup';
     switch (this.state.statusSignup) {
       case responseStatuses.success:
-        store.dispatch(
-          actionSignin({
-            login: this.state.login,
-            password: this.state.password
-          })
-        );
-        store.dispatch(actionAuth(true));
-
         return true;
       case responseStatuses.notAuthorized:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);
         break;
       case responseStatuses.alreadyExists:
-        returnError(errorInputs.LoginOrPasswordError, errorClassName);
+        returnError(errorInputs.LoginExists, errorClassName);
+        break;
+      case responseStatuses.csrfError:
+        store.dispatch(actionCSRF()).then((response) => {
+          store.dispatch(
+            actionSignup({
+              login: this.state.login,
+              password: this.state.password,
+              email: this.state.email
+            })
+          );
+        });
         break;
       default:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);

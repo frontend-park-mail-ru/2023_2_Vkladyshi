@@ -82,7 +82,7 @@ export class Header extends Component {
         case target.closest('.loginHeader') !== null:
           router.go(
             {
-              path: '/signin',
+              path: '/login',
               props: ''
             },
             { pushState: true, refresh: false }
@@ -99,6 +99,15 @@ export class Header extends Component {
           break;
         case target.closest('.logoutHeader') !== null:
           store.dispatch(actionLogout());
+          break;
+        case target.closest('.settingsHeader') !== null:
+          router.go(
+            {
+              path: '/settings',
+              props: ''
+            },
+            { pushState: true, refresh: false }
+          );
           break;
         case target.closest('.menuHeader') !== null:
           router.go(

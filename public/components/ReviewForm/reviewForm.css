@@ -1,0 +1,62 @@
+.reviewForm {
+  width: var(--block-width);
+  height: auto;
+  margin: 5% auto;
+
+  background-color: rgb(255, 255, 255);
+  border-radius: 5%;
+  box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+}
+
+.rating__form {
+  margin: 30px;
+  height: 50px;
+}
+
+.reviewForm__header {
+  margin: 3%;
+  border-bottom: 2px black solid;
+  padding: 3% 0;
+
+  display: flex;
+}
+
+.reviewForm__header__img {
+  width: 4%;
+  height: auto;
+}
+
+.reviewForm__header__text {
+  margin: 0 5%;
+}
+
+.reviewForm__body {
+  width: 90%;
+  margin: auto;
+}
+
+.redirect__signin {
+  cursor: pointer;
+  font-size: 19px;
+  padding: 30px 50px;
+}
+
+.reviewForm__body__text {
+  width: 90%;
+  height: 200px;
+
+  margin: 0 auto;
+
+  border-radius: 5%;
+  padding: 5%;
+
+  white-space: normal;
+  word-wrap: break-word;
+  text-align: left;
+  vertical-align: top;
+}
+
+.reviewForm__body__button {
+  width: 30%;
+  margin: 3% 0;
+}

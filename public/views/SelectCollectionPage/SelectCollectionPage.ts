@@ -1,9 +1,5 @@
 import { View } from '@views/view';
-import {
-  ROOT,
-  selectCollection
-} from '@utils/config';
-
+import { ROOT, selectCollection } from '@utils/config';
 import { router } from '@router/router';
 import { store } from '@store/store';
 import { actionCollectionMenu } from '@store/action/actionTemplates';
@@ -33,6 +29,7 @@ export class SelectCollectionPage extends View {
 
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this.subscribeCollectionMenu = this.subscribeCollectionMenu.bind(this);
+
     store.subscribe('collectionMenu', this.subscribeCollectionMenu);
   }
 
@@ -93,7 +90,7 @@ export class SelectCollectionPage extends View {
     router.go(
       {
         path: `/films`,
-        props: `?collection_id=${this.state.dataSection}`
+        props: `/${this.state.dataSection}`
       },
       { pushState: true, refresh: false }
     );
