@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { desc, info, countLikeFilm, reviewForm, review } from '@utils/config';
 import { store } from '@store/store';
@@ -96,7 +97,18 @@ export class FilmPage extends View {
         'beforeend',
         countLikeFilm.render(result)
       );
-      contentBlockHTML?.insertAdjacentHTML('beforeend', info.render(result));
+      //TODO
+      //если 10 шкала - изменить пороги
+      const markElement = document.querySelector('.countLikeActor__mark');
+      if (markElement) {
+        if (result.mark >= 3.5) {
+          markElement.classList.add('countLikeActor__mark_good');
+        } else if (result.mark > 2 && result.mark < 3.5) {
+          markElement.classList.add('countLikeActor__mark_mid');
+        } else {
+          markElement.classList.add('countLikeActor__mark_bad');
+        };
+      };
     }
 
     this.addEvents();
@@ -261,3 +273,7 @@ export class FilmPage extends View {
     this.componentDidMount();
   }
 }
+function elseif(arg0: boolean) {
+  throw new Error('Function not implemented.');
+}
+
