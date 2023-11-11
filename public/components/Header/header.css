@@ -1,4 +1,5 @@
 @media (max-width: 1920px) {
+  .basketItem,
   .headerItem,
   .loginHeader,
   .brandHeader,
@@ -8,6 +9,7 @@
 }
 
 @media (max-width: 1150px) {
+  .basketItem,
   .headerItem,
   .loginHeader,
   .brandHeader,
@@ -40,6 +42,7 @@ header {
   margin-right: auto;
 }
 
+.basketItem,
 .headerItem,
 .brandHeader,
 .loginHeader,
@@ -53,10 +56,11 @@ header {
   white-space: nowrap;
 }
 
-.headerItem {
-  /*cursor: not-allowed;*/
+.basketItem {
+  cursor: not-allowed;
 }
 
+.headerItem,
 .brandHeader,
 .loginHeader,
 .menuHeader {

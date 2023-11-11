@@ -14,6 +14,8 @@
 @import './components/ChangeUserData/changeUserData.css';
 @import './components/Review/review.css';
 @import './components/ReviewForm/reviewForm.css';
+@import './components/inputButton/inputButton.css';
+@import './components/ButtonSubmit/buttonSubmit.css';
 
 :root {
   --background-color: rgb(81, 82, 58, 0.1);

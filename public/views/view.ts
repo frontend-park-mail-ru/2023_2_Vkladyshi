@@ -1,5 +1,7 @@
 import { Component } from '@components/component';
 import { contentBlock, footer, header, ROOT } from '@utils/config';
+import { store } from '@store/store';
+import { actionAuth } from '@store/action/actionTemplates';
 
 /**
  * Родитель всех страниц
@@ -16,6 +18,7 @@ export class View extends Component {
     }
 
     if (!document.querySelector('header')) {
+      store.dispatch(actionAuth());
       ROOT?.insertAdjacentHTML('afterbegin', header.render());
       header.componentDidMount();
     } else {

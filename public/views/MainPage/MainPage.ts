@@ -1,15 +1,8 @@
 import { View } from '@views/view';
-import { header, filmSelectionPage, ROOT, userPage } from '@utils/config';
-import { store } from '@store/store';
-import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
+import { filmSelectionPage } from '@utils/config';
 import { router } from '@router/router';
+import { inputButton } from '@components/inputButton/inputButton';
 
-export interface MainPage {
-  state: {
-    isAuth: boolean;
-    isCurrentView: boolean;
-  };
-}
 /**
  * Класс формирования главной страницы
  * @class MainPage
@@ -17,24 +10,6 @@ export interface MainPage {
  */
 export class MainPage extends View {
   private popupEvent: (event) => void;
-  /**
-   * Конструктор для формирования родительского элемента
-   * @param ROOT
-   * @class
-   */
-  constructor (ROOT) {
-    super(ROOT);
-    this.state = {
-      isAuth: false,
-      isCurrentView: true
-    };
-
-    this.subscribeMainPageStatus = this.subscribeMainPageStatus.bind(this);
-    this.subscribeLogoutStatus = this.subscribeLogoutStatus.bind(this);
-
-    store.subscribe('statusAuth', this.subscribeMainPageStatus);
-    store.subscribe('logoutStatus', this.subscribeLogoutStatus);
-  }
   /**
    * Метод создания страницы
    */
@@ -44,20 +19,10 @@ export class MainPage extends View {
 
     if (contentBlockHTML) {
       filmSelectionPage.render(false).then((response) => {
-        if (this.state.isCurrentView) {
-          contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
-          this.componentDidMount();
-        }
+        contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
+        this.componentDidMount();
       });
     }
-
-    store.dispatch(actionAuth());
-  }
-
-  subscribeMainPageStatus () {
-    this.state.isAuth = store.getState('statusAuth') === 200;
-
-    this.changeHeader(this.state.isAuth);
   }
 
   componentDidMount () {
@@ -87,30 +52,6 @@ export class MainPage extends View {
 
   componentWillUnmount () {
     const popup = document.querySelector('.filmSelection');
-
     popup?.removeEventListener('click', this.popupEvent);
-  }
-
-  subscribeLogoutStatus () {
-    this.state.isAuth = store.getState('logoutStatus') === 200;
-
-    this.changeHeader(!this.state.isAuth);
-
-    if (this.state.isAuth) {
-      router.go(
-        {
-          path: '/',
-          props: ``
-        },
-        { pushState: true, refresh: false }
-      );
-    }
-  }
-
-  changeHeader (isAuth) {
-    const headerHTML = document.querySelector('header');
-
-    headerHTML!.innerHTML = header.render(isAuth);
-    header.componentDidMount();
   }
 }

@@ -295,7 +295,7 @@ const settings = {
     login: 'login_11',
     email: '1111@1111',
     photo: '/icons/star.png',
-    birthdate: '2020-01-01',
+    birthday: '2020-01-01',
   },
 };
 
@@ -316,6 +316,8 @@ app.use('/signin', (req, res) => {
   const login = req.body.login;
 
   res.header('Content-Security-Policy', "img-src 'self'");
+
+  console.log(req.body);
 
   if (!password || !login) {
     return res.status(200).json({ status: 401 });
@@ -341,12 +343,12 @@ app.use('/registration', (req, res) => {
   }
 });
 
-const csrf = require('csurf');
-const csrfProtection = csrf({ cookie: true });
+// const csrf = require('csurf');
+// const csrfProtection = csrf({ cookie: true });
 
-app.use(csrfProtection);
+// app.use(csrfProtection);
 app.get('/api/v1/csrf', (req, res) => {
-  res.set('x-csrf-token', req.csrfToken());
+  //res.set('x-csrf-token', req.csrfToken());
   return res.status(200).json({
     status: 200,
   });

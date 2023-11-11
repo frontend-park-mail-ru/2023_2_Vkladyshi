@@ -1,5 +1,5 @@
 import { View } from '@views/view';
-import { footer, desc, info, LkStar } from '@utils/config';
+import { desc, info, LkStar } from '@utils/config';
 import { store } from '@store/store';
 import { actionActor } from '@store/action/actionTemplates';
 
