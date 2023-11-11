@@ -1,7 +1,11 @@
 import { View } from '@views/view';
-import { filmSelectionPage } from '@utils/config';
+import {filmSelectionPage, ROOT} from '@utils/config';
 import { router } from '@router/router';
 import { inputButton } from '@components/inputButton/inputButton';
+import {film} from '@components/film/film';
+import '@components/film/slider';
+import {func} from '@components/film/slider';
+
 
 /**
  * Класс формирования главной страницы
@@ -16,6 +20,17 @@ export class MainPage extends View {
   render () {
     this.renderDefaultPage();
     const contentBlockHTML = document.querySelector('.contentBlock');
+    const mainHTML = document.querySelector('main');
+
+
+    // const popup = document.createElement('div');
+    // popup.classList.add('background-main');
+    // mainHTML?.insertBefore(popup, mainHTML.firstChild);
+
+    mainHTML?.insertAdjacentHTML('afterbegin', film.render({urlImage : 'mainImagjpg'}));
+    film.componentDidMount();
+    // func();
+
 
     if (contentBlockHTML) {
       filmSelectionPage.render(false).then((response) => {
@@ -23,6 +38,8 @@ export class MainPage extends View {
         this.componentDidMount();
       });
     }
+
+    // contentBlockHTML!.insertAdjacentHTML('beforeend', film.render());
   }
 
   componentDidMount () {

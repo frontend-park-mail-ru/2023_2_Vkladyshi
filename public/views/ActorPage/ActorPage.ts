@@ -65,8 +65,8 @@ export class ActorDescritionPage extends View {
         headerAbout: 'Биография',
         date: formattedDate,
         poster: res['poster_href'],
-        infoText: res['info_text'],
-        country: res['country'],
+        infoText: res['info_text'] ? res['info_text'] : 'Неизвестно',
+        country: res['country'] ? res['country'] : 'Неизвестно',
         career: res['career']
       };
     }

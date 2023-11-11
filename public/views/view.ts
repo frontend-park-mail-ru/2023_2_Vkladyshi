@@ -21,6 +21,11 @@ export class View extends Component {
       store.dispatch(actionAuth());
       ROOT?.insertAdjacentHTML('afterbegin', header.render());
       header.componentDidMount();
+      // @ts-ignore
+      // document.querySelector('header')?.style.opacity = 1;
+      // @ts-ignore
+      // header?.style.visibility = 'visible';
+      // document.querySelector('header')?.style.visibility = 'visible';
     } else {
       main.innerHTML = '';
     }
@@ -32,5 +37,12 @@ export class View extends Component {
     if (document.querySelector('.footer') == null) {
       main.insertAdjacentHTML('beforeend', footer.render());
     }
+
+
+    console.log(1212)
+    // @ts-ignore
+    document.querySelector('header')?.style.opacity = 1;
+    // @ts-ignore
+    document.querySelector('header')?.style.visibility = 'visible';
   };
 }

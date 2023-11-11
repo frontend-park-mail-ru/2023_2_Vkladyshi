@@ -1,7 +1,7 @@
 import { Component } from '@components/component';
 import { router } from '@router/router';
 import * as templateHeader from '@components/Header/header.hbs';
-import { config } from '@utils/config';
+import {config, signinPage} from '@utils/config';
 import { store } from '@store/store';
 import { actionLogout } from '@store/action/actionTemplates';
 
@@ -95,7 +95,7 @@ export class Header extends Component {
       const target = event.target;
 
       switch (true) {
-        case target.closest('.loginHeader') !== null:
+        case target.closest('.header_login-header') !== null:
           router.go(
             {
               path: '/login',
@@ -104,7 +104,7 @@ export class Header extends Component {
             { pushState: true, refresh: false }
           );
           break;
-        case target.closest('.brandHeader') !== null:
+        case target.closest('.header_brand-header') !== null:
           router.go(
             {
               path: '/',
@@ -113,10 +113,10 @@ export class Header extends Component {
             { pushState: true, refresh: false }
           );
           break;
-        case target.closest('.logoutHeader') !== null:
-          store.dispatch(actionLogout());
+        case target.closest('.header_logout-header') !== null:
+          store.dispatch(actionLogout({redirect: true}));
           break;
-        case target.closest('.settingsHeader') !== null:
+        case target.closest('.header_settings-header') !== null:
           router.go(
             {
               path: '/settings',
@@ -125,7 +125,7 @@ export class Header extends Component {
             { pushState: true, refresh: false }
           );
           break;
-        case target.closest('.menuHeader') !== null:
+        case target.closest('.header_menu-header') !== null:
           router.go(
             {
               path: '/selection',
@@ -173,6 +173,24 @@ export class Header extends Component {
   changeHeader (isAuth) {
     const headerHTML = document.querySelector('header');
     headerHTML!.innerHTML = this.render(isAuth);
+    if (isAuth === true) {
+
+      // const name = localStorage.getItem('userName');
+      // const namePage = signinPage.state.userInfo['login'];
+      // if (!namePage) {
+      //   document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName');
+      // } else {
+      //   localStorage.setItem('userName', store.getState('userName'))
+      //   document.querySelector('.profile-text')!.textContent = name;
+      // }
+
+      const namePage = signinPage.state.userInfo['login'];
+      if (namePage) {
+        document.querySelector('.profile-text')!.textContent = namePage;
+      } else {
+        document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName')
+      }
+    }
 
     this.componentDidMount();
   }

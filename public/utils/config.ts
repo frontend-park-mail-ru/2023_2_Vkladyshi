@@ -29,8 +29,8 @@ import { Review } from '@components/Review/review';
 
 export const ROOT = document.querySelector('#root');
 
-//export const DOMAIN = 'http://127.0.0.1:8001';
-export const DOMAIN = 'http://84.23.54.189';
+export const DOMAIN = 'http://127.0.0.1:8001';
+//export const DOMAIN = 'http://84.23.54.189';
 
 export const urls = {
   main: '/',
@@ -105,37 +105,37 @@ export const config = {
   menu: {
     basket: {
       href: urls.basket,
-      png_name: 'VectorMyFilms.svg',
+      png_name: 'myTags.svg',
       name: 'Мои фильмы',
       renderObject: ''
     },
     profile: {
       href: urls.profile,
-      png_name: 'profileIcon.svg',
+      png_name: 'iconPerson.svg',
       name: 'Мой профиль',
       renderObject: ''
     },
     signin: {
       href: urls.signin,
-      png_name: 'profileIcon.svg',
+      png_name: 'iconPerson.svg',
       name: 'Войти',
       renderObject: signinPage
     },
     signup: {
       href: urls.signup,
-      png_name: 'profileIcon.svg',
+      png_name: 'iconPerson.svg',
       name: 'Зарегистрироваться',
       renderObject: signupPage
     },
     selection: {
       href: urls.selection,
-      png_name: 'VectorTags.svg',
+      png_name: 'vectorTags.svg',
       name: 'Меню',
       renderObject: selectCollectionPage
     },
     main: {
       href: urls.main,
-      png_name: 'titleIcon.png',
+      png_name: 'brandIcon.svg',
       name: 'MovieHub',
       renderObject: mainPage
     }

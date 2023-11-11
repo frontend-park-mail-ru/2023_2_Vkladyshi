@@ -64,6 +64,7 @@ export class SignupPage extends View {
 
     this.subscribeSignupStatus = this.subscribeSignupStatus.bind(this);
     this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
+    this.redirectToMain = this.redirectToMain.bind(this);
 
     store.subscribe('statusSignup', this.subscribeSignupStatus);
   }
@@ -72,6 +73,18 @@ export class SignupPage extends View {
    * Метод создания страницы
    */
   render () {
+    store.subscribe('statusAuth', this.redirectToMain);
+
+    if (store.getState('statusLogin') === 200 || store.getState('statusAuth') === 200) {
+      router.go(
+          {
+            path: '/',
+            props: ''
+          },
+          { pushState: true, refresh: false }
+      );
+    }
+
     if (document.querySelector('.popupSign') == null) {
       this.renderDefaultPage();
       const mainHTML = document.querySelector('main');
@@ -280,6 +293,7 @@ export class SignupPage extends View {
     this.state.statusSignup = store.getState('statusSignup');
 
     if (this.handlerStatus()) {
+      store.unsubscribe('statusAuth', this.redirectToMain);
       store.subscribe('statusLogin', this.subscribeSigninStatus);
       store.dispatch(
         actionSignin({
@@ -394,5 +408,18 @@ export class SignupPage extends View {
       passwordSecond: passwordSecondError,
       birthday: dateError
     };
+  }
+
+  redirectToMain() {
+    if (store.getState('statusAuth') === 200) {
+      store.unsubscribe('statusAuth', this.redirectToMain);
+      router.go(
+          {
+            path: '/',
+            props: ''
+          },
+          { pushState: true, refresh: false }
+      );
+    }
   }
 }

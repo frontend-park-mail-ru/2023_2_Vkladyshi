@@ -75,8 +75,8 @@ export class FilmPage extends View {
         genre,
         actors,
         poster,
-        country,
-        date,
+        country: country ? country : 'Неизвестно',
+        date: date ? date : 'Неизвестно',
         title,
         // eslint-disable-next-line camelcase
         infoText: info,
@@ -85,7 +85,8 @@ export class FilmPage extends View {
         headerComment: 'Отзывы',
         isHeader: true,
         stars_burning: [true, true, true, false, false],
-        mark: rating,
+        // @ts-ignore
+        mark: rating.toFixed(1),
         mark_number: number
       };
     }
@@ -163,7 +164,7 @@ export class FilmPage extends View {
           actionGetCommentsFilm({
             film_id: this.state.fildId,
             page: 1,
-            per_page: 10
+            per_page: 20
           })
         )
         .then((response) => {
@@ -183,8 +184,7 @@ export class FilmPage extends View {
 
           if (
             !document.querySelector('.reviewForm') &&
-            store.getState('statusAuth') === 200 &&
-            this.state.mapFilms[this.state.fildId] === undefined
+            store.getState('statusAuth') === 200
           ) {
             div2?.insertAdjacentHTML(
               'beforeend',
@@ -203,13 +203,6 @@ export class FilmPage extends View {
               // @ts-ignore
               const text = textHTML.value;
 
-              console.log(this.state.fildId, this.state.mapFilms);
-              if (this.state.mapFilms[this.state.fildId] == null) {
-                this.state.mapFilms[this.state.fildId] = true;
-
-                // @ts-ignore
-                document.querySelector('.input__form').innerHTML = '';
-              }
 
               store.dispatch(
                 actionAddComment({
@@ -217,7 +210,13 @@ export class FilmPage extends View {
                   rating: select,
                   text: text
                 })
-              );
+              ).then(response => {
+                if (response!['body']['status'] === 200) {
+                  document.querySelector('.input__form')!.innerHTML = '';
+                } else {
+                  document.querySelector('.input__form')!.innerHTML = '<h4>Вы уже писали отзыв</h4>';
+                }
+              });
             };
             const review = document.querySelector('.reviewForm');
             review?.addEventListener('submit', Event);

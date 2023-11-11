@@ -1,7 +1,7 @@
 import { View } from '@views/view';
 import { errorInputs, responseStatuses, signin } from '@utils/config';
 import { store } from '@store/store';
-import { actionCSRF, actionSignin } from '@store/action/actionTemplates';
+import {actionAuth, actionCSRF, actionSignin} from '@store/action/actionTemplates';
 import {
   addErrorsActive,
   insertInInput,
@@ -13,6 +13,7 @@ import { validateLogin, validatePassword } from '@utils/validate';
 import { router } from '@router/router';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
+import {film} from "@components/film/film";
 
 export interface SigninPage {
   state: {
@@ -49,20 +50,40 @@ export class SigninPage extends View {
 
     this.subscribeLoginStatus = this.subscribeLoginStatus.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
+    this.redirectToMain = this.redirectToMain.bind(this);
   }
 
   /**
    * Метод создания страницы
    */
   render () {
+    store.subscribe('statusAuth', this.redirectToMain);
+
+    if (store.getState('statusLogin') === 200 || store.getState('statusAuth') === 200) {
+      router.go(
+          {
+            path: '/',
+            props: ''
+          },
+          { pushState: true, refresh: false }
+      );
+    }
+
     if (document.querySelector('.popupSign') == null) {
       this.renderDefaultPage();
       const mainHTML = document.querySelector('main');
+
+      // const mainHTML = document.querySelector('main');
+
+
       const popup = document.createElement('div');
       popup.classList.add('popupSign');
 
       mainHTML!.innerHTML = '';
-      mainHTML?.appendChild(popup);
+      mainHTML?.insertAdjacentHTML('afterbegin', film.render({urlImage : 'loginImage.jpg'}));
+      const containerHTML = document.querySelector('.image-container');
+      containerHTML?.appendChild(popup);
+      //containerHTML?.insertAdjacentHTML('beforebegin', popup);
     }
 
     if (!document.querySelector('.login-form')) {
@@ -229,9 +250,12 @@ export class SigninPage extends View {
     this.state.statusLogin = store.getState('statusLogin');
 
     if (this.handlerStatus()) {
+      store.unsubscribe('statusAuth', this.redirectToMain);
       store.unsubscribe('statusLogin', this.subscribeLoginStatus);
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
+      localStorage.setItem('userName', this.state.userInfo['login']);
+      console.log('signin')
 
       this.state.statusLogin = 0;
       this.componentWillUnmount();
@@ -245,6 +269,19 @@ export class SigninPage extends View {
           props: ''
         },
         { pushState: true, refresh: false }
+      );
+    }
+  }
+
+  redirectToMain() {
+    if (store.getState('statusAuth') === 200) {
+      store.unsubscribe('statusAuth', this.redirectToMain);
+      router.go(
+          {
+            path: '/',
+            props: ''
+          },
+          { pushState: true, refresh: false }
       );
     }
   }

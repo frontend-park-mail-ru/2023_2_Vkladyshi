@@ -29,7 +29,7 @@ export class FilmSelection extends Component {
       films: response.films,
       haveFilms: response.haveFilms
     };
-
+    console.log(result)
     return templateFilmSelection(result);
   }
 }

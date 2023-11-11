@@ -51,7 +51,7 @@ export function validateLogin (login) {
   if (!regex.test(login)) {
     return {
       result: false,
-      error: 'Логин должен состоять из букв, цифр, - и _'
+      error: 'Логин должен состоять из латинских букв, цифр, - и _'
     };
   }
 
@@ -60,7 +60,7 @@ export function validateLogin (login) {
     if (login.includes(dangerousChars[i])) {
       return {
         result: false,
-        error: "В логине не должно символов: < > & ' / `"
+        error: "В логине не должно спец-символов: < > & ' / `"
       };
     }
   }

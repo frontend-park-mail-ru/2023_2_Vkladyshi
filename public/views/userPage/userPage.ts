@@ -73,7 +73,6 @@ export class UserPage extends View {
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
-
     store.subscribe('getSettingsStatus', this.subscribeActorStatus);
   }
 
@@ -129,7 +128,7 @@ export class UserPage extends View {
           router.refresh();
           this.setUserInfo();
           if (login !== this.state.userInfo['login'] || password.length > 0) {
-            store.dispatch(actionLogout())
+            store.dispatch(actionLogout({redirect : false}));
           }
         }
       });
@@ -378,4 +377,6 @@ export class UserPage extends View {
       birthday: dateError
     };
   }
+
+
 }

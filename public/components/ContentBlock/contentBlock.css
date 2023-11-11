@@ -6,7 +6,11 @@
 .contentBlock {
   width: 80%;
   min-height: 100vh;
-  background-color: #ffffff;
+  /*background-color: #ffffff;*/
+  background: black;
   text-align: center;
-  margin: auto auto;
+  margin-left: auto;
+  margin-right: auto;
+  /*border-right: 1px solid white;*/
+  /*border-left: 1px solid white;*/
 }

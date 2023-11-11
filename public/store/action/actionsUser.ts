@@ -11,7 +11,8 @@ class ActionsUser {
     const result = await response;
 
     return {
-      statusLogin: result['status']
+      statusLogin: result['status'],
+      userName: user['login']
     };
   }
 
@@ -45,12 +46,15 @@ class ActionsUser {
     return { statusAuth: result['status'] };
   }
 
-  async logout () {
+  async logout (redirect = false) {
     const response = get({
       url: urls.logout
     });
     const result = await response;
-    return { logoutStatus: result['status'] };
+    return {
+      logoutStatus: result['status'],
+      redirect: redirect
+    };
   }
 
   async getSettings () {
