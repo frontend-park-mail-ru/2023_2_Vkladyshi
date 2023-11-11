@@ -85,7 +85,7 @@ export class FilmPage extends View {
         headerAbout: 'Описание',
         headerComment: 'Отзывы',
         isHeader: true,
-        stars_burning: [true, true, true, false, false],
+        stars_burning: [false, false, false, false, false],
         mark: rating,
         mark_number: number
       };
@@ -93,17 +93,26 @@ export class FilmPage extends View {
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
+
+      // TODO
+      // если 10 шкала - изменить пороги
+      for (let i = 0; i < result.mark; i++) {
+        result.stars_burning[i] = true;
+      }
+  
+
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
         countLikeFilm.render(result)
       );
-      //TODO
-      //если 10 шкала - изменить пороги
+
+      // TODO
+      // если 10 шкала - изменить пороги
       const markElement = document.querySelector('.countLikeActor__mark');
       if (markElement) {
-        if (result.mark >= 3.5) {
+        if (result.mark >= 7) {
           markElement.classList.add('countLikeActor__mark_good');
-        } else if (result.mark > 2 && result.mark < 3.5) {
+        } else if (result.mark > 4 && result.mark < 7) {
           markElement.classList.add('countLikeActor__mark_mid');
         } else {
           markElement.classList.add('countLikeActor__mark_bad');
