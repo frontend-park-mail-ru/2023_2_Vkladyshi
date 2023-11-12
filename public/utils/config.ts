@@ -71,9 +71,10 @@ export const errorInputs = {
   PasswordNoValid: 'Пароль не валиден',
   PasswordsNoEqual: 'Пароли не одинаковые',
   NotPassword: 'Нет пароля',
-  NotAllElements: 'Нет всех полей',
+  NotAllElement: '* Обязательно поле',
   LoginExists: 'Логин уже используется',
-  ServerError: 'Ошибка сервера'
+  ServerError: 'Ошибка сервера',
+  badRequest: 'Почта уже используется'
 };
 
 export const mainPage = new MainPage(ROOT);

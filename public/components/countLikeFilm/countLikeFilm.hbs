@@ -16,20 +16,20 @@
 <div class='countLikeActor'>
   <div class='countLikeActor__star-box'>
     {{#each stars_burning}}
-      {{#if this includeZero=false}}
+      {{#if this}}
         <img
           class='countLikeActor__star-box__star'
           src='/icons/Оценеено=Есть оценка.svg'
           alt='Горящая звезда'
         />
       {{/if}}
-      {{#if this includeZero=true}}
+      {{#unless this}}
         <img
           class='countLikeActor__star-box__star'
           src='/icons/Оценеено=Нет оценки.svg'
           alt='Погасшая звезда'
         />
-      {{/if}}
+      {{/unless}}
     {{/each}}
   </div>
 

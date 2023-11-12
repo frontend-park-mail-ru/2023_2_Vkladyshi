@@ -1,6 +1,6 @@
 import { DOMAIN, routes } from '@utils/config';
 import { store } from '@store/store';
-import { actionCSRF } from '@store/action/actionTemplates';
+import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
 
 interface Class {
   render: Function;
@@ -23,7 +23,7 @@ class Router {
     this.privateMapViews = new Map();
   }
 
-  register ({ path, view }, privatePAth = false) {
+  register ({ path, view }, privatePath = false) {
     this.privateMapViews.set(path, view);
     this.mapViews.set(path, view);
   }

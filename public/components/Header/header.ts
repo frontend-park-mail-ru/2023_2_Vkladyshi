@@ -5,6 +5,13 @@ import { config } from '@utils/config';
 import { store } from '@store/store';
 import { actionLogout } from '@store/action/actionTemplates';
 
+export interface Header {
+  state: {
+    config: any;
+    isAuth: boolean;
+  };
+}
+
 /**
  * Класс создания верхней шапки
  * @class Header
@@ -20,11 +27,18 @@ export class Header extends Component {
    */
   constructor (ROOT) {
     super(ROOT);
-    this.config = config.menu;
+    this.state = {
+      config: config.menu,
+      isAuth: false
+    };
     this.eventFunc = () => {};
 
-    this.subscribeHeader = this.subscribeHeader.bind(this);
-    store.subscribe('user', this.subscribeHeader);
+    this.subscribeLogoutStatus = this.subscribeLogoutStatus.bind(this);
+    this.subscribeAuthStatus = this.subscribeAuthStatus.bind(this);
+
+    store.subscribe('statusAuth', this.subscribeAuthStatus);
+    store.subscribe('statusLogin', this.subscribeAuthStatus);
+    store.subscribe('logoutStatus', this.subscribeLogoutStatus);
   }
 
   /**
@@ -33,7 +47,7 @@ export class Header extends Component {
    * @type {Array}
    */
   get items () {
-    return Object.entries(this.config).map(
+    return Object.entries(this.state.config).map(
       // @ts-expect-error
       // eslint-disable-next-line camelcase
       ([key, { href, png_name, name }]) => ({
@@ -52,11 +66,13 @@ export class Header extends Component {
    * @return {string} - html шапки
    */
   render (isAuthorized = false) {
-    const brand = this.items.find((item) => item.key === 'main');
-    const signin = this.items.find((item) => item.key === 'signin');
-    const basket = this.items.find((item) => item.key === 'basket');
-    const profile = this.items.find((item) => item.key === 'profile');
-    const selection = this.items.find((item) => item.key === 'selection');
+    const [brand, signin, basket, profile, selection] = [
+      'main',
+      'signin',
+      'basket',
+      'profile',
+      'selection'
+    ].map((key) => this.items.find((item) => item.key === key));
 
     return templateHeader({
       isAuthorized,
@@ -122,7 +138,6 @@ export class Header extends Component {
           break;
       }
     };
-
     headerContainer?.addEventListener('click', this.eventFunc);
   }
 
@@ -131,7 +146,34 @@ export class Header extends Component {
     headerContainer?.removeEventListener('click', this.eventFunc);
   }
 
-  subscribeHeader () {
-    this.render();
+  subscribeAuthStatus () {
+    this.state.isAuth =
+      store.getState('statusAuth') === 200 ||
+      store.getState('statusLogin') === 200;
+    this.changeHeader(this.state.isAuth);
+  }
+
+  subscribeLogoutStatus () {
+    this.state.isAuth = store.getState('logoutStatus') !== 200;
+
+    this.changeHeader(this.state.isAuth);
+
+    if (!this.state.isAuth) {
+      store.setState['statusLogin'] = 400;
+      router.go(
+        {
+          path: '/',
+          props: ``
+        },
+        { pushState: true, refresh: false }
+      );
+    }
+  }
+
+  changeHeader (isAuth) {
+    const headerHTML = document.querySelector('header');
+    headerHTML!.innerHTML = this.render(isAuth);
+
+    this.componentDidMount();
   }
 }

@@ -19,6 +19,8 @@
 .ChangeUserData__form {
   display: flex;
   flex-direction: column;
+  text-align: left;
+  width: 80%;
 
   margin: 2% auto;
 }
@@ -34,7 +36,7 @@
 }
 
 .ChangeUserData__form__img {
-  width: 7%;
+  /*width: 7%;*/
   height: auto;
 
   margin-right: 5%;
@@ -62,4 +64,12 @@
 
 .check__all_comments:hover {
   cursor: pointer;
+}
+
+.user-data-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-content: space-around;
+  margin-top: 20px;
+  /*width: 200px;*/
 }

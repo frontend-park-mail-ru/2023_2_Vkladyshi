@@ -19,8 +19,6 @@ export class FilmSelection extends Component {
 
     name = getKeyByValue(parseFloat(response.collection_name));
 
-    console.log(response, name, parseFloat(response.collection_name));
-
     if (name === null) {
       name = 'Новинки';
     }
