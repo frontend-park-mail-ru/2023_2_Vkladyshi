@@ -165,7 +165,7 @@
 }
 
 .errorStringSignin,
-.error_string_settings {
+.change-user-data__error {
   margin-bottom: 10px;
   color: red;
   display: block;

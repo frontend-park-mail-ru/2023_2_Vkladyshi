@@ -220,7 +220,7 @@ export class UserPage extends View {
   }
 
   handlerStatus () {
-    const errorClassName = 'error_string_settings';
+    const errorClassName = 'change-user-data__error';
 
     switch (this.state.userStatus) {
       case responseStatuses.success:
