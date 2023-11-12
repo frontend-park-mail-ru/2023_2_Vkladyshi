@@ -8,6 +8,7 @@ import {
   actionGetCommentsFilm
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
+import {image} from "@components/Image/image";
 
 export interface FilmPage {
   state: {
@@ -69,7 +70,6 @@ export class FilmPage extends View {
       const fullDate = new Date(release_date);
       const date = fullDate.getFullYear().toString();
 
-      // @ts-ignore
       result = {
         film: true,
         body: this.state.filmInfo,
@@ -79,7 +79,6 @@ export class FilmPage extends View {
         country: country || 'Неизвестно',
         date: date || 'Неизвестно',
         title,
-        // eslint-disable-next-line camelcase
         infoText: info,
         header: 'О фильме',
         headerAbout: 'Описание',
@@ -93,31 +92,44 @@ export class FilmPage extends View {
     }
 
     if (contentBlockHTML != null) {
-      contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
+
+      // const descHTML = document.querySelector('.settings');
+      // mainHTML?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'loginImage.jpg' }));
+      //
+      // const containerHTML = document.querySelector('.image-container');
+      // containerHTML?.appendChild(descHTML!);
+
+      const mainHTML = document.querySelector('main');
+      mainHTML?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'mainImagjpg' }));
+
+      mainHTML?.insertAdjacentHTML('beforeend', desc.render(result));
+       const descriptionHTML = document.querySelector('.description');
+      const containerHTML = document.querySelector('.image-container');
+      containerHTML?.appendChild(descriptionHTML!);
 
       // TODO
       // если 10 шкала - изменить пороги
-      for (let i = 0; i < result.mark; i++) {
-        result.stars_burning[i] = true;
-      }
+      // for (let i = 0; i < result.mark; i++) {
+      //   result.stars_burning[i] = true;
+      // }
 
-      contentBlockHTML?.insertAdjacentHTML(
+      descriptionHTML?.insertAdjacentHTML(
         'beforeend',
         countLikeFilm.render(result)
       );
 
       // TODO
       // если 10 шкала - изменить пороги
-      const markElement = document.querySelector('.count-like-actor__mark');
-      if (markElement) {
-        if (result.mark >= 7) {
-          markElement.classList.add('count-like-actor__mark_good');
-        } else if (result.mark > 4 && result.mark < 7) {
-          markElement.classList.add('count-like-actor__mark_mid');
-        } else {
-          markElement.classList.add('count-like-actor__mark_bad');
-        }
-      }
+      // const markElement = document.querySelector('.count-like-actor__mark');
+      // if (markElement) {
+      //   if (result.mark >= 7) {
+      //     markElement.classList.add('count-like-actor__mark_good');
+      //   } else if (result.mark > 4 && result.mark < 7) {
+      //     markElement.classList.add('count-like-actor__mark_mid');
+      //   } else {
+      //     markElement.classList.add('count-like-actor__mark_bad');
+      //   }
+      // }
     }
 
     this.addEvents();

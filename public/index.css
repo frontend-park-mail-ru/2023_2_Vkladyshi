@@ -18,6 +18,7 @@
 @import './components/ButtonSubmit/buttonSubmit.css';
 @import './components/Image/image.css';
 @import './components/filmCard/filmCard.css';
+@import './components/Settings/settings.css';
 
 
 :root {

@@ -1,11 +1,11 @@
-.count-like-actor {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+/*.count-like-actor {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
 
-  width: var(--block-width);
-  margin: auto;
-}
+/*  width: var(--block-width);*/
+/*  margin: auto;*/
+/*}*/
 
 .count-like-actor__mark {
   margin-left: 3%;

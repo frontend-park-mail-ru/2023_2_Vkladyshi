@@ -86,7 +86,7 @@ export class UserPage extends View {
   }
 
   componentDidMount () {
-    const blockHTML = document.querySelector('.description');
+    const blockHTML = document.querySelector('.settings');
     const popupEvent = (event) => {
       switch (true) {
         case event.target.closest('.button-submit') !== null:
@@ -281,7 +281,7 @@ export class UserPage extends View {
       settings.render(this.state.userInfo)
     );
 
-    const descHTML = document.querySelector('.description');
+    const descHTML = document.querySelector('.settings');
     mainHTML?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'loginImage.jpg' }));
 
     const containerHTML = document.querySelector('.image-container');
