@@ -1,36 +1,15 @@
-.filmSelection_name {
-    padding-left: .75rem;
-    border-left: 5px solid #dba506;
-    width: 85%;
-    margin-top: 40px;
-    padding-bottom: 10px;
-    /*padding-left: 5%;*/
-    /*border-bottom: 1px solid #ffffff;*/
-    color: #ffffff;
-    font-family: Montserrat, serif;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    letter-spacing: 0.96px;
-    text-align: left;
-}
-
 .filmSelection_film {
     cursor: pointer;
-    width: 250px;
-    height: 420px;
     margin: 20px;
-    border-radius: 30px;
-    background: rgba(217, 217, 217, 0.19);
+    width: 250px;
     display: flex;
     align-items: center;
     flex-direction: column;
     transition: all 0.3s ease;
 }
 
-.filmSelection_film:hover {
-    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+.filmSelection_film-poster:hover {
+    opacity: 0.9;
 }
 
 .filmSelection_film_poster {
@@ -56,20 +35,25 @@
     /*width: 20%;*/
 }
 
+.filmSelection_film-information{
+    width: 250px
+}
+
 .filmSelection_film_name {
-    width: 80%;
+    /*width: 80%;*/
     /*white-space: nowrap;*/
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-top: 10px;
 
-    color: #0b0a0a;
+    color: #f5f5f5;
     font-family: Montserrat, serif;
     font-size: 17px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
     letter-spacing: 0.51px;
-    margin-top: 0;
+
     margin-bottom: 0;
 }
 
@@ -116,4 +100,41 @@
 
 .selectCollection-frame-list-item:hover {
     cursor: pointer;
+}
+
+.image-watchlist {
+    margin-top: 2px;
+    width: 50px;
+    height: 50px;
+    opacity: 0.3;
+}
+
+.film-rating{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+    margin-right: 5px;
+    width: 28px;
+    height: 28px;
+    font-size: 19px;
+    background: #57b846;
+}
+
+.image-watchlist:hover {
+    opacity: 0.5;
+}
+
+.filmSelection_film_header {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.filmSelection_film-poster {
+    width: 250px;
+    height: 420px;
+
+    background-size: cover;
+    background-position: center center;
 }

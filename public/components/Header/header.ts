@@ -1,7 +1,7 @@
 import { Component } from '@components/component';
 import { router } from '@router/router';
 import * as templateHeader from '@components/Header/header.hbs';
-import {config, signinPage} from '@utils/config';
+import { config, signinPage } from '@utils/config';
 import { store } from '@store/store';
 import { actionLogout } from '@store/action/actionTemplates';
 
@@ -114,7 +114,7 @@ export class Header extends Component {
           );
           break;
         case target.closest('.header_logout-header') !== null:
-          store.dispatch(actionLogout({redirect: true}));
+          store.dispatch(actionLogout({ redirect: true }));
           break;
         case target.closest('.header_settings-header') !== null:
           router.go(
@@ -174,7 +174,6 @@ export class Header extends Component {
     const headerHTML = document.querySelector('header');
     headerHTML!.innerHTML = this.render(isAuth);
     if (isAuth === true) {
-
       // const name = localStorage.getItem('userName');
       // const namePage = signinPage.state.userInfo['login'];
       // if (!namePage) {
@@ -188,7 +187,7 @@ export class Header extends Component {
       if (namePage) {
         document.querySelector('.profile-text')!.textContent = namePage;
       } else {
-        document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName')
+        document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName');
       }
     }
 

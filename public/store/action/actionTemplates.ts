@@ -11,7 +11,7 @@ export const actionCSRF = () => ({
   type: 'csrf'
 });
 
-export const actionLogout = (redirect ) => ({
+export const actionLogout = (redirect) => ({
   type: 'logout'
 });
 

@@ -1,17 +1,14 @@
 import { View } from '@views/view';
 import {
-  desc,
-  info,
-  changeUserData,
   errorInputs,
   responseStatuses
 } from '@utils/config';
 import { store } from '@store/store';
 import {
-  // actionCSRF,
+  actionCSRF,
   actionGetSettings,
   actionLogout,
-  actionPutSettings, actionSignin
+  actionPutSettings
 } from '@store/action/actionTemplates';
 import {
   addErrorsActive,
@@ -30,6 +27,8 @@ import { dateConverter } from '@utils/dateConverter';
 import { router } from '@router/router';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
+import { image } from '@components/Image/image';
+import { settings } from '@components/Settings/settings';
 
 export interface UserPage {
   state: {
@@ -85,7 +84,7 @@ export class UserPage extends View {
   }
 
   componentDidMount () {
-    const contentBlockHTML = document.querySelector('.contentBlock');
+    const blockHTML = document.querySelector('.description');
     const popupEvent = (event) => {
       switch (true) {
         case event.target.closest('.button-submit') !== null:
@@ -100,7 +99,7 @@ export class UserPage extends View {
     };
 
     this.popupEvent = popupEvent;
-    contentBlockHTML?.addEventListener('click', popupEvent);
+    blockHTML?.addEventListener('click', popupEvent);
   }
 
   getForm () {
@@ -128,7 +127,7 @@ export class UserPage extends View {
           router.refresh();
           this.setUserInfo();
           if (login !== this.state.userInfo['login'] || password.length > 0) {
-            store.dispatch(actionLogout({redirect : false}));
+            store.dispatch(actionLogout({ redirect: false }));
           }
         }
       });
@@ -236,9 +235,9 @@ export class UserPage extends View {
         returnError(errorInputs.LoginExists, errorClassName);
         break;
       case responseStatuses.csrfError:
-        // store.dispatch(actionCSRF()).then((response) => {
-        //   store.dispatch(actionPutSettings({ file: this.state.userInfo['fileData'] }));
-        // });
+        store.dispatch(actionCSRF()).then((response) => {
+          store.dispatch(actionPutSettings({ file: this.state.userInfo['fileData'] }));
+        });
         break;
       default:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);
@@ -247,7 +246,8 @@ export class UserPage extends View {
   }
 
   subscribeActorStatus () {
-    const contentBlockHTML = document.querySelector('.contentBlock');
+    const mainHTML = document.querySelector('main');
+    mainHTML!.innerHTML = '';
     const result = store.getState('getSettingsStatus');
     this.state.userStatus = result.status;
 
@@ -270,14 +270,16 @@ export class UserPage extends View {
       };
     }
 
-    contentBlockHTML?.insertAdjacentHTML(
+    mainHTML?.insertAdjacentHTML(
       'beforeend',
-      desc.render(this.state.userInfo)
+      settings.render(this.state.userInfo)
     );
-    document.querySelector('.description')?.insertAdjacentHTML(
-      'beforeend',
-      changeUserData.render(this.state.userInfo)
-    );
+
+    const descHTML = document.querySelector('.description');
+    mainHTML?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'loginImage.jpg' }));
+
+    const containerHTML = document.querySelector('.image-container');
+    containerHTML?.appendChild(descHTML!);
 
     const loginText = document.querySelector('.login-text');
     const passwordFirstText = document.querySelector('.login-first-text');
@@ -377,6 +379,4 @@ export class UserPage extends View {
       birthday: dateError
     };
   }
-
-
 }

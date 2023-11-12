@@ -77,11 +77,11 @@ export class SignupPage extends View {
 
     if (store.getState('statusLogin') === 200 || store.getState('statusAuth') === 200) {
       router.go(
-          {
-            path: '/',
-            props: ''
-          },
-          { pushState: true, refresh: false }
+        {
+          path: '/',
+          props: ''
+        },
+        { pushState: true, refresh: false }
       );
     }
 
@@ -410,15 +410,15 @@ export class SignupPage extends View {
     };
   }
 
-  redirectToMain() {
+  redirectToMain () {
     if (store.getState('statusAuth') === 200) {
       store.unsubscribe('statusAuth', this.redirectToMain);
       router.go(
-          {
-            path: '/',
-            props: ''
-          },
-          { pushState: true, refresh: false }
+        {
+          path: '/',
+          props: ''
+        },
+        { pushState: true, refresh: false }
       );
     }
   }

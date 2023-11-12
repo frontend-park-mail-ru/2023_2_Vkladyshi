@@ -177,20 +177,20 @@
 }
 
 .popupSign {
-  background-color: rgba(255, 255, 255, 0);
-  position: relative;
-  width: 100%;
-  height: 100%;
-  /*top: 0;*/
-  left: 0;
-  transition: all 0.5s ease 0s;
-  /*top: 150px;*/
+  /*background-color: rgba(255, 255, 255, 0);*/
+  /*position: relative;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
+  /*!*top: 0;*!*/
+  /*left: 0;*/
+  /*transition: all 0.5s ease 0s;*/
+  /*margin-top: 100px;*/
 }
 
-.popupSign.active {
-  opacity: 1;
-  visibility: visible;
-}
+/*.popupSign.active {*/
+/*  opacity: 1;*/
+/*  visibility: visible;*/
+/*}*/
 
 .sign-frame-img {
   position: absolute;

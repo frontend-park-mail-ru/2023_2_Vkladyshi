@@ -7,6 +7,7 @@ import {
 } from '@store/action/actionTemplates';
 import { getCollection } from '@utils/getCollection';
 import { router } from '@router/router';
+import { image } from '@components/Image/image';
 
 /**
  * Класс формирования подборки фильмов

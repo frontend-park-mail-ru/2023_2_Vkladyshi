@@ -11,16 +11,12 @@
     background-position: center center;
     /*background-attachment: fixed;*/
 }
-/*loginImage*/
+
 .header__container {
     position: relative;
-    /*position: absolute;*/
-    /*z-index: 2;*/
 }
 
 .box-shadow {
-    background: rgb(0 0 0 / 40%);
-    background-image: none;
     position: absolute;
     top: 0;
     right: 0;
@@ -28,5 +24,24 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%);
+    background: rgb(0 0 0 / 40%) linear-gradient(to top, rgba(0, 0, 0, 0.95) 0, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.8) 100%);
+}
+
+.header__container__text{
+    text-align: center;
+    position: absolute;
+    color: white;
+    opacity: 1;
+    top: 30%;
+}
+
+.first-text {
+    margin-top: 10px;
+    font-size: 55px;
+
+}
+
+.second-text {
+    margin-top: 10px;
+    font-size: 30px;
 }

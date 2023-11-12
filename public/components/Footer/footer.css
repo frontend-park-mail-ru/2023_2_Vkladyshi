@@ -3,35 +3,18 @@
   height: 70px;
   width: 80%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  color: #fff;
-  text-align: center;
+  color: #a29f9f;
   font-family: Montserrat, serif;
-  font-size: 20px;
   font-style: normal;
   font-weight: 300;
-  line-height: normal;
-  letter-spacing: 1px;
   margin-left: auto;
   margin-right: auto;
 }
 
-.left_text {
-  width: 40%;
-  text-align: center;
-  color: #a29f9f;
-}
-
 .center_image {
-  width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.right_text {
-  width: 40%;
-  text-align: left;
-  color: #a29f9f;
 }

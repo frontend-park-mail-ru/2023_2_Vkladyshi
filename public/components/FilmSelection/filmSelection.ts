@@ -14,9 +14,7 @@ export class FilmSelection extends Component {
    * @return {string}
    */
   render (response) {
-    const buf = response.collection_name;
     let name;
-
     name = getKeyByValue(parseFloat(response.collection_name));
 
     if (name === null) {
@@ -29,7 +27,11 @@ export class FilmSelection extends Component {
       films: response.films,
       haveFilms: response.haveFilms
     };
-    console.log(result)
+
+    if (response.films.length === 0) {
+      return templateFilmSelection({ haveFilms: false });
+    }
+
     return templateFilmSelection(result);
   }
 }

@@ -46,7 +46,7 @@ const actor = {
   status: 200,
   body: {
     isHeader: true,
-    poster: '/icons/star.png',
+    poster_href: '/icons/star.png',
     name: 'Сильвестр Сталлоне',
 
     genres: ['боевик', 'драма', 'триллер'],
@@ -247,15 +247,9 @@ const films_tags = {
     films: {
       film1: {
         poster: '/icons/bastards.jpg',
-        title: 'film_1 111110000000000000000000000000000000000000000001',
-        rating: 1,
+        title: 'Бесславные ублюдки',
+        rating: 8,
         film_id: 11,
-      },
-      film2: {
-        poster: '/',
-        title: 'film_2',
-        rating: 2,
-        film_id: 15,
       },
       film3: {
         poster: '/icons/bastards.jpg',
@@ -324,7 +318,6 @@ const settings = {
 };
 
 app.get(express.static('dist'));
-
 
 app.use('/login', (req, res) => {
   if (req.method === 'GET') {
@@ -498,8 +491,8 @@ app.use('/api/v1/film', (req, res) => {
     res.sendFile(__dirname + '/index.html');
     return;
   }
-  // const filmTitle = 'film';
-  // const film = findFilmByTitle(films.body.films.film9, filmTitle);
+  // const filmTitle = 'Image';
+  // const Image = findFilmByTitle(films.body.films.film9, filmTitle);
   return res.status(200).json({ body: films.body.films.film9 });
 });
 

@@ -75,8 +75,8 @@ export class FilmPage extends View {
         genre,
         actors,
         poster,
-        country: country ? country : 'Неизвестно',
-        date: date ? date : 'Неизвестно',
+        country: country || 'Неизвестно',
+        date: date || 'Неизвестно',
         title,
         // eslint-disable-next-line camelcase
         infoText: info,
@@ -121,10 +121,10 @@ export class FilmPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-        case event.target.closest('.about-film') !== null:
+        case event.target.closest('.about-Image') !== null:
           this.redirectToAbout();
           break;
-        case event.target.closest('.comments-film') !== null:
+        case event.target.closest('.comments-Image') !== null:
           this.redirectToComments();
           break;
         default:
@@ -202,7 +202,6 @@ export class FilmPage extends View {
               const select = parseInt(selectHTML.value);
               // @ts-ignore
               const text = textHTML.value;
-
 
               store.dispatch(
                 actionAddComment({

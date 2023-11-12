@@ -38,8 +38,6 @@ export class View extends Component {
       main.insertAdjacentHTML('beforeend', footer.render());
     }
 
-
-    console.log(1212)
     // @ts-ignore
     document.querySelector('header')?.style.opacity = 1;
     // @ts-ignore

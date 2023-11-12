@@ -16,7 +16,8 @@
 @import './components/ReviewForm/reviewForm.css';
 @import './components/inputButton/inputButton.css';
 @import './components/ButtonSubmit/buttonSubmit.css';
-@import './components/film/film.css';
+@import './components/Image/image.css';
+@import './components/filmCard/filmCard.css';
 
 
 :root {
@@ -26,26 +27,16 @@
 }
 
 body {
-  /*background-color: #ebeFbe7;*/
   padding: 0;
   margin: 0;
   background: black;
   font-family: 'Montserrat', sans-serif;
 }
 
-main {
-  /*background: black;*/
-  /*padding-top: 70px;*/
-}
 
 body.none-active {
   overflow: hidden;
 }
-
-/*.background-main {*/
-/*  width: 100%;*/
-/*  height: 100%;*/
-/*}*/
 
 @media (max-width: 1200px) {
   .contentBlock, .header, .footer {
@@ -60,87 +51,3 @@ body.none-active {
     margin-right: 20px;
   }
 }
-
-/*@media (min-width: 1920px) {*/
-/*  .header,*/
-/*  .contentBlock,*/
-/*  .footer {*/
-/*    width: 70%;*/
-/*  }*/
-/*  .signin,*/
-/*  .signup {*/
-/*    width: 20%;*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 2120px) {*/
-/*  .header,*/
-/*  .contentBlock,*/
-/*  .footer {*/
-/*    width: 60%;*/
-/*  }*/
-/*  .signin,*/
-/*  .signup {*/
-/*    width: 17%;*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 2620px) {*/
-/*  .header,*/
-/*  .contentBlock,*/
-/*  .footer {*/
-/*    width: 50%;*/
-/*  }*/
-/*  .signin,*/
-/*  .signup {*/
-/*    width: 14%;*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 2920px) {*/
-/*  .header,*/
-/*  .contentBlock,*/
-/*  .footer {*/
-/*    width: 40%;*/
-/*  }*/
-/*  .signin,*/
-/*  .signup {*/
-/*    width: 11%;*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 3520px) {*/
-/*  .header,*/
-/*  .contentBlock,*/
-/*  .footer {*/
-/*    width: 30%;*/
-/*  }*/
-/*  .signin,*/
-/*  .signup {*/
-/*    width: 8%;*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 4520px) {*/
-/*  .header,*/
-/*  .contentBlock,*/
-/*  .footer {*/
-/*    width: 20%;*/
-/*  }*/
-/*  .signin,*/
-/*  .signup {*/
-/*    width: 5%;*/
-/*  }*/
-/*}*/
-
-/*@media (min-width: 5820px) {*/
-/*  .header,*/
-/*  .contentBlock,*/
-/*  .footer {*/
-/*    width: 10%;*/
-/*  }*/
-/*  .signin,*/
-/*  .signup {*/
-/*    width: 2%;*/
-/*  }*/
-/*}*/

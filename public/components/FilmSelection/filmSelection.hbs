@@ -3,29 +3,28 @@
     {{collection_name}}
   </div>
   <div class='filmSelection_films'>
-<!--    {{#if haveFilms}}-->
-<!--      {{#each films}}-->
-<!--        <div class='filmSelection_film' data-section='{{id}}'>-->
-<!--          <img class='filmSelection_film_poster' src='{{poster}}' />-->
-<!--          <p class='filmSelection_film_name'>{{title}}</p>-->
-<!--          <div class='filmSelection_film_rating'>-->
-<!--            <img class='filmSelection_film_rating_img' src='/icons/star.svg' />-->
-<!--            <p class='filmSelection_film_rating_p'>-->
-<!--              {{film.rating}}-->
-<!--            </p>-->
-<!--          </div>-->
-<!--          <div class='filmSelection_film_select'>-->
-<!--            <img-->
-<!--              class='filmSelection_film_select_img'-->
-<!--              src='../../icons/plus.svg'-->
-<!--            />-->
-<!--            <p class='filmSelection_film_select_p'>-->
-<!--              К просмотру-->
-<!--            </p>-->
-<!--          </div>-->
-<!--        </div>-->
-<!--      {{/each}}-->
-<!--    {{else}}-->
+    {{#if haveFilms}}
+      {{#each films}}
+          <div class='filmSelection_film' data-section='{{id}}'>
+              <div class='filmSelection_film-poster' style='background-image: url("{{poster}}")'>
+                  <div class="filmSelection_film_header">
+                      <img class="image-watchlist" src="/icons/bookmark.png">
+                      <div class="film-rating">
+                          {{#if rating}}
+                              {{rating}}
+                          {{else}}
+                              8
+                          {{/if}}
+                      </div>
+                  </div>
+              </div>
+              <div class="filmSelection_film-information">
+                  <div class='filmSelection_film_name'>{{title}}</div>
+              </div>
+          </div>
+
+      {{/each}}
+    {{else}}
       <div><p>К сожалению, но таких фильмов нет.</p></div>
     {{/if}}
   </div>
