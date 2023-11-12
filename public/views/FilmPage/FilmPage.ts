@@ -51,7 +51,7 @@ export class FilmPage extends View {
   }
 
   componentDidMount () {
-    const contentBlockHTML = document.querySelector('.contentBlock');
+    const contentBlockHTML = document.querySelector('.content-block');
 
     if (contentBlockHTML != null) {
       contentBlockHTML!.innerHTML = '';
@@ -124,7 +124,7 @@ export class FilmPage extends View {
   }
 
   addEvents () {
-    const popup = document.querySelector('.contentBlock');
+    const popup = document.querySelector('.content-block');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
@@ -156,7 +156,7 @@ export class FilmPage extends View {
   }
 
   redirectToComments () {
-    const infoHTML = document.querySelector('.contentBlock');
+    const infoHTML = document.querySelector('.content-block');
 
     if (!document.querySelector('.comments__block')) {
       const comments = document.createElement('div');
@@ -262,7 +262,7 @@ export class FilmPage extends View {
 
   redirectToAbout () {
     const commentsBlock = document.querySelector('.comments__block');
-    const infoHTML = document.querySelector('.contentBlock');
+    const infoHTML = document.querySelector('.content-block');
 
     if (commentsBlock) {
       infoHTML?.removeChild(commentsBlock);

@@ -215,7 +215,7 @@ export class UserPage extends View {
   }
 
   componentWillUnmount () {
-    const popup = document.querySelector('.contentBlock');
+    const popup = document.querySelector('.content-block');
     popup?.removeEventListener('submit', this.popupEvent);
   }
 
