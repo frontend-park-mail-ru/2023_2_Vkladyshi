@@ -15,7 +15,7 @@ export class MainPage extends View {
    */
   render () {
     this.renderDefaultPage();
-    const contentBlockHTML = document.querySelector('.contentBlock');
+    const contentBlockHTML = document.querySelector('.content-block');
     const mainHTML = document.querySelector('main');
 
     mainHTML?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'mainImagjpg', mainPage: true }));

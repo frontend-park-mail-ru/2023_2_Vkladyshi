@@ -1,5 +1,5 @@
 .image-container {
-    background-image: url("/icons/mainImagjpg");
+    /* background-image: url("/icons/mainImagjpg"); */
     min-height: 100vh;
     display: flex;
     justify-content: center;

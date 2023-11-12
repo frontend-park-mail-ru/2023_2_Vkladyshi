@@ -30,7 +30,7 @@ export class View extends Component {
       main.innerHTML = '';
     }
 
-    if (document.querySelector('.contentBlock') == null) {
+    if (document.querySelector('.content-block') == null) {
       main.insertAdjacentHTML('beforeend', contentBlock.render());
     }
 

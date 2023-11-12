@@ -73,17 +73,17 @@ export class ActorDescritionPage extends View {
 
     console.log(res, 6667)
 
-    if (document.querySelector('.contentBlock') != null) {
+    if (document.querySelector('.content-block') != null) {
       document
-        ?.querySelector('.contentBlock')
+        ?.querySelector('.content-block')
         ?.insertAdjacentHTML('beforeend', desc.render(result));
 
       document
-        ?.querySelector('.contentBlock')
+        ?.querySelector('.content-block')
         ?.insertAdjacentHTML('beforeend', LkStar.render(result));
 
       document
-        ?.querySelector('.contentBlock')
+        ?.querySelector('.content-block')
         ?.insertAdjacentHTML('beforeend', info.render(result));
     }
   }

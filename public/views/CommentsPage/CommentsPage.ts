@@ -53,7 +53,7 @@ export class CommentsPage extends View {
   }
 
   insertComments () {
-    const contentBlockHTML = document.querySelector('.contentBlock');
+    const contentBlockHTML = document.querySelector('.content-block');
     const result = this.state.commentsInfo;
 
     result.forEach((res) => {
@@ -72,7 +72,7 @@ export class CommentsPage extends View {
   }
 
   componentDidMount () {
-    const popup = document.querySelector('.contentBlock');
+    const popup = document.querySelector('.content-block');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
@@ -122,7 +122,7 @@ export class CommentsPage extends View {
   }
 
   componentWillUnmount () {
-    const popup = document.querySelector('.contentBlock');
+    const popup = document.querySelector('.content-block');
     popup?.removeEventListener('click', this.popupEvent);
     window?.removeEventListener('scroll', this.scrollEvent);
 

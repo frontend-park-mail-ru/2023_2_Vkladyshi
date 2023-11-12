@@ -37,7 +37,7 @@ export class FilmSelectionPage extends View {
     if (isNotMain) {
       this.renderDefaultPage();
 
-      const contentBlockHTML = document.querySelector('.contentBlock');
+      const contentBlockHTML = document.querySelector('.content-block');
       const url = new URL(window.location.href);
 
       const result = store.getState('collectionMenu');

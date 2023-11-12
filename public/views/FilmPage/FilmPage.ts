@@ -51,7 +51,7 @@ export class FilmPage extends View {
   }
 
   componentDidMount () {
-    const contentBlockHTML = document.querySelector('.contentBlock');
+    const contentBlockHTML = document.querySelector('.content-block');
 
     if (contentBlockHTML != null) {
       contentBlockHTML!.innerHTML = '';
@@ -108,14 +108,14 @@ export class FilmPage extends View {
 
       // TODO
       // если 10 шкала - изменить пороги
-      const markElement = document.querySelector('.countLikeActor__mark');
+      const markElement = document.querySelector('.count-like-actor__mark');
       if (markElement) {
         if (result.mark >= 7) {
-          markElement.classList.add('countLikeActor__mark_good');
+          markElement.classList.add('count-like-actor__mark_good');
         } else if (result.mark > 4 && result.mark < 7) {
-          markElement.classList.add('countLikeActor__mark_mid');
+          markElement.classList.add('count-like-actor__mark_mid');
         } else {
-          markElement.classList.add('countLikeActor__mark_bad');
+          markElement.classList.add('count-like-actor__mark_bad');
         }
       }
     }
@@ -124,7 +124,7 @@ export class FilmPage extends View {
   }
 
   addEvents () {
-    const popup = document.querySelector('.contentBlock');
+    const popup = document.querySelector('.content-block');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
@@ -156,7 +156,7 @@ export class FilmPage extends View {
   }
 
   redirectToComments () {
-    const infoHTML = document.querySelector('.contentBlock');
+    const infoHTML = document.querySelector('.content-block');
 
     if (!document.querySelector('.comments__block')) {
       const comments = document.createElement('div');
@@ -262,7 +262,7 @@ export class FilmPage extends View {
 
   redirectToAbout () {
     const commentsBlock = document.querySelector('.comments__block');
-    const infoHTML = document.querySelector('.contentBlock');
+    const infoHTML = document.querySelector('.content-block');
 
     if (commentsBlock) {
       infoHTML?.removeChild(commentsBlock);

@@ -1,9 +1,9 @@
 @media (max-width: 1150px) {
-  .contentBlock {
+  .content-block {
     width: 100px;
   }
 }
-.contentBlock {
+.content-block {
   width: 80%;
   min-height: 100vh;
   /*background-color: #ffffff;*/

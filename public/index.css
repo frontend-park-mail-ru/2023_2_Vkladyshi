@@ -39,7 +39,7 @@ body.none-active {
 }
 
 @media (max-width: 1200px) {
-  .contentBlock, .header, .footer {
+  .content-block, .header, .footer {
     width: 100%;
   }
 

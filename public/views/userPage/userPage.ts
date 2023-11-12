@@ -215,12 +215,12 @@ export class UserPage extends View {
   }
 
   componentWillUnmount () {
-    const popup = document.querySelector('.contentBlock');
+    const popup = document.querySelector('.content-block');
     popup?.removeEventListener('submit', this.popupEvent);
   }
 
   handlerStatus () {
-    const errorClassName = 'error_string_settings';
+    const errorClassName = 'change-user-data__error';
 
     switch (this.state.userStatus) {
       case responseStatuses.success:
