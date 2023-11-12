@@ -5,10 +5,11 @@ import {
 } from '@utils/config';
 import { store } from '@store/store';
 import {
-  actionCSRF,
-  actionGetSettings,
-  actionLogout,
-  actionPutSettings
+    actionCSRF,
+    // actionCSRF,
+    actionGetSettings,
+    actionLogout,
+    actionPutSettings
 } from '@store/action/actionTemplates';
 import {
   addErrorsActive,
@@ -29,6 +30,7 @@ import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 import { image } from '@components/Image/image';
 import { settings } from '@components/Settings/settings';
+
 
 export interface UserPage {
   state: {
@@ -167,6 +169,7 @@ export class UserPage extends View {
 
     if ((!password && passwordSecond) || (password && !passwordSecond)) {
       insertText([elements['passwordFirst'], elements['passwordSecond']], errorInputs.NotAllElement);
+
       addErrorsActive([wraps['passwordFirst'], wraps['passwordSecond']]);
       result = false;
     } else {
@@ -235,9 +238,11 @@ export class UserPage extends View {
         returnError(errorInputs.LoginExists, errorClassName);
         break;
       case responseStatuses.csrfError:
+
         store.dispatch(actionCSRF()).then((response) => {
           store.dispatch(actionPutSettings({ file: this.state.userInfo['fileData'] }));
         });
+
         break;
       default:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);
@@ -248,6 +253,7 @@ export class UserPage extends View {
   subscribeActorStatus () {
     const mainHTML = document.querySelector('main');
     mainHTML!.innerHTML = '';
+
     const result = store.getState('getSettingsStatus');
     this.state.userStatus = result.status;
 
@@ -312,6 +318,7 @@ export class UserPage extends View {
     dateText?.insertAdjacentHTML(
       'beforeend',
       inputButton.render({ wrap: 'birthday', module: 'user-data', type: 'date' })
+
     );
     emailText?.insertAdjacentHTML(
       'beforeend',

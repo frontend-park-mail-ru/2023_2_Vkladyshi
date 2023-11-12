@@ -174,15 +174,6 @@ export class Header extends Component {
     const headerHTML = document.querySelector('header');
     headerHTML!.innerHTML = this.render(isAuth);
     if (isAuth === true) {
-      // const name = localStorage.getItem('userName');
-      // const namePage = signinPage.state.userInfo['login'];
-      // if (!namePage) {
-      //   document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName');
-      // } else {
-      //   localStorage.setItem('userName', store.getState('userName'))
-      //   document.querySelector('.profile-text')!.textContent = name;
-      // }
-
       const namePage = signinPage.state.userInfo['login'];
       if (namePage) {
         document.querySelector('.profile-text')!.textContent = namePage;

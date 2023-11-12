@@ -66,6 +66,7 @@ export class SignupPage extends View {
     this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
     this.redirectToMain = this.redirectToMain.bind(this);
 
+
     store.subscribe('statusSignup', this.subscribeSignupStatus);
   }
 

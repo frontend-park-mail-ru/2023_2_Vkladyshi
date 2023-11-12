@@ -8,6 +8,7 @@ import {
 } from '@store/action/actionTemplates';
 import { image } from '@components/Image/image';
 
+
 export interface SelectCollectionPage {
   state: {
     dataSection: string;

@@ -1,6 +1,6 @@
 import { DOMAIN, routes } from '@utils/config';
 import { store } from '@store/store';
-import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
+import { actionCSRF } from '@store/action/actionTemplates';
 import { page404 } from '@router/Page404/page404';
 
 interface Class {

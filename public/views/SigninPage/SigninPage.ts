@@ -1,7 +1,7 @@
 import { View } from '@views/view';
 import { errorInputs, responseStatuses, signin } from '@utils/config';
 import { store } from '@store/store';
-import { actionAuth, actionCSRF, actionSignin } from '@store/action/actionTemplates';
+import { actionCSRF, actionSignin } from '@store/action/actionTemplates';
 import {
   addErrorsActive,
   insertInInput,
@@ -14,6 +14,7 @@ import { router } from '@router/router';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 import { image } from '@components/Image/image';
+
 
 export interface SigninPage {
   state: {
@@ -51,6 +52,7 @@ export class SigninPage extends View {
     this.subscribeLoginStatus = this.subscribeLoginStatus.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this.redirectToMain = this.redirectToMain.bind(this);
+
   }
 
   /**
@@ -246,6 +248,7 @@ export class SigninPage extends View {
 
     if (this.handlerStatus()) {
       store.unsubscribe('statusAuth', this.redirectToMain);
+
       store.unsubscribe('statusLogin', this.subscribeLoginStatus);
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
