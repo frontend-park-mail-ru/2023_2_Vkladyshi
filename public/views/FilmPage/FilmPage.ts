@@ -108,14 +108,14 @@ export class FilmPage extends View {
 
       // TODO
       // если 10 шкала - изменить пороги
-      const markElement = document.querySelector('.countLikeActor__mark');
+      const markElement = document.querySelector('.count-like-actor__mark');
       if (markElement) {
         if (result.mark >= 7) {
-          markElement.classList.add('countLikeActor__mark_good');
+          markElement.classList.add('count-like-actor__mark_good');
         } else if (result.mark > 4 && result.mark < 7) {
-          markElement.classList.add('countLikeActor__mark_mid');
+          markElement.classList.add('count-like-actor__mark_mid');
         } else {
-          markElement.classList.add('countLikeActor__mark_bad');
+          markElement.classList.add('count-like-actor__mark_bad');
         }
       }
     }
