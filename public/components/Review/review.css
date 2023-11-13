@@ -1,0 +1,50 @@
+.review {
+  width: var(--block-width);
+
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+
+  margin: 50px auto;
+  margin-bottom: 0;
+  /* padding-top: 50px;*/
+  /* padding-bottom: 50px; */
+
+  border-radius: 20px;
+  background-color: var(--background-color);
+}
+
+.review__header {
+  width: 100%;
+  height: auto;
+
+  margin: 2% 0;
+  border-bottom: 3px black solid;
+  padding: 2% 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.review__header__img {
+  height: auto;
+  width: 10%;
+}
+
+.review__header__user-name,
+.review__header__film-name {
+  display: inline;
+  margin: 3%;
+  width: 30%;
+  cursor: pointer;
+}
+
+.review__header__review-data {
+  text-align: end;
+  width: 40%;
+}
+
+.review__body {
+  margin: 3% 0;
+}

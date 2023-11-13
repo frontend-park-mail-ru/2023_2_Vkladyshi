@@ -1,33 +1,6 @@
-@media (min-width: 1200px) {
-  .redirectToSignup,
-  .errorStringSignin {
-    font-size: 16px;
-  }
-}
-
-@media (max-width: 1200px) {
-  .redirectToSignup,
-  .errorStringSignin {
-    font-size: 10px;
-  }
-}
-
-@media (max-width: 500px) {
-  .redirectToSignup,
-  .errorStringSignin {
-    font-size: 7px;
-  }
-}
-
-@media (max-width: 700px) {
-  .buttonLogin {
-    font-size: 7px;
-  }
-}
-
 .signin {
-  width: 23%;
-  background-color: rgb(98, 98, 93);
+  width: 400px;
+  background-color: rgb(255, 255, 255);
   border-radius: 5%;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
   display: flex;
@@ -36,7 +9,6 @@
   justify-content: center;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 10%;
   position: relative;
 }
 
@@ -45,100 +17,165 @@
   visibility: visible;
 }
 
-.signinMain {
+.text-form {
+  margin-top: 20px;
+  font-size: 13px;
+  color: #555555;
+  line-height: 1.4;
+}
+
+.signin__main {
   width: 100%;
-  height: 300px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-left: auto;
-  margin-right: auto;
+  /*margin-left: auto;*/
+  /*margin-right: auto;*/
   position: relative;
   transition: all 1s ease 0s;
+
+  /*padding: 55px 85px;*/
 }
 
-.loginForm {
+.login-form {
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
+  /*align-items: center;*/
 
-  width: 100%;
+  width: 90%;
   height: 60%;
+  padding: 55px 85px;
 }
 
-.loginInput,
-.passwordInput {
-  width: 80%;
-  height: 17%;
-  border: 1px solid white;
+.wrap {
+  width: 100%;
+  /*height: 45px;*/
+  border: 1px solid #e6e6e6;
   border-radius: 5px;
   transition: border 0.3s ease;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.loginInput:hover,
-.passwordInput:hover {
-  border: 1px solid black;
+.wrap:hover {
+  border: 1px solid #57b846;
 }
 
-.buttonLogin {
-  width: 40%;
-  height: 15%;
-  border-radius: 5px;
-  background-color: #ffffff;
-  border: 1px solid white;
-  transition: border 0.3s ease;
+.wrap.active {
+  border: 1px solid #f50a0a;
 }
 
-.buttonLogin:hover {
-  border: 1px solid black;
-}
-
-.redirectToSignup {
-  cursor: pointer;
-  margin-top: 3%;
-  text-align: center;
-}
-
-.errorStringSignin {
+.error-string {
   color: red;
-  display: none;
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+
+.login-input,
+.password-input {
+  width: 90%;
+  height: 45px;
+  border: solid white;
+  font-size: 19px;
+  border-radius: 5px;
+  padding: 0 5% 0 5%;
+  /*text-align: center;*/
+}
+
+.input-error {
+  border: 1px solid red;
+
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+}
+
+.sign-title {
+  font-size: 20px;
+  color: #555555;
+  margin-bottom: 20px;
+}
+
+.button-login {
+  width: 100px;
+  height: 35px;
+  border-radius: 24px;
+  border: white;
+  color: white;
+  font-size: 16px;
+  background-color: #333333;
+  transition: background 0.3s ease;
+}
+
+.button-login:hover {
+  background: #57b846;
+}
+
+.redirect-to-signup:hover {
+  color: #57b846;
+}
+
+.redirect-to-signup {
+  /*width: 70%;*/
+  cursor: pointer;
+  text-align: center;
+  font-size: 13px;
+  color: #555555;
+  transition: color 0.3s ease;
+}
+
+.container-login {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 5%;
+}
+
+.errorStringSignin,
+.change-user-data__error {
+  margin-bottom: 10px;
+  color: red;
+  display: block;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
   position: relative;
   transition: all 1s ease 0s;
-}
-
-.errorStringSignin.active {
-  display: block;
-  margin-bottom: 10px;
 }
 
 .popupSign {
-  background-color: rgba(255, 255, 255, 0.8);
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.5s ease 0s;
+  /*background-color: rgba(255, 255, 255, 0);*/
+  /*position: relative;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
+  /*!*top: 0;*!*/
+  /*left: 0;*/
+  /*transition: all 0.5s ease 0s;*/
+  /*margin-top: 100px;*/
 }
 
-.popupSign.active {
-  opacity: 1;
-  visibility: visible;
-}
+/*.popupSign.active {*/
+/*  opacity: 1;*/
+/*  visibility: visible;*/
+/*}*/
 
-.signin-frame-img {
+.sign-frame-img {
   position: absolute;
   width: 7%;
   height: auto;
-  left: 10px;
+  left: 15px;
   top: 10px;
   cursor: pointer;
+  opacity: 0.7;
+  transition: opacity 0.3s ease;
+}
+
+.sign-frame-img:hover {
+  opacity: 1;
 }

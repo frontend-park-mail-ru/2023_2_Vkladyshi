@@ -4,7 +4,12 @@ module.exports = {
     es2021: true,
   },
   plugins: ['prettier', 'jsdoc'],
-  extends: ['google', 'prettier', 'plugin:jsdoc/recommended'],
+  extends: [
+    'google',
+    'prettier',
+    'plugin:jsdoc/recommended',
+    'eslint-config-ts-standard',
+  ],
   overrides: [
     {
       env: {
@@ -16,13 +21,10 @@ module.exports = {
       },
     },
   ],
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-  },
+  parserOptions: {},
   rules: {
     'require-jsdoc': 'warn',
     'valid-jsdoc': 'warn',
-    // Другие правила JSDoc...
+    semi: ['error', 'always'],
   },
 };

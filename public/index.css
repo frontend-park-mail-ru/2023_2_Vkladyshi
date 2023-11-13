@@ -5,12 +5,31 @@
 @import './components/ContentBlock/contentBlock.css';
 @import './components/Signup/signup.css';
 @import './components/Footer/footer.css';
+@import './components/Description/description.css';
+@import './components/AdditionalInfo/additionalInfo.css';
+@import './components/TableStyle/TableStyle.css';
+@import './components/countLikeActor/countLikeActor.css';
+@import './components/Button/button.css';
+@import './components/countLikeFilm/countLikeFilm.css';
+@import './components/UserDataForm/userDataForm.css';
+@import './components/Review/review.css';
+@import './components/ReviewForm/reviewForm.css';
+@import './components/inputButton/inputButton.css';
+@import './components/ButtonSubmit/buttonSubmit.css';
+@import './components/Image/image.css';
+@import './components/filmCard/filmCard.css';
+@import './components/Settings/settings.css';
+
+:root {
+  --background-color: rgb(81, 82, 58, 0.1);
+  --content-block-color: rgb(255, 255, 255);
+  --block-width: 80%;
+}
 
 body {
-  background-color: #ebebe7;
   padding: 0;
   margin: 0;
-
+  background: black;
   font-family: 'Montserrat', sans-serif;
 }
 
@@ -18,86 +37,18 @@ body.none-active {
   overflow: hidden;
 }
 
-@media (min-width: 1920px) {
+@media (max-width: 1200px) {
+  .content-block,
   .header,
-  .contentBlock,
   .footer {
-    width: 70%;
+    width: 100%;
   }
-  .signin,
-  .signup {
-    width: 20%;
-  }
-}
 
-@media (min-width: 2120px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 60%;
+  .header_brand-header {
+    margin-left: 20px;
   }
-  .signin,
-  .signup {
-    width: 17%;
-  }
-}
 
-@media (min-width: 2620px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 50%;
-  }
-  .signin,
-  .signup {
-    width: 14%;
-  }
-}
-
-@media (min-width: 2920px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 40%;
-  }
-  .signin,
-  .signup {
-    width: 11%;
-  }
-}
-
-@media (min-width: 3520px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 30%;
-  }
-  .signin,
-  .signup {
-    width: 8%;
-  }
-}
-
-@media (min-width: 4520px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 20%;
-  }
-  .signin,
-  .signup {
-    width: 5%;
-  }
-}
-
-@media (min-width: 5820px) {
-  .header,
-  .contentBlock,
-  .footer {
-    width: 10%;
-  }
-  .signin,
-  .signup {
-    width: 2%;
+  .header_login-header {
+    margin-right: 20px;
   }
 }

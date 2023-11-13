@@ -1,0 +1,32 @@
+<div class='additional-info'>
+  <div class='additional-info__headers'>
+    {{#if film}}
+      <h1
+        class='additional-info__headers__items table__header about-film'
+      >{{headerAbout}}</h1>
+      <h1
+        class='additional-info__headers__items table__header comments-film'
+      >{{headerComment}}</h1>
+    {{/if}}
+    {{#if actor}}
+      <h1
+        class='additional-info__headers__items table__header about-actor'
+      >{{headerAbout}}</h1>
+    {{/if}}
+  </div>
+  <div class='additional-info__content table__row__text'>{{infoText}}</div>
+  <div class='additional-info__review table__row__text'></div>
+  {{!-- {{infoText}} --}}
+
+  {{#each rewiew}}
+    <div class='review'>
+      <div class='rewiew__header'>
+        <img class='rewiew__header__img' src='/icons/avatar.png' />
+        <h1 class='rewiew__header__user-name table__header'>{{name}}</h1>
+      </div>
+      <div class='rewiew__body'>
+        <span class='rewiew__body__text table__row__text'>{{text}}</span>
+      </div>
+    </div>
+  {{/each}}
+</div>

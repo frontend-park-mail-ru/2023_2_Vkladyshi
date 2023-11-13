@@ -1,0 +1,51 @@
+.additional-info {
+  /*background-color: var(--content-block-color);*/
+  position: relative;
+  width: 80%;
+  height: 50%;
+
+  margin-top: 2%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.additional-info__headers {
+  display: flex;
+  align-items: center;
+
+  padding-top: 2%;
+  padding-bottom: 2%;
+
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  border-bottom-width: 2px;
+}
+
+.additional-info__headers__items {
+  margin-left: 2%;
+  margin-right: 2%;
+}
+
+.additional-info__content {
+  padding: 2%;
+
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.about-film,
+.comments-film,
+.table__actor__text,
+.about-actor,
+.table__genre__text {
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.about-film:hover,
+.comments-film:hover,
+.table__actor__text:hover,
+.about-actor:hover,
+.table__genre__text:hover {
+  opacity: 0.6;
+}
