@@ -1,34 +1,8 @@
 <div class='count-like-actor'>
   <div class='count-like-actor__star-box'>
-    {{#each stars_burning}}
-      {{#if this}}
-        <img
-          class='count-like-actor__star-box__star'
-          src='/icons/Оценеено=Есть оценка.svg'
-          alt='Горящая звезда'
-        />
-      {{/if}}
-      {{#unless this}}
-        <img
-          class='count-like-actor__star-box__star'
-          src='/icons/Оценеено=Нет оценки.svg'
-          alt='Погасшая звезда'
-        />
-      {{/unless}}
-    {{/each}}
-  </div>
-
   <div class='count-like-actor__mark count-like-actor__mark_good table__header'>
     {{mark}}
   </div>
   <div class='count-like-actor__mark-number table__row__text'>{{mark_number}}
     оценок</div>
-  <img
-    class='count-like-actor__watched'
-    src='/icons/Будут смотреть=Не смотрим.svg'
-  />
-  <img
-    class='count-like-actor__review'
-    src='/icons/Иконка написать отзыв.svg'
-  />
 </div>

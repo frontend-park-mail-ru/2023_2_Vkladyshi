@@ -50,6 +50,7 @@ export class ActorDescritionPage extends View {
     let result = {};
 
     const res = this.state.actorInfo;
+    // const { actors, rating, number, genre, film } = this.state.actorInfo;
 
     if (res) {
       const dateTime = new Date(res['birthday']);
