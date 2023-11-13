@@ -1,20 +1,11 @@
-/*@media screen and (max-width: 1370px) {*/
-/*  .filmSelection_film_select {*/
-/*    width: 40%;*/
-/*  }*/
-/*  .filmSelection_film_select_p {*/
-/*    display: none;*/
-/*  }*/
-/*}*/
-
-.filmSelection {
+.film-selection {
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
 }
 
-.filmSelection_films {
+.film-selection_films {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,13 +13,10 @@
   width: 100%;
 }
 
-.filmSelection_name {
-  /*padding-left: .2rem;*/
-  /*border-left: 5px solid #dba506;*/
+.film-selection_name {
   width: 100%;
-  margin-top: 40px;
+  margin-top: 100px;
   padding-bottom: 10px;
-  /*padding-left: 5%;*/
   border-bottom: 1px solid #ffffff;
   color: #ffffff;
   font-family: Montserrat, serif;

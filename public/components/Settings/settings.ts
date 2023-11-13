@@ -11,9 +11,9 @@ export class Settings extends Component {
   /**
    * Метод рендеринга элемента
    * @param result
-   * @returns {string} html авторизации
+   * @return {string} html авторизации
    */
-  render(result) {
+  render (result) {
     return templateSettings(result);
   }
 }

@@ -2,141 +2,141 @@ import { post, get, getCsrf } from '@utils/ajax';
 import { urls } from '@utils/config';
 
 class ActionsUser {
-  async signin(user) {
+  async signin (user) {
     const response = post({
       url: urls.signin,
-      body: { login: user['login'], password: user['password'] },
+      body: { login: user['login'], password: user['password'] }
     });
 
     const result = await response;
 
     return {
       statusLogin: result['status'],
-      userName: user['login'],
+      userName: user['login']
     };
   }
 
-  async signup(user) {
+  async signup (user) {
     const response = post({
       url: urls.signup,
       body: {
         login: user['login'],
         password: user['password'],
         email: user['email'],
-        birth_date: user['birthday'],
-      },
+        birth_date: user['birthday']
+      }
     });
 
     const result = await response;
     return {
-      statusSignup: result['status'],
+      statusSignup: result['status']
     };
   }
 
-  async auth(isAuth = false) {
+  async auth (isAuth = false) {
     if (isAuth) {
       return { statusAuth: 200 };
     }
 
     const response = get({
-      url: urls.authorized,
+      url: urls.authorized
     });
     const result = await response;
 
     return { statusAuth: result['status'] };
   }
 
-  async logout(redirect = false) {
+  async logout (redirect = false) {
     const response = get({
-      url: urls.logout,
+      url: urls.logout
     });
     const result = await response;
     return {
       logoutStatus: result['status'],
-      redirect: redirect,
+      redirect: redirect
     };
   }
 
-  async getSettings() {
+  async getSettings () {
     const response = get({
-      url: urls.settings,
+      url: urls.settings
     });
 
     const result = await response;
     return {
-      getSettingsStatus: result,
+      getSettingsStatus: result
     };
   }
 
-  async getCsrf() {
+  async getCsrf () {
     const response = getCsrf({
-      url: urls.csrf,
+      url: urls.csrf
     });
 
     const result = await response;
     return {
-      csrf: result,
+      csrf: result
     };
   }
 
-  async updateSettings(putSettings) {
+  async updateSettings (putSettings) {
     const response = post({
       url: urls.settings,
       body: putSettings,
-      contentType: true,
+      contentType: true
     });
 
     const result = await response;
     return {
-      postStatusSettings: result['status'],
+      postStatusSettings: result['status']
     };
   }
 
   // eslint-disable-next-line camelcase
-  async userComments({ page, per_page }: paginator) {
+  async userComments ({ page, per_page }: paginator) {
     const response = get({
       url: urls.comments,
       // eslint-disable-next-line camelcase
-      query: { page: page, per_page: per_page },
+      query: { page: page, per_page: per_page }
     });
 
     const result = await response;
     return {
-      userCommentsStatus: result,
+      userCommentsStatus: result
     };
   }
 
   // eslint-disable-next-line camelcase
-  async filmComments({ film_id, page, per_page }: paginatorFilm) {
+  async filmComments ({ film_id, page, per_page }: paginatorFilm) {
     const response = get({
       url: urls.comments,
       // eslint-disable-next-line camelcase
-      query: { film_id: film_id, page: page, per_page: per_page },
+      query: { film_id: film_id, page: page, per_page: per_page }
     });
 
     const result = await response;
     return {
-      filmCommentsStatus: result,
+      filmCommentsStatus: result
     };
   }
 
   // eslint-disable-next-line camelcase
-  async addComment({ film_id, rating, text }: addComment) {
+  async addComment ({ film_id, rating, text }: addComment) {
     const response = post({
       url: urls.addComment,
       // eslint-disable-next-line camelcase
-      body: { film_id: film_id, rating: rating, text: text },
+      body: { film_id: film_id, rating: rating, text: text }
     });
 
     const result = await response;
     return {
-      addCommentStatus: result['status'],
+      addCommentStatus: result['status']
     };
   }
 
-  async removeView() {
+  async removeView () {
     return {
-      removeView: true,
+      removeView: true
     };
   }
 }

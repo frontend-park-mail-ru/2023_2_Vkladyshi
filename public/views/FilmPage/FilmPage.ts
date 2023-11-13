@@ -1,6 +1,5 @@
-/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
-import { desc, info, countLikeFilm, reviewForm, review } from '@utils/config';
+import { desc, countLikeFilm, reviewForm, review, info } from '@utils/config';
 import { store } from '@store/store';
 import {
   actionAddComment,
@@ -9,6 +8,7 @@ import {
   actionGetCommentsFilm
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
+import { image } from '@components/Image/image';
 
 export interface FilmPage {
   state: {
@@ -48,11 +48,12 @@ export class FilmPage extends View {
     if (props != null) {
       store.dispatch(actionFilm({ filmId: props.replace('/', '') }));
     }
-    // this.componentDidMount();
   }
 
   componentDidMount () {
-    const contentBlockHTML = document.querySelector('.contentBlock');
+    const contentBlockHTML = document.querySelector(
+      '.content-block'
+    ) as HTMLElement;
 
     if (contentBlockHTML != null) {
       contentBlockHTML!.innerHTML = '';
@@ -79,57 +80,52 @@ export class FilmPage extends View {
         country: country || 'Неизвестно',
         date: date || 'Неизвестно',
         title,
-        // eslint-disable-next-line camelcase
         infoText: info,
         header: 'О фильме',
         headerAbout: 'Описание',
         headerComment: 'Отзывы',
         isHeader: true,
-<<<<<<< HEAD
-        stars_burning: [true, true, true, false, false],
+        stars_burning: [
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false,
+          false
+        ],
         // @ts-ignore
         mark: rating.toFixed(1),
-=======
-        stars_burning: [false, false, false, false, false, false, false, false, false, false],
-        mark: rating,
->>>>>>> 16cbd31 (add change rating color and fix stars)
         mark_number: number
       };
     }
 
     if (contentBlockHTML != null) {
-      contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
+      const mainHTML = document.querySelector('main');
+      mainHTML!.innerHTML = '';
 
-      // TODO
-      // если 10 шкала - изменить пороги
-      for (let i = 0; i < result.mark; i++) {
-        result.stars_burning[i] = true;
-      }
+      mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
 
-      contentBlockHTML?.insertAdjacentHTML(
+      const icon = document.querySelector('.image-container') as HTMLElement;
+      icon!.style.backgroundImage = 'url("' + result.poster + '")';
+
+      const containerHTML = document.querySelector('.image-container');
+      containerHTML?.insertAdjacentHTML('beforeend', desc.render(result));
+      containerHTML?.insertAdjacentHTML(
         'beforeend',
         countLikeFilm.render(result)
       );
-
-      // TODO
-      // если 10 шкала - изменить пороги
-      const markElement = document.querySelector('.countLikeActor__mark');
-      if (markElement) {
-        if (result.mark >= 7) {
-          markElement.classList.add('countLikeActor__mark_good');
-        } else if (result.mark > 4 && result.mark < 7) {
-          markElement.classList.add('countLikeActor__mark_mid');
-        } else {
-          markElement.classList.add('countLikeActor__mark_bad');
-        }
-      }
+      containerHTML?.insertAdjacentHTML('beforeend', info.render(result));
     }
 
     this.addEvents();
   }
 
   addEvents () {
-    const popup = document.querySelector('.contentBlock');
+    const popup = document.querySelector('.main-container');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
@@ -146,10 +142,10 @@ export class FilmPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-        case event.target.closest('.about-Image') !== null:
+        case event.target.closest('.about-film') !== null:
           this.redirectToAbout();
           break;
-        case event.target.closest('.comments-Image') !== null:
+        case event.target.closest('.comments-film') !== null:
           this.redirectToComments();
           break;
         default:
@@ -161,7 +157,7 @@ export class FilmPage extends View {
   }
 
   redirectToComments () {
-    const infoHTML = document.querySelector('.contentBlock');
+    const infoHTML = document.querySelector('.additional-info__review');
 
     if (!document.querySelector('.comments__block')) {
       const comments = document.createElement('div');
@@ -183,7 +179,6 @@ export class FilmPage extends View {
 
       infoHTML?.appendChild(comments);
 
-      // @ts-ignore
       store
         .dispatch(
           actionGetCommentsFilm({
@@ -198,79 +193,90 @@ export class FilmPage extends View {
           result.forEach((res) => {
             const table = {
               film: true,
-              film_id: res['film_id'],
-              name: res['name'],
-              rating: res['rating'],
-              text: res['text']
+              film_id: res.film_id,
+              name: res.name,
+              rating: res.rating,
+              text: res.text
             };
 
-            div1?.insertAdjacentHTML('beforeend', review.render(table));
+            const result = document.createElement('buf');
+            result?.insertAdjacentHTML('beforeend', review.render(table));
+            const reviewHTML = result?.querySelector('.review') as HTMLElement;
+
+            switch (true) {
+              case table.rating < 4:
+                reviewHTML.style.background = 'red';
+                break;
+              case table.rating > 6:
+                reviewHTML.style.background = 'green';
+                break;
+              default:
+                reviewHTML.style.background = 'orange';
+                break;
+            }
+
+            div1?.appendChild(reviewHTML);
           });
-
-          if (
-            !document.querySelector('.reviewForm') &&
-            store.getState('statusAuth') === 200 &&
-            this.state.mapFilms[this.state.fildId] === undefined
-          ) {
-            div2?.insertAdjacentHTML(
-              'beforeend',
-              reviewForm.render({ login: true })
-            );
-
-            const Event = (event) => {
-              event.preventDefault();
-              const selectHTML = document.querySelector('.rating__form');
-              const textHTML = document.querySelector(
-                '.reviewForm__body__text'
+          store.dispatch(actionAuth()).then((response) => {
+            if (
+              !document.querySelector('.review-form') &&
+              store.getState('statusAuth') === 200
+            ) {
+              div2?.insertAdjacentHTML(
+                'beforeend',
+                reviewForm.render({ login: true })
               );
 
-              // @ts-ignore
-              const select = parseInt(selectHTML.value);
-              // @ts-ignore
-              const text = textHTML.value;
-
-              console.log(this.state.fildId, this.state.mapFilms);
-              if (this.state.mapFilms[this.state.fildId] == null) {
-                this.state.mapFilms[this.state.fildId] = true;
+              const Event = (event) => {
+                event.preventDefault();
+                const selectHTML = document.querySelector('.rating__form');
+                const textHTML = document.querySelector(
+                  '.review-form__body__text'
+                );
 
                 // @ts-ignore
-                document.querySelector('.input__form').innerHTML = '';
-              }
+                const select = parseInt(selectHTML.value);
+                // @ts-ignore
+                const text = textHTML.value;
 
-              store.dispatch(
-                actionAddComment({
-                  film_id: this.state.fildId,
-                  rating: select,
-                  text: text
-                })
-              ).then(response => {
-                if (response!['body']['status'] === 200) {
-                  document.querySelector('.input__form')!.innerHTML = '';
-                } else {
-                  document.querySelector('.input__form')!.innerHTML = '<h4>Вы уже писали отзыв</h4>';
-                }
+                store
+                  .dispatch(
+                    actionAddComment({
+                      film_id: this.state.fildId,
+                      rating: select,
+                      text: text
+                    })
+                  )
+                  .then((response) => {
+                    if (response!['addCommentStatus'] === 200) {
+                      router.refresh();
+                    } else {
+                      document.querySelector('.input__form')!.innerHTML =
+                        '<h4>Вы уже писали отзыв</h4>';
+                    }
+                  });
+              };
+              const review = document.querySelector('.review-form');
+              review?.addEventListener('submit', Event);
+            } else if (store.getState('statusAuth') !== 200) {
+              div2.addEventListener('click', (event) => {
+                router.go(
+                  { path: '/login', props: `` },
+                  { pushState: true, refresh: false }
+                );
               });
-            };
-            const review = document.querySelector('.reviewForm');
-            review?.addEventListener('submit', Event);
-          } else if (store.getState('statusAuth') !== 200) {
-            div2.addEventListener('click', (event) => {
-              router.go(
-                { path: '/login', props: `` },
-                { pushState: true, refresh: false }
-              );
-            });
-          }
+            }
+          });
         });
     }
   }
 
   redirectToAbout () {
-    const commentsBlock = document.querySelector('.comments__block');
-    const infoHTML = document.querySelector('.contentBlock');
+    const commentsBlock = document.querySelector('.additional-info__review');
+    const infoHTML = document.querySelector('.additional-info');
 
     if (commentsBlock) {
-      infoHTML?.removeChild(commentsBlock);
+      commentsBlock!.innerHTML = '';
     }
 
     const divElement = document.querySelector(
@@ -283,7 +289,7 @@ export class FilmPage extends View {
     store.unsubscribe('removeView', this.componentWillUnmount);
     store.unsubscribe('filmInfo', this.subscribeActorStatus);
 
-    const popup = document.querySelector('.filmSelection');
+    const popup = document.querySelector('.film-selection');
     popup?.removeEventListener('click', this.popupEvent);
   }
 
@@ -292,11 +298,4 @@ export class FilmPage extends View {
     store.unsubscribe('filmInfo', this.subscribeActorStatus);
     this.componentDidMount();
   }
-}
-/**
- *
- * @param arg0
- */
-function elseif (arg0: boolean) {
-  throw new Error('Function not implemented.');
 }

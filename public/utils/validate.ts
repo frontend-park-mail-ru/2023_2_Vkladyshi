@@ -22,12 +22,7 @@ export function validatePassword (password) {
   if (!password) {
     return {
       result: false,
-<<<<<<< HEAD
-      error:
-          errorInputs.NotAllElement
-=======
       error: errorInputs.NotAllElement
->>>>>>> 16cbd31 (add change rating color and fix stars)
     };
   }
   if (

@@ -1,11 +1,11 @@
-.countFilmRating {
+.count-film-rating {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.countFilmRating__text {
+.count-film-rating__text {
   margin-left: 5%;
 
   color: #000;

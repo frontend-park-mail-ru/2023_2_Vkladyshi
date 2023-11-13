@@ -4,16 +4,13 @@
   justify-content: center;
   align-items: flex-start;
   position: relative;
-  padding: 30px;
+  margin-top: 150px;
   /*background-color: var(--content-block-color);*/
+  width: 80%;
 }
 
 .description__img {
-<<<<<<< HEAD
   width: 270px;
-=======
-  width: 180px;
->>>>>>> 16cbd31 (add change rating color and fix stars)
   height: auto;
 
   margin-left: 5%;
@@ -32,10 +29,12 @@
   height: auto;
 
   margin: 0;
+  color: white;
 }
 
 .description__text__header__header-string {
-  color: #000;
+  /*color: #000;*/
+  color: white;
   text-align: center;
   font-family: Montserrat;
   font-size: 50px;
@@ -49,7 +48,8 @@
 }
 
 .description__text__header__subheader-string {
-  color: #000;
+  /*color: #000;*/
+  color: white;
   text-align: center;
   font-family: Montserrat;
   font-size: 30px;
@@ -66,11 +66,13 @@
   height: 30%;
   margin-top: 0%;
   margin-bottom: 5%;
+  color: white;
 }
 
 .description__text__table {
   /* display: flex; */
   width: 100%;
+  color: white;
 }
 
 .description__table {
@@ -87,11 +89,13 @@
   align-items: center;
   /* flex-direction: column; */
   flex-wrap: wrap;
+  color: white;
 }
 
 .description__table__row {
   margin-right: 0%;
   width: 50%;
+  color: white;
 }
 
 .description__table__text {
@@ -99,6 +103,7 @@
   margin: 1% 2%;
   margin-left: 0;
   font-size: 25px;
+  color: white;
 }
 
 .table__actor__text {

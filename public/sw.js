@@ -1,8 +1,10 @@
 const CACHE_NAME = 'moviehub-1';
 
+const whiteDynamicUrls = ['/'];
+
 const blackSearchUrls = /object=user_avatar|user\/\d+/;
 
-const assetUrls = [];
+const assetUrls = ['/', '/index.html'];
 
 const cachedReg =
   /\/api|(.png|.ttf|.woff2|.js|.ts|.jpg|.jpeg|.icon|.svg|.css|\/)$/;
@@ -47,7 +49,6 @@ self.addEventListener('fetch', (event) => {
   ) {
     return;
   }
-
   event.respondWith(networkFirst(request, /\/$/.test(url.pathname)));
 });
 

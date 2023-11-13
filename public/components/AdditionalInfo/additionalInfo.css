@@ -1,6 +1,6 @@
 .additional-info {
-  background-color: var(--content-block-color);
-
+  /*background-color: var(--content-block-color);*/
+  position: relative;
   width: 80%;
   height: 50%;
 

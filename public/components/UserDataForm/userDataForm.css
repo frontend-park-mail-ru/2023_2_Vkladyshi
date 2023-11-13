@@ -1,4 +1,4 @@
-.ChangeUserData {
+.change-user-data {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -9,7 +9,7 @@
   /*margin: auto;*/
 }
 
-.ChangeUserData__header {
+.change-user-data__header {
   text-align: left;
   font-size: 20px;
   color: #555555;
@@ -17,7 +17,7 @@
   margin-top: 25px;
 }
 
-.ChangeUserData__form {
+.change-user-data__form {
   display: flex;
   flex-direction: column;
   text-align: left;
@@ -26,7 +26,7 @@
   margin: 2% auto;
 }
 
-.ChangeUserData__form__file[type='file'] {
+.change-user-data__form__file[type='file'] {
   outline: 0;
   opacity: 0;
   pointer-events: none;
@@ -36,12 +36,11 @@
   margin-bottom: 10px;
 }
 
-.ChangeUserData__form__file{
-
+.change-user-data__form__file {
   margin-bottom: 20px;
 }
 
-.ChangeUserData__form__img {
+.change-user-data__form__img {
   /*width: 7%;*/
   height: auto;
 
@@ -49,7 +48,7 @@
   margin-left: 0;
 }
 
-.ChangeUserData__form__apply {
+.change-user-data__form__apply {
   width: 50%;
 }
 
@@ -77,9 +76,5 @@
   justify-content: space-between;
   align-content: space-around;
   margin-top: 20px;
-<<<<<<< HEAD
   margin-bottom: 20px;
-=======
->>>>>>> 16cbd31 (add change rating color and fix stars)
-  /*width: 200px;*/
 }

@@ -3,11 +3,12 @@
   width: 100vw;
   text-align: center;
   background: #242424;
+  color: white;
 }
 
 .wrapper-404__header {
   font-size: 16rem;
-  color: rgb(0 0 0 / 30%);
+  color: white;
   filter: blur(3px);
   margin: 0;
   padding: 0;
@@ -15,7 +16,7 @@
 
 .wrapper-404__text {
   font-size: 2rem;
-  color: rgb(0 0 0 / 60%);
+  color: white;
   margin: 0;
   padding: 0;
 }

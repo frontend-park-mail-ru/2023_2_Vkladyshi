@@ -1,16 +1,16 @@
-<div class='filmSelection'>
-  <div class='filmSelection_name'>
+<div class='film-selection'>
+  <div class='film-selection_name'>
     {{collection_name}}
   </div>
-  <div class='filmSelection_films'>
+  <div class='film-selection_films'>
     {{#if haveFilms}}
       {{#each films}}
-        <div class='filmSelection_film' data-section='{{id}}'>
+        <div class='film-selection_film' data-section='{{id}}'>
           <div
-            class='filmSelection_film-poster'
+            class='film-selection_film-poster'
             style='background-image: url("{{poster}}")'
           >
-            <div class='filmSelection_film_header'>
+            <div class='film-selection_film_header'>
               <img class='image-watchlist' src='/icons/bookmark.png' />
               <div class='film-rating'>
                 {{#if rating}}
@@ -21,8 +21,8 @@
               </div>
             </div>
           </div>
-          <div class='filmSelection_film-information'>
-            <div class='filmSelection_film_name'>{{title}}</div>
+          <div class='film-selection_film-information'>
+            <div class='film-selection_film_name'>{{title}}</div>
           </div>
         </div>
 

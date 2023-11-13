@@ -1,27 +1,11 @@
 @media (max-width: 1920px) {
-<<<<<<< HEAD
   .header-button {
-=======
-  .basketItem,
-  .headerItem,
-  .loginHeader,
-  .brandHeader,
-  .menuHeader {
->>>>>>> 16cbd31 (add change rating color and fix stars)
     font-size: 16px;
   }
 }
 
 @media (max-width: 1150px) {
-<<<<<<< HEAD
   .header-button {
-=======
-  .basketItem,
-  .headerItem,
-  .loginHeader,
-  .brandHeader,
-  .menuHeader {
->>>>>>> 16cbd31 (add change rating color and fix stars)
     font-size: 0;
   }
 }
@@ -46,7 +30,6 @@ header {
   /*opacity: 0; !* Начальное значение прозрачности *!*/
 }
 
-
 .header {
   width: 80%;
   display: flex;
@@ -56,15 +39,7 @@ header {
   margin-right: auto;
 }
 
-<<<<<<< HEAD
 .header-button {
-=======
-.basketItem,
-.headerItem,
-.brandHeader,
-.loginHeader,
-.menuHeader {
->>>>>>> 16cbd31 (add change rating color and fix stars)
   height: 50px;
   display: flex;
   justify-content: center;
@@ -75,18 +50,7 @@ header {
   color: white;
 }
 
-<<<<<<< HEAD
 .header-button {
-=======
-.basketItem {
-  cursor: not-allowed;
-}
-
-.headerItem,
-.brandHeader,
-.loginHeader,
-.menuHeader {
->>>>>>> 16cbd31 (add change rating color and fix stars)
   cursor: pointer;
 }
 
@@ -150,7 +114,6 @@ input::placeholder {
   clear: both;
   width: 100%;
 }
-
 
 .header_settings-header:hover,
 .header_logout-header:hover {

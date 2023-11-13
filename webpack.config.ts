@@ -37,6 +37,10 @@ module.exports = {
           from: path.resolve(__dirname, './public/actors'),
           to: path.resolve(__dirname, 'dist/actors'),
         },
+        {
+          from: path.resolve(__dirname, './public/sw.js'),
+          to: path.resolve(__dirname, 'dist'),
+        },
       ],
     }),
   ],

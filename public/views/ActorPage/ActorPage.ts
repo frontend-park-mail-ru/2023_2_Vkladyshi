@@ -1,7 +1,8 @@
 import { View } from '@views/view';
-import { desc, info, LkStar } from '@utils/config';
+import { countLikeFilm, desc, info, LkStar } from '@utils/config';
 import { store } from '@store/store';
 import { actionActor } from '@store/action/actionTemplates';
+import { image } from '@components/Image/image';
 
 export interface ActorDescritionPage {
   state: {
@@ -19,10 +20,10 @@ export class ActorDescritionPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
-      actorInfo: null,
+      actorInfo: null
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -35,22 +36,21 @@ export class ActorDescritionPage extends View {
    * Метод создания страницы
    * @param props
    */
-  render(props = null) {
+  render (props = null) {
     this.renderDefaultPage();
     store.subscribe('removeView', this.componentWillUnmount);
 
     if (props !== null) {
       // @ts-ignore
-      store.dispatch(
-        actionActor({ actorName: parseInt(props.replace('/', '')) })
-      );
+      store.dispatch(actionActor({ actorName: parseInt(props.replace('/', '')) }));
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let result = {};
 
     const res = this.state.actorInfo;
+
     if (res) {
       const dateTime = new Date(res['birthday']);
       const year = dateTime.getFullYear();
@@ -69,30 +69,30 @@ export class ActorDescritionPage extends View {
         poster: res['poster_href'],
         infoText: res['info_text'] ? res['info_text'] : 'Неизвестно',
         country: res['country'] ? res['country'] : 'Неизвестно',
-        career: res['career'],
+        career: res['career']
       };
     }
 
-    if (document.querySelector('.contentBlock') != null) {
-      document
-        ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', desc.render(result));
+    if (document.querySelector('.content-block') != null) {
+      const mainHTML = document.querySelector('main');
+      mainHTML!.innerHTML = '';
 
-      document
-        ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', LkStar.render(result));
+      mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
 
-      document
-        ?.querySelector('.contentBlock')
-        ?.insertAdjacentHTML('beforeend', info.render(result));
+      const icon = document.querySelector('.image-container') as HTMLElement;
+      icon!.style.backgroundImage = 'url("' + result['poster'] + '")';
+
+      const containerHTML = document.querySelector('.image-container');
+      containerHTML?.insertAdjacentHTML('beforeend', desc.render(result));
+      containerHTML?.insertAdjacentHTML('beforeend', info.render(result));
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     store.unsubscribe('removeView', this.subscribeActorStatus);
   }
 
-  subscribeActorStatus() {
+  subscribeActorStatus () {
     this.state.actorInfo = store.getState('actorInfo');
     this.componentDidMount();
   }

@@ -1,19 +1,26 @@
 .image-container {
-  background-image: url('/icons/mainImagjpg');
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 100vw;
   /*transform: scale(1.25) translateY(-10%);*/
+  background-image: none;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
   /*background-attachment: fixed;*/
 }
 
+/*.header__container {*/
+/*    position: relative;*/
+/*    flex-direction: column;*/
+/*}*/
+
 .header__container {
+  /*background-image: none;*/
   position: relative;
+  flex-direction: column;
 }
 
 .box-shadow {
@@ -28,7 +35,7 @@
     linear-gradient(
       to top,
       rgba(0, 0, 0, 0.95) 0,
-      rgba(0, 0, 0, 0) 60%,
+      rgba(0, 0, 0, 0.5) 60%,
       rgba(0, 0, 0, 0.8) 100%
     );
 }

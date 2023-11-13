@@ -1,7 +1,7 @@
 export const getCollection = (response) => {
   const haveFilms = checkFilms(Object.keys(response['body'].films));
   return Object.assign({}, response['body'], {
-    haveFilms,
+    haveFilms
   });
 };
 

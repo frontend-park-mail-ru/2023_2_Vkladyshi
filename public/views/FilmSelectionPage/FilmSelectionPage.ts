@@ -1,13 +1,9 @@
 import { View } from '@views/view';
 import { store } from '@store/store';
 import { filmSelection } from '@utils/config';
-import {
-  actionAuth,
-  actionCollectionMain,
-} from '@store/action/actionTemplates';
+import { actionCollectionMain } from '@store/action/actionTemplates';
 import { getCollection } from '@utils/getCollection';
 import { router } from '@router/router';
-import { image } from '@components/Image/image';
 
 /**
  * Класс формирования подборки фильмов
@@ -21,7 +17,7 @@ export class FilmSelectionPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
 
     this.subscribeCollectionMenu = this.subscribeCollectionMenu.bind(this);
@@ -33,11 +29,11 @@ export class FilmSelectionPage extends View {
    * @return {string} html авторизации
    * @param isNotMain
    */
-  async render(isNotMain) {
+  async render (isNotMain) {
     if (isNotMain) {
       this.renderDefaultPage();
 
-      const contentBlockHTML = document.querySelector('.contentBlock');
+      const contentBlockHTML = document.querySelector('.content-block');
       const url = new URL(window.location.href);
 
       const result = store.getState('collectionMenu');
@@ -65,7 +61,7 @@ export class FilmSelectionPage extends View {
     return this.returnTemplate(0);
   }
 
-  returnTemplate(collectionId) {
+  returnTemplate (collectionId) {
     return store
       .dispatch(actionCollectionMain({ collection_id: collectionId }))
       .then((response) => {
@@ -75,20 +71,20 @@ export class FilmSelectionPage extends View {
       });
   }
 
-  componentDidMount() {
-    const popup = document.querySelector('.filmSelection_films');
+  componentDidMount () {
+    const popup = document.querySelector('.film-selection_films');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
-        case event.target.closest('.filmSelection_film') !== null:
+        case event.target.closest('.film-selection_film') !== null:
           const filmId = event.target
-            .closest('.filmSelection_film')
+            .closest('.film-selection_film')
             .getAttribute('data-section');
           this.componentWillUnmount();
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`,
+              props: `/${filmId}`
             },
             { pushState: true, refresh: false }
           );
@@ -100,11 +96,11 @@ export class FilmSelectionPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  componentWillUnmount() {
-    const popup = document.querySelector('.filmSelection_films');
+  componentWillUnmount () {
+    const popup = document.querySelector('.film-selection_films');
 
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  subscribeCollectionMenu() {}
+  subscribeCollectionMenu () {}
 }

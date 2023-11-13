@@ -9,16 +9,16 @@
 @import './components/AdditionalInfo/additionalInfo.css';
 @import './components/TableStyle/TableStyle.css';
 @import './components/countLikeActor/countLikeActor.css';
-@import './components/Button&Form/button&form.css';
+@import './components/Button/button.css';
 @import './components/countLikeFilm/countLikeFilm.css';
-@import './components/ChangeUserData/changeUserData.css';
+@import './components/UserDataForm/userDataForm.css';
 @import './components/Review/review.css';
 @import './components/ReviewForm/reviewForm.css';
 @import './components/inputButton/inputButton.css';
 @import './components/ButtonSubmit/buttonSubmit.css';
-
 @import './components/Image/image.css';
 @import './components/filmCard/filmCard.css';
+@import './components/Settings/settings.css';
 
 :root {
   --background-color: rgb(81, 82, 58, 0.1);
@@ -38,7 +38,7 @@ body.none-active {
 }
 
 @media (max-width: 1200px) {
-  .contentBlock,
+  .content-block,
   .header,
   .footer {
     width: 100%;

@@ -12,7 +12,7 @@ export class Review extends Component {
    * @param reviews
    * @returns {string} html нижней панели
    */
-  render(reviews) {
+  render (reviews) {
     return templateReview(reviews);
   }
 }

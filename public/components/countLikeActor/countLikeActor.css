@@ -1,11 +1,13 @@
-.countLikeActor {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.count-like-actor {
+  /*width: 80%;*/
+  /*display: flex;*/
+  /*align-items: center;*/
+  /*justify-content: center;*/
+  /*background: white;*/
+  /*position: relative;*/
 }
 
-.countLikeActor__text {
+.count-like-actor__text {
   margin-left: 5%;
 
   color: #000;
@@ -16,4 +18,5 @@
   font-weight: 300;
   line-height: normal;
   letter-spacing: 0.9px;
+  width: 80%;
 }

@@ -1,4 +1,4 @@
-.filmSelection_film {
+.film-selection_film {
   cursor: pointer;
   margin: 20px;
   width: 250px;
@@ -8,18 +8,18 @@
   transition: all 0.3s ease;
 }
 
-.filmSelection_film-poster:hover {
+.film-selection_film-poster:hover {
   opacity: 0.9;
 }
 
-.filmSelection_film_poster {
+.film-selection_film_poster {
   width: auto;
   height: 170px;
   margin-top: 15%;
   margin-bottom: 10%;
 }
 
-.filmSelection_film_rating {
+.film-selection_film_rating {
   /*height: 50%;*/
   /*width: 75%;*/
   margin-top: 5px;
@@ -29,17 +29,17 @@
   align-items: center;
 }
 
-.filmSelection_film_rating_p {
+.film-selection_film_rating_p {
   margin-top: 0;
   margin-bottom: 0;
   /*width: 20%;*/
 }
 
-.filmSelection_film-information {
+.film-selection_film-information {
   width: 250px;
 }
 
-.filmSelection_film_name {
+.film-selection_film_name {
   /*width: 80%;*/
   /*white-space: nowrap;*/
   overflow: hidden;
@@ -57,7 +57,7 @@
   margin-bottom: 0;
 }
 
-.filmSelection_film_select {
+.film-selection_film_select {
   width: 65%;
   height: auto;
   padding-top: 5%;
@@ -73,16 +73,16 @@
     width,
     background 0.3s ease;
 }
-.filmSelection_film_select:hover {
+.film-selection_film_select:hover {
   background: rgba(107, 103, 103, 0.3);
 }
 
-.filmSelection_film_select_img {
+.film-selection_film_select_img {
   width: 10%;
   height: auto;
 }
 
-.filmSelection_film_select_p {
+.film-selection_film_select_p {
   width: 80%;
   height: auto;
   margin-top: 0;
@@ -98,7 +98,7 @@
   vertical-align: middle;
 }
 
-.selectCollection-frame-list-item:hover {
+.select-collection-frame-list-item:hover {
   cursor: pointer;
 }
 
@@ -125,13 +125,13 @@
   opacity: 0.5;
 }
 
-.filmSelection_film_header {
+.film-selection_film_header {
   display: flex;
   justify-content: space-between;
   width: 100%;
 }
 
-.filmSelection_film-poster {
+.film-selection_film-poster {
   width: 250px;
   height: 420px;
 

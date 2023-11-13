@@ -22,6 +22,7 @@ import {
 } from '@utils/validate';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
+import { image } from '@components/Image/image';
 
 export interface SignupPage {
   state: {
@@ -64,10 +65,7 @@ export class SignupPage extends View {
 
     this.subscribeSignupStatus = this.subscribeSignupStatus.bind(this);
     this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
-<<<<<<< HEAD
     this.redirectToMain = this.redirectToMain.bind(this);
-=======
->>>>>>> 16cbd31 (add change rating color and fix stars)
 
     store.subscribe('statusSignup', this.subscribeSignupStatus);
   }
@@ -78,7 +76,10 @@ export class SignupPage extends View {
   render () {
     store.subscribe('statusAuth', this.redirectToMain);
 
-    if (store.getState('statusLogin') === 200 || store.getState('statusAuth') === 200) {
+    if (
+      store.getState('statusLogin') === 200 ||
+      store.getState('statusAuth') === 200
+    ) {
       router.go(
         {
           path: '/',
@@ -92,10 +93,15 @@ export class SignupPage extends View {
       this.renderDefaultPage();
       const mainHTML = document.querySelector('main');
       const popup = document.createElement('div');
-      popup.className = 'popupSign';
+      popup.classList.add('popupSign');
 
       mainHTML!.innerHTML = '';
-      mainHTML?.appendChild(popup);
+      mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
+      const icon = document.querySelector('.image-container') as HTMLElement;
+      icon!.style.backgroundImage = 'url("/icons/loginImage.jpg")';
+
+      const containerHTML = document.querySelector('.image-container');
+      containerHTML?.appendChild(popup);
     }
 
     if (!document.querySelector('.signup-form')) {
@@ -138,14 +144,10 @@ export class SignupPage extends View {
         'beforeend',
         inputButton.render({ wrap: 'email', module: 'signup' })
       );
-<<<<<<< HEAD
-      button!.insertAdjacentHTML('afterbegin', buttonSubmit.render({ text: 'Войти' }));
-=======
       button!.insertAdjacentHTML(
         'afterbegin',
         buttonSubmit.render({ text: 'Войти' })
       );
->>>>>>> 16cbd31 (add change rating color and fix stars)
 
       this.componentDidMount();
       this.init();
@@ -317,6 +319,8 @@ export class SignupPage extends View {
   subscribeSigninStatus () {
     if (store.getState('statusLogin')) {
       store.unsubscribe('statusLogin', this.subscribeSigninStatus);
+      document.querySelector('.profile-text')!.textContent =
+        this.state.userInfo['login'];
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
 
@@ -419,7 +423,6 @@ export class SignupPage extends View {
       birthday: dateError
     };
   }
-<<<<<<< HEAD
 
   redirectToMain () {
     if (store.getState('statusAuth') === 200) {
@@ -433,6 +436,4 @@ export class SignupPage extends View {
       );
     }
   }
-=======
->>>>>>> 16cbd31 (add change rating color and fix stars)
 }

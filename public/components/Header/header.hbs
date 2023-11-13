@@ -1,20 +1,24 @@
 <header>
   <div class='header'>
-    <div class='header_brand-header header-button margin-header' data-section='{{brand.key}}'>
+    <div
+      class='header_brand-header header-button margin-header'
+      data-section='{{brand.key}}'
+    >
       <img src='/icons/{{brand.png_name}}' class='brand_icon' />
     </div>
 
-    <div class='header_menu-header header-button margin-header' data-section='{{selection.key}}'>
+    <div
+      class='header_menu-header header-button margin-header'
+      data-section='{{selection.key}}'
+    >
       <img src='/icons/{{selection.png_name}}' class='icon' />
       <span>{{selection.name}}</span>
     </div>
     <input class='header_search_item' placeholder='Поиск фильмов' />
-<<<<<<< HEAD
-    <div class='header_basket-item header-button margin-header' data-section='{{basket.key}}'>
-=======
-
-    <div class='basketItem' data-section='{{basket.key}}'>
->>>>>>> 16cbd31 (add change rating color and fix stars)
+    <div
+      class='header_basket-item header-button margin-header'
+      data-section='{{basket.key}}'
+    >
       <img src='/icons/{{basket.png_name}}' class='icon' />
       <span>{{basket.name}}</span>
     </div>
@@ -27,7 +31,9 @@
               <ul>
                 <div class='header_header-item header-button margin-header'>
                   <img src='/icons/{{profile.png_name}}' class='icon' />
-                  <span class="header_header-item profile-text">{{profile.name}}</span>
+                  <span
+                    class='header_header-item profile-text'
+                  >{{profile.name}}</span>
                 </div>
               </ul>
               <ul class='dropdown'>
@@ -42,7 +48,10 @@
         </nav>
       </div>
     {{else}}
-      <div class='header_login-header header-button margin-header' data-section='{{signin.key}}'>
+      <div
+        class='header_login-header header-button margin-header'
+        data-section='{{signin.key}}'
+      >
         <img src='/icons/{{signin.png_name}}' class='icon' alt='' />
         <span class='loginText'>{{signin.name}}</span>
       </div>

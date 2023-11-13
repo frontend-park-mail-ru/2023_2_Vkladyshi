@@ -1,0 +1,36 @@
+<div class='change-user-data'>
+  <form
+    class='change-user-data__form'
+    enctype='multipart/form-data'
+    method='post'
+  >
+    <div class='change-user-data__header table__header'>
+      Ваш профиль
+    </div>
+    <span class='text-form login-text'>Логин</span>
+    <span class='error-login error-string'></span>
+    <span class='text-form email-text'>Электронная почта</span>
+    <span class='error-email error-string'></span>
+    <span class='text-form date-text'>Дата рождения</span>
+    <span class='error-birthday error-string'></span>
+    <span class='text-form login-first-text'>Пароль</span>
+    <span class='error-password-first error-string'></span>
+    <span class='text-form login-second-text'>Пароль</span>
+    <div>
+      <span class='error-password-second error-string'></span>
+    </div>
+    <div class='change-user-data__form user-data-buttons'>
+      <label class='change-user-data__form__file button button__text'>
+        <img
+          class='change-user-data__form__img'
+          src='/icons/Иконка файлов.svg'
+          alt=''
+        />
+        <input class='change-user-data__form__file settings_file' type='file' />
+        Новое фото
+      </label>
+    </div>
+  </form>
+  <div class='change-user-data__error'></div>
+  <div class='change-user-data__success-string-settings'></div>
+</div>

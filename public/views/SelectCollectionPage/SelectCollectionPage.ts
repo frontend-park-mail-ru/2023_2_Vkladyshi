@@ -6,10 +6,7 @@ import {
   actionAuth,
   actionCollectionMenu
 } from '@store/action/actionTemplates';
-<<<<<<< HEAD
 import { image } from '@components/Image/image';
-=======
->>>>>>> 16cbd31 (add change rating color and fix stars)
 
 export interface SelectCollectionPage {
   state: {
@@ -46,16 +43,16 @@ export class SelectCollectionPage extends View {
   render () {
     this.renderDefaultPage();
 
-    if (!document.querySelector('.selectCollection-frame')) {
+    if (!document.querySelector('.select-collection-frame')) {
       const main = ROOT?.querySelector('main');
       main!.innerHTML = '';
 
-      const popup = document.querySelector('.popupSelectCollection');
-      main?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'ocean.jpg' }));
+      const popup = document.querySelector('.popup-select-collection');
+      main?.insertAdjacentHTML('afterbegin', image.render({}));
+      const icon = document.querySelector('.image-container') as HTMLElement;
+      icon!.style.backgroundImage = 'url("/icons/ocean.jpg")';
 
       const containerHTML = document.querySelector('.image-container');
-      // containerHTML?.appendChild(popup!);
-
       containerHTML?.insertAdjacentHTML('beforeend', selectCollection.render());
 
       this.componentDidMount();
@@ -68,11 +65,11 @@ export class SelectCollectionPage extends View {
    * @returns {Promise} Promise ответа
    */
   componentDidMount () {
-    const popup = document.querySelector('.popupSelectCollection');
+    const popup = document.querySelector('.popup-select-collection');
 
     this.popupEvent = (event) => {
       switch (true) {
-        case event.target.closest('.selectCollection-frame-img') !== null:
+        case event.target.closest('.select-collection-frame-img') !== null:
           router.go(
             {
               path: '/',
@@ -81,7 +78,8 @@ export class SelectCollectionPage extends View {
             { pushState: true, refresh: false }
           );
           break;
-        case event.target.closest('.selectCollection-frame-list-item') !== null:
+        case event.target.closest('.select-collection-frame-list-item') !==
+          null:
           const dataSection = event.target.getAttribute('data-section');
           this.state.dataSection = dataSection;
           store.dispatch(actionCollectionMenu({ collection_id: dataSection }));

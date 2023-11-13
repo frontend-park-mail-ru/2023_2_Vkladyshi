@@ -1,8 +1,8 @@
 import { DOMAIN, routes } from '@utils/config';
 import { store } from '@store/store';
-import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
-
+import { actionCSRF } from '@store/action/actionTemplates';
 import { page404 } from '@router/Page404/page404';
+
 interface Class {
   render: Function;
   componentWillUnmount: Function;
@@ -18,18 +18,18 @@ interface Router {
   privateMapViews: Map<string, Class>;
 }
 class Router {
-  constructor(ROOT) {
+  constructor (ROOT) {
     this.root = ROOT;
     this.mapViews = new Map();
     this.privateMapViews = new Map();
   }
 
-  register({ path, view }, privatePath = false) {
+  register ({ path, view }, privatePath = false) {
     this.privateMapViews.set(path, view);
     this.mapViews.set(path, view);
   }
 
-  refresh(redirect = false) {
+  refresh (redirect = false) {
     const url = new URL(window.location.href);
     const names = url.pathname.split('/');
 
@@ -40,7 +40,7 @@ class Router {
       this.go(
         {
           path: url.pathname,
-          props: url.search,
+          props: url.search
         },
         { pushState: !redirect, refresh: !redirect }
       );
@@ -48,7 +48,7 @@ class Router {
       this.go(
         {
           path: `/${names[1]}`,
-          props: `/${names[2]}`,
+          props: `/${names[2]}`
         },
         { pushState: !redirect, refresh: !redirect }
       );
@@ -57,7 +57,7 @@ class Router {
     }
   }
 
-  start() {
+  start () {
     store.dispatch(actionCSRF());
     for (const rout of routes) {
       this.register(rout);
@@ -85,7 +85,7 @@ class Router {
     this.refresh();
   }
 
-  go(
+  go (
     stateObject: stateObject,
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
@@ -95,7 +95,7 @@ class Router {
     this.navigate(stateObject, pushState);
   }
 
-  navigate({ path, props }: stateObject, pushState = false) {
+  navigate ({ path, props }: stateObject, pushState = false) {
     const location = DOMAIN;
 
     if (pushState) {

@@ -13,7 +13,7 @@ export class FilmSelection extends Component {
    * @param response
    * @return {string}
    */
-  render(response) {
+  render (response) {
     let name;
     name = getKeyByValue(parseFloat(response.collection_name));
 
@@ -25,7 +25,7 @@ export class FilmSelection extends Component {
       // eslint-disable-next-line camelcase
       collection_name: name,
       films: response.films,
-      haveFilms: response.haveFilms,
+      haveFilms: response.haveFilms
     };
 
     if (response.films.length === 0) {

@@ -13,15 +13,13 @@ export class FilmCard extends Component {
    * @param response
    * @return {string}
    */
-  render(response) {
+  render (response) {
     const film = response.films.film1;
     const result = {
-      // eslint-disable-next-line camelcase
-      // collection_name: name,
       id: film.film_id,
       title: film.title,
       poster: film.poster,
-      rating: film.rating,
+      rating: film.rating
     };
 
     return templateFilmCard(result);

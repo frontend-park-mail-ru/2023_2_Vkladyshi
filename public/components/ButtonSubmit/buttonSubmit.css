@@ -1,27 +1,7 @@
-<<<<<<< HEAD
-.button-submit, .button {
-    /*width: 100px;*/
-    /*margin-bottom: 40px;*/
-    padding-left: 30px;
-    padding-right: 30px;
-    height: 35px;
-    border-radius: 24px;
-    border: white;
-    color: white;
-    font-size: 16px;
-    background-color: #333333;
-    transition: background 0.3s ease;
-}
-
-.button-submit:hover, .button:hover {
-    background: #57b846;
-}
-
-=======
 .button-submit,
 .button {
   /*width: 100px;*/
-  margin-bottom: 40px;
+  /*margin-bottom: 40px;*/
   padding-left: 30px;
   padding-right: 30px;
   height: 35px;
@@ -37,4 +17,3 @@
 .button:hover {
   background: #57b846;
 }
->>>>>>> 16cbd31 (add change rating color and fix stars)

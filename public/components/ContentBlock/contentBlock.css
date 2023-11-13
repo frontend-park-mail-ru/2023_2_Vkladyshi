@@ -1,17 +1,13 @@
 @media (max-width: 1150px) {
-  .contentBlock {
+  .content-block {
     width: 100px;
   }
 }
-.contentBlock {
+.content-block {
   width: 80%;
   min-height: 100vh;
-<<<<<<< HEAD
   /*background-color: #ffffff;*/
   background: black;
-=======
-  background-color: #ffffff;
->>>>>>> 16cbd31 (add change rating color and fix stars)
   text-align: center;
   margin-left: auto;
   margin-right: auto;
