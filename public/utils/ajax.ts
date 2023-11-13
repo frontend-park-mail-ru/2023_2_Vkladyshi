@@ -5,13 +5,13 @@ import { methods } from '@utils/config';
  * @param params параметры запроса
  * @returns {Promise} Promise ответ
  */
-export async function get (params = {}) {
+export async function get(params = {}) {
   const response = await fetch(
     params['url'] + '?' + new URLSearchParams(params['query'] || {}),
     {
       method: methods.get,
       credentials: 'include',
-      mode: 'cors'
+      mode: 'cors',
     }
   );
 
@@ -31,7 +31,7 @@ export async function get (params = {}) {
  * @param root0.contentType
  * @returns {Promise} Promise ответ
  */
-export async function post ({ url, body, contentType = false }) {
+export async function post({ url, body, contentType = false }) {
   let data;
   const header = { 'x-csrf-token': <string>localStorage.getItem('csrf') };
 
@@ -41,13 +41,13 @@ export async function post ({ url, body, contentType = false }) {
     data = JSON.stringify(body);
     header['Content-Type'] = 'application/json';
   }
-
+  // console.log(data, header, contentType, url);
   const response = await fetch(url, {
     method: methods.post,
     credentials: 'include',
     mode: 'cors',
     headers: header,
-    body: data
+    body: data,
   });
   let result = await response.text();
 
@@ -64,7 +64,7 @@ export async function post ({ url, body, contentType = false }) {
  *
  * @param params
  */
-export async function getCsrf (params = {}) {
+export async function getCsrf(params = {}) {
   const response = await fetch(
     params['url'] + '?' + new URLSearchParams(params['query'] || {}),
     {
@@ -72,8 +72,8 @@ export async function getCsrf (params = {}) {
       credentials: 'include',
       mode: 'cors',
       headers: {
-        'x-csrf-token': <string>localStorage.getItem('csrf')
-      }
+        'x-csrf-token': <string>localStorage.getItem('csrf'),
+      },
     }
   );
 

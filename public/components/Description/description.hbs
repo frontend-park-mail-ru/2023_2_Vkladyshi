@@ -1,73 +1,59 @@
-<div class='description'>
-  <img class='description__img' src='{{poster}}' alt='description__img' />
-  <div class='description__text'>
-    {{#if isHeader}}
-      <div class='description__text__header'>
-        <p class='description__text__header__header-string'>{{header}}</p>
+<div class='film-page'>
+  <div class='film-page__theme'>
+    <div class='film-page__theme__content-block'>
+      <div class='column'>
+        <div class='film-name'>{{title}}</div>
+        <div class='content-card'>
+          <ul class='param-list'>{{date}} {{mpaa}}</ul>
+          <ul class='param-list'>{{country}}
+            {{#each body.genre}}
+              {{title}}
+            {{/each}}
+          </ul>
+        </div>
       </div>
-    {{/if}}
-
-    {{#if film}}
-      <div class='description__text__table'>
-        <div class='description__table table__header'>{{title}}</div>
-        <div class='description__table table__row'>
-          <span class='description__table__row table__row__title'>Жанры</span>
-          {{#each body.genre}}
-            <span
-              class='description__table__text table__row__text table__genre__text'
-              data-section='{{id}}'
-            >{{title}}</span>
-          {{/each}}
+      <div class='player'>
+        <div class='video-content'>
+          <div
+            class='video-content-image'
+            style='background-image: url("{{poster}}")'
+          > </div>
         </div>
-        <div class='description__table table__row'>
-          <span class='description__table__row table__row__title'>Страна</span>
-          <span
-            class='description__table__text table__row__text'
-          >{{country}}</span>
+        <div class='video-buttons'>
+          <div class='trailer'>
+            <img class='trailer-player-image' src='/icons/play-button.svg' />
+            Трейлер
+          </div>
+          <div class='cinema'>Смотреть</div>
         </div>
-        <div class='description__table table__row'>
-          <span class='description__table__row table__row__title'>Год</span>
-          <span
-            class='description__table__text table__row__text'
-          >{{date}}</span>
+      </div>
+      <div class='film-info'>{{infoText}}</div>
+      <div class='rating'>
+        <div class='left'>
+          <div class='number'>{{mark}}</div>
+          <div class='count'>{{mark_number}} оценок</div>
         </div>
-        <div class='description__table table__row'>
-          <span class='description__table__row table__row__title'>Актеры</span>
+        <div class='right'>
+          <div class='review-button'>Оставить отзыв</div>
+        </div>
+      </div>
+      <div class='actors'>
+        <div class='actors-header'>Актёры</div>
+        <div class='actors-list'>
           {{#each actors}}
-            <span
-              class='description__table__text table__row__text table__actor__text'
-              data-section='{{actor_id}}'
-            >{{actor_name}}</span>
+            <div class='actor table__actor__text' data-section='{{actor_id}}'>
+              <img
+                class='actor-poster'
+                style='background-image: url("{{actor_photo}}")'
+              />
+              <div class='actor-name'>{{actor_name}}</div>
+            </div>
           {{/each}}
         </div>
       </div>
-    {{/if}}
-    {{#if actor}}
-      <div class='description__text__table'>
-        <div class='description__table table__header'>{{title}}</div>
-        <div class='description__table table__row'>
-          <span class='description__table__row table__row__title'>Карьера</span>
-          {{#each career}}
-            <span
-              class='description__table__text table__row__text'
-            >{{profession}}</span>
-          {{/each}}
-        </div>
-        <div class='description__table table__row'>
-          <span class='description__table__row table__row__title'>Страна</span>
-          <span
-            class='description__table__text table__row__text'
-          >{{country}}</span>
-        </div>
-        <div class='description__table table__row'>
-          <span class='description__table__row table__row__title'>Год рождения</span>
-          <span
-            class='description__table__text table__row__text'
-          >{{date}}</span>
-        </div>
-        <div class='description__table table__row'>
-        </div>
-      </div>
-    {{/if}}
+    </div>
+  </div>
+  <div class='film-page__comments'>
+    <div class='film-page__comments__header'>Отзывы</div>
   </div>
 </div>

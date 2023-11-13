@@ -1,11 +1,11 @@
 import { View } from '@views/view';
-import { errorInputs, responseStatuses, signup } from '@utils/config';
+import { errorInputs, responseStatuses, ROOT } from '@utils/config';
 import { router } from '@router/router';
 import { store } from '@store/store';
 import {
   actionCSRF,
   actionSignin,
-  actionSignup
+  actionSignup,
 } from '@store/action/actionTemplates';
 
 import {
@@ -13,21 +13,29 @@ import {
   insertInInput,
   insertText,
   removeErrors,
-  removeErrorsActive
+  removeErrorsActive,
 } from '@utils/addError';
 import {
+  validateBirthday,
   validateEmail,
   validateLogin,
-  validatePassword
+  validatePassword,
 } from '@utils/validate';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 import { image } from '@components/Image/image';
+import { Signup } from '@components/Signup/signup';
 
 export interface SignupPage {
   state: {
     statusSignup: number;
-    userInfo: {};
+    userInfo: {
+      email: string;
+      password: string;
+      passwordSecond: string;
+      birthday: string;
+      login: string;
+    };
     wraps: {};
     inputsHTML: {};
     errorsHTML: {};
@@ -46,7 +54,7 @@ export class SignupPage extends View {
    * @param ROOT
    * @class
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       statusSignup: 0,
@@ -59,36 +67,17 @@ export class SignupPage extends View {
         password: '',
         passwordSecond: '',
         email: '',
-        birthday: ''
-      }
+        birthday: '',
+      },
     };
 
-    this.subscribeSignupStatus = this.subscribeSignupStatus.bind(this);
-    this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
-    this.redirectToMain = this.redirectToMain.bind(this);
-
-    store.subscribe('statusSignup', this.subscribeSignupStatus);
+    store.subscribe('statusSignup', this.subscribeSignupStatus.bind(this));
   }
 
   /**
    * Метод создания страницы
    */
-  render () {
-    store.subscribe('statusAuth', this.redirectToMain);
-
-    if (
-      store.getState('statusLogin') === 200 ||
-      store.getState('statusAuth') === 200
-    ) {
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false }
-      );
-    }
-
+  render() {
     if (document.querySelector('.popupSign') == null) {
       this.renderDefaultPage();
       const mainHTML = document.querySelector('main');
@@ -106,6 +95,7 @@ export class SignupPage extends View {
 
     if (!document.querySelector('.signup-form')) {
       const result = document.querySelector('.popupSign');
+      const signup = new Signup(ROOT);
       result!.innerHTML = <string>signup.render();
       insertInInput(this.state.inputsHTML, this.state.userInfo);
 
@@ -125,7 +115,7 @@ export class SignupPage extends View {
         inputButton.render({
           wrap: 'password-first',
           module: 'signup',
-          type: 'password'
+          type: 'password',
         })
       );
       passwordSecondText!.insertAdjacentHTML(
@@ -133,7 +123,7 @@ export class SignupPage extends View {
         inputButton.render({
           wrap: 'password-second',
           module: 'signup',
-          type: 'password'
+          type: 'password',
         })
       );
       dateText!.insertAdjacentHTML(
@@ -155,7 +145,7 @@ export class SignupPage extends View {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const popup = document.querySelector('.popupSign');
 
     const popupEvent = (event) => {
@@ -166,7 +156,7 @@ export class SignupPage extends View {
           router.go(
             {
               path: '/login',
-              props: ''
+              props: '',
             },
             { pushState: true, refresh: false }
           );
@@ -176,7 +166,7 @@ export class SignupPage extends View {
           router.go(
             {
               path: '/',
-              props: ''
+              props: '',
             },
             { pushState: true, refresh: false }
           );
@@ -195,12 +185,22 @@ export class SignupPage extends View {
     this.popupEvent = popupEvent;
     popup?.addEventListener('click', popupEvent);
   }
-  componentWillUnmount () {
+  componentWillUnmount() {
+    store.unsubscribe('login', this.redirectToMain.bind(this));
+    store.unsubscribe('auth', this.redirectToMain.bind(this));
+
     const popup = document.querySelector('.popupSign');
     popup?.removeEventListener('click', this.popupEvent);
+
+    const info = this.state.userInfo;
+    info.login = '';
+    info.password = '';
+    info.passwordSecond = '';
+    info.email = '';
+    info.birthday = '';
   }
 
-  getForm () {
+  getForm() {
     const elements = this.state.inputsHTML;
 
     const login = elements['login'].value.trim();
@@ -221,13 +221,13 @@ export class SignupPage extends View {
           login: login,
           password: password,
           email: email,
-          birthday: birthday
+          birthday: birthday,
         })
       );
     }
   }
 
-  getUserInfo () {
+  getUserInfo() {
     this.state.userInfo['login'] = this.state.inputsHTML['login'].value.trim();
     this.state.userInfo['passwordFirst'] =
       this.state.inputsHTML['passwordFirst'].value;
@@ -237,7 +237,7 @@ export class SignupPage extends View {
     this.state.userInfo['email'] = this.state.inputsHTML['email'].value;
   }
 
-  validateForm (login, password, passwordSecond, email, birthday) {
+  validateForm(login, password, passwordSecond, email, birthday) {
     const elements = this.state.errorsHTML;
     const wraps = this.state.wraps;
     let result = true;
@@ -246,42 +246,53 @@ export class SignupPage extends View {
       insertText(elements['login'], errorInputs.NotAllElement);
       addErrorsActive(wraps['login']);
       result = false;
+    } else {
+      const loginValidate = validateLogin(login);
+      if (!loginValidate.result) {
+        insertText(elements['login'], loginValidate.error);
+        addErrorsActive(wraps['login']);
+        result = false;
+      }
     }
+
     if (!email) {
       insertText(elements['email'], errorInputs.NotAllElement);
       addErrorsActive(wraps['email']);
       result = false;
+    } else if (!validateEmail(email)) {
+      insertText(elements['email'], errorInputs.EmailNoValid);
+      addErrorsActive(wraps['email']);
+      result = false;
     }
+
     if (!password) {
       insertText(elements['passwordFirst'], errorInputs.NotAllElement);
       addErrorsActive(wraps['passwordFirst']);
       result = false;
     }
+
     if (!passwordSecond) {
       insertText(elements['passwordSecond'], errorInputs.NotAllElement);
       addErrorsActive(wraps['passwordSecond']);
       result = false;
     }
+
     if (!birthday) {
       insertText(elements['birthday'], errorInputs.NotAllElement);
       addErrorsActive(wraps['birthday']);
       result = false;
+    } else {
+      const validateResult = validateBirthday(birthday);
+      if (!validateResult.result) {
+        insertText(elements['birthday'], validateResult.error);
+        addErrorsActive(wraps['birthday']);
+        result = false;
+      }
     }
 
     const isValidate = validatePassword(password);
     if (!isValidate.result && password.length > 0) {
       insertText(elements['passwordFirst'], isValidate.error);
-      result = false;
-    }
-
-    if (!validateEmail(email) && email.length > 0) {
-      insertText(elements['email'], errorInputs.EmailNoValid);
-      result = false;
-    }
-
-    const loginValidate = validateLogin(login);
-    if (!loginValidate.result && login.length > 0) {
-      insertText(elements['login'], loginValidate.error);
       result = false;
     }
 
@@ -301,45 +312,43 @@ export class SignupPage extends View {
     return result;
   }
 
-  subscribeSignupStatus () {
+  subscribeSignupStatus() {
     this.state.statusSignup = store.getState('statusSignup');
 
     if (this.handlerStatus()) {
-      store.unsubscribe('statusAuth', this.redirectToMain);
-      store.subscribe('statusLogin', this.subscribeSigninStatus);
+      store.unsubscribe('auth', this.redirectToMain.bind(this));
+      store.subscribe('login', this.subscribeSigninStatus.bind(this));
       store.dispatch(
         actionSignin({
           login: this.state.userInfo['login'],
-          password: this.state.userInfo['passwordFirst']
+          password: this.state.userInfo['passwordFirst'],
         })
       );
     }
   }
 
-  subscribeSigninStatus () {
-    if (store.getState('statusLogin')) {
-      store.unsubscribe('statusLogin', this.subscribeSigninStatus);
-      document.querySelector('.profile-text')!.textContent =
-        this.state.userInfo['login'];
+  subscribeSigninStatus() {
+    if (store.getState('login')) {
+      store.unsubscribe('login', this.subscribeSigninStatus.bind(this));
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
 
       this.state.statusSignup = 0;
       this.componentWillUnmount();
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false }
-      );
+      // router.go(
+      //   {
+      //     path: '/',
+      //     props: ''
+      //   },
+      //   { pushState: true, refresh: false }
+      // );
       return;
     }
 
     this.render();
   }
 
-  handlerStatus () {
+  handlerStatus() {
     switch (this.state.statusSignup) {
       case responseStatuses.success:
         return true;
@@ -361,7 +370,7 @@ export class SignupPage extends View {
             actionSignup({
               login: this.state.userInfo['login'],
               password: this.state.userInfo['password'],
-              email: this.state.userInfo['email']
+              email: this.state.userInfo['email'],
             })
           );
         });
@@ -372,11 +381,11 @@ export class SignupPage extends View {
     return false;
   }
 
-  setUserInfo () {
+  setUserInfo() {
     insertInInput(this.state.inputsHTML, this.state.userInfo);
   }
 
-  init () {
+  init() {
     const loginHTML = document.querySelector('.login-input-signup');
     const emailHTML = document.querySelector('.email-input-signup');
     const passwordFirstHTML = document.querySelector(
@@ -406,34 +415,34 @@ export class SignupPage extends View {
       email: emailHTML,
       passwordFirst: passwordFirstHTML,
       passwordSecond: passwordSecondHTML,
-      birthday: birthdayHTML
+      birthday: birthdayHTML,
     };
     this.state.wraps = {
       login: wrapLogin,
       email: wrapEmailHTML,
       passwordFirst: wrapPassword,
       passwordSecond: wrapSecondPassword,
-      birthday: wrapBirthdayHTML
+      birthday: wrapBirthdayHTML,
     };
     this.state.errorsHTML = {
       login: loginError,
       email: emailError,
       passwordFirst: passwordFirstError,
       passwordSecond: passwordSecondError,
-      birthday: dateError
+      birthday: dateError,
     };
   }
 
-  redirectToMain () {
-    if (store.getState('statusAuth') === 200) {
-      store.unsubscribe('statusAuth', this.redirectToMain);
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false }
-      );
+  redirectToMain() {
+    if (store.getState('login').status === 200) {
+      store.unsubscribe('login', this.redirectToMain.bind(this));
+      // router.go(
+      //   {
+      //     path: '/',
+      //     props: ''
+      //   },
+      //   { pushState: true, refresh: false }
+      // );
     }
   }
 }

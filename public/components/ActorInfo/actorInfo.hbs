@@ -1,0 +1,26 @@
+<div class='film-page'>
+  <div class='film-page__theme'>
+    <div class='film-page__theme__content-block'>
+      <div class='column'>
+        <div class='film-name'>{{header}}</div>
+        <div class='content-card'>
+          <ul class='param-list'>{{date}}</ul>
+          <ul class='param-list'>{{country}}
+            {{#each career}}
+              {{profession}}
+            {{/each}}
+          </ul>
+        </div>
+      </div>
+      <div class='player'>
+        <div class='video-content'>
+          <div
+            class='video-content-image'
+            style='background-image: url("{{poster}}")'
+          > </div>
+        </div>
+      </div>
+      <div class='info'>{{infoText}}</div>
+    </div>
+  </div>
+</div>

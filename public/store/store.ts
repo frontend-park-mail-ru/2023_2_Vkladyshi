@@ -8,7 +8,7 @@ interface Store {
 }
 
 class Store {
-  constructor () {
+  constructor() {
     this.state = {};
     this.mapActionHandlers = new Map();
     this.mapSubscribers = new Map();
@@ -19,12 +19,13 @@ class Store {
     }
   }
 
-  register ({ type, method }) {
+  register({ type, method }) {
     this.mapActionHandlers.set(type, method);
   }
 
-  subscribe (type, callback) {
+  subscribe(type, callback) {
     const arraySubs = this.mapSubscribers.get(type);
+
     if (arraySubs) {
       arraySubs.push(callback);
     } else {
@@ -32,7 +33,7 @@ class Store {
     }
   }
 
-  unsubscribe (type, activeFunc) {
+  unsubscribe(type, activeFunc) {
     const arraySubs = this.mapSubscribers.get(type);
     if (arraySubs) {
       this.mapSubscribers.set(
@@ -42,7 +43,7 @@ class Store {
     }
   }
 
-  setState (newState: { [key: string]: any }) {
+  setState(newState: { [key: string]: any }) {
     let subs;
     Object.keys(newState).forEach((key) => {
       this.state[key] = newState[key];
@@ -55,7 +56,7 @@ class Store {
     });
   }
 
-  async dispatch (action) {
+  async dispatch(action) {
     const storeReducer = this.mapActionHandlers.get(action.type);
     if (!storeReducer) {
       return;
@@ -74,7 +75,7 @@ class Store {
     return newState;
   }
 
-  getState (nameObject) {
+  getState(nameObject) {
     if (Object.hasOwnProperty.call(this.state, nameObject)) {
       return this.state[nameObject];
     }

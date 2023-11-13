@@ -1,6 +1,6 @@
 import { Component } from '@components/component';
 import * as templateFilmSelection from '@components/FilmSelection/filmSelection.hbs';
-import { collections } from '@utils/config';
+import { collections, ROOT } from '@utils/config';
 
 /**
  * Класс рендеринга формирования подборки фильмов
@@ -13,23 +13,14 @@ export class FilmSelection extends Component {
    * @param response
    * @return {string}
    */
-  render (response) {
-    let name;
-    name = getKeyByValue(parseFloat(response.collection_name));
-
-    if (name === null) {
-      name = 'Новинки';
-    }
-
+  render(response) {
     const result = {
-      // eslint-disable-next-line camelcase
-      collection_name: name,
-      films: response.films,
-      haveFilms: response.haveFilms
+      collection_name: 'Результат поиска',
+      haveFilms: true,
     };
 
-    if (response.films.length === 0) {
-      return templateFilmSelection({ haveFilms: false });
+    if (response?.length === 0 || response?.length === undefined) {
+      result.haveFilms = false;
     }
 
     return templateFilmSelection(result);
@@ -37,7 +28,7 @@ export class FilmSelection extends Component {
 }
 
 const getKeyByValue = (value) => {
-  const collectionItems = collections.collections.collection1.collection_items;
+  const collectionItems = collections.collection_items;
   for (const item of collectionItems) {
     if (item.value === value) {
       return item.key;
