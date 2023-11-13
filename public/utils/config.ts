@@ -19,13 +19,13 @@ import { FilmPage } from '@views/FilmPage/FilmPage';
 import { FilmRating } from '@components/FilmRating/filmRating';
 
 import { СountLikeFilm } from '@components/countLikeFilm/countLikeFilm';
-import { ChangeUserData } from '@components/ChangeUserData/changeUserData';
 
 import { UserPage } from '@views/userPage/userPage';
 
 import { ReviewForm } from '@components/ReviewForm/reviewForm';
 import { CommentsPage } from '@views/CommentsPage/CommentsPage';
 import { Review } from '@components/Review/review';
+import {UserDataForm} from "@components/UserDataForm/userDataForm";
 
 export const ROOT = document.querySelector('#root');
 
@@ -94,7 +94,7 @@ export const selectCollection = new SelectCollection(ROOT);
 export const actorPage = new ActorDescritionPage(ROOT);
 export const filmPage = new FilmPage(ROOT);
 export const filmRating = new FilmRating(ROOT);
-export const changeUserData = new ChangeUserData(ROOT);
+export const userDataForm = new UserDataForm(ROOT);
 export const userPage = new UserPage(ROOT);
 export const countLikeFilm = new СountLikeFilm(ROOT);
 export const reviewForm = new ReviewForm(ROOT);
