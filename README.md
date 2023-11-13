@@ -36,6 +36,6 @@
 
 [Backend репозиторий](https://github.com/go-park-mail-ru/2023_2_Vkladyshi)
 
-[Деплой](http://84.23.54.189/)
+[Деплой](https://movie-hub.ru/)
 
 [API в Swagger](https://app.swaggerhub.com/apis/ALEKSEJY60/Andrey/1.0.0#)
