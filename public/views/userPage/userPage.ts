@@ -5,10 +5,15 @@ import {
 } from '@utils/config';
 import { store } from '@store/store';
 import {
-  actionCSRF,
+  // actionCSRF,
   actionGetSettings,
   actionLogout,
+<<<<<<< HEAD
   actionPutSettings
+=======
+  actionPutSettings,
+  actionSignin
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 } from '@store/action/actionTemplates';
 import {
   addErrorsActive,
@@ -27,8 +32,11 @@ import { dateConverter } from '@utils/dateConverter';
 import { router } from '@router/router';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
+<<<<<<< HEAD
 import { image } from '@components/Image/image';
 import { settings } from '@components/Settings/settings';
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
 export interface UserPage {
   state: {
@@ -84,7 +92,11 @@ export class UserPage extends View {
   }
 
   componentDidMount () {
+<<<<<<< HEAD
     const blockHTML = document.querySelector('.description');
+=======
+    const contentBlockHTML = document.querySelector('.contentBlock');
+>>>>>>> 16cbd31 (add change rating color and fix stars)
     const popupEvent = (event) => {
       switch (true) {
         case event.target.closest('.button-submit') !== null:
@@ -99,7 +111,11 @@ export class UserPage extends View {
     };
 
     this.popupEvent = popupEvent;
+<<<<<<< HEAD
     blockHTML?.addEventListener('click', popupEvent);
+=======
+    contentBlockHTML?.addEventListener('click', popupEvent);
+>>>>>>> 16cbd31 (add change rating color and fix stars)
   }
 
   getForm () {
@@ -122,12 +138,20 @@ export class UserPage extends View {
     if (
       this.validateForm(login, password, passwordSecond, email, file, birthday)
     ) {
+<<<<<<< HEAD
       store.dispatch(actionPutSettings({ file: data })).then(response => {
+=======
+      store.dispatch(actionPutSettings({ file: data })).then((response) => {
+>>>>>>> 16cbd31 (add change rating color and fix stars)
         if (response!['postStatusSettings'] === 200) {
           router.refresh();
           this.setUserInfo();
           if (login !== this.state.userInfo['login'] || password.length > 0) {
+<<<<<<< HEAD
             store.dispatch(actionLogout({ redirect: false }));
+=======
+            store.dispatch(actionLogout());
+>>>>>>> 16cbd31 (add change rating color and fix stars)
           }
         }
       });
@@ -166,7 +190,14 @@ export class UserPage extends View {
     }
 
     if ((!password && passwordSecond) || (password && !passwordSecond)) {
+<<<<<<< HEAD
       insertText([elements['passwordFirst'], elements['passwordSecond']], errorInputs.NotAllElement);
+=======
+      insertText(
+        [elements['passwordFirst'], elements['passwordSecond']],
+        errorInputs.NotAllElement
+      );
+>>>>>>> 16cbd31 (add change rating color and fix stars)
       addErrorsActive([wraps['passwordFirst'], wraps['passwordSecond']]);
       result = false;
     } else {
@@ -235,9 +266,15 @@ export class UserPage extends View {
         returnError(errorInputs.LoginExists, errorClassName);
         break;
       case responseStatuses.csrfError:
+<<<<<<< HEAD
         store.dispatch(actionCSRF()).then((response) => {
           store.dispatch(actionPutSettings({ file: this.state.userInfo['fileData'] }));
         });
+=======
+        // store.dispatch(actionCSRF()).then((response) => {
+        //   store.dispatch(actionPutSettings({ file: this.state.userInfo['fileData'] }));
+        // });
+>>>>>>> 16cbd31 (add change rating color and fix stars)
         break;
       default:
         returnError(errorInputs.LoginOrPasswordError, errorClassName);
@@ -246,8 +283,12 @@ export class UserPage extends View {
   }
 
   subscribeActorStatus () {
+<<<<<<< HEAD
     const mainHTML = document.querySelector('main');
     mainHTML!.innerHTML = '';
+=======
+    const contentBlockHTML = document.querySelector('.contentBlock');
+>>>>>>> 16cbd31 (add change rating color and fix stars)
     const result = store.getState('getSettingsStatus');
     this.state.userStatus = result.status;
 
@@ -269,6 +310,7 @@ export class UserPage extends View {
         career: userInfo['career']
       };
     }
+<<<<<<< HEAD
 
     mainHTML?.insertAdjacentHTML(
       'beforeend',
@@ -281,6 +323,20 @@ export class UserPage extends View {
     const containerHTML = document.querySelector('.image-container');
     containerHTML?.appendChild(descHTML!);
 
+=======
+
+    contentBlockHTML?.insertAdjacentHTML(
+      'beforeend',
+      desc.render(this.state.userInfo)
+    );
+    document
+      .querySelector('.description')
+      ?.insertAdjacentHTML(
+        'beforeend',
+        changeUserData.render(this.state.userInfo)
+      );
+
+>>>>>>> 16cbd31 (add change rating color and fix stars)
     const loginText = document.querySelector('.login-text');
     const passwordFirstText = document.querySelector('.login-first-text');
     const passwordSecondText = document.querySelector('.login-second-text');
@@ -311,14 +367,29 @@ export class UserPage extends View {
     );
     dateText?.insertAdjacentHTML(
       'beforeend',
+<<<<<<< HEAD
       inputButton.render({ wrap: 'birthday', module: 'user-data', type: 'date' })
+=======
+      inputButton.render({
+        wrap: 'birthday',
+        module: 'user-data',
+        type: 'date'
+      })
+>>>>>>> 16cbd31 (add change rating color and fix stars)
     );
     emailText?.insertAdjacentHTML(
       'beforeend',
       inputButton.render({ wrap: 'email', module: 'user-data' })
     );
 
+<<<<<<< HEAD
     buttons?.insertAdjacentHTML('beforeend', buttonSubmit.render({ text: 'Сохранить' }));
+=======
+    buttons?.insertAdjacentHTML(
+      'beforeend',
+      buttonSubmit.render({ text: 'Сохранить' })
+    );
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
     this.init();
     this.componentDidMount();

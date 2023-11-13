@@ -1,7 +1,10 @@
 import { DOMAIN, routes } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
+<<<<<<< HEAD
 import { page404 } from '@router/Page404/page404';
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
 interface Class {
   render: Function;

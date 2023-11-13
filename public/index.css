@@ -16,9 +16,12 @@
 @import './components/ReviewForm/reviewForm.css';
 @import './components/inputButton/inputButton.css';
 @import './components/ButtonSubmit/buttonSubmit.css';
+<<<<<<< HEAD
 @import './components/Image/image.css';
 @import './components/filmCard/filmCard.css';
 
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
 :root {
   --background-color: rgb(81, 82, 58, 0.1);

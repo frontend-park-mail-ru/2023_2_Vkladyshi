@@ -173,6 +173,7 @@ export class Header extends Component {
   changeHeader (isAuth) {
     const headerHTML = document.querySelector('header');
     headerHTML!.innerHTML = this.render(isAuth);
+<<<<<<< HEAD
     if (isAuth === true) {
       // const name = localStorage.getItem('userName');
       // const namePage = signinPage.state.userInfo['login'];
@@ -190,6 +191,8 @@ export class Header extends Component {
         document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName');
       }
     }
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
     this.componentDidMount();
   }

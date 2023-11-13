@@ -1,7 +1,11 @@
 import { View } from '@views/view';
 import { filmSelectionPage } from '@utils/config';
 import { router } from '@router/router';
+<<<<<<< HEAD
 import { image } from '@components/Image/image';
+=======
+import { inputButton } from '@components/inputButton/inputButton';
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
 /**
  * Класс формирования главной страницы

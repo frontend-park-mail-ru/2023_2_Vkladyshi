@@ -64,7 +64,10 @@ export class SignupPage extends View {
 
     this.subscribeSignupStatus = this.subscribeSignupStatus.bind(this);
     this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
+<<<<<<< HEAD
     this.redirectToMain = this.redirectToMain.bind(this);
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
     store.subscribe('statusSignup', this.subscribeSignupStatus);
   }
@@ -135,7 +138,14 @@ export class SignupPage extends View {
         'beforeend',
         inputButton.render({ wrap: 'email', module: 'signup' })
       );
+<<<<<<< HEAD
       button!.insertAdjacentHTML('afterbegin', buttonSubmit.render({ text: 'Войти' }));
+=======
+      button!.insertAdjacentHTML(
+        'afterbegin',
+        buttonSubmit.render({ text: 'Войти' })
+      );
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
       this.componentDidMount();
       this.init();
@@ -409,6 +419,7 @@ export class SignupPage extends View {
       birthday: dateError
     };
   }
+<<<<<<< HEAD
 
   redirectToMain () {
     if (store.getState('statusAuth') === 200) {
@@ -422,4 +433,6 @@ export class SignupPage extends View {
       );
     }
   }
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 }

@@ -1,7 +1,11 @@
 import { View } from '@views/view';
 import { errorInputs, responseStatuses, signin } from '@utils/config';
 import { store } from '@store/store';
+<<<<<<< HEAD
 import { actionAuth, actionCSRF, actionSignin } from '@store/action/actionTemplates';
+=======
+import { actionCSRF, actionSignin } from '@store/action/actionTemplates';
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 import {
   addErrorsActive,
   insertInInput,
@@ -13,7 +17,10 @@ import { validateLogin, validatePassword } from '@utils/validate';
 import { router } from '@router/router';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
+<<<<<<< HEAD
 import { image } from '@components/Image/image';
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
 export interface SigninPage {
   state: {
@@ -50,7 +57,10 @@ export class SigninPage extends View {
 
     this.subscribeLoginStatus = this.subscribeLoginStatus.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
+<<<<<<< HEAD
     this.redirectToMain = this.redirectToMain.bind(this);
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
   }
 
   /**
@@ -101,7 +111,14 @@ export class SigninPage extends View {
           type: 'password'
         })
       );
+<<<<<<< HEAD
       button!.insertAdjacentHTML('afterbegin', buttonSubmit.render({ text: 'Войти' }));
+=======
+      button!.insertAdjacentHTML(
+        'afterbegin',
+        buttonSubmit.render({ text: 'Войти' })
+      );
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
       this.componentDidMount();
       this.init();
@@ -245,7 +262,10 @@ export class SigninPage extends View {
     this.state.statusLogin = store.getState('statusLogin');
 
     if (this.handlerStatus()) {
+<<<<<<< HEAD
       store.unsubscribe('statusAuth', this.redirectToMain);
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
       store.unsubscribe('statusLogin', this.subscribeLoginStatus);
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
@@ -267,6 +287,7 @@ export class SigninPage extends View {
     }
   }
 
+<<<<<<< HEAD
   redirectToMain () {
     if (store.getState('statusAuth') === 200) {
       store.unsubscribe('statusAuth', this.redirectToMain);
@@ -280,6 +301,8 @@ export class SigninPage extends View {
     }
   }
 
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
   init () {
     const errorLogin = document.querySelector('.error-login');
     const errorPassword = document.querySelector('.error-password');

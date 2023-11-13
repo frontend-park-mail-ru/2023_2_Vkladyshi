@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { desc, info, countLikeFilm, reviewForm, review } from '@utils/config';
 import { store } from '@store/store';
@@ -84,20 +85,44 @@ export class FilmPage extends View {
         headerAbout: 'Описание',
         headerComment: 'Отзывы',
         isHeader: true,
+<<<<<<< HEAD
         stars_burning: [true, true, true, false, false],
         // @ts-ignore
         mark: rating.toFixed(1),
+=======
+        stars_burning: [false, false, false, false, false, false, false, false, false, false],
+        mark: rating,
+>>>>>>> 16cbd31 (add change rating color and fix stars)
         mark_number: number
       };
     }
 
     if (contentBlockHTML != null) {
       contentBlockHTML?.insertAdjacentHTML('beforeend', desc.render(result));
+
+      // TODO
+      // если 10 шкала - изменить пороги
+      for (let i = 0; i < result.mark; i++) {
+        result.stars_burning[i] = true;
+      }
+
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
         countLikeFilm.render(result)
       );
-      contentBlockHTML?.insertAdjacentHTML('beforeend', info.render(result));
+
+      // TODO
+      // если 10 шкала - изменить пороги
+      const markElement = document.querySelector('.countLikeActor__mark');
+      if (markElement) {
+        if (result.mark >= 7) {
+          markElement.classList.add('countLikeActor__mark_good');
+        } else if (result.mark > 4 && result.mark < 7) {
+          markElement.classList.add('countLikeActor__mark_mid');
+        } else {
+          markElement.classList.add('countLikeActor__mark_bad');
+        }
+      }
     }
 
     this.addEvents();
@@ -184,7 +209,8 @@ export class FilmPage extends View {
 
           if (
             !document.querySelector('.reviewForm') &&
-            store.getState('statusAuth') === 200
+            store.getState('statusAuth') === 200 &&
+            this.state.mapFilms[this.state.fildId] === undefined
           ) {
             div2?.insertAdjacentHTML(
               'beforeend',
@@ -202,6 +228,14 @@ export class FilmPage extends View {
               const select = parseInt(selectHTML.value);
               // @ts-ignore
               const text = textHTML.value;
+
+              console.log(this.state.fildId, this.state.mapFilms);
+              if (this.state.mapFilms[this.state.fildId] == null) {
+                this.state.mapFilms[this.state.fildId] = true;
+
+                // @ts-ignore
+                document.querySelector('.input__form').innerHTML = '';
+              }
 
               store.dispatch(
                 actionAddComment({
@@ -258,4 +292,11 @@ export class FilmPage extends View {
     store.unsubscribe('filmInfo', this.subscribeActorStatus);
     this.componentDidMount();
   }
+}
+/**
+ *
+ * @param arg0
+ */
+function elseif (arg0: boolean) {
+  throw new Error('Function not implemented.');
 }

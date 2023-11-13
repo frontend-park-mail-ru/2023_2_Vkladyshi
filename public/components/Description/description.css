@@ -9,7 +9,11 @@
 }
 
 .description__img {
+<<<<<<< HEAD
   width: 270px;
+=======
+  width: 180px;
+>>>>>>> 16cbd31 (add change rating color and fix stars)
   height: auto;
 
   margin-left: 5%;

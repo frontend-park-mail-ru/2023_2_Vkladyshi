@@ -77,6 +77,9 @@
   justify-content: space-between;
   align-content: space-around;
   margin-top: 20px;
+<<<<<<< HEAD
   margin-bottom: 20px;
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
   /*width: 200px;*/
 }

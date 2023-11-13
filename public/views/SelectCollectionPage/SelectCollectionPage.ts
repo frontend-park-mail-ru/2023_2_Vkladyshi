@@ -6,7 +6,10 @@ import {
   actionAuth,
   actionCollectionMenu
 } from '@store/action/actionTemplates';
+<<<<<<< HEAD
 import { image } from '@components/Image/image';
+=======
+>>>>>>> 16cbd31 (add change rating color and fix stars)
 
 export interface SelectCollectionPage {
   state: {
