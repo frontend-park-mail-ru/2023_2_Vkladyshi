@@ -1,5 +1,5 @@
 .table__header {
-  color: #000;
+  color: #ffffff;
   text-align: center;
   font-family: Montserrat;
   font-size: 40px;
@@ -7,7 +7,6 @@
   font-weight: 600;
   line-height: normal;
   letter-spacing: 2px;
-
 }
 
 /* .table__row {
@@ -25,7 +24,7 @@
 }
 
 .table__row__title {
-  color: #000;
+  color: #ffffff;
   font-family: Montserrat;
   font-size: 30px;
   font-style: italic;
@@ -36,7 +35,7 @@
 }
 
 .table__row__text {
-  color: #000;
+  color: #ffffff;
   text-align: left;
   font-family: Montserrat;
   font-size: 30px;

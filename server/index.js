@@ -62,64 +62,122 @@ const actor = {
 
 const comments = {
   status: 200,
-  body: [
-    {
-      name: 'Login_User',
-      rating: 3,
-      text: 'Фильм отличный 11/10',
-      film_id: 7,
-      film_name: 'film',
-    },
-    {
-      name: 'Login_User',
-      rating: 4,
-      text: 'Фильм отличный 11/10',
-      film_id: 7,
-      film_name: 'film',
-    },
-    {
-      name: 'Login_User',
-      rating: 7,
-      text: 'Фильм отличный 11/10',
-      film_id: 7,
-      film_name: 'film',
-    },
-    {
-      name: 'Login_User',
-      rating: 8,
-      text: 'Фильм отличный 11/10',
-      film_id: 7,
-      film_name: 'film',
-    },
-    {
-      name: 'Login_User',
-      rating: 9,
-      text: 'Фильм отличный 11/10',
-      film_id: 7,
-      film_name: 'film',
-    },
-    {
-      name: 'Login_User',
-      rating: 10,
-      text: 'Фильм отличный 11/10',
-      film_id: 7,
-      film_name: 'film',
-    },
-    {
-      name: 'Login_User',
-      rating: 1,
-      text: 'Фильм отличный 11/10',
-      film_id: 7,
-      film_name: 'film',
-    },
-    {
-      name: 'Login_User',
-      rating: 2,
-      text: 'Фильм отличный 11/10',
-      film_id: 7,
-      film_name: 'film',
-    },
-  ],
+  body: {
+    comment: [
+      {
+        name: 'Login_User',
+        rating: 3,
+        text: 'Фильм отличный 11/10',
+        film_id: 7,
+        film_name: 'film',
+      },
+      {
+        name: 'Login_User',
+        rating: 4,
+        text: 'Фильм отличный 11/10',
+        film_id: 7,
+        film_name: 'film',
+      },
+      {
+        name: 'Login_User',
+        rating: 7,
+        text: 'Фильм отличный 11/10',
+        film_id: 7,
+        film_name: 'film',
+      },
+      {
+        name: 'Login_User',
+        rating: 8,
+        text: 'Фильм отличный 11/10',
+        film_id: 7,
+        film_name: 'film',
+      },
+      {
+        name: 'Login_User',
+        rating: 9,
+        text: 'Фильм отличный 11/10',
+        film_id: 7,
+        film_name: 'film',
+      },
+      {
+        name: 'Login_User',
+        rating: 10,
+        text: 'Фильм отличный 11/10',
+        film_id: 7,
+        film_name: 'film',
+      },
+      {
+        name: 'Login_User',
+        rating: 1,
+        text: 'Фильм отличный 11/10',
+        film_id: 7,
+        film_name: 'film',
+      },
+      {
+        name: 'Login_User',
+        rating: 2,
+        text: 'Фильм отличный 11/10',
+        film_id: 7,
+        film_name: 'film',
+      },
+    ],
+  },
+  // {
+  //   name: 'Login_User',
+  //   rating: 3,
+  //   text: 'Фильм отличный 11/10',
+  //   film_id: 7,
+  //   film_name: 'film',
+  // },
+  // {
+  //   name: 'Login_User',
+  //   rating: 4,
+  //   text: 'Фильм отличный 11/10',
+  //   film_id: 7,
+  //   film_name: 'film',
+  // },
+  // {
+  //   name: 'Login_User',
+  //   rating: 7,
+  //   text: 'Фильм отличный 11/10',
+  //   film_id: 7,
+  //   film_name: 'film',
+  // },
+  // {
+  //   name: 'Login_User',
+  //   rating: 8,
+  //   text: 'Фильм отличный 11/10',
+  //   film_id: 7,
+  //   film_name: 'film',
+  // },
+  // {
+  //   name: 'Login_User',
+  //   rating: 9,
+  //   text: 'Фильм отличный 11/10',
+  //   film_id: 7,
+  //   film_name: 'film',
+  // },
+  // {
+  //   name: 'Login_User',
+  //   rating: 10,
+  //   text: 'Фильм отличный 11/10',
+  //   film_id: 7,
+  //   film_name: 'film',
+  // },
+  // {
+  //   name: 'Login_User',
+  //   rating: 1,
+  //   text: 'Фильм отличный 11/10',
+  //   film_id: 7,
+  //   film_name: 'film',
+  // },
+  // {
+  //   name: 'Login_User',
+  //   rating: 2,
+  //   text: 'Фильм отличный 11/10',
+  //   film_id: 7,
+  //   film_name: 'film',
+  // },
 };
 
 const films = {
@@ -165,8 +223,7 @@ const films = {
           release_date: '2023-12-30',
           country: 'USA',
           mpaa: 'R',
-          info_text:
-            'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
+          info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
         },
         genre: [{ id: 0, title: 'war' }],
         rating: 9.3333333333333333,
@@ -219,12 +276,11 @@ const film = {
     film: {
       id: 10,
       title: 'film',
-      poster: '/icons/Poster.jpg',
+      poster_href: '/icons/Poster.jpg',
       release_date: '2023-12-30',
       country: 'USA',
       mpaa: 'R',
-      info_text:
-        'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
+      info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
     },
     genre: [{ id: 0, title: 'war' }],
     rating: 10,
@@ -510,21 +566,21 @@ app.get('/api/v1/comment', (req, res) => {
     res.sendFile(__dirname + '/index.html');
     return;
   }
+  //
+  // const page = parseInt(req.query.page) || 1; // Получаем значение параметра "page" из запроса, по умолчанию 1
+  // const perPage = parseInt(req.query.per_page) || 10; // Получаем значение параметра "per_page" из запроса, по умолчанию 10
+  //
+  // const startIndex = (page - 1) * perPage; // Вычисляем индекс начала комментариев на текущей странице
+  // const endIndex = startIndex + perPage; // Вычисляем индекс конца комментариев на текущей странице
+  //
+  // const paginatedComments = comments.body.slice(startIndex, endIndex); // Получаем комментарии для текущей страницы
 
-  const page = parseInt(req.query.page) || 1; // Получаем значение параметра "page" из запроса, по умолчанию 1
-  const perPage = parseInt(req.query.per_page) || 10; // Получаем значение параметра "per_page" из запроса, по умолчанию 10
+  // const response = {
+  //   status: 200,
+  //   body: paginatedComments,
+  // };
 
-  const startIndex = (page - 1) * perPage; // Вычисляем индекс начала комментариев на текущей странице
-  const endIndex = startIndex + perPage; // Вычисляем индекс конца комментариев на текущей странице
-
-  const paginatedComments = comments.body.slice(startIndex, endIndex); // Получаем комментарии для текущей страницы
-
-  const response = {
-    status: 200,
-    body: paginatedComments,
-  };
-
-  res.status(200).json(response);
+  res.status(200).json(comments);
   return res;
 });
 

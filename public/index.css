@@ -20,7 +20,6 @@
 @import './components/filmCard/filmCard.css';
 @import './components/Settings/settings.css';
 
-
 :root {
   --background-color: rgb(81, 82, 58, 0.1);
   --content-block-color: rgb(255, 255, 255);
@@ -34,13 +33,14 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 
-
 body.none-active {
   overflow: hidden;
 }
 
 @media (max-width: 1200px) {
-  .content-block, .header, .footer {
+  .content-block,
+  .header,
+  .footer {
     width: 100%;
   }
 

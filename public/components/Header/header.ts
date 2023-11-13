@@ -173,14 +173,14 @@ export class Header extends Component {
   changeHeader (isAuth) {
     const headerHTML = document.querySelector('header');
     headerHTML!.innerHTML = this.render(isAuth);
-    if (isAuth === true) {
-      const namePage = signinPage.state.userInfo['login'];
-      if (namePage) {
-        document.querySelector('.profile-text')!.textContent = namePage;
-      } else {
-        document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName');
-      }
-    }
+    // if (isAuth === true) {
+    //   const namePage = signinPage.state.userInfo['login'];
+    //   if (namePage) {
+    //     document.querySelector('.profile-text')!.textContent = namePage;
+    //   } else {
+    //     document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName');
+    //   }
+    // }
 
     this.componentDidMount();
   }

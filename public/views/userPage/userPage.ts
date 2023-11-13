@@ -1,15 +1,12 @@
 import { View } from '@views/view';
-import {
-  errorInputs,
-  responseStatuses
-} from '@utils/config';
+import { errorInputs, responseStatuses } from '@utils/config';
 import { store } from '@store/store';
 import {
-    actionCSRF,
-    // actionCSRF,
-    actionGetSettings,
-    actionLogout,
-    actionPutSettings
+  actionCSRF,
+  // actionCSRF,
+  actionGetSettings,
+  actionLogout,
+  actionPutSettings
 } from '@store/action/actionTemplates';
 import {
   addErrorsActive,
@@ -30,7 +27,6 @@ import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 import { image } from '@components/Image/image';
 import { settings } from '@components/Settings/settings';
-
 
 export interface UserPage {
   state: {
@@ -124,7 +120,7 @@ export class UserPage extends View {
     if (
       this.validateForm(login, password, passwordSecond, email, file, birthday)
     ) {
-      store.dispatch(actionPutSettings({ file: data })).then(response => {
+      store.dispatch(actionPutSettings({ file: data })).then((response) => {
         if (response!['postStatusSettings'] === 200) {
           router.refresh();
           this.setUserInfo();
@@ -168,7 +164,10 @@ export class UserPage extends View {
     }
 
     if ((!password && passwordSecond) || (password && !passwordSecond)) {
-      insertText([elements['passwordFirst'], elements['passwordSecond']], errorInputs.NotAllElement);
+      insertText(
+        [elements['passwordFirst'], elements['passwordSecond']],
+        errorInputs.NotAllElement
+      );
 
       addErrorsActive([wraps['passwordFirst'], wraps['passwordSecond']]);
       result = false;
@@ -238,9 +237,10 @@ export class UserPage extends View {
         returnError(errorInputs.LoginExists, errorClassName);
         break;
       case responseStatuses.csrfError:
-
         store.dispatch(actionCSRF()).then((response) => {
-          store.dispatch(actionPutSettings({ file: this.state.userInfo['fileData'] }));
+          store.dispatch(
+            actionPutSettings({ file: this.state.userInfo['fileData'] })
+          );
         });
 
         break;
@@ -282,7 +282,10 @@ export class UserPage extends View {
     );
 
     const descHTML = document.querySelector('.settings');
-    mainHTML?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'loginImage.jpg' }));
+    mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
+
+    const icon = document.querySelector('.image-container') as HTMLElement;
+    icon!.style.backgroundImage = 'url("/icons/loginImage.jpg")';
 
     const containerHTML = document.querySelector('.image-container');
     containerHTML?.appendChild(descHTML!);
@@ -317,15 +320,21 @@ export class UserPage extends View {
     );
     dateText?.insertAdjacentHTML(
       'beforeend',
-      inputButton.render({ wrap: 'birthday', module: 'user-data', type: 'date' })
-
+      inputButton.render({
+        wrap: 'birthday',
+        module: 'user-data',
+        type: 'date'
+      })
     );
     emailText?.insertAdjacentHTML(
       'beforeend',
       inputButton.render({ wrap: 'email', module: 'user-data' })
     );
 
-    buttons?.insertAdjacentHTML('beforeend', buttonSubmit.render({ text: 'Сохранить' }));
+    buttons?.insertAdjacentHTML(
+      'beforeend',
+      buttonSubmit.render({ text: 'Сохранить' })
+    );
 
     this.init();
     this.componentDidMount();

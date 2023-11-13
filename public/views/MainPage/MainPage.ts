@@ -18,7 +18,12 @@ export class MainPage extends View {
     const contentBlockHTML = document.querySelector('.content-block');
     const mainHTML = document.querySelector('main');
 
-    mainHTML?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'mainImagjpg', mainPage: true }));
+    mainHTML?.insertAdjacentHTML(
+      'afterbegin',
+      image.render({ mainPage: true })
+    );
+    const icon = document.querySelector('.image-container') as HTMLElement;
+    icon!.style.backgroundImage = 'url("/icons/mainImagjpg")';
 
     if (contentBlockHTML) {
       filmSelectionPage.render(false).then((response) => {
@@ -29,13 +34,13 @@ export class MainPage extends View {
   }
 
   componentDidMount () {
-    const popup = document.querySelector('.filmSelection');
+    const popup = document.querySelector('.film-selection');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
-        case event.target.closest('.filmSelection_film') !== null:
+        case event.target.closest('.film-selection_film') !== null:
           const filmId = event.target
-            .closest('.filmSelection_film')
+            .closest('.film-selection_film')
             .getAttribute('data-section');
           this.componentWillUnmount();
           router.go(
@@ -54,7 +59,7 @@ export class MainPage extends View {
   }
 
   componentWillUnmount () {
-    const popup = document.querySelector('.filmSelection');
+    const popup = document.querySelector('.film-selection');
     popup?.removeEventListener('click', this.popupEvent);
   }
 }

@@ -1,4 +1,4 @@
-.popupSelectCollection {
+.popup-select-collection {
   margin-top: 70px;
   position: relative;
   width: 100%;
@@ -9,20 +9,20 @@
   transition: all 0.5s ease 0s;
 }
 
-.selectCollection {
+.select-collection {
   display: flex;
   justify-content: center;
   margin-top: 10vh;
 }
 
-.selectCollection-frame {
+.select-collection-frame {
   width: 500px;
   border-radius: 45px;
   background-color: rgb(98, 98, 93);
   transition: all 1s ease 0s;
 }
 
-.selectCollection-frame-header {
+.select-collection-frame-header {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -30,14 +30,14 @@
   height: 5%;
 }
 
-.selectCollection-frame-img {
+.select-collection-frame-img {
   width: 7%;
   height: auto;
   margin-left: 10%;
   cursor: pointer;
 }
 
-.selectCollection-frame-header-name {
+.select-collection-frame-header-name {
   width: 85%;
   height: auto;
   text-align: right;
@@ -51,12 +51,12 @@
   letter-spacing: 0.9px;
 }
 
-.\selectCollection-frame-lists {
+.select-collection-frame-lists {
   display: flex;
   justify-content: center;
 }
 
-.selectCollection-frame-list {
+.select-collection-frame-list {
   display: flex;
   flex-direction: column;
   width: 27%;
@@ -65,7 +65,7 @@
   margin-right: 5%;
 }
 
-.selectCollection-frame-list-header {
+.select-collection-frame-list-header {
   color: #fff;
   text-align: center;
   font-family: Montserrat, serif;
@@ -82,7 +82,7 @@
   width: auto;
 }
 
-.selectCollection-frame-list-item {
+.select-collection-frame-list-item {
   color: #fff;
   text-align: center;
   font-family: Montserrat, serif;
@@ -95,4 +95,5 @@
   height: auto;
   margin-top: 10%;
   margin-bottom: 10%;
+  cursor: pointer;
 }

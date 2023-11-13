@@ -1,7 +1,8 @@
 import { View } from '@views/view';
-import { desc, info, LkStar } from '@utils/config';
+import { countLikeFilm, desc, info, LkStar } from '@utils/config';
 import { store } from '@store/store';
 import { actionActor } from '@store/action/actionTemplates';
+import { image } from '@components/Image/image';
 
 export interface ActorDescritionPage {
   state: {
@@ -49,6 +50,8 @@ export class ActorDescritionPage extends View {
     let result = {};
 
     const res = this.state.actorInfo;
+    // const { actors, rating, number, genre, film } = this.state.actorInfo;
+
     if (res) {
       const dateTime = new Date(res['birthday']);
       const year = dateTime.getFullYear();
@@ -71,20 +74,18 @@ export class ActorDescritionPage extends View {
       };
     }
 
-    console.log(res, 6667)
-
     if (document.querySelector('.content-block') != null) {
-      document
-        ?.querySelector('.content-block')
-        ?.insertAdjacentHTML('beforeend', desc.render(result));
+      const mainHTML = document.querySelector('main');
+      mainHTML!.innerHTML = '';
 
-      document
-        ?.querySelector('.content-block')
-        ?.insertAdjacentHTML('beforeend', LkStar.render(result));
+      mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
 
-      document
-        ?.querySelector('.content-block')
-        ?.insertAdjacentHTML('beforeend', info.render(result));
+      const icon = document.querySelector('.image-container') as HTMLElement;
+      icon!.style.backgroundImage = 'url("' + result['poster'] + '")';
+
+      const containerHTML = document.querySelector('.image-container');
+      containerHTML?.insertAdjacentHTML('beforeend', desc.render(result));
+      containerHTML?.insertAdjacentHTML('beforeend', info.render(result));
     }
   }
 

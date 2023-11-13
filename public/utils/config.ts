@@ -30,7 +30,7 @@ import { Review } from '@components/Review/review';
 export const ROOT = document.querySelector('#root');
 
 export const DOMAIN = 'http://127.0.0.1:8001';
-// export const DOMAIN = 'http://84.23.54.189';
+//export const DOMAIN = 'https://84.23.54.189';
 
 export const urls = {
   main: '/',

@@ -1,13 +1,9 @@
 import { View } from '@views/view';
 import { store } from '@store/store';
 import { filmSelection } from '@utils/config';
-import {
-  actionAuth,
-  actionCollectionMain
-} from '@store/action/actionTemplates';
+import { actionCollectionMain } from '@store/action/actionTemplates';
 import { getCollection } from '@utils/getCollection';
 import { router } from '@router/router';
-import { image } from '@components/Image/image';
 
 /**
  * Класс формирования подборки фильмов
@@ -76,13 +72,13 @@ export class FilmSelectionPage extends View {
   }
 
   componentDidMount () {
-    const popup = document.querySelector('.filmSelection_films');
+    const popup = document.querySelector('.film-selection_films');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
-        case event.target.closest('.filmSelection_film') !== null:
+        case event.target.closest('.film-selection_film') !== null:
           const filmId = event.target
-            .closest('.filmSelection_film')
+            .closest('.film-selection_film')
             .getAttribute('data-section');
           this.componentWillUnmount();
           router.go(
@@ -101,7 +97,7 @@ export class FilmSelectionPage extends View {
   }
 
   componentWillUnmount () {
-    const popup = document.querySelector('.filmSelection_films');
+    const popup = document.querySelector('.film-selection_films');
 
     popup?.removeEventListener('click', this.popupEvent);
   }

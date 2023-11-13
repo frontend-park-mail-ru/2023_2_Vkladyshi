@@ -1,4 +1,4 @@
-.reviewForm {
+.review-form {
   width: var(--block-width);
   height: auto;
   margin: 5% auto;
@@ -13,7 +13,7 @@
   height: 50px;
 }
 
-.reviewForm__header {
+.review-form__header {
   margin: 3%;
   border-bottom: 2px black solid;
   padding: 3% 0;
@@ -21,16 +21,16 @@
   display: flex;
 }
 
-.reviewForm__header__img {
+.review-form__header__img {
   width: 4%;
   height: auto;
 }
 
-.reviewForm__header__text {
+.review-form__header__text {
   margin: 0 5%;
 }
 
-.reviewForm__body {
+.review-form__body {
   width: 90%;
   margin: auto;
 }
@@ -41,7 +41,7 @@
   padding: 30px 50px;
 }
 
-.reviewForm__body__text {
+.review-form__body__text {
   width: 90%;
   height: 200px;
 
@@ -56,7 +56,7 @@
   vertical-align: top;
 }
 
-.reviewForm__body__button {
+.review-form__body__button {
   width: 30%;
   margin: 3% 0;
 }

@@ -30,7 +30,6 @@ header {
   /*opacity: 0; !* Начальное значение прозрачности *!*/
 }
 
-
 .header {
   width: 80%;
   display: flex;
@@ -115,7 +114,6 @@ input::placeholder {
   clear: both;
   width: 100%;
 }
-
 
 .header_settings-header:hover,
 .header_logout-header:hover {

@@ -15,7 +15,6 @@ import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 import { image } from '@components/Image/image';
 
-
 export interface SigninPage {
   state: {
     statusLogin: number;
@@ -52,7 +51,6 @@ export class SigninPage extends View {
     this.subscribeLoginStatus = this.subscribeLoginStatus.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this.redirectToMain = this.redirectToMain.bind(this);
-
   }
 
   /**
@@ -61,7 +59,10 @@ export class SigninPage extends View {
   render () {
     store.subscribe('statusAuth', this.redirectToMain);
 
-    if (store.getState('statusLogin') === 200 || store.getState('statusAuth') === 200) {
+    if (
+      store.getState('statusLogin') === 200 ||
+      store.getState('statusAuth') === 200
+    ) {
       router.go(
         {
           path: '/',
@@ -78,7 +79,10 @@ export class SigninPage extends View {
       popup.classList.add('popupSign');
 
       mainHTML!.innerHTML = '';
-      mainHTML?.insertAdjacentHTML('afterbegin', image.render({ urlImage: 'loginImage.jpg' }));
+      mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
+      const icon = document.querySelector('.image-container') as HTMLElement;
+      icon!.style.backgroundImage = 'url("/icons/loginImage.jpg")';
+
       const containerHTML = document.querySelector('.image-container');
       containerHTML?.appendChild(popup);
     }
@@ -103,7 +107,10 @@ export class SigninPage extends View {
           type: 'password'
         })
       );
-      button!.insertAdjacentHTML('afterbegin', buttonSubmit.render({ text: 'Войти' }));
+      button!.insertAdjacentHTML(
+        'afterbegin',
+        buttonSubmit.render({ text: 'Войти' })
+      );
 
       this.componentDidMount();
       this.init();
@@ -252,7 +259,7 @@ export class SigninPage extends View {
       store.unsubscribe('statusLogin', this.subscribeLoginStatus);
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
-      localStorage.setItem('userName', this.state.userInfo['login']);
+      // localStorage.setItem('userName', this.state.userInfo['login']);
 
       this.state.statusLogin = 0;
       this.componentWillUnmount();
