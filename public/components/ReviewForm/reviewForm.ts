@@ -12,7 +12,7 @@ export class ReviewForm extends Component {
    * @param params
    * @returns {string} html форма заполенения отзыва
    */
-  render (params) {
+  render(params) {
     return templateReviewForm(params);
   }
 }

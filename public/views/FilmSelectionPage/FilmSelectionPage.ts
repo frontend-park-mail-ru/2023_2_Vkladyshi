@@ -3,7 +3,7 @@ import { store } from '@store/store';
 import { filmSelection } from '@utils/config';
 import {
   actionAuth,
-  actionCollectionMain
+  actionCollectionMain,
 } from '@store/action/actionTemplates';
 import { getCollection } from '@utils/getCollection';
 import { router } from '@router/router';
@@ -21,7 +21,7 @@ export class FilmSelectionPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
 
     this.subscribeCollectionMenu = this.subscribeCollectionMenu.bind(this);
@@ -33,7 +33,7 @@ export class FilmSelectionPage extends View {
    * @return {string} html авторизации
    * @param isNotMain
    */
-  async render (isNotMain) {
+  async render(isNotMain) {
     if (isNotMain) {
       this.renderDefaultPage();
 
@@ -65,7 +65,7 @@ export class FilmSelectionPage extends View {
     return this.returnTemplate(0);
   }
 
-  returnTemplate (collectionId) {
+  returnTemplate(collectionId) {
     return store
       .dispatch(actionCollectionMain({ collection_id: collectionId }))
       .then((response) => {
@@ -75,7 +75,7 @@ export class FilmSelectionPage extends View {
       });
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const popup = document.querySelector('.filmSelection_films');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
@@ -88,7 +88,7 @@ export class FilmSelectionPage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`
+              props: `/${filmId}`,
             },
             { pushState: true, refresh: false }
           );
@@ -100,11 +100,11 @@ export class FilmSelectionPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const popup = document.querySelector('.filmSelection_films');
 
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  subscribeCollectionMenu () {}
+  subscribeCollectionMenu() {}
 }

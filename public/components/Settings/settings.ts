@@ -8,14 +8,14 @@ import { ROOT } from '@utils/config';
  * @typedef {Settings}
  */
 export class Settings extends Component {
-    /**
-     * Метод рендеринга элемента
-     * @param result
-     * @returns {string} html авторизации
-     */
-    render (result) {
-        return templateSettings(result);
-    }
+  /**
+   * Метод рендеринга элемента
+   * @param result
+   * @returns {string} html авторизации
+   */
+  render(result) {
+    return templateSettings(result);
+  }
 }
 
 export const settings = new Settings(ROOT);

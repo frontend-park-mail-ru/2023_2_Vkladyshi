@@ -46,12 +46,12 @@ export const urls = {
   signup: '/signup',
   selection: '/selection',
   authorized: '/authcheck',
-  logout: '/logout'
+  logout: '/logout',
 };
 
 export const methods = {
   post: 'POST',
-  get: 'GET'
+  get: 'GET',
 };
 
 export const responseStatuses = {
@@ -61,7 +61,7 @@ export const responseStatuses = {
   serverError: 500,
   notFound: 404,
   alreadyExists: 409,
-  csrfError: 412
+  csrfError: 412,
 };
 
 export const errorInputs = {
@@ -74,7 +74,7 @@ export const errorInputs = {
   NotAllElement: '* Обязательно поле',
   LoginExists: 'Логин уже используется',
   ServerError: 'Ошибка сервера',
-  badRequest: 'Почта уже используется'
+  badRequest: 'Почта уже используется',
 };
 
 export const mainPage = new MainPage(ROOT);
@@ -107,39 +107,39 @@ export const config = {
       href: urls.basket,
       png_name: 'myTags.svg',
       name: 'Мои фильмы',
-      renderObject: ''
+      renderObject: '',
     },
     profile: {
       href: urls.profile,
       png_name: 'iconPerson.svg',
       name: 'Мой профиль',
-      renderObject: ''
+      renderObject: '',
     },
     signin: {
       href: urls.signin,
       png_name: 'iconPerson.svg',
       name: 'Войти',
-      renderObject: signinPage
+      renderObject: signinPage,
     },
     signup: {
       href: urls.signup,
       png_name: 'iconPerson.svg',
       name: 'Зарегистрироваться',
-      renderObject: signupPage
+      renderObject: signupPage,
     },
     selection: {
       href: urls.selection,
       png_name: 'vectorTags.svg',
       name: 'Меню',
-      renderObject: selectCollectionPage
+      renderObject: selectCollectionPage,
     },
     main: {
       href: urls.main,
       png_name: 'brandIcon.svg',
       name: 'MovieHub',
-      renderObject: mainPage
-    }
-  }
+      renderObject: mainPage,
+    },
+  },
 };
 
 export const header = new Header(ROOT);
@@ -163,10 +163,10 @@ export const collections = {
         { key: 'Мелодрама', value: 12 },
         { key: 'Фантастика', value: 13 },
         { key: 'Триллер', value: 14 },
-        { key: 'Фэнтези', value: 15 }
-      ]
-    }
-  }
+        { key: 'Фэнтези', value: 15 },
+      ],
+    },
+  },
 };
 
 export const routes = [
@@ -178,5 +178,5 @@ export const routes = [
   { path: '/actor', view: actorPage },
   { path: '/film', view: filmPage },
   { path: '/settings', view: userPage },
-  { path: '/comments', view: commentsPage }
+  { path: '/comments', view: commentsPage },
 ];
