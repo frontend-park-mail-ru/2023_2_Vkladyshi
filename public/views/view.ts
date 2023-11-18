@@ -18,29 +18,20 @@ export class View extends Component {
     }
 
     if (!document.querySelector('header')) {
-      store.dispatch(actionAuth());
       ROOT?.insertAdjacentHTML('afterbegin', header.render());
       header.componentDidMount();
-      // @ts-ignore
-      // document.querySelector('header')?.style.opacity = 1;
-      // @ts-ignore
-      // header?.style.visibility = 'visible';
-      // document.querySelector('header')?.style.visibility = 'visible';
     } else {
       main.innerHTML = '';
     }
 
-    if (document.querySelector('.content-block') == null) {
+    if (!document.querySelector('.content-block')) {
       main.insertAdjacentHTML('beforeend', contentBlock.render());
     }
 
-    if (document.querySelector('.footer') == null) {
+    if (!document.querySelector('.footer')) {
       main.insertAdjacentHTML('beforeend', footer.render());
     }
 
-    // @ts-ignore
-    document.querySelector('header')?.style.opacity = 1;
-    // @ts-ignore
-    document.querySelector('header')?.style.visibility = 'visible';
+    // store.dispatch(actionAuth());
   };
 }

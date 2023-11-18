@@ -1,6 +1,6 @@
-import { DOMAIN, routes } from '@utils/config';
+import { DOMAIN, privateRoutes, routes } from '@utils/config';
 import { store } from '@store/store';
-import { actionCSRF } from '@store/action/actionTemplates';
+import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
 import { page404 } from '@router/Page404/page404';
 
 interface Class {
@@ -22,16 +22,23 @@ class Router {
     this.root = ROOT;
     this.mapViews = new Map();
     this.privateMapViews = new Map();
+
+    this.subscribeRouterLogout = this.subscribeRouterLogout.bind(this);
+
+    store.subscribe('logoutStatus', this.subscribeRouterLogout);
   }
 
   register ({ path, view }, privatePath = false) {
-    this.privateMapViews.set(path, view);
-    this.mapViews.set(path, view);
+    privatePath
+      ?this.privateMapViews.set(path, view)
+      :this.mapViews.set(path, view);
   }
 
   refresh (redirect = false) {
     const url = new URL(window.location.href);
     const names = url.pathname.split('/');
+
+    // console.log(this.privateMapViews, this.mapViews);
 
     if (
       this.mapViews.get(url.pathname) ||
@@ -44,7 +51,7 @@ class Router {
         },
         { pushState: !redirect, refresh: !redirect }
       );
-    } else if (this.mapViews.get(`/${names[1]}`)) {
+    } else if (this.mapViews.get(`/${names[1]}`) || this.privateMapViews.get(`/${names[1]}`)) {
       this.go(
         {
           path: `/${names[1]}`,
@@ -59,8 +66,14 @@ class Router {
 
   start () {
     store.dispatch(actionCSRF());
+    store.dispatch(actionAuth());
+
     for (const rout of routes) {
       this.register(rout);
+    }
+
+    for (const rout of privateRoutes) {
+      this.register(rout, true);
     }
 
     window.addEventListener('popstate', () => {
@@ -89,10 +102,26 @@ class Router {
     stateObject: stateObject,
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
-    const view = this.mapViews.get(stateObject.path);
+    let view = this.mapViews.get(stateObject.path);
+    if (view) {
+      view?.render(stateObject.props);
+      this.navigate(stateObject, pushState);
+      return;
+    }
 
-    view?.render(stateObject.props);
-    this.navigate(stateObject, pushState);
+    view = this.privateMapViews.get(stateObject.path);
+    if (view) {
+      store.dispatch(actionAuth()).then(() => {
+        const status = store.getState('auth').status;
+        if (status !== 200) {
+          view = this.mapViews.get('/login');
+          stateObject = { props: '', path: '/login' };
+        }
+        view?.render(stateObject.props);
+        this.navigate(stateObject, pushState);
+      });
+      this.navigate(stateObject, pushState);
+    }
   }
 
   navigate ({ path, props }: stateObject, pushState = false) {
@@ -110,6 +139,20 @@ class Router {
       } else {
         window.history.replaceState('', '', location + path);
       }
+    }
+  }
+
+  subscribeRouterLogout () {
+    const logout = store.getState('logoutStatus');
+
+    if (logout === 200) {
+      this.go(
+        {
+          path: '/',
+          props: ``
+        },
+        { pushState: true, refresh: false }
+      );
     }
   }
 }

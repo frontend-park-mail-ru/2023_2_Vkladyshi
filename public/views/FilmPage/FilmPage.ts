@@ -9,6 +9,8 @@ import {
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
+import { addErrorsActive, insertText } from '@utils/addError';
+import { validateReview } from '@utils/validate';
 
 export interface FilmPage {
   state: {
@@ -110,7 +112,11 @@ export class FilmPage extends View {
       mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
 
       const icon = document.querySelector('.image-container') as HTMLElement;
+      const iconsShadow = document.querySelector('.header__container__shadow') as HTMLElement;
+
       icon!.style.backgroundImage = 'url("' + result.poster + '")';
+      icon!.style.backgroundAttachment = 'fixed';
+      iconsShadow!.style.backgroundAttachment = 'fixed';
 
       const containerHTML = document.querySelector('.image-container');
       containerHTML?.insertAdjacentHTML('beforeend', desc.render(result));
@@ -196,22 +202,23 @@ export class FilmPage extends View {
               film_id: res.film_id,
               name: res.name,
               rating: res.rating,
-              text: res.text
+              text: res.text,
+              photo: res.photo
             };
 
             const result = document.createElement('buf');
             result?.insertAdjacentHTML('beforeend', review.render(table));
-            const reviewHTML = result?.querySelector('.review') as HTMLElement;
+            const reviewHTML = result?.querySelector('.comment') as HTMLElement;
 
             switch (true) {
               case table.rating < 4:
-                reviewHTML.style.background = 'red';
+                reviewHTML.style.background = 'rgba(255, 229, 229, 0.9)';
                 break;
               case table.rating > 6:
-                reviewHTML.style.background = 'green';
+                reviewHTML.style.background = 'rgba(189, 230, 189, 0.9)';
                 break;
               default:
-                reviewHTML.style.background = 'orange';
+                reviewHTML.style.background = 'rgba(255, 240, 195, 0.9)';
                 break;
             }
 
@@ -220,24 +227,35 @@ export class FilmPage extends View {
           store.dispatch(actionAuth()).then((response) => {
             if (
               !document.querySelector('.review-form') &&
-              store.getState('statusAuth') === 200
+              store.getState('auth').status === 200
             ) {
               div2?.insertAdjacentHTML(
                 'beforeend',
                 reviewForm.render({ login: true })
               );
 
+              const textHTML = document.querySelector('.review-form__body__text') as HTMLElement;
+              textHTML.style.height = '200px';
+
               const Event = (event) => {
                 event.preventDefault();
                 const selectHTML = document.querySelector('.rating__form');
-                const textHTML = document.querySelector(
-                  '.review-form__body__text'
-                );
+                // const textHTML = document.querySelector(
+                //   '.review-form__body__text'
+                // );
 
                 // @ts-ignore
                 const select = parseInt(selectHTML.value);
                 // @ts-ignore
                 const text = textHTML.value;
+
+                const result = validateReview(text);
+                if (!result.result) {
+                  const errorHTML = document.querySelector('.review-form__body__error');
+                  insertText(errorHTML, result.error);
+                  addErrorsActive(document.querySelector('.text-area'));
+                  return;
+                }
 
                 store
                   .dispatch(
@@ -258,7 +276,7 @@ export class FilmPage extends View {
               };
               const review = document.querySelector('.review-form');
               review?.addEventListener('submit', Event);
-            } else if (store.getState('statusAuth') !== 200) {
+            } else if (store.getState('auth').status !== 200) {
               div2.addEventListener('click', (event) => {
                 router.go(
                   { path: '/login', props: `` },
@@ -296,6 +314,7 @@ export class FilmPage extends View {
   subscribeActorStatus () {
     this.state.filmInfo = store.getState('filmInfo');
     store.unsubscribe('filmInfo', this.subscribeActorStatus);
+
     this.componentDidMount();
   }
 }

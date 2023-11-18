@@ -5,14 +5,16 @@ class ActionsUser {
   async signin (user) {
     const response = post({
       url: urls.signin,
-      body: { login: user['login'], password: user['password'] }
+      body: {
+        login: user.login,
+        password: user.password
+      }
     });
 
     const result = await response;
 
     return {
-      statusLogin: result['status'],
-      userName: user['login']
+      login: result
     };
   }
 
@@ -20,10 +22,10 @@ class ActionsUser {
     const response = post({
       url: urls.signup,
       body: {
-        login: user['login'],
-        password: user['password'],
-        email: user['email'],
-        birth_date: user['birthday']
+        login: user.login,
+        password: user.password,
+        email: user.email,
+        birth_date: user.birthday
       }
     });
 
@@ -35,7 +37,7 @@ class ActionsUser {
 
   async auth (isAuth = false) {
     if (isAuth) {
-      return { statusAuth: 200 };
+      return { auth: { status: 200 } };
     }
 
     const response = get({
@@ -43,7 +45,9 @@ class ActionsUser {
     });
     const result = await response;
 
-    return { statusAuth: result['status'] };
+    return {
+      auth: result
+    };
   }
 
   async logout (redirect = false) {
@@ -52,7 +56,7 @@ class ActionsUser {
     });
     const result = await response;
     return {
-      logoutStatus: result['status'],
+      logoutStatus: result.status,
       redirect: redirect
     };
   }
@@ -96,7 +100,6 @@ class ActionsUser {
   async userComments ({ page, per_page }: paginator) {
     const response = get({
       url: urls.comments,
-      // eslint-disable-next-line camelcase
       query: { page: page, per_page: per_page }
     });
 
@@ -106,11 +109,9 @@ class ActionsUser {
     };
   }
 
-  // eslint-disable-next-line camelcase
   async filmComments ({ film_id, page, per_page }: paginatorFilm) {
     const response = get({
       url: urls.comments,
-      // eslint-disable-next-line camelcase
       query: { film_id: film_id, page: page, per_page: per_page }
     });
 
@@ -120,11 +121,9 @@ class ActionsUser {
     };
   }
 
-  // eslint-disable-next-line camelcase
   async addComment ({ film_id, rating, text }: addComment) {
     const response = post({
       url: urls.addComment,
-      // eslint-disable-next-line camelcase
       body: { film_id: film_id, rating: rating, text: text }
     });
 

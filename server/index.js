@@ -70,6 +70,7 @@ const comments = {
         text: 'Фильм отличный 11/10',
         film_id: 7,
         film_name: 'film',
+        photo: '/icons/star.png',
       },
       {
         name: 'Login_User',
@@ -276,7 +277,7 @@ const film = {
     film: {
       id: 10,
       title: 'film',
-      poster_href: '/icons/Poster.jpg',
+      poster: '/icons/Poster.jpg',
       release_date: '2023-12-30',
       country: 'USA',
       mpaa: 'R',
@@ -315,13 +316,13 @@ const films_tags = {
       },
       film4: {
         poster: '/icons/bastards.jpg',
-        title: 'film_1 111110000000000000000000000000000000000000000001',
+        title: 'film_1',
         rating: 1,
         film_id: 11,
       },
       film5: {
         poster: '/icons/bastards.jpg',
-        title: 'film_1 111110000000000000000000000000000000000000000001',
+        title: 'film_1 111',
         rating: 1,
         film_id: 11,
       },
@@ -350,6 +351,10 @@ const users = {
     password: 'Password1',
     age: 25,
   },
+  Andrey111: {
+    email: 'Andrey@111',
+    password: 'Andrey111'
+  },
   login: {
     email: 'email@mail.ru',
     password: 'Password1',
@@ -366,10 +371,10 @@ const ids = {};
 const settings = {
   status: 200,
   body: {
-    login: 'login_11',
-    email: '1111@1111',
+    login: 'Andrey111',
+    email: 'Andrey@111',
     photo: '/icons/star.png',
-    birthday: '2020-01-01',
+    birthday: '2010-01-01',
   },
 };
 
@@ -462,7 +467,7 @@ app.get('/authcheck', (req, res) => {
     return res.status(200).json({ status: 401 }).end();
   }
 
-  return res.status(200).json({ status: 200 }).end();
+  return res.status(200).json({ status: 200, login: 'volodin' }).end();
 });
 
 app.get('/logout', (req, res) => {
@@ -549,7 +554,7 @@ app.use('/api/v1/film', (req, res) => {
   }
   // const filmTitle = 'Image';
   // const Image = findFilmByTitle(films.body.films.film9, filmTitle);
-  return res.status(200).json({ body: films.body.films.film9 });
+  return res.status(200).json({ body: film.body, status: film.status });
 });
 
 // app.get('/comments/user', (req, res) => {

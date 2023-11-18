@@ -49,8 +49,13 @@ export class SelectCollectionPage extends View {
 
       const popup = document.querySelector('.popup-select-collection');
       main?.insertAdjacentHTML('afterbegin', image.render({}));
+
       const icon = document.querySelector('.image-container') as HTMLElement;
+      const iconsShadow = document.querySelector('.header__container__shadow') as HTMLElement;
+
       icon!.style.backgroundImage = 'url("/icons/ocean.jpg")';
+      icon!.style.backgroundAttachment = 'fixed';
+      iconsShadow!.style.backgroundAttachment = 'fixed';
 
       const containerHTML = document.querySelector('.image-container');
       containerHTML?.insertAdjacentHTML('beforeend', selectCollection.render());

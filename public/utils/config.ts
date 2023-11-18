@@ -25,12 +25,12 @@ import { UserPage } from '@views/userPage/userPage';
 import { ReviewForm } from '@components/ReviewForm/reviewForm';
 import { CommentsPage } from '@views/CommentsPage/CommentsPage';
 import { Review } from '@components/Review/review';
-import {UserDataForm} from "@components/UserDataForm/userDataForm";
+import { UserDataForm } from '@components/UserDataForm/userDataForm';
 
 export const ROOT = document.querySelector('#root');
 
 export const DOMAIN = 'http://127.0.0.1:8001';
-//export const DOMAIN = 'http://84.23.54.189';
+//export const DOMAIN = 'https://movie-hub.ru';
 
 export const urls = {
   main: '/',
@@ -51,7 +51,8 @@ export const urls = {
 
 export const methods = {
   post: 'POST',
-  get: 'GET'
+  get: 'GET',
+  put: 'PUT'
 };
 
 export const responseStatuses = {
@@ -177,6 +178,10 @@ export const routes = [
   { path: '/films', view: filmSelectionPage },
   { path: '/actor', view: actorPage },
   { path: '/film', view: filmPage },
-  { path: '/settings', view: userPage },
+  // { path: '/settings', view: userPage },
   { path: '/comments', view: commentsPage }
+];
+
+export const privateRoutes = [
+  { path: '/settings', view: userPage }
 ];

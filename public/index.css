@@ -19,6 +19,8 @@
 @import './components/Image/image.css';
 @import './components/filmCard/filmCard.css';
 @import './components/Settings/settings.css';
+@import './components/Slider/slider.css';
+@import './router/Page404/page404.css';
 
 :root {
   --background-color: rgb(81, 82, 58, 0.1);
@@ -37,7 +39,7 @@ body.none-active {
   overflow: hidden;
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1150px) {
   .content-block,
   .header,
   .footer {

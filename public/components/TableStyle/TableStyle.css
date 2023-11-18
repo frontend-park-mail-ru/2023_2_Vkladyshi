@@ -1,5 +1,5 @@
 .table__header {
-  color: #ffffff;
+  /*color: #ffffff;*/
   text-align: center;
   font-family: Montserrat;
   font-size: 40px;
@@ -27,7 +27,7 @@
   color: #ffffff;
   font-family: Montserrat;
   font-size: 30px;
-  font-style: italic;
+  /*font-style: italic;*/
   font-weight: 400;
   line-height: normal;
   letter-spacing: 1.5px;
@@ -35,12 +35,14 @@
 }
 
 .table__row__text {
-  color: #ffffff;
-  text-align: left;
-  font-family: Montserrat;
+  /*color: #ffffff;*/
+  font-family: Montserrat, serif;
   font-size: 30px;
   font-style: normal;
   font-weight: 200;
   line-height: normal;
   letter-spacing: 1.5px;
+  /*text-align: center;*/
+  padding-left: 10px;
+  padding-right: 10px;
 }

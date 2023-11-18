@@ -34,11 +34,13 @@ export class Header extends Component {
     this.eventFunc = () => {};
 
     this.subscribeLogoutStatus = this.subscribeLogoutStatus.bind(this);
+    this.subscribeLoginHeaderStatus = this.subscribeLoginHeaderStatus.bind(this);
     this.subscribeAuthStatus = this.subscribeAuthStatus.bind(this);
 
-    store.subscribe('statusAuth', this.subscribeAuthStatus);
-    store.subscribe('statusLogin', this.subscribeAuthStatus);
+    store.subscribe('auth', this.subscribeAuthStatus);
+    store.subscribe('login', this.subscribeLoginHeaderStatus);
     store.subscribe('logoutStatus', this.subscribeLogoutStatus);
+    // console.log('header');
   }
 
   /**
@@ -62,10 +64,11 @@ export class Header extends Component {
 
   /**
    * Рендер шапки для незарегистрированного пользователя
-   * @param isAuthorized
    * @return {string} - html шапки
    */
-  render (isAuthorized = false) {
+  render () {
+    const isAuthorized= this.state.isAuth;
+
     const [brand, signin, basket, profile, selection] = [
       'main',
       'signin',
@@ -147,41 +150,25 @@ export class Header extends Component {
   }
 
   subscribeAuthStatus () {
-    this.state.isAuth =
-      store.getState('statusAuth') === 200 ||
-      store.getState('statusLogin') === 200;
-    this.changeHeader(this.state.isAuth);
+    this.state.isAuth = store.getState('auth').status === 200;
+    this.changeHeader();
+  }
+
+  subscribeLoginHeaderStatus () {
+    this.state.isAuth = store.getState('login').status === 200;
+    this.changeHeader();
   }
 
   subscribeLogoutStatus () {
     this.state.isAuth = store.getState('logoutStatus') !== 200;
-
-    this.changeHeader(this.state.isAuth);
-
-    if (!this.state.isAuth) {
-      store.setState['statusLogin'] = 400;
-      router.go(
-        {
-          path: '/',
-          props: ``
-        },
-        { pushState: true, refresh: false }
-      );
-    }
+    this.changeHeader();
   }
 
-  changeHeader (isAuth) {
+  changeHeader () {
     const headerHTML = document.querySelector('header');
-    headerHTML!.innerHTML = this.render(isAuth);
-    // if (isAuth === true) {
-    //   const namePage = signinPage.state.userInfo['login'];
-    //   if (namePage) {
-    //     document.querySelector('.profile-text')!.textContent = namePage;
-    //   } else {
-    //     document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName');
-    //   }
-    // }
-
-    this.componentDidMount();
+    if (headerHTML) {
+      headerHTML!.innerHTML = this.render();
+      this.componentDidMount();
+    }
   }
 }

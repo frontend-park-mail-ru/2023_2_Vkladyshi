@@ -51,6 +51,11 @@ interface addComment {
   text: string;
 }
 
+// interface auth {
+//   status: number,
+//   login: string
+// }
+
 // interface userComments {
 //   file: any;
 // }

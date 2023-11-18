@@ -4,6 +4,7 @@
   }
 }
 .content-block {
+  /*width: 1330px;*/
   width: 80%;
   min-height: 100vh;
   /*background-color: #ffffff;*/
@@ -13,4 +14,6 @@
   margin-right: auto;
   /*border-right: 1px solid white;*/
   /*border-left: 1px solid white;*/
+  /*display: flex;*/
+  /*justify-content: center;*/
 }

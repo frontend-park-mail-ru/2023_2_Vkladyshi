@@ -1,24 +1,21 @@
-import { errorInputs, responseStatuses } from '@utils/config';
-import { returnError } from '@utils/addError';
-import { store } from '@store/store';
-import { actionCSRF, actionSignin } from '@store/action/actionTemplates';
+import { errorInputs } from '@utils/config';
 
 /**
  * валидация почты
  * @param {string} email почта
  * @return {boolean} результат проверки на валидацию
  */
-export function validateEmail (email) {
-  const re = /^.+@.+$/;
+export const validateEmail = (email) => {
+  const re = /^[a-zA-Z0-9.]+@[a-zA-Z0-9.]+$/;
   return re.test(email);
-}
+};
 
 /**
  * валидация пароля
  * @param {string} password пароль
  * @return {{}} результат проверки на валидацию
  */
-export function validatePassword (password) {
+export const validatePassword = (password) => {
   if (!password) {
     return {
       result: false,
@@ -38,19 +35,19 @@ export function validatePassword (password) {
     };
   }
   return { result: true };
-}
+};
 
 /**
  * валидация логина
  * @param {string} login логин
  * @return {{}} результат проверки на валидацию
  */
-export function validateLogin (login) {
+export const validateLogin = (login) => {
   const regex = /^[a-zA-Z0-9_-]+$/;
-  if (!regex.test(login)) {
+  if (!regex.test(login) || login.length < 4) {
     return {
       result: false,
-      error: 'Логин должен состоять из латинских букв, цифр, - и _'
+      error: 'Логин должен быть длиннее 4 символов и состоять из латинских букв, цифр, - и _ '
     };
   }
 
@@ -65,4 +62,45 @@ export function validateLogin (login) {
   }
 
   return { result: true };
-}
+};
+
+export const validateReview = (str) => {
+  if (str && /^[a-zA-Z0-9а-яА-Я\s()!.,?-]+$/.test(str)) {
+    return {
+      result: true
+    };
+  } else {
+    return {
+      result: false,
+      error: 'В вашем сообщении не должно быть спец символов.'
+    };
+  }
+};
+
+export const validateBirthday = (date) => {
+  const birthdayDate = new Date(date);
+  const currentDate = new Date();
+
+  if (birthdayDate.toString() === 'Invalid Date') {
+    return {
+      result: false,
+      error: 'Укажите правильную дату'
+    };
+  }
+
+  const minDate = new Date();
+  minDate.setFullYear(minDate.getFullYear() - 114);
+  const maxDate = new Date();
+  maxDate.setFullYear(maxDate.getFullYear() - 6);
+
+  if (birthdayDate < minDate || birthdayDate > maxDate) {
+    return {
+      result: false,
+      error: 'Укажите правильную дату'
+    };
+  }
+
+  return {
+    result: true
+  };
+};

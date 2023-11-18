@@ -1,12 +1,11 @@
 import { get } from '@utils/ajax';
 import { urls } from '@utils/config';
+import { page404 } from '@router/Page404/page404';
 
 class ActionsFilm {
-  // eslint-disable-next-line camelcase
   async getCollectionDataMain ({ collection_id }: collectionParams) {
     const response = get({
       url: urls.basket,
-      // eslint-disable-next-line camelcase
       query: { collection_id: collection_id }
     });
 
@@ -16,15 +15,18 @@ class ActionsFilm {
     };
   }
 
-  // eslint-disable-next-line camelcase
   async getCollectionDataMenu ({ collection_id }: collectionParams) {
     const response = get({
       url: urls.basket,
-      // eslint-disable-next-line camelcase
       query: { collection_id: collection_id }
     });
 
     const result = await response;
+    //
+    // if (result['status'] !== 200) {
+    //   page404.render();
+    // }
+
     return {
       collectionMenu: result
     };
@@ -37,6 +39,11 @@ class ActionsFilm {
     });
 
     const result = await response;
+
+    // if (result['status'] !== 200) {
+    //   page404.render();
+    // }
+
     return {
       actorInfo: result['body']
     };
@@ -49,6 +56,11 @@ class ActionsFilm {
     });
 
     const result = await response;
+
+    // if (result['status'] !== 200) {
+    //   page404.render();
+    // }
+
     return {
       filmInfo: result['body']
     };

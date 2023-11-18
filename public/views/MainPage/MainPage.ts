@@ -2,6 +2,7 @@ import { View } from '@views/view';
 import { filmSelectionPage } from '@utils/config';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
+import { slider } from '@components/Slider/slider';
 
 /**
  * Класс формирования главной страницы
@@ -22,8 +23,12 @@ export class MainPage extends View {
       'afterbegin',
       image.render({ mainPage: true })
     );
+
     const icon = document.querySelector('.image-container') as HTMLElement;
     icon!.style.backgroundImage = 'url("/icons/mainImagjpg")';
+
+    contentBlockHTML?.insertAdjacentHTML('beforeend', slider.render());
+    slider.addEvents();
 
     if (contentBlockHTML) {
       filmSelectionPage.render(false).then((response) => {

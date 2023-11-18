@@ -2,10 +2,10 @@
   <div class='film-selection_name'>
     {{collection_name}}
   </div>
-  <div class='film-selection_films'>
+  <ul class='film-selection_films'>
     {{#if haveFilms}}
       {{#each films}}
-        <div class='film-selection_film' data-section='{{id}}'>
+        <li class='film-selection_film' data-section='{{id}}'>
           <div
             class='film-selection_film-poster'
             style='background-image: url("{{poster}}")'
@@ -24,11 +24,11 @@
           <div class='film-selection_film-information'>
             <div class='film-selection_film_name'>{{title}}</div>
           </div>
-        </div>
+        </li>
 
       {{/each}}
     {{else}}
       <div><p>К сожалению, но таких фильмов нет.</p></div>
     {{/if}}
-  </div>
+  </ul>
 </div>

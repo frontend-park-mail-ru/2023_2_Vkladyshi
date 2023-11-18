@@ -16,6 +16,7 @@ import {
   removeErrorsActive
 } from '@utils/addError';
 import {
+  validateBirthday,
   validateEmail,
   validateLogin,
   validatePassword
@@ -27,7 +28,14 @@ import { image } from '@components/Image/image';
 export interface SignupPage {
   state: {
     statusSignup: number;
-    userInfo: {};
+    userInfo: {
+      email: string;
+      password: string;
+      passwordSecond: string;
+      birthday: string;
+      login: string;
+
+    };
     wraps: {};
     inputsHTML: {};
     errorsHTML: {};
@@ -74,20 +82,8 @@ export class SignupPage extends View {
    * Метод создания страницы
    */
   render () {
-    store.subscribe('statusAuth', this.redirectToMain);
-
-    if (
-      store.getState('statusLogin') === 200 ||
-      store.getState('statusAuth') === 200
-    ) {
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false }
-      );
-    }
+    // store.subscribe('login', this.redirectToMain);
+    // store.subscribe('auth', this.redirectToMain);
 
     if (document.querySelector('.popupSign') == null) {
       this.renderDefaultPage();
@@ -196,8 +192,18 @@ export class SignupPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
   componentWillUnmount () {
+    store.unsubscribe('login', this.redirectToMain);
+    store.unsubscribe('auth', this.redirectToMain);
+
     const popup = document.querySelector('.popupSign');
     popup?.removeEventListener('click', this.popupEvent);
+
+    const info = this.state.userInfo;
+    info.login = '';
+    info.password = '';
+    info.passwordSecond = '';
+    info.email = '';
+    info.birthday = '';
   }
 
   getForm () {
@@ -246,42 +252,53 @@ export class SignupPage extends View {
       insertText(elements['login'], errorInputs.NotAllElement);
       addErrorsActive(wraps['login']);
       result = false;
+    } else {
+      const loginValidate = validateLogin(login);
+      if (!loginValidate.result) {
+        insertText(elements['login'], loginValidate.error);
+        addErrorsActive(wraps['login']);
+        result = false;
+      }
     }
+
     if (!email) {
       insertText(elements['email'], errorInputs.NotAllElement);
       addErrorsActive(wraps['email']);
       result = false;
+    } else if (!validateEmail(email)) {
+      insertText(elements['email'], errorInputs.EmailNoValid);
+      addErrorsActive(wraps['email']);
+      result = false;
     }
+
     if (!password) {
       insertText(elements['passwordFirst'], errorInputs.NotAllElement);
       addErrorsActive(wraps['passwordFirst']);
       result = false;
     }
+
     if (!passwordSecond) {
       insertText(elements['passwordSecond'], errorInputs.NotAllElement);
       addErrorsActive(wraps['passwordSecond']);
       result = false;
     }
+
     if (!birthday) {
       insertText(elements['birthday'], errorInputs.NotAllElement);
       addErrorsActive(wraps['birthday']);
       result = false;
+    } else {
+      const validateResult = validateBirthday(birthday);
+      if (!validateResult.result) {
+        insertText(elements['birthday'], validateResult.error);
+        addErrorsActive(wraps['birthday']);
+        result = false;
+      }
     }
 
     const isValidate = validatePassword(password);
     if (!isValidate.result && password.length > 0) {
       insertText(elements['passwordFirst'], isValidate.error);
-      result = false;
-    }
-
-    if (!validateEmail(email) && email.length > 0) {
-      insertText(elements['email'], errorInputs.EmailNoValid);
-      result = false;
-    }
-
-    const loginValidate = validateLogin(login);
-    if (!loginValidate.result && login.length > 0) {
-      insertText(elements['login'], loginValidate.error);
       result = false;
     }
 
@@ -305,22 +322,15 @@ export class SignupPage extends View {
     this.state.statusSignup = store.getState('statusSignup');
 
     if (this.handlerStatus()) {
-      store.unsubscribe('statusAuth', this.redirectToMain);
-      store.subscribe('statusLogin', this.subscribeSigninStatus);
-      store.dispatch(
-        actionSignin({
-          login: this.state.userInfo['login'],
-          password: this.state.userInfo['passwordFirst']
-        })
-      );
+      store.unsubscribe('auth', this.redirectToMain);
+      store.subscribe('login', this.subscribeSigninStatus);
+      store.dispatch(actionSignin({ login: this.state.userInfo['login'], password: this.state.userInfo['passwordFirst'] }));
     }
   }
 
   subscribeSigninStatus () {
-    if (store.getState('statusLogin')) {
-      store.unsubscribe('statusLogin', this.subscribeSigninStatus);
-      document.querySelector('.profile-text')!.textContent =
-        this.state.userInfo['login'];
+    if (store.getState('login')) {
+      store.unsubscribe('login', this.subscribeSigninStatus);
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
 
@@ -425,8 +435,11 @@ export class SignupPage extends View {
   }
 
   redirectToMain () {
-    if (store.getState('statusAuth') === 200) {
-      store.unsubscribe('statusAuth', this.redirectToMain);
+    const login = store.getState('login');
+
+    if (store.getState('login').status === 200) {
+      store.unsubscribe('login', this.redirectToMain);
+      // console.log(1111, 'Signin');
       router.go(
         {
           path: '/',

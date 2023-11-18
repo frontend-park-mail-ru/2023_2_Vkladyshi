@@ -19,7 +19,10 @@ export interface SigninPage {
   state: {
     statusLogin: number;
     haveEvent: boolean;
-    userInfo: {};
+    userInfo: {
+      password: string;
+      login: string;
+    };
     wraps: {};
     inputsHTML: {};
     errorsHTML: {};
@@ -45,10 +48,13 @@ export class SigninPage extends View {
       wraps: {},
       inputsHTML: {},
       errorsHTML: {},
-      userInfo: {}
+      userInfo: {
+        login: '',
+        password: ''
+      }
     };
 
-    this.subscribeLoginStatus = this.subscribeLoginStatus.bind(this);
+    this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
     this.redirectToMain = this.redirectToMain.bind(this);
   }
@@ -57,20 +63,7 @@ export class SigninPage extends View {
    * Метод создания страницы
    */
   render () {
-    store.subscribe('statusAuth', this.redirectToMain);
-
-    if (
-      store.getState('statusLogin') === 200 ||
-      store.getState('statusAuth') === 200
-    ) {
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false }
-      );
-    }
+    store.subscribe('auth', this.redirectToMain);
 
     if (document.querySelector('.popupSign') == null) {
       this.renderDefaultPage();
@@ -115,7 +108,7 @@ export class SigninPage extends View {
       this.componentDidMount();
       this.init();
       this.setUserInfo();
-      store.subscribe('statusLogin', this.subscribeLoginStatus);
+      store.subscribe('login', this.subscribeSigninStatus);
     }
   }
 
@@ -171,7 +164,7 @@ export class SigninPage extends View {
       this.getUserInfo();
       switch (true) {
         case event.target.closest('.redirect-to-signup') !== null:
-          store.unsubscribe('statusLogin', this.subscribeLoginStatus);
+          store.unsubscribe('login', this.subscribeSigninStatus);
           this.componentWillUnmount();
           router.go(
             {
@@ -182,7 +175,7 @@ export class SigninPage extends View {
           );
           break;
         case event.target.closest('.sign-frame-img') !== null:
-          store.unsubscribe('statusLogin', this.subscribeLoginStatus);
+          store.unsubscribe('login', this.subscribeSigninStatus);
           this.componentWillUnmount();
           router.go(
             {
@@ -211,9 +204,14 @@ export class SigninPage extends View {
     const popup = document.querySelector('.popupSign');
     this.state.statusLogin = 0;
     popup?.removeEventListener('click', this.popupEvent);
+
+    const info = this.state.userInfo;
+    info.login = '';
+    info.password = '';
   }
 
   handlerStatus () {
+    // console.log(store.state)
     switch (this.state.statusLogin) {
       case responseStatuses.success:
         return true;
@@ -250,16 +248,15 @@ export class SigninPage extends View {
     insertInInput(this.state.inputsHTML, this.state.userInfo);
   }
 
-  subscribeLoginStatus () {
-    this.state.statusLogin = store.getState('statusLogin');
+  subscribeSigninStatus () {
+    this.state.statusLogin = store.getState('login').status;
 
     if (this.handlerStatus()) {
-      store.unsubscribe('statusAuth', this.redirectToMain);
+      store.unsubscribe('auth', this.redirectToMain);
 
-      store.unsubscribe('statusLogin', this.subscribeLoginStatus);
+      store.unsubscribe('statusLogin', this.subscribeSigninStatus);
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
-      // localStorage.setItem('userName', this.state.userInfo['login']);
 
       this.state.statusLogin = 0;
       this.componentWillUnmount();
@@ -278,8 +275,8 @@ export class SigninPage extends View {
   }
 
   redirectToMain () {
-    if (store.getState('statusAuth') === 200) {
-      store.unsubscribe('statusAuth', this.redirectToMain);
+    if (store.getState('auth').status === 200) {
+      store.unsubscribe('auth', this.redirectToMain);
       router.go(
         {
           path: '/',

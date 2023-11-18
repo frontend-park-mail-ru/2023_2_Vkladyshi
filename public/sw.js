@@ -1,10 +1,12 @@
 const CACHE_NAME = 'moviehub-1';
 
-const whiteDynamicUrls = ['/'];
-
 const blackSearchUrls = /object=user_avatar|user\/\d+/;
 
-const assetUrls = ['/', '/index.html'];
+const assetUrls = [
+    '/',
+    // '/index.html',
+    // '/settings'
+];
 
 const cachedReg =
   /\/api|(.png|.ttf|.woff2|.js|.ts|.jpg|.jpeg|.icon|.svg|.css|\/)$/;
@@ -14,7 +16,6 @@ self.addEventListener('activate', (event) => {
     (key) => CACHE_NAME[key]
   );
 
-  // Delete out of date cahes
   event.waitUntil(
     caches.keys().then((cacheNames) =>
       Promise.all(

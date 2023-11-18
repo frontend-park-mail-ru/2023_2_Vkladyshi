@@ -81,7 +81,11 @@ export class ActorDescritionPage extends View {
       mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
 
       const icon = document.querySelector('.image-container') as HTMLElement;
+      const iconsShadow = document.querySelector('.header__container__shadow') as HTMLElement;
       icon!.style.backgroundImage = 'url("' + result['poster'] + '")';
+
+      icon!.style.backgroundAttachment = 'fixed';
+      iconsShadow!.style.backgroundAttachment = 'fixed';
 
       const containerHTML = document.querySelector('.image-container');
       containerHTML?.insertAdjacentHTML('beforeend', desc.render(result));

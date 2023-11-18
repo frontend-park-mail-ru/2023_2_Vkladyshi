@@ -10,12 +10,12 @@
   }
 }
 
-/*@media (max-width: 780px) {*/
-/*  .settingsHeader,*/
-/*  .logoutHeader {*/
-/*    font-size: 10px;*/
-/*  }*/
-/*}*/
+@media (max-width: 780px) {
+  .settingsHeader,
+  .logoutHeader {
+    font-size: 10px;
+  }
+}
 
 header {
   width: 100%;

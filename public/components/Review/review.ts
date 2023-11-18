@@ -8,7 +8,7 @@ import * as templateReview from '@components/Review/review.hbs';
  */
 export class Review extends Component {
   /**
-   * Метод для рендеринга HTML кода
+   * Метод для рендеринга HTML кодаf
    * @param reviews
    * @returns {string} html нижней панели
    */
