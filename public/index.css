@@ -20,7 +20,9 @@
 @import './components/filmCard/filmCard.css';
 @import './components/Settings/settings.css';
 @import './components/Slider/slider.css';
+@import './components/ActorInfo/actorInfo.css';
 @import './router/Page404/page404.css';
+
 
 :root {
   --background-color: rgb(81, 82, 58, 0.1);

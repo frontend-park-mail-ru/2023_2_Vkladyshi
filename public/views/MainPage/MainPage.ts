@@ -1,5 +1,5 @@
 import { View } from '@views/view';
-import { filmSelectionPage } from '@utils/config';
+import { commentsPage, filmSelectionPage } from '@utils/config';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
 import { slider } from '@components/Slider/slider';
@@ -26,6 +26,8 @@ export class MainPage extends View {
 
     const icon = document.querySelector('.image-container') as HTMLElement;
     icon!.style.backgroundImage = 'url("/icons/mainImagjpg")';
+
+    // commentsPage.render();
 
     contentBlockHTML?.insertAdjacentHTML('beforeend', slider.render());
     slider.addEvents();

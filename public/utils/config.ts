@@ -30,7 +30,7 @@ import { UserDataForm } from '@components/UserDataForm/userDataForm';
 export const ROOT = document.querySelector('#root');
 
 export const DOMAIN = 'http://127.0.0.1:8001';
-//export const DOMAIN = 'https://movie-hub.ru';
+// export const DOMAIN = 'https://movie-hub.ru';
 
 export const urls = {
   main: '/',

@@ -50,9 +50,9 @@ const actor = {
     name: 'Сильвестр Сталлоне',
 
     genres: ['боевик', 'драма', 'триллер'],
-    career: ['Актер', 'Сценарист', 'Продюсер', 'Режиссер'],
+    career: [{ id: 0, profession: 'Актер' }],
     country: 'США',
-    birth_date: '1946',
+    birthday: '1946',
     headersItems: ['Биография', 'Фото'],
     info_text:
       'Родился 6 июля 1946 года в Нью-Йорке. Его отец, парикмахер Фрэнк Сталлоне-старший (англ. Frank Stallone, Sr., 1919—2011), — иммигрант из Сицилии; мать, Жаклин Лейбофиш (1921—2020).',
@@ -562,6 +562,10 @@ app.use('/api/v1/film', (req, res) => {
 // });
 
 app.get('/comments', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/comments/:comments', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 

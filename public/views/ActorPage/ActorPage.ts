@@ -3,6 +3,7 @@ import { countLikeFilm, desc, info, LkStar } from '@utils/config';
 import { store } from '@store/store';
 import { actionActor } from '@store/action/actionTemplates';
 import { image } from '@components/Image/image';
+import {actorInfo} from "@components/ActorInfo/actorInfo";
 
 export interface ActorDescritionPage {
   state: {
@@ -88,8 +89,8 @@ export class ActorDescritionPage extends View {
       iconsShadow!.style.backgroundAttachment = 'fixed';
 
       const containerHTML = document.querySelector('.image-container');
-      containerHTML?.insertAdjacentHTML('beforeend', desc.render(result));
-      containerHTML?.insertAdjacentHTML('beforeend', info.render(result));
+      containerHTML?.insertAdjacentHTML('beforeend', actorInfo.render(result));
+      // containerHTML?.insertAdjacentHTML('beforeend', info.render(result));
     }
   }
 
