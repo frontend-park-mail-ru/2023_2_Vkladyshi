@@ -26,7 +26,6 @@ class Store {
   subscribe (type, callback) {
     const arraySubs = this.mapSubscribers.get(type);
 
-    // console.log(type, callback, 'SUB')
     if (arraySubs) {
       arraySubs.push(callback);
     } else {
@@ -37,9 +36,7 @@ class Store {
   unsubscribe (type, activeFunc) {
     const arraySubs = this.mapSubscribers.get(type);
     if (arraySubs) {
-      // console.log(arraySubs, 'UNS');
       this.mapSubscribers.set(type, arraySubs.filter((item) => item.name !== activeFunc.name));
-      // console.log(arraySubs, 'UNS');
     }
   }
 
@@ -48,7 +45,6 @@ class Store {
     Object.keys(newState).forEach((key) => {
       this.state[key] = newState[key];
       subs = this.mapSubscribers.get(key);
-      // console.log(key, 'setState')
       if (subs && subs.length) {
         subs.forEach((subscriber) => {
           subscriber();

@@ -1,9 +1,22 @@
-<div class='film-selection_film' data-section='{{id}}'>
+<div class='film-selection_film' data-section='{{id}}' draggable="true">
+    <div
+            class='film-selection_film-poster'
+            style='background-image: url("{{poster}}")'
+    >
   <div class='film-selection_film-poster'>
     <div class='film-selection_film_header'>
-      <img class='image-watchlist' src='/icons/bookmark.png' />
+        {{#if alreadyFavorite}}
+            <div></div>
+        {{else}}
+            <img class='image-watchlist' src='/icons/bookmark.png' />
+        {{/if}}
+<!--      <img class='image-watchlist' src='/icons/bookmark.png' />-->
       <div class='film-rating'>
-        {{rating}}
+          {{#if rating}}
+              {{rating}}
+          {{else}}
+              8
+          {{/if}}
       </div>
     </div>
   </div>

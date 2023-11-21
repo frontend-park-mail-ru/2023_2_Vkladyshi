@@ -21,7 +21,10 @@
 @import './components/Settings/settings.css';
 @import './components/Slider/slider.css';
 @import './components/ActorInfo/actorInfo.css';
+@import './components/FavoriteFilms/favoriteFilms.css';
+@import './components/Modal/modal.css';
 @import './router/Page404/page404.css';
+@import './components/DirectoryFilms/directoryFilms.css';
 
 
 :root {

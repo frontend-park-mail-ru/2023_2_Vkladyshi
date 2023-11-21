@@ -1,7 +1,7 @@
 import { Component } from '@components/component';
 import * as templateReviewForm from '@components/ReviewForm/reviewForm.hbs';
 import { store } from '@store/store';
-import { actionAddComment, actionAuth, actionGetCommentsFilm } from '@store/action/actionTemplates';
+import { actionAddComment } from '@store/action/actionTemplates';
 import { validateReview } from '@utils/validate';
 import { addErrorsActive, insertText } from '@utils/addError';
 import { router } from '@router/router';
@@ -35,51 +35,15 @@ export class ReviewForm extends Component {
 
   event (fildId) {
     this.state.fildId = fildId;
-    const infoHTML = document.querySelector('.additional-info__review');
+    // const infoHTML = document.querySelector('.additional-info__review');
     const textHTML = document.querySelector('.review-form__body__text') as HTMLElement;
-    textHTML.style.height = '200px';
 
-    if (store.getState('auth').status !== 200) {
-      // const comments = document.createElement('div');
-      // comments.className = 'comments__block';
-      //
-      // const div1 = document.createElement('div');
-      // div1.className = 'comments__all';
-      //
-      // const div2 = document.createElement('div');
-      // div2.className = 'input__form';
-      //
-      // comments.appendChild(div1);
-      // comments.appendChild(div2);
-      //
-      // const divElement = document.querySelector(
-      //   '.additional-info__content.table__row__text'
-      // ) as HTMLDivElement;
-      // divElement.style.display = 'none';
-      //
-      // infoHTML?.appendChild(comments);
-
-      // store.dispatch(actionAuth()).then((response) => {
-      //   if (
-      //     !document.querySelector('.review-form') &&
-      //     store.getState('auth').status === 200
-      //   ) {
-      //     div2?.insertAdjacentHTML(
-      //       'beforeend',
-      //       this.render({ login: true })
-      //     );
-      //
-      //     const textHTML = document.querySelector('.review-form__body__text') as HTMLElement;
-      //     textHTML.style.height = '200px';
-      console.log('EVENT')
+    if (store.getState('auth').status === 200) {
+      textHTML.style.height = '200px';
       const Event = (event) => {
         event.preventDefault();
 
-        console.log(12121)
         const selectHTML = document.querySelector('.rating__form');
-        // const textHTML = document.querySelector(
-        //   '.review-form__body__text'
-        // );
 
         // @ts-ignore
         const select = parseInt(selectHTML.value);
@@ -103,7 +67,6 @@ export class ReviewForm extends Component {
             })
           )
           .then((response) => {
-            console.log('response')
             if (response!['addCommentStatus'] === 200) {
               router.refresh();
             } else {
@@ -115,10 +78,10 @@ export class ReviewForm extends Component {
       const review = document.querySelector('.review-form');
       review?.addEventListener('submit', Event);
     } else if (store.getState('auth').status !== 200) {
-      router.go(
-        { path: '/login', props: `` },
-        { pushState: true, refresh: false }
-      );
+      // router.go(
+      //   { path: '/login', props: `` },
+      //   { pushState: true, refresh: false }
+      // );
     }
   }
 }

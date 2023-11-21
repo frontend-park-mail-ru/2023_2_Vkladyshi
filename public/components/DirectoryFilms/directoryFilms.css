@@ -1,0 +1,31 @@
+.directory-films {
+    /*background: #393b39;*/
+    margin: 20px;
+    width: 250px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.directory-films:hover {
+    opacity: 0.7;
+}
+
+.directory-films__poster {
+    width: 250px;
+    background: #393b39;
+    height: 420px;
+}
+
+.directory-films__title {
+    width: 250px;
+    margin-top: 10px;
+}
+
+.directory-films__poster__image {
+    width: 50px;
+    height: 50px;
+
+    margin-top: 65%;
+}

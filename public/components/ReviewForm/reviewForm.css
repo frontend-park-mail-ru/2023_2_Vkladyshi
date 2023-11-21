@@ -1,7 +1,8 @@
 .review-form {
   width: var(--block-width);
   height: auto;
-  margin: 100px auto;
+
+  margin: 0 auto 100px;
 
   background-color: rgb(255, 255, 255);
   border-radius: 7px;

@@ -55,7 +55,7 @@ header {
 }
 
 .header_basket-item {
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
 .margin-header {

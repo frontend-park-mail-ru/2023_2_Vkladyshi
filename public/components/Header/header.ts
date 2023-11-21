@@ -40,7 +40,6 @@ export class Header extends Component {
     store.subscribe('auth', this.subscribeAuthStatus);
     store.subscribe('login', this.subscribeLoginHeaderStatus);
     store.subscribe('logoutStatus', this.subscribeLogoutStatus);
-    // console.log('header');
   }
 
   /**
@@ -123,6 +122,15 @@ export class Header extends Component {
           router.go(
             {
               path: '/settings',
+              props: ''
+            },
+            { pushState: true, refresh: false }
+          );
+          break;
+        case target.closest('.header_basket-item') !== null:
+          router.go(
+            {
+              path: '/watchlist',
               props: ''
             },
             { pushState: true, refresh: false }

@@ -51,6 +51,15 @@ interface addComment {
   text: string;
 }
 
+interface favoriteFilms {
+  page: number;
+  per_page: number;
+}
+
+interface addFavoriteFilm {
+  film_id: number;
+}
+
 // interface auth {
 //   status: number,
 //   login: string

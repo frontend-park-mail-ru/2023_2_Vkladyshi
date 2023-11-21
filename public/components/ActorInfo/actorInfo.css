@@ -123,9 +123,10 @@
 }
 
 .film-page__theme__content-block {
-  width: 1150px;
+  width: 80%;
   display: grid;
-  grid-template-columns: 25% 75%;
+  /*grid-template-columns: 25% 75%;*/
+  grid-template-columns: minmax(300px, auto) auto;
   grid-gap: 30px;
   margin-top: 20px;
   padding-bottom: 100px;
@@ -255,7 +256,7 @@
   /*opacity: 0.6;*/
   border-radius: 10px;
   background-color: hsla(0, 0%, 100%, 0.18);
-  cursor: pointer;
+  cursor: not-allowed;
   padding: 10px 20px;
   transition: all 0.5s ease;
 }
@@ -275,12 +276,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: not-allowed;
   /*opacity: 0.6;*/
 
   border-radius: 10px;
   margin-left: 20px;
   background-color: hsla(0, 0%, 100%, 0.18);
-  cursor: pointer;
   padding: 10px 20px;
   transition: all 0.5s ease;
 }
@@ -360,11 +361,19 @@
   }
 
   .film-page__theme__content-block {
+    /*width: 100%;*/
+    /*grid-template-columns: auto;*/
+    /*flex-direction: column;*/
+
+    /*justify-content: center;*/
     width: 100%;
     grid-template-columns: auto;
     flex-direction: column;
-
     justify-content: center;
+    align-items: center;
+    align-content: center;
+    display: flex;
+
   }
 
   .rating {

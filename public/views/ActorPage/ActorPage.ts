@@ -3,7 +3,7 @@ import { countLikeFilm, desc, info, LkStar } from '@utils/config';
 import { store } from '@store/store';
 import { actionActor } from '@store/action/actionTemplates';
 import { image } from '@components/Image/image';
-import {actorInfo} from "@components/ActorInfo/actorInfo";
+import { actorInfo } from '@components/ActorInfo/actorInfo';
 
 export interface ActorDescritionPage {
   state: {

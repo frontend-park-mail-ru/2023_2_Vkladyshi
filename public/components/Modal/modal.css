@@ -1,0 +1,50 @@
+.modal {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 3;
+    transition: all 0.5s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal.active-modal {
+    overflow: hidden;
+}
+
+.modal.none-active-modal {
+    display: none;
+    overflow: visible;
+}
+
+.modal__window {
+    width: 400px;
+    height: 200px;
+    background: white;
+    border-radius: 7px;
+}
+
+.modal__window__title {
+    font-size: 19px;
+    color: black;
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.modal__window__body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.modal__window__button {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.direction {
+ width: 80%;
+}

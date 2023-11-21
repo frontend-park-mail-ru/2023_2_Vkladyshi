@@ -133,9 +133,33 @@ class ActionsUser {
     };
   }
 
+  async favoriteFilms ({ page, per_page }: favoriteFilms) {
+    const response = get({
+      url: urls.favoriteFilms,
+      query: { page: page, per_page: per_page }
+    });
+
+    const result = await response;
+    return {
+      favoriteFilms: result
+    };
+  }
+
   async removeView () {
     return {
       removeView: true
+    };
+  }
+
+  async addFavoriteFilm({ film_id }: addFavoriteFilm) {
+    const response = post({
+      url: urls.addFavoriteFilm,
+      body: { film_id: film_id }
+    });
+
+    const result = await response;
+    return {
+      addFavoriteFilm: result
     };
   }
 }

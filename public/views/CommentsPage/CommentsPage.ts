@@ -5,8 +5,7 @@ import {
   actionAuth,
   actionGetCommentsUser
 } from '@store/action/actionTemplates';
-import {desc, review, reviewForm} from '@utils/config';
-import {image} from "@components/Image/image";
+import { desc, review, reviewForm } from '@utils/config';
 
 export interface CommentsPage {
   state: {
@@ -55,15 +54,11 @@ export class CommentsPage extends View {
   insertComments () {
     const comments = document.createElement('all-comments');
     const contentBlockHTML = document.querySelector('.content-block') as HTMLElement;
-    // contentBlockHTML.style.marginTop = '100px';
     comments?.insertAdjacentHTML('beforeend', reviewForm.render({ login: true }));
     comments.style.display = 'flex';
     comments.style.flexDirection = 'column';
-    // const reviewFormHTML = document.querySelector('.review-form') as HTMLElement;
-    // reviewFormHTML.style.marginTop = '100px';
 
     const result = this.state.commentsInfo['comment'];
-    // console.log(result[0].film_id, result)
 
     result.forEach((res) => {
       const table = {
@@ -92,19 +87,6 @@ export class CommentsPage extends View {
 
       comments?.appendChild(reviewHTML);
     });
-    // const mainHTML = document.querySelector('main');
-    // mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
-    //
-    // const icon = document.querySelector('.image-container') as HTMLElement;
-    // const iconsShadow = document.querySelector('.header__container__shadow') as HTMLElement;
-    //
-    // icon!.style.backgroundImage = 'url("' + '/icons/barbie.jpg' + '")';
-    // icon!.style.backgroundAttachment = 'fixed';
-    // iconsShadow!.style.backgroundAttachment = 'fixed';
-    //
-    // const containerHTML = document.querySelector('.image-container');
-    // containerHTML?.insertAdjacentHTML('beforeend', desc.render(result));
-
     contentBlockHTML?.appendChild(comments);
     reviewForm.event(result[0].film_id);
 

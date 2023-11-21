@@ -24,7 +24,9 @@ class Router {
     this.privateMapViews = new Map();
 
     this.subscribeRouterLogout = this.subscribeRouterLogout.bind(this);
+    this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
 
+    store.subscribe('login', this.subscribeSigninStatus);
     store.subscribe('logoutStatus', this.subscribeRouterLogout);
   }
 
@@ -37,8 +39,6 @@ class Router {
   refresh (redirect = false) {
     const url = new URL(window.location.href);
     const names = url.pathname.split('/');
-
-    // console.log(this.privateMapViews, this.mapViews);
 
     if (
       this.mapViews.get(url.pathname) ||
@@ -109,17 +109,19 @@ class Router {
       return;
     }
 
+    console.log(store.state);
+
     view = this.privateMapViews.get(stateObject.path);
     if (view) {
-      store.dispatch(actionAuth()).then(() => {
-        const status = store.getState('auth').status;
-        if (status !== 200) {
-          view = this.mapViews.get('/login');
-          stateObject = { props: '', path: '/login' };
-        }
+      // store.dispatch(actionAuth());
+      if (store.getState('auth')?.status !== 200) {
+        view = this.mapViews.get('/login');
+        stateObject = { props: '', path: '/login' };
         view?.render(stateObject.props);
         this.navigate(stateObject, pushState);
-      });
+      }
+
+      view?.render(stateObject.props);
       this.navigate(stateObject, pushState);
     }
   }
@@ -146,6 +148,7 @@ class Router {
     const logout = store.getState('logoutStatus');
 
     if (logout === 200) {
+      store.setState({ auth: { status: 400 } });
       this.go(
         {
           path: '/',
@@ -154,6 +157,12 @@ class Router {
         { pushState: true, refresh: false }
       );
     }
+  }
+
+  subscribeSigninStatus () {
+    const status = store.getState('login').status;
+    store.setState({ auth: { status: status } });
+    // store.dispatch(actionAuth(true));
   }
 }
 

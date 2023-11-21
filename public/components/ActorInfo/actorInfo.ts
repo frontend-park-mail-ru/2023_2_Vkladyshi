@@ -1,6 +1,6 @@
 import { Component } from '@components/component';
 import * as templateActorInfo from '@components/ActorInfo/actorInfo.hbs';
-import {ROOT} from '@utils/config';
+import { ROOT } from '@utils/config';
 
 /**
  * Класс рендеринга авторизации

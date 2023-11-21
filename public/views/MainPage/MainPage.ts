@@ -1,8 +1,10 @@
 import { View } from '@views/view';
-import { commentsPage, filmSelectionPage } from '@utils/config';
+import { filmSelectionPage } from '@utils/config';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
 import { slider } from '@components/Slider/slider';
+import {store} from "@store/store";
+import {actionAddFavoriteFilm} from "@store/action/actionTemplates";
 
 /**
  * Класс формирования главной страницы
@@ -45,6 +47,21 @@ export class MainPage extends View {
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       switch (true) {
+        case event.target.closest('.image-watchlist') !== null:
+          if (store.getState('auth').status === 200) {
+            const filmFavoriteId = event.target.closest('.film-selection_film').getAttribute('data-section');
+            store.dispatch(actionAddFavoriteFilm({film_id: filmFavoriteId}));
+          } else {
+            router.go(
+                {
+                  path: '/login',
+                  props: ``
+                },
+                { pushState: true, refresh: false }
+            );
+          }
+
+          break;
         case event.target.closest('.film-selection_film') !== null:
           const filmId = event.target
             .closest('.film-selection_film')

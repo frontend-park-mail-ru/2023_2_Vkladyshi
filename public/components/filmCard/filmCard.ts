@@ -10,17 +10,22 @@ export class FilmCard extends Component {
   con;
   /**
    * Метод рендеринга элемента
-   * @param response
-   * @return {string}
+   * @returns {string}
+   * @param film.film
+   * @param film.alreadyFavorite
+   * @param film
    */
-  render (response) {
-    const film = response.films.film1;
+  render ({ film, alreadyFavorite }) {
+    // const film = response;
     const result = {
-      id: film.film_id,
+      id: film.film.id,
       title: film.title,
       poster: film.poster,
-      rating: film.rating
+      rating: film.rating.toFixed(1),
+      alreadyFavorite: alreadyFavorite
     };
+
+    // console.log(film, 11111, result);
 
     return templateFilmCard(result);
   }

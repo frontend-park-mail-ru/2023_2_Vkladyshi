@@ -181,6 +181,27 @@ const comments = {
   // },
 };
 
+const favoriteFilms = {
+  status: 200,
+  body: {
+    collection_name: 'Новинки',
+    films: {
+      film1: {
+        film: {id: 3},
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111111',
+        rating: 4.5,
+      },
+      film2: {
+        film: {id: 8},
+        poster: '/icons/Poster.jpg',
+        title: 'film_2',
+        rating: 4.1,
+      },
+    }
+  }
+}
+
 const films = {
   status: 200,
   body: {
@@ -425,8 +446,15 @@ app.use('/registration', (req, res) => {
 // const csrf = require('csurf');
 // const csrfProtection = csrf({ cookie: true });
 
-// app.use(csrfProtection);
+// app.use(csrfProtection); //'/api/v1/favorite/add'
 app.get('/api/v1/csrf', (req, res) => {
+  //res.set('x-csrf-token', req.csrfToken());
+  return res.status(200).json({
+    status: 200,
+  });
+});
+
+app.post('/api/v1/favorite/add', (req, res) => {
   //res.set('x-csrf-token', req.csrfToken());
   return res.status(200).json({
     status: 200,
@@ -481,6 +509,13 @@ app.get('/selection', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/watchlist', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/api/v1/favorite', (req, res) => {
+  return res.status(200).json(favoriteFilms);
+});
 app.get('/settings', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });

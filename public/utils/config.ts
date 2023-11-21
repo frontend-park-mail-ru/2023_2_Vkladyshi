@@ -26,9 +26,9 @@ import { ReviewForm } from '@components/ReviewForm/reviewForm';
 import { CommentsPage } from '@views/CommentsPage/CommentsPage';
 import { Review } from '@components/Review/review';
 import { UserDataForm } from '@components/UserDataForm/userDataForm';
+import { favoritePage } from '@views/FavoritePage/FavoritePage';
 
 export const ROOT = document.querySelector('#root');
-
 export const DOMAIN = 'http://127.0.0.1:8001';
 // export const DOMAIN = 'https://movie-hub.ru';
 
@@ -40,6 +40,12 @@ export const urls = {
   actor: '/api/v1/actor',
   comments: '/api/v1/comment',
   addComment: '/api/v1/comment/add',
+
+  favoriteFilms: '/api/v1/favorite',
+  addFavoriteFilm: '/api/v1/favorite/add',
+  createDirection: '/api/v1/direction/create',
+  moveFilms: '/api/v1/favorites/move',
+
   settings: '/api/v1/settings',
   profile: '/profile',
   signin: '/signin',
@@ -52,7 +58,8 @@ export const urls = {
 export const methods = {
   post: 'POST',
   get: 'GET',
-  put: 'PUT'
+  put: 'PUT',
+  delete: 'DELETE',
 };
 
 export const responseStatuses = {
@@ -183,5 +190,7 @@ export const routes = [
 ];
 
 export const privateRoutes = [
-  { path: '/settings', view: userPage }
+  { path: '/settings', view: userPage },
+  { path: '/watchlist', view: favoritePage },
+  { path: '/watchlist/directory', view: favoritePage }
 ];

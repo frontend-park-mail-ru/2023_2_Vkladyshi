@@ -59,7 +59,7 @@ export const actionGetCommentsUser = (params: paginator) => ({
   value: params
 });
 
-export const actionGetCommentsFilm = (params: paginatorFilm) => ({
+export const actionGetCommentsFilm = (params: { film_id: number; per_page: number; page: number }) => ({
   type: 'filmComments',
   value: params
 });
@@ -68,3 +68,13 @@ export const actionAddComment = (params: addComment) => ({
   type: 'addComment',
   value: params
 });
+
+export const actionFavoriteFilms = (params: favoriteFilms) => ({
+  type: 'favoriteFilms',
+  value: params
+});
+
+ export const actionAddFavoriteFilm = (params: addFavoriteFilm) => ({
+   type: 'addFavoriteFilm',
+   value: params
+ })

@@ -6,10 +6,7 @@ const handlers = [
   { type: 'signup', method: actionsUser.signup.bind(actionsUser) },
   { type: 'auth', method: actionsUser.auth.bind(actionsUser) },
   { type: 'logout', method: actionsUser.logout.bind(actionsUser) },
-  {
-    type: 'putSettings',
-    method: actionsUser.updateSettings.bind(actionsUser)
-  },
+  { type: 'putSettings', method: actionsUser.updateSettings.bind(actionsUser) },
   {
     type: 'userComments',
     method: actionsUser.userComments.bind(actionsUser)
@@ -17,6 +14,10 @@ const handlers = [
   {
     type: 'addComment',
     method: actionsUser.addComment.bind(actionsUser)
+  },
+  {
+    type: 'favoriteFilms',
+    method: actionsUser.favoriteFilms.bind(actionsUser)
   },
   {
     type: 'filmComments',
@@ -29,6 +30,10 @@ const handlers = [
   {
     type: 'csrf',
     method: actionsUser.getCsrf.bind(actionsUser)
+  },
+  {
+    type: 'addFavoriteFilm',
+    method: actionsUser.addFavoriteFilm.bind(actionsUser)
   },
   {
     type: 'collectionMain',

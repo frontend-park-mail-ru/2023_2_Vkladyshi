@@ -52,8 +52,10 @@ export class Slider {
         this.slideIndex = 1;
       }
 
-      slides[this.slideIndex - 1].style.display = 'block';
-      setTimeout(this.showSlidesAuto.bind(this), 7000);
+      try {
+        slides[this.slideIndex - 1].style.display = 'block';
+        setTimeout(this.showSlidesAuto.bind(this), 7000);
+      } catch {}
     }
 
     addEvents () {

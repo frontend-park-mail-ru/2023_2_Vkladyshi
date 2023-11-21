@@ -1,0 +1,54 @@
+.favorite-films {
+    color: white;
+    /*margin-top: 100px;*/
+    width: 100%;
+    flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    /*position: absolute;*/
+}
+
+.favorite-films__header {
+    border-bottom: 1px solid #ffffff;
+    margin-top: 100px;
+    width: 100%;
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.film-favorite__header__create {
+    width: 100%;
+    font-family: Montserrat, serif;
+    font-size: 16px;
+    transition: all 0.5s ease;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+
+.film-favorite__header__title {
+    width: 100%;
+    padding-bottom: 10px;
+    color: #ffffff;
+    font-family: Montserrat, serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.96px;
+    text-align: left;
+}
+
+.film-favorite__header__create:hover {
+    opacity: 0.7;
+}
+
+.create-direction {
+    cursor: pointer;
+    transition: all 0.5s ease;
+}
+
+.create-direction:hover {
+    opacity: 0.7;
+}

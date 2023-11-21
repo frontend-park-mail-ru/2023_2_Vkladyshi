@@ -92,6 +92,7 @@ export class SigninPage extends View {
         'beforeend',
         inputButton.render({ wrap: 'login', module: 'signin' })
       );
+
       passwordText!.insertAdjacentHTML(
         'beforeend',
         inputButton.render({
@@ -100,6 +101,7 @@ export class SigninPage extends View {
           type: 'password'
         })
       );
+
       button!.insertAdjacentHTML(
         'afterbegin',
         buttonSubmit.render({ text: 'Войти' })
