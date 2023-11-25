@@ -30,7 +30,7 @@ import { favoritePage } from '@views/FavoritePage/FavoritePage';
 
 export const ROOT = document.querySelector('#root');
 export const DOMAIN = 'http://127.0.0.1:8001';
-// export const DOMAIN = 'https://movie-hub.ru';
+//export const DOMAIN = 'https://movie-hub.ru';
 
 export const urls = {
   main: '/',
@@ -40,12 +40,12 @@ export const urls = {
   actor: '/api/v1/actor',
   comments: '/api/v1/comment',
   addComment: '/api/v1/comment/add',
-
-  favoriteFilms: '/api/v1/favorite',
-  addFavoriteFilm: '/api/v1/favorite/add',
-  createDirection: '/api/v1/direction/create',
-  moveFilms: '/api/v1/favorites/move',
-
+  favoriteFilms: '/api/v1/favorite/films',
+  favoriteActors: '/api/v1/favorite/actors',
+  addFavoriteFilm: '/api/v1/favorite/film/add',
+  addFavoriteActor: '/api/v1/favorite/actor/add',
+  removeFilm: '/api/v1/favorite/film/remove',
+  removeActor: '/api/v1/favorite/actor/remove',
   settings: '/api/v1/settings',
   profile: '/profile',
   signin: '/signin',
@@ -59,7 +59,7 @@ export const methods = {
   post: 'POST',
   get: 'GET',
   put: 'PUT',
-  delete: 'DELETE',
+  delete: 'DELETE'
 };
 
 export const responseStatuses = {
@@ -153,8 +153,6 @@ export const config = {
 export const header = new Header(ROOT);
 
 export const collections = {
-  collections: {
-    collection1: {
       collection_name: 'Жанры',
       collection_items: [
         { key: 'Боевики', value: 5 },
@@ -173,8 +171,6 @@ export const collections = {
         { key: 'Триллер', value: 14 },
         { key: 'Фэнтези', value: 15 }
       ]
-    }
-  }
 };
 
 export const routes = [
@@ -185,12 +181,11 @@ export const routes = [
   { path: '/films', view: filmSelectionPage },
   { path: '/actor', view: actorPage },
   { path: '/film', view: filmPage },
-  // { path: '/settings', view: userPage },
   { path: '/comments', view: commentsPage }
 ];
 
 export const privateRoutes = [
   { path: '/settings', view: userPage },
-  { path: '/watchlist', view: favoritePage },
-  { path: '/watchlist/directory', view: favoritePage }
+  { path: '/watchlist/films', view: favoritePage },
+  { path: '/watchlist/actors', view: favoritePage }
 ];

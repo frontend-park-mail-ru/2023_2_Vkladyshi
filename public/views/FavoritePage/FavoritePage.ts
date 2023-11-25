@@ -1,15 +1,16 @@
 import { View } from '@views/view';
 import { filmSelectionPage, ROOT } from '@utils/config';
-import { favoriteFilms } from '@components/FavoriteFilms/favoriteFilms';
+import { favoriteList } from '@components/FavoriteList/favoriteList';
 import { store } from '@store/store';
-import { actionFavoriteFilms } from '@store/action/actionTemplates';
+import {
+  actionAddFavoriteFilm,
+  actionFavoriteActors,
+  actionFavoriteFilms, actionRemoveFavoriteActor,
+  actionRemoveFavoriteFilm
+} from '@store/action/actionTemplates';
 import { FilmCard } from '@components/filmCard/filmCard';
-import {router} from "@router/router";
-import {DirectoryFilms} from "@components/DirectoryFilms/directoryFilms";
-import {modal} from "@components/Modal/modal";
-import {removeErrors, removeErrorsActive} from "@utils/addError";
-import {inputButton} from "@components/inputButton/inputButton";
-import {buttonSubmit} from "@components/ButtonSubmit/buttonSubmit";
+import { router } from '@router/router';
+import { ActorCard } from '@components/ActorCard/actorCard';
 
 export interface FavoritePage {
     state: {
@@ -29,131 +30,128 @@ export class FavoritePage extends View {
       };
 
       store.subscribe('favoriteFilms', this.subscribeFavoriteFilms.bind(this));
+      store.subscribe('favoriteActors', this.subscribeFavoriteActor.bind(this));
     }
 
     render () {
       this.renderDefaultPage();
-
       const contentBlockHTML = document.querySelector('.content-block') as HTMLElement;
       contentBlockHTML.style.display='flex';
 
-      contentBlockHTML?.insertAdjacentHTML('beforeend', favoriteFilms.render(false));
-      store.dispatch(actionFavoriteFilms({ page: 1, per_page: 10 }));
+      // console.log(store.state, 1212);
 
-        const mainHTML = document.querySelector('main');
-        mainHTML?.insertAdjacentHTML('afterbegin', modal.render(true));
+      if (window.location.pathname === '/watchlist/films') {
+        contentBlockHTML?.insertAdjacentHTML('beforeend', favoriteList.render({ title: 'Список фильмов', redirect: 'Любимые акторы' }));
+        store.dispatch(actionFavoriteFilms({ page: 1, per_page: 20 }));
+        return;
+      }
 
-        const modalHTML = document.querySelector('.modal');
-        const bodyHTML = document.querySelector('.modal__window__body');
-        const buttonHTML = document.querySelector('.modal__window__button');
-
-        modalHTML?.classList.add('none-active-modal');
-
-        bodyHTML!.insertAdjacentHTML(
-            'beforeend',
-            inputButton.render({ wrap: 'direction', module: 'modal' })
-        );
-
-        buttonHTML!.insertAdjacentHTML(
-            'beforeend',
-            buttonSubmit.render({ text: 'Создать' })
-        );
+      contentBlockHTML?.insertAdjacentHTML('beforeend', favoriteList.render({ title: 'Список актёров', redirect: 'Любимые фильмы' }));
+      store.dispatch(actionFavoriteActors({ page: 1, per_page: 20 }));
     }
 
-    componentDidMount () {
-        const dragstart = (event) => {
-            event.dataTransfer.setData('dragItem', event.target.dataset.section);
-            // console.log('dragstart')
-        }
+    componentDidMount (isFilms = true) {
+      const popupEvent = (event) => {
+        this.popupEvent = popupEvent;
+        const filmId = event.target.closest('.film-selection_film')?.getAttribute('data-section');
+        const actorId = event.target.closest('.actor-selection_actor')?.getAttribute('data-section');
 
-        const movalEvent = (event) => {
-            switch (true) {
-                case event.target.closest('.modal__window') === null:
-                    modal.displayNone();
-                    break;
-                case event.target.closest('.button-submit') !== null:
-                    const inputText = document.querySelector('.direction-input-modal') as HTMLInputElement;
-                    const contentBlockHTML = document.querySelector('.favorite-films__header') as HTMLInputElement;
-                    // console.log(inputText.value.trim());
-                    modal.displayNone();
+        switch (true) {
+          case event.target.closest('.image-cancel') !== null:
+            let id;
 
-                    const directory = new DirectoryFilms(ROOT);
-                    const buf = document.createElement('div') as HTMLElement;
-                    buf.innerHTML = directory.render({directionName: inputText.value.trim()});
-
-                    const dir = buf.querySelector('.directory-films') as HTMLElement;
-                    dir.addEventListener('dragenter', dragenter);
-                    dir.addEventListener('dragleave', dragleave);
-                    dir.addEventListener('dragover', dragover);
-                    dir.addEventListener('drop', drop.bind(dir));
-
-                    contentBlockHTML.insertAdjacentElement('afterend', dir);
-
-                    break;
-                default:
-                    break;
+            if (isFilms) {
+                id = filmId;
+              store.dispatch(actionRemoveFavoriteFilm({ film_id: filmId }));
+            } else {
+                id = actorId;
+              store.dispatch(actionRemoveFavoriteActor({ actor_id: actorId }));
             }
-        };
 
-        const dragenter = (event) => {
-            event.preventDefault()
-            const target = event.target;
-            target.style.opacity = 0.7;
-        }
-
-        const dragleave = (event) => {
-            const target = event.target;
-            target.style.opacity = 1;
-        }
-
-        const dragover = (event) => {
-            event.preventDefault();
-        }
-
-        const drop = (event) => {
-           const flag = event.dataTransfer.getData('dragItem');
-           const element = document.querySelector(`[data-section="${flag}"]`);
+            const element = document.querySelector(`[data-section="${id}"]`);
             element?.remove();
+            break;
+          case event.target.closest('.film-selection_film') !== null:
+            this.componentWillUnmount();
+            router.go(
+              {
+                path: '/film',
+                props: `/${filmId}`
+              },
+              { pushState: true, refresh: false }
+            );
+            break;
+          case event.target.closest('.redirect-to-favorite') !== null:
+            this.componentWillUnmount();
+            if (isFilms) {
+              router.go(
+                {
+                  path: '/watchlist/actors',
+                  props: ``
+                },
+                { pushState: true, refresh: false }
+              );
+            } else {
+              router.go(
+                {
+                  path: '/watchlist/films',
+                  props: ``
+                },
+                { pushState: true, refresh: false }
+              );
+            }
+            break;
+          case event.target.closest('.actor-selection_actor') !== null:
+            this.componentWillUnmount();
+            router.go(
+              {
+                path: '/actor',
+                props: `/${actorId}`
+              },
+              { pushState: true, refresh: false }
+            );
+            break;
+          default:
+            break;
         }
+      };
 
-        const elements = document.querySelectorAll('.film-selection_film');
-        const dirs = document.querySelectorAll('.directory-films');
-
-        elements.forEach(item => {
-            item.addEventListener('dragstart', dragstart.bind(item));
-        })
-
-        dirs.forEach(dir => {
-            dir.addEventListener('dragenter', dragenter);
-            dir.addEventListener('dragleave', dragleave);
-            dir.addEventListener('dragover', dragover);
-            dir.addEventListener('drop', drop.bind(dir));
-        })
-
-        const createDir = document.querySelector('.create-direction');
-        createDir?.addEventListener('click', (event) => {
-            const modalHTML = document.querySelector('.modal');
-
-            modal.displayActive();
-
-            modalHTML?.addEventListener('click', movalEvent);
-        });
+      const elements = document.querySelector('.favorite');
+      elements?.addEventListener('click', popupEvent.bind(elements));
     }
 
     componentWillUnmount () {
     }
 
     subscribeFavoriteFilms () {
-        const contentBlockHTML = document.querySelector('.favorite-films') as HTMLElement;
-        const films = store.getState('favoriteFilms').body.films;
+      const contentBlockHTML = document.querySelector('.favorite__body') as HTMLElement;
+      const films = store.getState('favoriteFilms')?.body.films;
 
-        for (const film in films) {
-            const filmCard = new FilmCard(ROOT);
-            contentBlockHTML?.insertAdjacentHTML('beforeend', filmCard.render({ film: films[film], alreadyFavorite: true }));
-        }
+      for (const film in films) {
+        const filmCard = new FilmCard(ROOT);
+        contentBlockHTML?.insertAdjacentHTML('beforeend', filmCard.render({ film: films[film], alreadyFavorite: true }));
+      }
 
-        this.componentDidMount();
+      this.componentDidMount(true);
+    }
+
+    subscribeFavoriteActor () {
+      const contentBlockHTML = document.querySelector('.favorite__body') as HTMLElement;
+      const actors = store.getState('favoriteActors')?.body.actors;
+      // console.log(actors);
+      for (const actor in actors) {
+        const actorCard = new ActorCard(ROOT);
+        contentBlockHTML?.insertAdjacentHTML('beforeend', actorCard.render({ actor: actors[actor], alreadyFavorite: true }));
+      }
+
+      this.componentDidMount(false);
     }
 }
 
 export const favoritePage = new FavoritePage(ROOT);
+
+/*
+* <iframe class="mbr-background-video" id="ytplayer-95a211" style="margin-top: 0px; max-width: initial; transition-property: opacity; transition-duration: 1000ms; pointer-events: none; position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; transform: scale(1.2);" frameborder="0" allowfullscreen="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" title="INSIDE OUT 2 – FULL TRAILER (2024) Disney Pixar Studios" width="1872" height="1053" src="https://www.youtube.com/embed/r2ofrRyJRZo?autoplay=1&amp;mute=0&amp;controls=0&amp;enablejsapi=1&amp;allowfullscreen=true&amp;iv_load_policy=3&amp;modestbranding=1&amp;origin=https%3A%2F%2Flab-mobirise-ai.ui-api.com&amp;rel=0&amp;mode=transparent&amp;showinfo=0&amp;html5=1&amp;version=3&amp;playerapiid=iframe_YTP_1624972482514&amp;widget_referrer=https%3A%2F%2Fai.mobirise.com%2F&amp;widgetid=1"></iframe>
+*
+*
+* */

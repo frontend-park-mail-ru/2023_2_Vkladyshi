@@ -1,0 +1,18 @@
+<div class='actor-selection_actor' data-section='{{id}}' draggable="true">
+    <div
+            class='actor-selection_actor-poster'
+            style='background-image: url("{{poster}}")'
+    >
+        <div class='actor-selection_actor-poster'>
+            <div class='actor-selection_actor_header'>
+                {{#if alreadyFavorite}}
+                    <img class='image-cancel' src='/icons/cancel.png' />
+                {{else}}
+                    <img class='image-watchlist' src='/icons/bookmark.png' />
+                {{/if}}
+            </div>
+        </div>
+        <div class='actor-selection_actor-information'>
+            <div class='actor-selection_actor_name'>{{title}}</div>
+        </div>
+    </div>

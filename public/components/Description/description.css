@@ -1,12 +1,10 @@
-
-.film-page__theme {
-    /*background: rgb(31,31,31);*/
+.actor-page__theme {
     width: 100%;
     display: flex;
     justify-content: center;
 }
 
-.film-page__comments__header {
+.actor-page__comments__header {
     color: white;
     font-size: 32px;
 
@@ -15,10 +13,9 @@
     margin-bottom: 20px;
 }
 
-.film-page__theme__content-block {
+.actor-page__theme__content-block {
     width: 1150px;
     display: grid;
-    /*grid-template-columns: auto auto;*/
     grid-template-columns: minmax(300px, auto) auto;
     grid-gap: 30px;
     margin-top: 20px;
@@ -26,12 +23,12 @@
 }
 
 .param-list {
+    font-size: 19px;
     text-align: center;
     padding: 0;
 }
 
-.film-page__comments {
-    /*width: var(--block-width);*/
+.actor-page__comments {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,25 +39,24 @@
     grid-row-start: 1;
 }
 
-.film-name {
+.actor-name {
     font-size: 42px;
     color: white;
     text-align: center;
     line-height: 44px;
 }
 
-.info {
-    font-size: 15px;
+.film-info {
+    font-size: 22px;
     color: white;
     font-style: normal;
     font-weight: 400;
-    line-height: 22px;
+    line-height: 34px;
     overflow: hidden;
     text-overflow: ellipsis;
     grid-column-start: 2;
     grid-row-start: 2;
-
-
+    text-align: center;
 }
 
 .number {
@@ -121,8 +117,7 @@
     opacity: 0.7;
 }
 
-.film-page {
-    /*background: rgb(31,31,31);*/
+.actor-page {
     font-family: Montserrat;
     position: relative;
     margin-top: 80px;
@@ -142,7 +137,6 @@
 }
 
 .video-content-image {
-    /*background-image: url("jn.jpg");*/
     width: 250px;
     height: 100%;
     background-size: cover;
@@ -153,7 +147,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /*opacity: 0.6;*/
     border-radius: 10px;
     background-color: hsla(0, 0%, 100%, 0.18);
     cursor: pointer;
@@ -176,8 +169,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    /*opacity: 0.6;*/
-
     border-radius: 10px;
     margin-left: 20px;
     background-color: hsla(0, 0%, 100%, 0.18);
@@ -203,7 +194,6 @@
     font-weight: 500;
     height: 20px;
     line-height: 20px;
-
     color: white;
 }
 
@@ -213,7 +203,6 @@
 }
 
 .actor-poster {
-    /*background-image: url("/icons/star.png");*/
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center center;
@@ -260,7 +249,7 @@
         height: 420px;
     }
 
-    .film-page__theme__content-block {
+    .actor-page__theme__content-block {
         width: 100%;
         grid-template-columns: auto;
         flex-direction: column;
@@ -274,7 +263,7 @@
         grid-column: 1;
     }
 
-    .film-name {
+    .actor-name {
         text-align: center;
     }
 
@@ -304,7 +293,7 @@
         text-align: center;
     }
 
-    .info {
+    .film-info {
         text-align: center;
         grid-row: 3;
         grid-column: 1;

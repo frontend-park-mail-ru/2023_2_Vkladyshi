@@ -37,7 +37,7 @@ export class FilmSelection extends Component {
 }
 
 const getKeyByValue = (value) => {
-  const collectionItems = collections.collections.collection1.collection_items;
+  const collectionItems = collections.collection_items;
   for (const item of collectionItems) {
     if (item.value === value) {
       return item.key;

@@ -1,24 +1,69 @@
-<div class='popup-select-collection'>
-  <div class='select-collection'>
-    <div class='select-collection-frame'>
-      <div class='select-collection-frame-header'>
-        <img class='select-collection-frame-img' src='/icons/arrow_left.svg' />
-        <p class='select-collection-frame-header-name'> MovieHub</p>
-      </div>
-      <div class='select-collection-frame-lists'>
-        {{#each collections}}
-          <div class='select-collection-frame-list'>
-            <p class='select-collection-frame-list-header'>
-              {{collection_name}}</p>
-            {{#each collection_items}}
-              <p
-                class='select-collection-frame-list-item'
-                data-section='{{this.value}}'
-              >{{this.key}}</p>
-            {{/each}}
-          </div>
-        {{/each}}
-      </div>
+<div class="search-container">
+    <div class="search-container__header">Расширенный поиск по названию</div>
+    <div class="search-container__text">Откройте для себя надежный поиск по заголовкам на IMDb. Комбинируйте и сопоставляйте информацию, чтобы уточнить результаты поиска. Ищете канадские фильмы ужасов 1970-х годов с оценкой выше 6 по крайней мере 100 пользователей? Найдите их здесь. Все поля ниже необязательны, но для поиска необходимо хотя бы одно. Для диапазонов (дата выпуска, голоса) используйте «min» для большего/после и «max» для меньшего/до. Вы также можете нажать «Ввод» после установки флажка или фокусировки на поле.
     </div>
-  </div>
+    <div class="search-container__select">
+        <div class="search-container__select__films">
+            <img class="image-select" src="/icons/youtube.png">
+            <div class="text-select">Фильмы</div>
+        </div>
+        <div class="search-container__select__actors">
+            <img class="image-select" src="/icons/people.png">
+            <div class="text-select">Актёры</div>
+        </div>
+    </div>
+    <div class="search-container__result-button">
+        <div class="result-button">Результаты</div>
+    </div>
+    <div class="search-container__main">
+        <div class="search-container__main__left">
+            <div class="search-container__main__left__button">
+                <div class="wrap-center title-select">
+                    <div class="text-select">Название</div>
+                    <img class="image-search" src="/icons/icon-button.png">
+                </div>
+<!--                <input class="input-selection" type="text">-->
+            </div>
+            <div class="search-container__main__left__button">
+                <div class="wrap-center genre-select">
+                    <div class="text-select">Жанр</div>
+                    <img class="image-search" src="/icons/icon-button.png">
+                </div>
+            <section class="section-title-type"></section>
+            </div>
+            <div class="search-container__main__left__button">
+                <div class="wrap-center rating-select">
+                    <div class="text-select">Рейтинг</div>
+                    <img class="image-search" src="/icons/icon-button.png">
+                </div>
+                <div class="section-rating noactive">
+                    от
+                    <div class="section-rating__left"></div>
+                    до
+                    <div class="section-rating__right"></div>
+                </div>
+            </div>
+            <div class="search-container__main__left__button mpaa-select">
+                <div class="wrap-center">
+                    <div class="text-select">MPAA</div>
+                    <img class="image-search" src="/icons/icon-button.png">
+                </div>
+            </div>
+            <div class="search-container__main__left__button years-select">
+                <div class="wrap-center">
+                    <div class="text-select">Годы</div>
+                    <img class="image-search" src="/icons/icon-button.png">
+                </div>
+            </div>
+            <div class="search-container__main__left__button actors-select">
+                <div class="wrap-center">
+                    <div class="text-select">Актёры</div>
+                    <img class="image-search" src="/icons/icon-button.png">
+                </div>
+            </div>
+        </div>
+        <div class="search-container__main__right">
+
+        </div>
+    </div>
 </div>

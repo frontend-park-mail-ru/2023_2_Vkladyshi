@@ -1,99 +1,286 @@
-.popup-select-collection {
-  margin-top: 70px;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(255, 255, 255, 0);
-  top: 0;
-  left: 0;
-  transition: all 0.5s ease 0s;
+/*.popup-select-collection {*/
+/*  margin-top: 70px;*/
+/*  position: relative;*/
+/*  width: 100%;*/
+/*  height: 100%;*/
+/*  background-color: rgba(255, 255, 255, 0);*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  transition: all 0.5s ease 0s;*/
+/*}*/
+
+/*.select-collection {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  margin-top: 10vh;*/
+/*}*/
+
+/*.select-collection-frame {*/
+/*  width: 500px;*/
+/*  border-radius: 45px;*/
+/*  background-color: rgb(98, 98, 93);*/
+/*  transition: all 1s ease 0s;*/
+/*}*/
+
+/*.select-collection-frame-header {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*  align-items: center;*/
+/*  width: 100%;*/
+/*  height: 5%;*/
+/*}*/
+
+/*.select-collection-frame-img {*/
+/*  width: 7%;*/
+/*  height: auto;*/
+/*  margin-left: 10%;*/
+/*  cursor: pointer;*/
+/*}*/
+
+/*.select-collection-frame-header-name {*/
+/*  width: 85%;*/
+/*  height: auto;*/
+/*  text-align: right;*/
+/*  margin-right: 10%;*/
+/*  color: #000;*/
+/*  font-family: Montserrat, serif;*/
+/*  font-size: 24px;*/
+/*  font-style: normal;*/
+/*  font-weight: 700;*/
+/*  line-height: normal;*/
+/*  letter-spacing: 0.9px;*/
+/*}*/
+
+/*.select-collection-frame-lists {*/
+/*  display: flex;*/
+/*  justify-content: center;*/
+/*}*/
+
+/*.select-collection-frame-list {*/
+/*  display: flex;*/
+/*  flex-direction: column;*/
+/*  width: 27%;*/
+/*  height: auto;*/
+/*  margin-left: 5%;*/
+/*  margin-right: 5%;*/
+/*}*/
+
+/*.select-collection-frame-list-header {*/
+/*  color: #fff;*/
+/*  text-align: center;*/
+/*  font-family: Montserrat, serif;*/
+/*  font-size: 30px;*/
+/*  font-style: normal;*/
+/*  font-weight: 700;*/
+/*  line-height: normal;*/
+/*  letter-spacing: 1.2px;*/
+/*  margin-top: 0;*/
+/*  margin-bottom: 0%;*/
+/*  padding-bottom: 10%;*/
+/*  border-bottom: 2px solid black;*/
+/*  height: auto;*/
+/*  width: auto;*/
+/*}*/
+
+/*.select-collection-frame-list-item {*/
+/*  color: #fff;*/
+/*  text-align: center;*/
+/*  font-family: Montserrat, serif;*/
+/*  font-size: 25px;*/
+/*  font-style: normal;*/
+/*  font-weight: 400;*/
+/*  line-height: normal;*/
+/*  letter-spacing: 0.96px;*/
+/*  width: 100%;*/
+/*  height: auto;*/
+/*  margin-top: 10%;*/
+/*  margin-bottom: 10%;*/
+/*  cursor: pointer;*/
+/*}*/
+
+
+.search-container {
+    width: 80%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin-top: 100px;
 }
 
-.select-collection {
-  display: flex;
-  justify-content: center;
-  margin-top: 10vh;
+.search-container__select__films, .search-container__select__actors {
+    display: flex;
+    flex-direction: row;
+    margin-right: 40px;
+    cursor: pointer;
+
+    justify-items: center;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    transition: all 0.5s ease;
 }
 
-.select-collection-frame {
-  width: 500px;
-  border-radius: 45px;
-  background-color: rgb(98, 98, 93);
-  transition: all 1s ease 0s;
+.search-container__result-button {
+    display: flex;
+    margin-top: 20px;
 }
 
-.select-collection-frame-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 5%;
+.search-container__header {
+    font-size: 32px;
+    /*color: white;*/
+    text-align: left;
+    margin-bottom: 1.5rem;
+    color: #F5C518;
 }
 
-.select-collection-frame-img {
-  width: 7%;
-  height: auto;
-  margin-left: 10%;
-  cursor: pointer;
+.search-container__text {
+    font-size: 22px;
+    /*color: white;*/
+    text-align: left;
+    margin-bottom: 1.5rem;
 }
 
-.select-collection-frame-header-name {
-  width: 85%;
-  height: auto;
-  text-align: right;
-  margin-right: 10%;
-  color: #000;
-  font-family: Montserrat, serif;
-  font-size: 24px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 0.9px;
+.search-container__main__left {
+    width: 37%;
 }
 
-.select-collection-frame-lists {
-  display: flex;
-  justify-content: center;
+.search-container__main__right {
+    width: 63%;
 }
 
-.select-collection-frame-list {
-  display: flex;
-  flex-direction: column;
-  width: 27%;
-  height: auto;
-  margin-left: 5%;
-  margin-right: 5%;
+.search-container__select, .search-container__main {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: row;
 }
 
-.select-collection-frame-list-header {
-  color: #fff;
-  text-align: center;
-  font-family: Montserrat, serif;
-  font-size: 30px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 1.2px;
-  margin-top: 0;
-  margin-bottom: 0%;
-  padding-bottom: 10%;
-  border-bottom: 2px solid black;
-  height: auto;
-  width: auto;
+.image-select {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
 }
 
-.select-collection-frame-list-item {
-  color: #fff;
-  text-align: center;
-  font-family: Montserrat, serif;
-  font-size: 25px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: normal;
-  letter-spacing: 0.96px;
-  width: 100%;
-  height: auto;
-  margin-top: 10%;
-  margin-bottom: 10%;
-  cursor: pointer;
+.text-select {
+    font-size: 20px;
 }
+
+.search-container__main__left {
+    /*height: 500px;*/
+    border-radius: 8px;
+    border: 1px solid #737272;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.search-container__main__right {
+    height: 500px;
+}
+
+.search-container__main__left__button {
+    width: 80%;
+    border-bottom: 1px solid #737272;
+    /*height: 70px;*/
+    cursor: pointer;
+    /*border-bottom: 1px solid red;*/
+    padding-bottom: 10px;
+
+}
+
+.input-selection {
+    width: 100%;
+    margin-bottom: 10px;
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+}
+
+.wrap-center {
+    /*height: 70px;*/
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    transition: all 0.5s ease;
+}
+
+.wrap-center:hover {
+    opacity: 0.7;
+}
+
+.image-search {
+    width: 20px;
+    height: 20px;
+}
+
+.result-button {
+    font-size: 19px;
+    border-radius: 8px;
+    padding: 8px 16px 8px 16px;
+    background: #F5C518;
+    color: black;
+    transition: all 0.5s ease;
+    cursor: pointer;
+
+}
+
+.result-button:hover, .search-container__select__films:hover, .search-container__select__actors:hover {
+    opacity: 0.7;
+}
+
+.title-type {
+    padding: 5px 10px 5px 10px;
+    border-radius: 8px;
+    border: 2px solid white;
+    margin-right: 5px;
+    margin-top: 5px;
+    transition: all 0.5s ease;
+}
+
+.title-type:hover {
+    background: #F5C518;
+    color: black;
+    border: 2px solid #F5C518;
+}
+
+.section-title-type {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    /*margin-bottom: 10px;*/
+}
+
+.active {
+    display: block;
+}
+
+/*.noactive {*/
+/*    display: none;*/
+/*}*/
+
+.section-rating.noactive {
+    display: none;
+}
+
+.section-rating.active {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    /*margin-left: 15px;*/
+}
+
+.section-rating__left, .section-rating__right {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+@media (max-width: 1200px) {
+    .search-container {
+        width: 100%;
+    }
+}
+
+

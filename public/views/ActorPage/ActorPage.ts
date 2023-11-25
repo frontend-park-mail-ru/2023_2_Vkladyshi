@@ -70,7 +70,7 @@ export class ActorDescritionPage extends View {
         date: formattedDate,
         poster: res['poster_href'],
         infoText: res['info_text'] ? res['info_text'] : 'Неизвестно',
-        country: res['country'] ? res['country'] : 'Неизвестно',
+        country: res['country'] ? res['country'] : 'Страна неизвестна',
         career: res['career']
       };
     }

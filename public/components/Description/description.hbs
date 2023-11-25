@@ -24,7 +24,7 @@
                     <div class="cinema">Смотреть</div>
                 </div>
             </div>
-            <div class="info">{{infoText}}</div>
+            <div class="film-info">{{infoText}}</div>
             <div class="rating">
                 <div class="left">
                     <div class="number">{{mark}}</div>
@@ -39,7 +39,7 @@
                 <div class="actors-list">
                 {{#each actors}}
                     <div class="actor table__actor__text" data-section='{{actor_id}}'>
-                        <div class="actor-poster" style='background-image: url("/icons/star.svg")'></div>
+                        <img class="actor-poster" style='background-image: url("{{actor_photo}}")'>
                         <div class="actor-name">{{actor_name}}</div>
                     </div>
                 {{/each}}

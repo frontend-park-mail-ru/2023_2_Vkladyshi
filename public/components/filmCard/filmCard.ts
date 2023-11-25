@@ -16,7 +16,6 @@ export class FilmCard extends Component {
    * @param film
    */
   render ({ film, alreadyFavorite }) {
-    // const film = response;
     const result = {
       id: film.film.id,
       title: film.title,
@@ -24,8 +23,6 @@ export class FilmCard extends Component {
       rating: film.rating.toFixed(1),
       alreadyFavorite: alreadyFavorite
     };
-
-    // console.log(film, 11111, result);
 
     return templateFilmCard(result);
   }

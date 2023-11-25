@@ -51,13 +51,22 @@ interface addComment {
   text: string;
 }
 
-interface favoriteFilms {
+interface paginator {
   page: number;
   per_page: number;
 }
 
-interface addFavoriteFilm {
+// interface favoriteActors {
+//   page: number;
+//   per_page: number;
+// }
+
+interface favoriteFilm {
   film_id: number;
+}
+
+interface favoriteActor {
+  actor_id: number;
 }
 
 // interface auth {

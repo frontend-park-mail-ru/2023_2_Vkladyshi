@@ -18,10 +18,11 @@
 @import './components/ButtonSubmit/buttonSubmit.css';
 @import './components/Image/image.css';
 @import './components/filmCard/filmCard.css';
+@import './components/ActorCard/actorCard.css';
 @import './components/Settings/settings.css';
 @import './components/Slider/slider.css';
 @import './components/ActorInfo/actorInfo.css';
-@import './components/FavoriteFilms/favoriteFilms.css';
+@import './components/FavoriteList/favoriteList.css';
 @import './components/Modal/modal.css';
 @import './router/Page404/page404.css';
 @import './components/DirectoryFilms/directoryFilms.css';

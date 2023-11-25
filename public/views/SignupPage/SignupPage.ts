@@ -71,20 +71,13 @@ export class SignupPage extends View {
       }
     };
 
-    this.subscribeSignupStatus = this.subscribeSignupStatus.bind(this);
-    this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
-    this.redirectToMain = this.redirectToMain.bind(this);
-
-    store.subscribe('statusSignup', this.subscribeSignupStatus);
+    store.subscribe('statusSignup', this.subscribeSignupStatus.bind(this));
   }
 
   /**
    * Метод создания страницы
    */
   render () {
-    // store.subscribe('login', this.redirectToMain);
-    // store.subscribe('auth', this.redirectToMain);
-
     if (document.querySelector('.popupSign') == null) {
       this.renderDefaultPage();
       const mainHTML = document.querySelector('main');
@@ -192,8 +185,8 @@ export class SignupPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
   componentWillUnmount () {
-    store.unsubscribe('login', this.redirectToMain);
-    store.unsubscribe('auth', this.redirectToMain);
+    store.unsubscribe('login', this.redirectToMain.bind(this));
+    store.unsubscribe('auth', this.redirectToMain.bind(this));
 
     const popup = document.querySelector('.popupSign');
     popup?.removeEventListener('click', this.popupEvent);
@@ -322,15 +315,15 @@ export class SignupPage extends View {
     this.state.statusSignup = store.getState('statusSignup');
 
     if (this.handlerStatus()) {
-      store.unsubscribe('auth', this.redirectToMain);
-      store.subscribe('login', this.subscribeSigninStatus);
+      store.unsubscribe('auth', this.redirectToMain.bind(this));
+      store.subscribe('login', this.subscribeSigninStatus.bind(this));
       store.dispatch(actionSignin({ login: this.state.userInfo['login'], password: this.state.userInfo['passwordFirst'] }));
     }
   }
 
   subscribeSigninStatus () {
     if (store.getState('login')) {
-      store.unsubscribe('login', this.subscribeSigninStatus);
+      store.unsubscribe('login', this.subscribeSigninStatus.bind(this));
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
 
@@ -435,11 +428,8 @@ export class SignupPage extends View {
   }
 
   redirectToMain () {
-    const login = store.getState('login');
-
     if (store.getState('login').status === 200) {
-      store.unsubscribe('login', this.redirectToMain);
-      // console.log(1111, 'Signin');
+      store.unsubscribe('login', this.redirectToMain.bind(this));
       router.go(
         {
           path: '/',

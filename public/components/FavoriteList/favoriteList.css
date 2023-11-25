@@ -1,14 +1,15 @@
-.favorite-films {
+.favorite {
     color: white;
-    /*margin-top: 100px;*/
     width: 100%;
     flex-wrap: wrap;
     display: flex;
-    justify-content: center;
-    /*position: absolute;*/
+    align-items: center;
+    flex-direction: column;
 }
 
-.favorite-films__header {
+
+
+.favorite__header {
     border-bottom: 1px solid #ffffff;
     margin-top: 100px;
     width: 100%;
@@ -17,7 +18,8 @@
     justify-content: space-between;
 }
 
-.film-favorite__header__create {
+
+.favorite__header__create {
     width: 100%;
     font-family: Montserrat, serif;
     font-size: 16px;
@@ -27,7 +29,7 @@
     align-items: center;
 }
 
-.film-favorite__header__title {
+.favorite__header__title {
     width: 100%;
     padding-bottom: 10px;
     color: #ffffff;
@@ -40,15 +42,22 @@
     text-align: left;
 }
 
-.film-favorite__header__create:hover {
+.favorite__header__create:hover {
     opacity: 0.7;
 }
 
-.create-direction {
+.redirect-to-favorite {
     cursor: pointer;
     transition: all 0.5s ease;
 }
 
-.create-direction:hover {
+.favorite__body {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+    margin-top: 40px;
+}
+
+.redirect-to-favorite:hover {
     opacity: 0.7;
 }

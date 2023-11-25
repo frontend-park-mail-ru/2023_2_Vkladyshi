@@ -1,119 +1,15 @@
-/*.description {*/
-/*  display: flex;*/
-/*  flex-direction: row;*/
-/*  justify-content: center;*/
-/*  align-items: flex-start;*/
-/*  position: relative;*/
-/*  margin-top: 150px;*/
-/*  !*background-color: var(--content-block-color);*!*/
-/*  width: 80%;*/
-/*}*/
+.film-page__comments {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-/*.description__img {*/
-/*  width: 270px;*/
-/*  height: auto;*/
-
-/*  margin-left: 5%;*/
-/*  margin-right: 5%;*/
-
-/*  border-radius: 30px;*/
-/*}*/
-/*.description__text {*/
-/*  display: flex;*/
-/*  flex-direction: column;*/
-/*  justify-content: flex-start;*/
-/*  align-items: center;*/
-/*  flex-wrap: wrap;*/
-
-/*  !*width: 60%;*!*/
-/*  height: auto;*/
-
-/*  margin: 0;*/
-/*  color: white;*/
-/*}*/
-
-/*.description__text__header__header-string {*/
-/*  !*color: #000;*!*/
-/*  color: white;*/
-/*  text-align: center;*/
-/*  font-family: Montserrat;*/
-/*  font-size: 50px;*/
-/*  font-style: normal;*/
-/*  font-weight: 600;*/
-/*  line-height: normal;*/
-/*  letter-spacing: 2.5px;*/
-
-/*  margin-top: 0%;*/
-/*  margin-bottom: 3%;*/
-/*}*/
-
-/*.description__text__header__subheader-string {*/
-/*  !*color: #000;*!*/
-/*  color: white;*/
-/*  text-align: center;*/
-/*  font-family: Montserrat;*/
-/*  font-size: 30px;*/
-/*  font-style: normal;*/
-/*  font-weight: 200;*/
-/*  line-height: normal;*/
-/*  letter-spacing: 1.5px;*/
-
-/*  margin-top: 0%;*/
-/*  margin-bottom: 0%;*/
-/*}*/
-
-/*.description__text__header {*/
-/*  height: 30%;*/
-/*  margin-top: 0%;*/
-/*  margin-bottom: 5%;*/
-/*  color: white;*/
-/*}*/
-
-/*.description__text__table {*/
-/*  !* display: flex; *!*/
-/*  width: 100%;*/
-/*  color: white;*/
-/*}*/
-
-/*.description__table {*/
-/*  margin-left: 0%;*/
-/*  margin-right: 0%;*/
-/*  width: 100%;*/
-/*  height: auto;*/
-
-/*  margin-top: 2%;*/
-/*  margin-bottom: 2%;*/
-
-/*  display: flex;*/
-/*  justify-content: flex-start;*/
-/*  align-items: center;*/
-/*  !* flex-direction: column; *!*/
-/*  flex-wrap: wrap;*/
-/*  color: white;*/
-/*}*/
-
-/*.description__table__row {*/
-/*  margin-right: 0%;*/
-/*  width: 50%;*/
-/*  color: white;*/
-/*}*/
-
-/*.description__table__text {*/
-/*  !* width: 60%; *!*/
-/*  margin: 1% 2%;*/
-/*  margin-left: 0;*/
-/*  font-size: 25px;*/
-/*  color: white;*/
-/*}*/
-
-/*.table__actor__text {*/
-/*  cursor: pointer;*/
-/*}*/
-
-/*.table__actor__text:hover {*/
-/*  color: #343333;*/
-/*}*/
-
+.film-page__comments__header {
+  width: 80%;
+  font-size: 32px;
+  color: white;
+  margin-bottom: 30px;
+}
 
 .film-page__theme {
   /*background: rgb(31,31,31);*/
@@ -133,6 +29,7 @@
 }
 
 .param-list {
+  font-size: 19px;
   text-align: center;
   padding: 0;
 }
@@ -143,7 +40,7 @@
 }
 
 .film-name {
-  font-size: 42px;
+  font-size: 57px;
   color: white;
   text-align: center;
   line-height: 44px;

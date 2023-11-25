@@ -20,6 +20,10 @@ const handlers = [
     method: actionsUser.favoriteFilms.bind(actionsUser)
   },
   {
+    type: 'favoriteActors',
+    method: actionsUser.favoriteActors.bind(actionsUser)
+  },
+  {
     type: 'filmComments',
     method: actionsUser.filmComments.bind(actionsUser)
   },
@@ -34,6 +38,18 @@ const handlers = [
   {
     type: 'addFavoriteFilm',
     method: actionsUser.addFavoriteFilm.bind(actionsUser)
+  },
+  {
+    type: 'addFavoriteActor',
+    method: actionsUser.addFavoriteActor.bind(actionsUser)
+  },
+  {
+    type: 'removeFavoriteFilm',
+    method: actionsUser.removeFavoriteFilm.bind(actionsUser)
+  },
+  {
+    type: 'removeFavoriteActor',
+    method: actionsUser.removeFavoriteActor.bind(actionsUser)
   },
   {
     type: 'collectionMain',

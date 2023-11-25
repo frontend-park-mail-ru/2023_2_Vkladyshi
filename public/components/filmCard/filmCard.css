@@ -1,7 +1,7 @@
 .film-selection_film {
   cursor: pointer;
-  margin: 20px;
-  width: 250px;
+  margin: 10px;
+  width: 200px;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -40,7 +40,7 @@
 }
 
 .film-selection_film-information {
-  width: 250px;
+  width: 200px;
 }
 
 .film-selection_film_name {
@@ -52,11 +52,11 @@
 
   color: #f5f5f5;
   font-family: Montserrat, serif;
-  font-size: 17px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
-  letter-spacing: 0.51px;
+  /*letter-spacing: 0.51px;*/
 
   margin-bottom: 0;
 }
@@ -121,11 +121,24 @@
   margin-right: 5px;
   width: 28px;
   height: 28px;
-  font-size: 19px;
+  font-size: 14px;
   background: #57b846;
 }
 
 .image-watchlist:hover {
+  opacity: 0.5;
+}
+
+.image-cancel {
+  margin-top: 4px;
+  margin-left: 4px;
+  width: 15px;
+  height: 15px;
+  opacity: 0.9;
+  transition: all 0.5s ease;
+}
+
+.image-cancel:hover {
   opacity: 0.5;
 }
 
@@ -136,8 +149,8 @@
 }
 
 .film-selection_film-poster {
-  width: 250px;
-  height: 420px;
+  width: 200px;
+  height: 300px;
 
   background-size: cover;
   background-position: center center;

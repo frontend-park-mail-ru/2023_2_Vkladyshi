@@ -69,12 +69,32 @@ export const actionAddComment = (params: addComment) => ({
   value: params
 });
 
-export const actionFavoriteFilms = (params: favoriteFilms) => ({
+export const actionFavoriteFilms = (params: paginator) => ({
   type: 'favoriteFilms',
   value: params
 });
 
- export const actionAddFavoriteFilm = (params: addFavoriteFilm) => ({
-   type: 'addFavoriteFilm',
-   value: params
- })
+export const actionFavoriteActors = (params: paginator) => ({
+  type: 'favoriteActors',
+  value: params
+});
+
+export const actionAddFavoriteFilm = (params: favoriteFilm) => ({
+  type: 'addFavoriteFilm',
+  value: params
+});
+
+export const actionRemoveFavoriteFilm = (params: favoriteFilm) => ({
+  type: 'removeFavoriteFilm',
+  value: params
+});
+
+export const actionRemoveFavoriteActor = (params: favoriteActor) => ({
+  type: 'removeFavoriteActor',
+  value: params
+});
+
+// export const actionActorFavoriteFilm = (params: favoriteActor) => ({
+//   type: 'addFavoriteActor',
+//   value: params
+// });

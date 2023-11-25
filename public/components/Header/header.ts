@@ -130,7 +130,7 @@ export class Header extends Component {
         case target.closest('.header_basket-item') !== null:
           router.go(
             {
-              path: '/watchlist',
+              path: '/watchlist/films',
               props: ''
             },
             { pushState: true, refresh: false }

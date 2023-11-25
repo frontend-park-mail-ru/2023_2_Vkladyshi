@@ -123,62 +123,6 @@ const comments = {
       },
     ],
   },
-  // {
-  //   name: 'Login_User',
-  //   rating: 3,
-  //   text: 'Фильм отличный 11/10',
-  //   film_id: 7,
-  //   film_name: 'film',
-  // },
-  // {
-  //   name: 'Login_User',
-  //   rating: 4,
-  //   text: 'Фильм отличный 11/10',
-  //   film_id: 7,
-  //   film_name: 'film',
-  // },
-  // {
-  //   name: 'Login_User',
-  //   rating: 7,
-  //   text: 'Фильм отличный 11/10',
-  //   film_id: 7,
-  //   film_name: 'film',
-  // },
-  // {
-  //   name: 'Login_User',
-  //   rating: 8,
-  //   text: 'Фильм отличный 11/10',
-  //   film_id: 7,
-  //   film_name: 'film',
-  // },
-  // {
-  //   name: 'Login_User',
-  //   rating: 9,
-  //   text: 'Фильм отличный 11/10',
-  //   film_id: 7,
-  //   film_name: 'film',
-  // },
-  // {
-  //   name: 'Login_User',
-  //   rating: 10,
-  //   text: 'Фильм отличный 11/10',
-  //   film_id: 7,
-  //   film_name: 'film',
-  // },
-  // {
-  //   name: 'Login_User',
-  //   rating: 1,
-  //   text: 'Фильм отличный 11/10',
-  //   film_id: 7,
-  //   film_name: 'film',
-  // },
-  // {
-  //   name: 'Login_User',
-  //   rating: 2,
-  //   text: 'Фильм отличный 11/10',
-  //   film_id: 7,
-  //   film_name: 'film',
-  // },
 };
 
 const favoriteFilms = {
@@ -199,6 +143,18 @@ const favoriteFilms = {
         rating: 4.1,
       },
     }
+  }
+}
+
+const favoriteActors = {
+  status: 200,
+  body: {
+    actors: [
+      { actor_id: 1, actor_name: 'Джейсон Стэйтем', actor_photo: '/icons/star.png'},
+      { actor_id: 2, actor_name: 'Фифти Сент' , actor_photo: '/icons/star.png'},
+      { actor_id: 3, actor_name: 'Меган Фокс' , actor_photo: '/icons/star.png'},
+      { actor_id: 4, actor_name: 'Сильвестр Сталлоне', actor_photo: '/icons/star.png' },
+    ],
   }
 }
 
@@ -308,10 +264,10 @@ const film = {
     rating: 10,
     number: 11,
     actors: [
-      { id_actor: 1, actor_name: 'Джейсон Стэйтем' },
-      { id_actor: 2, actor_name: 'Фифти Сент' },
-      { id_actor: 3, actor_name: 'Меган Фокс' },
-      { id_actor: 4, actor_name: 'Сильвестр Сталлоне' },
+      { id_actor: 1, actor_name: 'Джейсон Стэйтем', actor_photo: '/icons/star.png'},
+      { id_actor: 2, actor_name: 'Фифти Сент' , actor_photo: '/icons/star.png'},
+      { id_actor: 3, actor_name: 'Меган Фокс' , actor_photo: '/icons/star.png'},
+      { id_actor: 4, actor_name: 'Сильвестр Сталлоне', actor_photo: '/icons/star.png' },
     ],
     directors: [{ directors_id: 1, directors_name: 'POHUI' }],
   },
@@ -454,12 +410,52 @@ app.get('/api/v1/csrf', (req, res) => {
   });
 });
 
-app.post('/api/v1/favorite/add', (req, res) => {
+app.get('/api/v1/favorite/film/add', (req, res) => {
   //res.set('x-csrf-token', req.csrfToken());
   return res.status(200).json({
     status: 200,
   });
 });
+
+app.get('/api/v1/favorite/actor/add', (req, res) => {
+  //res.set('x-csrf-token', req.csrfToken());
+  return res.status(200).json({
+    status: 200,
+  });
+});
+
+app.get('/api/v1/favorite/actor/remove', (req, res) => {
+  //res.set('x-csrf-token', req.csrfToken());
+  return res.status(200).json({
+    status: 200,
+  });
+});
+
+app.get('/api/v1/favorite/film/remove', (req, res) => {
+  //res.set('x-csrf-token', req.csrfToken());
+  return res.status(200).json({
+    status: 200,
+  });
+});
+
+// app.get('/api/v1/favorite/films', (req, res) => {
+//   //res.set('x-csrf-token', req.csrfToken());
+//   return res.status(200).json();
+// });
+
+/*
+*
+*   favoriteFilms: '/api/v1/favorite/films',
+  favoriteActors: '/api/v1/favorite/actors',
+  addFavoriteFilm: '/api/v1/favorite/film/add',
+  addFavoriteActor: '/api/v1/favorite/actor/add',
+  removeFilm: '/api/v1/favorite/film/remove',
+  removeActor: '/api/v1/favorite/actor/remove',
+*
+*
+* */
+
+
 
 app.use('/signup', (req, res) => {
   if (req.method === 'GET') {
@@ -509,12 +505,20 @@ app.get('/selection', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/watchlist', (req, res) => {
+app.get('/watchlist/films', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-app.get('/api/v1/favorite', (req, res) => {
-  return res.status(200).json(favoriteFilms);
+app.get('/watchlist/actors', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/api/v1/favorite/films', (req, res) => {
+  return res.status(200).json( favoriteFilms );
+});
+
+app.get('/api/v1/favorite/actors', (req, res) => {
+  return res.status(200).json( favoriteActors );
 });
 app.get('/settings', (req, res) => {
   res.sendFile(__dirname + '/index.html');

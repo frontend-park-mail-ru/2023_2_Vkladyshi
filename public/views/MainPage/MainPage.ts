@@ -3,8 +3,8 @@ import { filmSelectionPage } from '@utils/config';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
 import { slider } from '@components/Slider/slider';
-import {store} from "@store/store";
-import {actionAddFavoriteFilm} from "@store/action/actionTemplates";
+import { store } from '@store/store';
+import { actionAddFavoriteFilm } from '@store/action/actionTemplates';
 
 /**
  * Класс формирования главной страницы
@@ -26,7 +26,12 @@ export class MainPage extends View {
       image.render({ mainPage: true })
     );
 
+    // mainHTML!.innerHTML = image.render({ mainPage: true });
+
     const icon = document.querySelector('.image-container') as HTMLElement;
+    // const iconsShadow = document.querySelector('.header__container__shadow') as HTMLElement;
+    // // iconsShadow.style.background = 'rgb(0 0 0 / 40%) linear-gradient( to top, rgba(0, 0, 0, 0.95) 0, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0.8) 100% );';
+    // iconsShadow.style.transform = 'scale(1.2);';
     icon!.style.backgroundImage = 'url("/icons/mainImagjpg")';
 
     // commentsPage.render();
@@ -50,14 +55,14 @@ export class MainPage extends View {
         case event.target.closest('.image-watchlist') !== null:
           if (store.getState('auth').status === 200) {
             const filmFavoriteId = event.target.closest('.film-selection_film').getAttribute('data-section');
-            store.dispatch(actionAddFavoriteFilm({film_id: filmFavoriteId}));
+            store.dispatch(actionAddFavoriteFilm({ film_id: filmFavoriteId }));
           } else {
             router.go(
-                {
-                  path: '/login',
-                  props: ``
-                },
-                { pushState: true, refresh: false }
+              {
+                path: '/login',
+                props: ``
+              },
+              { pushState: true, refresh: false }
             );
           }
 

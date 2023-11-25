@@ -23,11 +23,8 @@ class Router {
     this.mapViews = new Map();
     this.privateMapViews = new Map();
 
-    this.subscribeRouterLogout = this.subscribeRouterLogout.bind(this);
-    this.subscribeSigninStatus = this.subscribeSigninStatus.bind(this);
-
-    store.subscribe('login', this.subscribeSigninStatus);
-    store.subscribe('logoutStatus', this.subscribeRouterLogout);
+    store.subscribe('login', this.subscribeRouterSigninStatus.bind(this));
+    store.subscribe('logoutStatus', this.subscribeRouterLogout.bind(this));
   }
 
   register ({ path, view }, privatePath = false) {
@@ -78,19 +75,18 @@ class Router {
 
     window.addEventListener('popstate', () => {
       const url = new URL(window.location.href);
-      const names = url.pathname.split('/');
+      // const names = url.pathname.split('/');
+
+      const hasNumber = /\d/.test(url.pathname);
 
       let path = '';
-      let props = '';
+      let props: string | undefined = '';
 
-      if (names[1] === '') {
-        path = '/';
+      if (hasNumber) {
+        path = url.pathname.replace(/\/\d+$/, '');
+        props = url.pathname.match(/\d+$/)?.[0];
       } else {
-        path = `/${names[1]}`;
-      }
-
-      if (names[2]) {
-        props = `/${names[2]}`;
+        path = url.pathname;
       }
 
       this.go({ path, props }, { pushState: false, refresh: false });
@@ -105,24 +101,26 @@ class Router {
     let view = this.mapViews.get(stateObject.path);
     if (view) {
       view?.render(stateObject.props);
+      window.scrollTo(0, 0);
       this.navigate(stateObject, pushState);
       return;
     }
 
-    console.log(store.state);
+    // console.log(store.state, 'router');
 
     view = this.privateMapViews.get(stateObject.path);
     if (view) {
-      // store.dispatch(actionAuth());
       if (store.getState('auth')?.status !== 200) {
         view = this.mapViews.get('/login');
         stateObject = { props: '', path: '/login' };
-        view?.render(stateObject.props);
-        this.navigate(stateObject, pushState);
+
+        // this.navigate(stateObject, pushState);
+        // view?.render(stateObject.props);
       }
 
-      view?.render(stateObject.props);
       this.navigate(stateObject, pushState);
+      window.scrollTo(0, 0);
+      view?.render(stateObject.props);
     }
   }
 
@@ -159,8 +157,9 @@ class Router {
     }
   }
 
-  subscribeSigninStatus () {
+  subscribeRouterSigninStatus () {
     const status = store.getState('login').status;
+    // console.log('login router', status);
     store.setState({ auth: { status: status } });
     // store.dispatch(actionAuth(true));
   }

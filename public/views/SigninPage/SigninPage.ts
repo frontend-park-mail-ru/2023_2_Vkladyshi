@@ -213,7 +213,6 @@ export class SigninPage extends View {
   }
 
   handlerStatus () {
-    // console.log(store.state)
     switch (this.state.statusLogin) {
       case responseStatuses.success:
         return true;
@@ -256,7 +255,7 @@ export class SigninPage extends View {
     if (this.handlerStatus()) {
       store.unsubscribe('auth', this.redirectToMain);
 
-      store.unsubscribe('statusLogin', this.subscribeSigninStatus);
+      store.unsubscribe('login', this.subscribeSigninStatus);
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
 
