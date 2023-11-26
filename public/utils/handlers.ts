@@ -45,6 +45,10 @@ const handlers = [
   {
     type: 'film',
     method: actionsFilm.getFilm.bind(actionsFilm)
+  },
+  {
+    type: 'getCalendar',
+    method: actionsFilm.getCalendar.bind(actionsFilm)
   }
 ];
 

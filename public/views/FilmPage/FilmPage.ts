@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { desc, countLikeFilm, reviewForm, review, info } from '@utils/config';
 import { store } from '@store/store';

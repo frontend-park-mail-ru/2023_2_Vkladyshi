@@ -1,0 +1,14 @@
+<div class='calendar'>
+  <h1 class='calendar__month'>{{monthName}}</h1>
+  <p class='calendar__text'>{{monthText}}</p>
+  <ul class='calendar__days'>
+    {{#each days}}
+      <li class='calendar__days__day day__{{this.dayNumber}}'>
+        <time class='calendar__days__time' datetime='2022-02-01'>
+          {{this.dayNumber}}
+        </time>
+        {{this.dayNews}}
+      </li>
+    {{/each}}
+  </ul>
+</div>

@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { get } from '@utils/ajax';
 import { urls } from '@utils/config';
 
@@ -51,6 +52,17 @@ class ActionsFilm {
     const result = await response;
     return {
       filmInfo: result['body']
+    };
+  }
+
+  async getCalendar () {
+    const response = get({
+      url: urls.calendar
+    });
+
+    const result = await response;
+    return {
+      calendarInfo: result
     };
   }
 }

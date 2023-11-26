@@ -1,8 +1,9 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { filmSelectionPage } from '@utils/config';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
-
+import { calendar } from '@components/Calendar/calendar';
 /**
  * Класс формирования главной страницы
  * @class MainPage
@@ -28,7 +29,16 @@ export class MainPage extends View {
     if (contentBlockHTML) {
       filmSelectionPage.render(false).then((response) => {
         contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
-        this.componentDidMount();
+        this.componentDidMount(); // @ts-ignore
+        calendar.render().then((response) => {
+          contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
+          const currentDate = new Date();
+          const searchDay = String(currentDate.getDate());
+          const currentDaysHTML = contentBlockHTML.querySelector(
+            '.day__' + searchDay
+          );
+          currentDaysHTML?.classList.add('calendar__days__day_today');
+        });
       });
     }
   }

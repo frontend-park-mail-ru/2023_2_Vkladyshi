@@ -68,3 +68,7 @@ export const actionAddComment = (params: addComment) => ({
   type: 'addComment',
   value: params
 });
+
+export const actionGetCalendar = () => ({
+  type: 'getCalendar'
+});

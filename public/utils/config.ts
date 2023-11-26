@@ -29,7 +29,7 @@ import { UserDataForm } from '@components/UserDataForm/userDataForm';
 
 export const ROOT = document.querySelector('#root');
 
-export const DOMAIN = 'http://127.0.0.1:8001';
+export const DOMAIN = 'http://localhost:8001';
 // export const DOMAIN = 'https://84.23.54.189';
 
 export const urls = {
@@ -46,7 +46,8 @@ export const urls = {
   signup: '/signup',
   selection: '/selection',
   authorized: '/authcheck',
-  logout: '/logout'
+  logout: '/logout',
+  calendar: '/api/v1/calendar'
 };
 
 export const methods = {

@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { store } from '@store/store';
 import { filmSelection } from '@utils/config';
@@ -102,5 +103,6 @@ export class FilmSelectionPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
+  // eslint-disable-next-line require-jsdoc
   subscribeCollectionMenu () {}
 }
