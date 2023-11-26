@@ -8,6 +8,7 @@ import {inputButton} from '@components/inputButton/inputButton';
 
 export interface SelectCollectionPage {
   state: {
+    haveActorsSelect: string,
     dataSection: string;
     haveTitle: boolean;
     haveGenre: boolean;
@@ -31,6 +32,7 @@ export class SelectCollectionPage extends View {
       dataSection: '',
       haveTitle: false,
       haveGenre: false,
+      haveActorsSelect: '',
     };
 
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
@@ -71,94 +73,12 @@ export class SelectCollectionPage extends View {
    * Метод обработки нажатий на выбранную коллекцию
    * @returns {Promise} Promise ответа
    */
-  componentDidMount () {
-    const popup = document.querySelector('.search-container');
-
-    this.popupEvent = (event) => {
-      switch (true) {
-        case event.target.closest('.search-container__select__films') !== null:
-          console.log('films');
-          break;
-        case event.target.closest('.search-container__select__actors') !== null:
-          console.log('actors');
-          break;
-        case event.target.closest('.result-button') !== null:
-          console.log('result-button');
-          break;
-        case event.target.closest('.title-select') !== null:
-          if (!this.state.haveTitle) {
-            const select = document.querySelector('.title-select');
-            select?.insertAdjacentHTML('afterend', inputButton.render({ wrap: 'select', module: 'select' }));
-            const input = document.querySelector('.select-input-select') as HTMLElement;
-            input.style.height = '20px';
-            this.state.haveTitle = true;
-          } else {
-            const input = document.querySelector('.select-input-select') as HTMLElement;
-            const parentElement = input?.parentNode;
-            parentElement?.parentNode?.removeChild(parentElement);
-            this.state.haveTitle = false;
-          }
-          break;
-        case event.target.closest('.genre-select') !== null:
-          const select = document.querySelector('.section-title-type');
-          const collectionItems = collections.collection_items;
-
-          if (!this.state.haveGenre) {
-            this.state.haveGenre = true;
-            for (let i = 0; i < collectionItems.length; i++) {
-              const item = collectionItems[i];
-              select?.insertAdjacentHTML('beforeend', `<div class="title-type" data-section="${item.value}">${item.key}</div>`);
-            }
-          } else {
-            this.state.haveGenre = false;
-            const input = document.querySelector('.section-title-type') as HTMLElement;
-            input!.innerHTML = '';
-          }
-          break;
-        case event.target.closest('.title-type') !== null:
-          if (!event.target.closest('.active')) {
-            event.target.classList.add('active');
-            event.target.style.background = '#F5C518';
-            event.target.style.color = 'black';
-            event.target.style.border = '2px solid #F5C518';
-          } else {
-            event.target.classList.remove('active');
-            event.target.style.background = 'none';
-            event.target.style.color = 'white';
-            event.target.style.border = '2px solid white';
-          }
-          break;
-        case event.target.closest('.rating-select') !== null:
-          const rating = document.querySelector('.section-rating');
-          const ratingLeft = document.querySelector('.section-rating__left');
-          const ratingRight = document.querySelector('.section-rating__right');
-
-          if (!rating?.closest('.active')) {
-            rating?.classList.remove('noactive');
-            rating?.classList.add('active');
-            ratingLeft?.insertAdjacentHTML('beforeend', inputButton.render({ wrap: 'rating-left', module: 'select', type: 'date' }));
-            ratingRight?.insertAdjacentHTML('beforeend', inputButton.render({ wrap: 'rating-right', module: 'select', type: 'date' }));
-            const inputLeft = document.querySelector('.rating-left-input-select') as HTMLElement;
-            const inputRight = document.querySelector('.rating-right-input-select') as HTMLElement;
-            inputLeft.style.height = '20px';
-            inputRight.style.height = '20px';
-          } else {
-            rating?.classList.remove('active');
-            rating?.classList.add('noactive');
-            ratingLeft!.innerHTML = '';
-            ratingRight!.innerHTML = '';
-
-          }
-
-          // input.style.height = '20px';
-          // input.style.
-          break;
-        default:
-          break;
+  componentDidMount (searchFilm = true) {
+      if (searchFilm) {
+        this.eventsSearchFilm();
+      } else {
+        this.eventsSearchActor();
       }
-    };
-
-    popup?.addEventListener('click', this.popupEvent);
   }
 
   componentWillUnmount () {
@@ -176,5 +96,122 @@ export class SelectCollectionPage extends View {
       },
       { pushState: true, refresh: false }
     );
+  }
+
+  eventsSearchFilm(firstEvent = true) {
+    const search = document.querySelector('.search-inputs-film');
+
+    if (search?.closest('.search-inputs-film.noactive')) {
+      search?.classList.remove('noactive');
+    }
+
+    const title = document.querySelector('.section-title');
+    const popup = document.querySelector('.search-container');
+    const titleFilm = document.querySelector('.section-title') as HTMLElement;
+    titleFilm?.insertAdjacentHTML('beforeend', inputButton.render({ wrap: 'select', module: 'select' }));
+
+    const genre = document.querySelector('.section-title-type');
+    const collectionGenreItems = collections.collection_items;
+    for (let i = 0; i < collectionGenreItems.length; i++) {
+      const item = collectionGenreItems[i];
+      genre?.insertAdjacentHTML('beforeend', `<div class="title-type" data-section="${item.value}">${item.key}</div>`);
+    }
+
+    const rating = document.querySelector('.section-rating');
+    const ratingLeft = document.querySelector('.section-rating__left');
+    const ratingRight = document.querySelector('.section-rating__right');
+    ratingLeft?.insertAdjacentHTML('beforeend', inputButton.render({ wrap: 'rating-left', module: 'select', type: 'number' }));
+    ratingRight?.insertAdjacentHTML('beforeend', inputButton.render({ wrap: 'rating-right', module: 'select', type: 'number' }));
+
+    const inputLeft = document.querySelector('.rating-left-input-select') as HTMLElement;
+    const inputRight = document.querySelector('.rating-right-input-select') as HTMLElement;
+    inputLeft.style.height = '20px';
+    inputRight.style.height = '20px';
+
+    const years = document.querySelector('.section-years');
+    const yearsLeft = document.querySelector('.years-select__left');
+    const yearsRight = document.querySelector('.years-select__right');
+    yearsLeft?.insertAdjacentHTML('beforeend', inputButton.render({ wrap: 'years-left', module: 'select', type: 'date' }));
+    yearsRight?.insertAdjacentHTML('beforeend', inputButton.render({ wrap: 'years-right', module: 'select', type: 'date' }));
+
+    const inputYearLeft = document.querySelector('.years-left-input-select') as HTMLElement;
+    const inputYearRight = document.querySelector('.years-right-input-select') as HTMLElement;
+    inputYearLeft.style.height = '20px';
+    inputYearRight.style.height = '20px';
+
+    const sectionActors = document.querySelector('.section-actors');
+    sectionActors?.insertAdjacentHTML('beforeend', inputButton.render({ wrap: 'actors', module: 'select' }));
+    const input = document.querySelector('.actors-input-select') as HTMLElement;
+    input.style.height = '20px';
+
+    const mpaa = document.querySelector('.mpaa-container');
+
+    const elements = {
+      '.title-select': title,
+      '.genre-select': genre,
+      '.rating-select': rating,
+      '.mpaa-select': mpaa,
+      '.years-select': years,
+      '.actors-select': sectionActors,
+    };
+
+    this.popupEvent = (event) => {
+      const selector = Object.keys(elements).find(key =>
+          event.target.closest(key)
+      );
+
+      if (selector) {
+        const element = elements[selector];
+        this.toggleActive(element);
+      }
+
+      switch (true) {
+        case event.target.closest('.search-container__select__films') !== null:
+          // this.componentDidMount(true);
+          this.eventsSearchFilm(false);
+          break;
+        case event.target.closest('.search-container__select__actors') !== null:
+          // this.componentDidMount(false);
+          this.eventsSearchActor();
+          break;
+        case event.target.closest('.result-button') !== null:
+          // store.dispatch(actionSearchFilm);
+          break;
+        case event.target.closest('.title-type') !== null:
+          if (!event.target.closest('.title-type.active')) {
+            event.target.classList.add('active');
+          } else {
+            event.target.classList.remove('active');
+          }
+          break;
+        default:
+          break;
+      }
+    }
+
+    popup?.removeEventListener('click', this.popupEvent);
+    popup?.addEventListener('click', this.popupEvent);
+  }
+
+  eventsSearchActor() {
+    const search = document.querySelector('.search-inputs-film');
+    search?.classList.add('noactive');
+  }
+
+  removeActive(html) {
+    html?.classList.remove('active');
+    html?.classList.add('noactive');
+  }
+  addActive(html) {
+    html?.classList.add('active');
+    html?.classList.remove('noactive');
+  }
+
+  toggleActive(element) {
+    if(!element.closest('.active')) {
+      this.addActive(element);
+    } else {
+      this.removeActive(element);
+    }
   }
 }
