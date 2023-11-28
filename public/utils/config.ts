@@ -11,8 +11,10 @@ import { CommentsPage } from '@views/CommentsPage/CommentsPage';
 import { FavoritePage } from '@views/FavoritePage/FavoritePage';
 
 export const ROOT = document.querySelector('#root');
+
 // export const DOMAIN = 'http://127.0.0.1:8001';
 export const DOMAIN = 'https://movie-hub.ru';
+
 
 export const urls = {
   main: '/',
@@ -37,6 +39,8 @@ export const urls = {
   selection: '/selection',
   authorized: '/authcheck',
   logout: '/logout',
+  calendar: '/api/v1/calendar'
+
 };
 
 export const methods = {

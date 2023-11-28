@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { get } from '@utils/ajax';
 import { urls } from '@utils/config';
 import { page404 } from '@router/Page404/page404';
@@ -63,6 +64,17 @@ class ActionsFilm {
 
     return {
       filmInfo: result['body'],
+    };
+  }
+
+  async getCalendar () {
+    const response = get({
+      url: urls.calendar
+    });
+
+    const result = await response;
+    return {
+      calendarInfo: result
     };
   }
 }

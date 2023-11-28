@@ -20,6 +20,7 @@
 @import './components/filmCard/filmCard.css';
 @import './components/ActorCard/actorCard.css';
 @import './components/Settings/settings.css';
+@import './components/Calendar/calendar.css';
 @import './components/Slider/slider.css';
 @import './components/ActorInfo/actorInfo.css';
 @import './components/FavoriteList/favoriteList.css';

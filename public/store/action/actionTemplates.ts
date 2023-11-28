@@ -112,3 +112,7 @@ export const actionSearchActor = (params: searchActor) => ({
   type: 'searchActor',
   value: params,
 });
+
+export const actionGetCalendar = () => ({
+  type: 'getCalendar'
+});

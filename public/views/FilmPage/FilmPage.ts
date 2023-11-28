@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { ROOT } from '@utils/config';
 import { store } from '@store/store';

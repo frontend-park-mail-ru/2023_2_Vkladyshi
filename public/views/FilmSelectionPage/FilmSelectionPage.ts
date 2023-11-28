@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { store } from '@store/store';
 import { ROOT } from '@utils/config';
@@ -254,6 +255,7 @@ export class FilmSelectionPage extends View {
     const popup = document.querySelector('.film-selection_films');
     popup?.removeEventListener('click', this.popupEvent);
   }
+
 
   subscribeSearchFilms() {
     store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
