@@ -1,7 +1,7 @@
 import { Component } from '@components/component';
 import { router } from '@router/router';
 import * as templateHeader from '@components/Header/header.hbs';
-import { config, signinPage } from '@utils/config';
+import { config } from '@utils/config';
 import { store } from '@store/store';
 import { actionLogout } from '@store/action/actionTemplates';
 
@@ -25,19 +25,21 @@ export class Header extends Component {
    * @class
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       config: config.menu,
-      isAuth: false
+      isAuth: false,
     };
     this.eventFunc = () => {};
 
     this.subscribeLogoutStatus = this.subscribeLogoutStatus.bind(this);
+    this.subscribeLoginHeaderStatus =
+      this.subscribeLoginHeaderStatus.bind(this);
     this.subscribeAuthStatus = this.subscribeAuthStatus.bind(this);
 
-    store.subscribe('statusAuth', this.subscribeAuthStatus);
-    store.subscribe('statusLogin', this.subscribeAuthStatus);
+    store.subscribe('auth', this.subscribeAuthStatus);
+    store.subscribe('login', this.subscribeLoginHeaderStatus);
     store.subscribe('logoutStatus', this.subscribeLogoutStatus);
   }
 
@@ -46,7 +48,7 @@ export class Header extends Component {
    * @readonly
    * @type {Array}
    */
-  get items () {
+  get items() {
     return Object.entries(this.state.config).map(
       // @ts-expect-error
       // eslint-disable-next-line camelcase
@@ -55,23 +57,24 @@ export class Header extends Component {
         href,
         // eslint-disable-next-line camelcase
         png_name,
-        name
+        name,
       })
     );
   }
 
   /**
    * Рендер шапки для незарегистрированного пользователя
-   * @param isAuthorized
    * @return {string} - html шапки
    */
-  render (isAuthorized = false) {
+  render() {
+    const isAuthorized = this.state.isAuth;
+
     const [brand, signin, basket, profile, selection] = [
       'main',
       'signin',
       'basket',
       'profile',
-      'selection'
+      'selection',
     ].map((key) => this.items.find((item) => item.key === key));
 
     return templateHeader({
@@ -80,14 +83,14 @@ export class Header extends Component {
       basket,
       profile,
       selection,
-      brand
+      brand,
     });
   }
 
   /**
    * Рендер шапки для зарегистрированного пользователя
    */
-  componentDidMount () {
+  componentDidMount() {
     const headerContainer = document.querySelector('header');
     headerContainer?.removeEventListener('click', this.eventFunc);
 
@@ -99,7 +102,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/login',
-              props: ''
+              props: '',
             },
             { pushState: true, refresh: false }
           );
@@ -108,7 +111,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/',
-              props: ''
+              props: '',
             },
             { pushState: true, refresh: false }
           );
@@ -120,7 +123,16 @@ export class Header extends Component {
           router.go(
             {
               path: '/settings',
-              props: ''
+              props: '',
+            },
+            { pushState: true, refresh: false }
+          );
+          break;
+        case target.closest('.header_basket-item') !== null:
+          router.go(
+            {
+              path: '/watchlist/films',
+              props: '',
             },
             { pushState: true, refresh: false }
           );
@@ -129,7 +141,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/selection',
-              props: ''
+              props: '',
             },
             { pushState: true, refresh: false }
           );
@@ -141,47 +153,31 @@ export class Header extends Component {
     headerContainer?.addEventListener('click', this.eventFunc);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const headerContainer = document.querySelector('header');
     headerContainer?.removeEventListener('click', this.eventFunc);
   }
 
-  subscribeAuthStatus () {
-    this.state.isAuth =
-      store.getState('statusAuth') === 200 ||
-      store.getState('statusLogin') === 200;
-    this.changeHeader(this.state.isAuth);
+  subscribeAuthStatus() {
+    this.state.isAuth = store.getState('auth').status === 200;
+    this.changeHeader();
   }
 
-  subscribeLogoutStatus () {
+  subscribeLoginHeaderStatus() {
+    this.state.isAuth = store.getState('login').status === 200;
+    this.changeHeader();
+  }
+
+  subscribeLogoutStatus() {
     this.state.isAuth = store.getState('logoutStatus') !== 200;
-
-    this.changeHeader(this.state.isAuth);
-
-    if (!this.state.isAuth) {
-      store.setState['statusLogin'] = 400;
-      router.go(
-        {
-          path: '/',
-          props: ``
-        },
-        { pushState: true, refresh: false }
-      );
-    }
+    this.changeHeader();
   }
 
-  changeHeader (isAuth) {
+  changeHeader() {
     const headerHTML = document.querySelector('header');
-    headerHTML!.innerHTML = this.render(isAuth);
-    // if (isAuth === true) {
-    //   const namePage = signinPage.state.userInfo['login'];
-    //   if (namePage) {
-    //     document.querySelector('.profile-text')!.textContent = namePage;
-    //   } else {
-    //     document.querySelector('.profile-text')!.textContent = localStorage.getItem('userName');
-    //   }
-    // }
-
-    this.componentDidMount();
+    if (headerHTML) {
+      headerHTML!.innerHTML = this.render();
+      this.componentDidMount();
+    }
   }
 }

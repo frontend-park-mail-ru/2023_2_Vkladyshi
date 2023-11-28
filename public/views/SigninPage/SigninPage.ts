@@ -1,5 +1,5 @@
 import { View } from '@views/view';
-import { errorInputs, responseStatuses, signin } from '@utils/config';
+import { errorInputs, responseStatuses, ROOT } from '@utils/config';
 import { store } from '@store/store';
 import { actionCSRF, actionSignin } from '@store/action/actionTemplates';
 import {
@@ -7,19 +7,23 @@ import {
   insertInInput,
   insertText,
   removeErrors,
-  removeErrorsActive
+  removeErrorsActive,
 } from '@utils/addError';
 import { validateLogin, validatePassword } from '@utils/validate';
 import { router } from '@router/router';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 import { image } from '@components/Image/image';
+import { Signin } from '@components/Signin/signin';
 
 export interface SigninPage {
   state: {
     statusLogin: number;
     haveEvent: boolean;
-    userInfo: {};
+    userInfo: {
+      password: string;
+      login: string;
+    };
     wraps: {};
     inputsHTML: {};
     errorsHTML: {};
@@ -37,7 +41,7 @@ export class SigninPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       statusLogin: 0,
@@ -45,32 +49,18 @@ export class SigninPage extends View {
       wraps: {},
       inputsHTML: {},
       errorsHTML: {},
-      userInfo: {}
+      userInfo: {
+        login: '',
+        password: '',
+      },
     };
-
-    this.subscribeLoginStatus = this.subscribeLoginStatus.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);
-    this.redirectToMain = this.redirectToMain.bind(this);
   }
 
   /**
    * Метод создания страницы
    */
-  render () {
-    store.subscribe('statusAuth', this.redirectToMain);
-
-    if (
-      store.getState('statusLogin') === 200 ||
-      store.getState('statusAuth') === 200
-    ) {
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false }
-      );
-    }
+  render() {
+    store.subscribe('auth', this.redirectToMain.bind(this));
 
     if (document.querySelector('.popupSign') == null) {
       this.renderDefaultPage();
@@ -89,6 +79,8 @@ export class SigninPage extends View {
 
     if (!document.querySelector('.login-form')) {
       const result = document.querySelector('.popupSign');
+      const signin = new Signin(ROOT);
+
       result!.innerHTML = <string>signin.render();
 
       const loginText = document.querySelector('.login-text');
@@ -99,14 +91,16 @@ export class SigninPage extends View {
         'beforeend',
         inputButton.render({ wrap: 'login', module: 'signin' })
       );
+
       passwordText!.insertAdjacentHTML(
         'beforeend',
         inputButton.render({
           wrap: 'password',
           module: 'signin',
-          type: 'password'
+          type: 'password',
         })
       );
+
       button!.insertAdjacentHTML(
         'afterbegin',
         buttonSubmit.render({ text: 'Войти' })
@@ -115,13 +109,11 @@ export class SigninPage extends View {
       this.componentDidMount();
       this.init();
       this.setUserInfo();
-      store.subscribe('statusLogin', this.subscribeLoginStatus);
+      store.subscribe('login', this.subscribeSigninStatus.bind(this));
     }
   }
 
-  getForm () {
-    const signin = document.querySelector('.signin');
-
+  getForm() {
     const login = this.state.userInfo['login'];
     const password = this.state.userInfo['password'];
 
@@ -130,7 +122,7 @@ export class SigninPage extends View {
     }
   }
 
-  validateForm (login, password) {
+  validateForm(login, password) {
     const elements = this.state.errorsHTML;
     const wraps = this.state.wraps;
     let result = true;
@@ -164,30 +156,30 @@ export class SigninPage extends View {
     return result;
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const popup = document.querySelector('.popupSign');
 
     const popupEvent = (event) => {
       this.getUserInfo();
       switch (true) {
         case event.target.closest('.redirect-to-signup') !== null:
-          store.unsubscribe('statusLogin', this.subscribeLoginStatus);
+          store.unsubscribe('login', this.subscribeSigninStatus);
           this.componentWillUnmount();
           router.go(
             {
               path: '/registration',
-              props: ''
+              props: '',
             },
             { pushState: true, refresh: false }
           );
           break;
         case event.target.closest('.sign-frame-img') !== null:
-          store.unsubscribe('statusLogin', this.subscribeLoginStatus);
+          store.unsubscribe('login', this.subscribeSigninStatus);
           this.componentWillUnmount();
           router.go(
             {
               path: '/',
-              props: ''
+              props: '',
             },
             { pushState: true, refresh: false }
           );
@@ -207,13 +199,17 @@ export class SigninPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const popup = document.querySelector('.popupSign');
     this.state.statusLogin = 0;
     popup?.removeEventListener('click', this.popupEvent);
+
+    const info = this.state.userInfo;
+    info.login = '';
+    info.password = '';
   }
 
-  handlerStatus () {
+  handlerStatus() {
     switch (this.state.statusLogin) {
       case responseStatuses.success:
         return true;
@@ -225,7 +221,7 @@ export class SigninPage extends View {
           store.dispatch(
             actionSignin({
               login: this.state.userInfo['login'],
-              password: this.state.userInfo['password']
+              password: this.state.userInfo['password'],
             })
           );
         });
@@ -241,25 +237,24 @@ export class SigninPage extends View {
     return false;
   }
 
-  getUserInfo () {
+  getUserInfo() {
     this.state.userInfo['login'] = this.state.inputsHTML['login'].value.trim();
     this.state.userInfo['password'] = this.state.inputsHTML['password'].value;
   }
 
-  setUserInfo () {
+  setUserInfo() {
     insertInInput(this.state.inputsHTML, this.state.userInfo);
   }
 
-  subscribeLoginStatus () {
-    this.state.statusLogin = store.getState('statusLogin');
+  subscribeSigninStatus() {
+    this.state.statusLogin = store.getState('login').status;
 
     if (this.handlerStatus()) {
-      store.unsubscribe('statusAuth', this.redirectToMain);
+      store.unsubscribe('auth', this.redirectToMain.bind(this));
 
-      store.unsubscribe('statusLogin', this.subscribeLoginStatus);
+      store.unsubscribe('login', this.subscribeSigninStatus);
       const popup = document.querySelector('.popupSign');
       popup?.removeEventListener('click', this.popupEvent);
-      // localStorage.setItem('userName', this.state.userInfo['login']);
 
       this.state.statusLogin = 0;
       this.componentWillUnmount();
@@ -267,30 +262,31 @@ export class SigninPage extends View {
       this.state.userInfo['login'] = '';
       this.state.userInfo['password'] = '';
 
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false }
-      );
+      // router.go(
+      //   {
+      //     path: '/',
+      //     props: ''
+      //   },
+      //   { pushState: true, refresh: false }
+      // );
     }
   }
 
-  redirectToMain () {
-    if (store.getState('statusAuth') === 200) {
-      store.unsubscribe('statusAuth', this.redirectToMain);
-      router.go(
-        {
-          path: '/',
-          props: ''
-        },
-        { pushState: true, refresh: false }
-      );
+  redirectToMain() {
+    if (store.getState('auth').status === 200) {
+      store.unsubscribe('auth', this.redirectToMain.bind(this));
+      store.unsubscribe('login', this.subscribeSigninStatus.bind(this));
+      // router.go(
+      //   {
+      //     path: '/',
+      //     props: ''
+      //   },
+      //   { pushState: true, refresh: false }
+      // );
     }
   }
 
-  init () {
+  init() {
     const errorLogin = document.querySelector('.error-login');
     const errorPassword = document.querySelector('.error-password');
     const login = document.querySelector('.login-input-signin');

@@ -51,6 +51,34 @@ interface addComment {
   text: string;
 }
 
-// interface userComments {
-//   file: any;
-// }
+interface paginator {
+  page: number;
+  per_page: number;
+}
+
+interface favoriteFilm {
+  film_id: number;
+}
+
+interface favoriteActor {
+  actor_id: number;
+}
+
+interface searchFilm {
+  title: string;
+  genre: any;
+  ratingFrom: number;
+  ratingTo: number;
+  mpaa: any;
+  dateFrom: string;
+  dateTo: string;
+  actors: any;
+}
+
+interface searchActor {
+  name: string;
+  amplua: string;
+  county: string;
+  birthday: string;
+  films: any;
+}

@@ -10,12 +10,17 @@
   }
 }
 
-/*@media (max-width: 780px) {*/
-/*  .settingsHeader,*/
-/*  .logoutHeader {*/
-/*    font-size: 10px;*/
-/*  }*/
-/*}*/
+@media (max-width: 780px) {
+  .settingsHeader,
+  .logoutHeader {
+    font-size: 10px;
+  }
+
+  .header_brand-header {
+    /*background: url("/icons/brandTitle.svg");*/
+    background-image: url('/icons/brandTitle.svg');
+  }
+}
 
 header {
   width: 100%;
@@ -55,7 +60,7 @@ header {
 }
 
 .header_basket-item {
-  cursor: not-allowed;
+  cursor: pointer;
 }
 
 .margin-header {

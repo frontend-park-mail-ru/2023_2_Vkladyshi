@@ -1,32 +1,36 @@
 {{#if login}}
   <form class='review-form'>
-    <div class='review-form__header'>
-      <img class='review-form__header__img' src='/icons/arrow_left.svg' />
-      <h1 class='review-form__header__text table__header'>Напишите Ваш отзыв</h1>
-    </div>
+    <!--    <div class='review-form__header'>-->
+    <!--      <h1 class='review-form__header__text table__header'>Напишите Ваш отзыв</h1>-->
+    <!--    </div>-->
     <div class='review-form__body'>
-      <select class='rating__form'>
-        <option value='1'>1</option>
-        <option value='2'>2</option>
-        <option value='3'>3</option>
-        <option value='4'>4</option>
-        <option value='5'>5</option>
-        <option value='6'>6</option>
-        <option value='7'>7</option>
-        <option value='8'>8</option>
-        <option value='9'>9</option>
-        <option value='10'>10</option>
-      </select>
-
-      <textarea
-        class='review-form__body__text'
-        type='text'
-        placeholder='Ваш отзыв'
-      ></textarea>
-      <button class='review-form__body__button button-login' type='submit'>
-        Отправить отзыв
-      </button>
+      <div class='wrap text-area'>
+        <textarea
+          class='input-button review-form__body__text'
+          type='text'
+          placeholder='Ваш отзыв'
+        ></textarea>
+      </div>
+      <div class='review-form__body__error'></div>
+      <div class='container-review'>
+        <button class='review-form__body__button button-login' type='submit'>
+          Отправить отзыв
+        </button>
+        <select class='rating__form'>
+          <option value='1'>1</option>
+          <option value='2'>2</option>
+          <option value='3'>3</option>
+          <option value='4'>4</option>
+          <option value='5'>5</option>
+          <option value='6'>6</option>
+          <option value='7'>7</option>
+          <option value='8'>8</option>
+          <option value='9'>9</option>
+          <option value='10'>10</option>
+        </select>
+      </div>
     </div>
+    <div class='input__form'></div>
   </form>
 {{else}}
   <div class='redirect__signin'>Хотите оставить отзыв? Авторизируйтесь!</div>

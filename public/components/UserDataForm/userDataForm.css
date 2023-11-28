@@ -17,6 +17,10 @@
   margin-top: 25px;
 }
 
+.error-image {
+  margin-bottom: 20px;
+}
+
 .change-user-data__form {
   display: flex;
   flex-direction: column;
@@ -37,7 +41,7 @@
 }
 
 .change-user-data__form__file {
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
 }
 
 .change-user-data__form__img {

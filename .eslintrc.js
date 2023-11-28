@@ -25,6 +25,8 @@ module.exports = {
   rules: {
     'require-jsdoc': 'warn',
     'valid-jsdoc': 'warn',
+    '@typescript-eslint/camelcase': 'off',
+    camelcase: 'off',
     semi: ['error', 'always'],
   },
 };
