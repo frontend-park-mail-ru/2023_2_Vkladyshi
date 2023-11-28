@@ -1,8 +1,8 @@
 import { View } from '@views/view';
-import { countLikeFilm, desc, info, LkStar } from '@utils/config';
 import { store } from '@store/store';
 import { actionActor } from '@store/action/actionTemplates';
 import { image } from '@components/Image/image';
+import { actorInfo } from '@components/ActorInfo/actorInfo';
 
 export interface ActorDescritionPage {
   state: {
@@ -20,10 +20,10 @@ export class ActorDescritionPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
-      actorInfo: null
+      actorInfo: null,
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -36,23 +36,23 @@ export class ActorDescritionPage extends View {
    * Метод создания страницы
    * @param props
    */
-  render (props = null) {
+  render(props = null) {
     this.renderDefaultPage();
     store.subscribe('removeView', this.componentWillUnmount);
 
     if (props !== null) {
       // @ts-ignore
-      // store.dispatch.actionActor({
-      // actorName: parseInt(props!.replace('/', ''))
-      // })();
-      // fixit - у меня эта строка давала ошибку, не собирался проект
+      store.dispatch(
+        actionActor({ actorName: parseInt(props.replace('/', '')) })
+      );
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     let result = {};
 
     const res = this.state.actorInfo;
+    // const { actors, rating, number, genre, film } = this.state.actorInfo;
 
     if (res) {
       const dateTime = new Date(res['birthday']);
@@ -71,8 +71,8 @@ export class ActorDescritionPage extends View {
         date: formattedDate,
         poster: res['poster_href'],
         infoText: res['info_text'] ? res['info_text'] : 'Неизвестно',
-        country: res['country'] ? res['country'] : 'Неизвестно',
-        career: res['career']
+        country: res['country'] ? res['country'] : 'Страна неизвестна',
+        career: res['career'],
       };
     }
 
@@ -83,19 +83,25 @@ export class ActorDescritionPage extends View {
       mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
 
       const icon = document.querySelector('.image-container') as HTMLElement;
+      const iconsShadow = document.querySelector(
+        '.header__container__shadow'
+      ) as HTMLElement;
       icon!.style.backgroundImage = 'url("' + result['poster'] + '")';
 
+      icon!.style.backgroundAttachment = 'fixed';
+      iconsShadow!.style.backgroundAttachment = 'fixed';
+
       const containerHTML = document.querySelector('.image-container');
-      containerHTML?.insertAdjacentHTML('beforeend', desc.render(result));
-      containerHTML?.insertAdjacentHTML('beforeend', info.render(result));
+      containerHTML?.insertAdjacentHTML('beforeend', actorInfo.render(result));
+      // containerHTML?.insertAdjacentHTML('beforeend', info.render(result));
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     store.unsubscribe('removeView', this.subscribeActorStatus);
   }
 
-  subscribeActorStatus () {
+  subscribeActorStatus() {
     this.state.actorInfo = store.getState('actorInfo');
     this.componentDidMount();
   }

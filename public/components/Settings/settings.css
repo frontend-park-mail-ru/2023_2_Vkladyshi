@@ -4,7 +4,7 @@
   justify-content: center;
   align-items: flex-start;
   position: relative;
-  padding: 30px;
+  margin-top: 100px;
   /*background-color: var(--content-block-color);*/
 }
 
@@ -53,11 +53,11 @@
   user-select: none;
 
   width: 0%;
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
 }
 
 .change-user-data__form__file {
-  margin-bottom: 20px;
+  /*margin-bottom: 20px;*/
 }
 
 .change-user-data__form__img {

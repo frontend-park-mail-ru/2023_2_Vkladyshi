@@ -12,7 +12,7 @@ export class SelectCollection extends Component {
    * Метод рендеринга элемента
    * @return {string} html авторизации
    */
-  render () {
+  render() {
     return templateSelectCollection(collections);
   }
 }

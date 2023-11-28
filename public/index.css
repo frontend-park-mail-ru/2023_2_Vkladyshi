@@ -18,8 +18,15 @@
 @import './components/ButtonSubmit/buttonSubmit.css';
 @import './components/Image/image.css';
 @import './components/filmCard/filmCard.css';
+@import './components/ActorCard/actorCard.css';
 @import './components/Settings/settings.css';
 @import './components/Calendar/calendar.css';
+@import './components/Slider/slider.css';
+@import './components/ActorInfo/actorInfo.css';
+@import './components/FavoriteList/favoriteList.css';
+@import './components/Modal/modal.css';
+@import './router/Page404/page404.css';
+@import './components/DirectoryFilms/directoryFilms.css';
 
 :root {
   --background-color: rgb(81, 82, 58, 0.1);
@@ -38,7 +45,17 @@ body.none-active {
   overflow: hidden;
 }
 
-@media (max-width: 1200px) {
+.csat-container {
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+  width: 400px;
+  height: 200px;
+  border: 0;
+  z-index: 3;
+}
+
+@media (max-width: 1150px) {
   .content-block,
   .header,
   .footer {

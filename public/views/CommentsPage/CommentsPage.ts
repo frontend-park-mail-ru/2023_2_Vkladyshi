@@ -1,12 +1,13 @@
-/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { store } from '@store/store';
 import { router } from '@router/router';
 import {
   actionAuth,
-  actionGetCommentsUser
+  actionGetCommentsUser,
 } from '@store/action/actionTemplates';
-import { review } from '@utils/config';
+import { ROOT } from '@utils/config';
+import { ReviewForm } from '@components/ReviewForm/reviewForm';
+import { Review } from '@components/Review/review';
 
 export interface CommentsPage {
   state: {
@@ -26,17 +27,17 @@ export class CommentsPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       commentsInfo: [],
-      rewiewBunch: 1
+      rewiewBunch: 1,
     };
 
     this.subscribeCommentsStatrus = this.subscribeCommentsStatrus.bind(this);
     this.componentWillUnmount = this.componentWillUnmount.bind(this);
 
-    // store.subscribe('userCommentsStatus', this.subscribeCommentsStatrus);
+    store.subscribe('userCommentsStatus', this.subscribeCommentsStatrus);
     store.subscribe('removeView', this.componentWillUnmount);
   }
 
@@ -45,16 +46,28 @@ export class CommentsPage extends View {
    * @param props
    * @returns {string} html авторизации
    */
-  render (props) {
+  render(props = null) {
     this.renderDefaultPage();
     store.dispatch(
       actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
     );
   }
 
-  insertComments () {
-    const contentBlockHTML = document.querySelector('.content-block');
-    const result = this.state.commentsInfo;
+  insertComments() {
+    const comments = document.createElement('all-comments');
+    const contentBlockHTML = document.querySelector(
+      '.content-block'
+    ) as HTMLElement;
+    const reviewForm = new ReviewForm(ROOT);
+
+    comments?.insertAdjacentHTML(
+      'beforeend',
+      reviewForm.render({ login: true })
+    );
+    comments.style.display = 'flex';
+    comments.style.flexDirection = 'column';
+
+    const result = this.state.commentsInfo['comment'];
 
     result.forEach((res) => {
       const table = {
@@ -62,16 +75,35 @@ export class CommentsPage extends View {
         film_id: res['film_id'],
         film_name: res['film_name'],
         rating: res['rating'],
-        text: res['text']
+        text: res['text'],
       };
 
-      contentBlockHTML?.insertAdjacentHTML('beforeend', review.render(table));
+      const result = document.createElement('buf');
+      const review = new Review(ROOT);
+      result?.insertAdjacentHTML('beforeend', review.render(table));
+      const reviewHTML = result?.querySelector('.comment') as HTMLElement;
+
+      switch (true) {
+        case table.rating < 4:
+          reviewHTML.style.background = 'rgba(255, 229, 229, 0.9)';
+          break;
+        case table.rating > 6:
+          reviewHTML.style.background = 'rgba(189, 230, 189, 0.9)';
+          break;
+        default:
+          reviewHTML.style.background = 'rgba(255, 240, 195, 0.9)';
+          break;
+      }
+
+      comments?.appendChild(reviewHTML);
     });
+    contentBlockHTML?.appendChild(comments);
+    reviewForm.event(result[0].film_id);
 
     this.componentDidMount();
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const popup = document.querySelector('.content-block');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
@@ -86,7 +118,7 @@ export class CommentsPage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`
+              props: `/${filmId}`,
             },
             { pushState: true, refresh: false }
           );
@@ -96,32 +128,32 @@ export class CommentsPage extends View {
       }
     };
 
-    const handleScroll = () => {
-      this.scrollEvent = handleScroll;
-      if (
-        Math.floor(window.innerHeight + document.documentElement.scrollTop) /
-          10 ===
-        Math.floor(document.documentElement.offsetHeight - 1) / 10
-      ) {
-        this.state.rewiewBunch += 1;
-        console.log('inIF');
-        console.log(this.state.rewiewBunch);
-        store.dispatch(
-          actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
-        );
-      }
-
-      console.log(
-        Math.floor(window.innerHeight + document.documentElement.scrollTop) / 10
-      );
-      console.log(Math.floor(document.documentElement.offsetHeight - 1) / 10);
-    };
-
-    popup?.addEventListener('click', popupEvent);
-    window?.addEventListener('scroll', handleScroll);
+    // const handleScroll = () => {
+    //   this.scrollEvent = handleScroll;
+    //   if (
+    //     Math.floor(window.innerHeight + document.documentElement.scrollTop) /
+    //       10 ===
+    //     Math.floor(document.documentElement.offsetHeight - 1) / 10
+    //   ) {
+    //     this.state.rewiewBunch += 1;
+    //     console.log('inIF');
+    //     console.log(this.state.rewiewBunch);
+    //     store.dispatch(
+    //       actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
+    //     );
+    //   }
+    //
+    //   console.log(
+    //     Math.floor(window.innerHeight + document.documentElement.scrollTop) / 10
+    //   );
+    //   console.log(Math.floor(document.documentElement.offsetHeight - 1) / 10);
+    // };
+    //
+    // popup?.addEventListener('click', popupEvent);
+    // window?.addEventListener('scroll', handleScroll);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const popup = document.querySelector('.content-block');
     popup?.removeEventListener('click', this.popupEvent);
     window?.removeEventListener('scroll', this.scrollEvent);
@@ -130,7 +162,7 @@ export class CommentsPage extends View {
     store.unsubscribe('removeView', this.componentWillUnmount);
   }
 
-  subscribeCommentsStatrus () {
+  subscribeCommentsStatrus() {
     const result = store.getState('userCommentsStatus');
 
     if (result?.status === 200) {

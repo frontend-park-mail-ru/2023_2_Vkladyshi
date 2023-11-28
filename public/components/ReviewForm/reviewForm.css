@@ -1,20 +1,22 @@
 .review-form {
   width: var(--block-width);
   height: auto;
-  margin: 5% auto;
+
+  margin: 0 auto 100px;
 
   background-color: rgb(255, 255, 255);
-  border-radius: 5%;
+  border-radius: 7px;
   box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.25);
+  padding: 10px;
 }
 
 .rating__form {
-  margin: 30px;
+  /*margin-top: 30px;*/
   height: 50px;
 }
 
 .review-form__header {
-  margin: 3%;
+  /*margin: 3%;*/
   border-bottom: 2px black solid;
   padding: 3% 0;
 
@@ -31,8 +33,13 @@
 }
 
 .review-form__body {
-  width: 90%;
+  width: 100%;
   margin: auto;
+}
+
+.review-form__body__error {
+  color: #e04949;
+  font-size: 19px;
 }
 
 .redirect__signin {
@@ -44,19 +51,28 @@
 .review-form__body__text {
   width: 90%;
   height: 200px;
+  /*margin: 0 auto;*/
+  /*border-radius: 7px;*/
+  padding: 20px;
+  /*white-space: normal;*/
+  /*word-wrap: break-word;*/
+  /*text-align: left;*/
+  /*vertical-align: top;*/
+  resize: vertical;
+}
 
-  margin: 0 auto;
+.container-review {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
 
-  border-radius: 5%;
-  padding: 5%;
-
-  white-space: normal;
-  word-wrap: break-word;
-  text-align: left;
-  vertical-align: top;
+.input__form {
+  color: black;
 }
 
 .review-form__body__button {
-  width: 30%;
-  margin: 3% 0;
+  width: 200px;
+  /*margin: 3% 0;*/
 }
