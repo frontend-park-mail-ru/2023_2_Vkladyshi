@@ -154,3 +154,13 @@
   background-size: cover;
   background-position: center center;
 }
+
+@media screen and (max-width: 505px) {
+  .film-selection_film {
+    width: 100px;
+  }
+  .film-selection_film-poster {
+    width: 100px;
+    height: 200px;
+  }
+}

@@ -2,8 +2,8 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-
-  color: #ffffff;
+  color: #f5c518;
+  /* color: #ffffff; */
   margin: auto;
 }
 
@@ -19,13 +19,15 @@
   flex-wrap: wrap;
 
   list-style: none;
+
+  padding: 0;
 }
 
 .calendar__days__day {
   display: flex;
 
-  width: 10rem;
-  height: 10rem;
+  width: 9rem;
+  height: 9rem;
 
   margin: 0.25rem;
 
@@ -36,7 +38,8 @@
   padding: 1rem;
 
   font-weight: 300;
-  font-size: 1rem;
+  font-size: 15px;
+  line-height: normal;
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 8px 32px 0 rgba(118, 121, 160, 0.37);
@@ -47,19 +50,44 @@
 }
 
 .calendar__days__day:hover {
-  border: 3px solid rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.3);
+  /* border: 3px solid rgba(255, 255, 255, 0.7); */
+  /* background: rgba(255, 255, 255, 0.3); */
+
+  border: 3px solid #f5c518;
+  /* background: #f5c51846; */
 }
 
 .calendar__days__time {
-  font-size: 2rem;
+  font-size: 1.8rem;
   margin: 0 0 1rem 0;
   font-weight: 500;
 }
 
 .calendar__days__day_today {
   font-weight: 800;
-  background: #ffffffa6;
+  /* background: #ffffffa6; */
+  background: #f5c51846;
+}
+
+@media (max-width: 1300px) {
+  .calendar__days__day {
+    width: 6rem;
+    height: 6rem;
+
+    margin: 0.25rem;
+
+    border-radius: 0.2rem;
+
+    padding: 0.7rem;
+
+    font-weight: 300;
+    font-size: 0.5rem;
+  }
+
+  .calendar__days__time {
+    font-size: 1.2rem;
+    margin: 0 0 0.5rem 0;
+  }
 }
 
 @media (max-width: 768px) {
@@ -75,49 +103,28 @@
       padding: 0.3rem;
 
       font-weight: 300;
-      font-size: 0.5rem;
+      font-size: 0.4rem;
+    }
+    .calendar__days__time {
+      font-size: 0.8rem;
     }
   }
 }
 
 @media (max-width: 505px) {
   .calendar__days {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     .calendar__days__day {
-      width: 53px;
-      height: 53px;
+      width: 85px;
+      height: 85px;
 
       margin: 0.25rem;
 
       border-radius: 0.2rem;
-
-      font-weight: 300;
-      font-size: 0.5rem;
+      font-size: 9px;
     }
-  }
-}
-
-@media (max-width: 1300px) {
-  .calendar__days__day {
-    width: 6rem;
-    height: 6rem;
-
-    margin: 0.25rem;
-
-    border-radius: 0.2rem;
-
-    /*padding: 0.5rem;*/
-
-    font-weight: 300;
-    font-size: 0.5rem;
-  }
-
-  .calendar__days {
-    padding: 0;
-  }
-
-  .calendar__days__time {
-    font-size: 0.6rem;
-    margin: 0 0 0.5rem 0;
-    font-weight: 500;
+    .calendar__days__time {
+      font-size: 0.9rem;
+    }
   }
 }

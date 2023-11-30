@@ -226,13 +226,16 @@ input::placeholder {
   }
 }
 
-
 @media screen and (max-width: 600px) {
-
   .brand_icon {
     height: 30px;
     width: auto;
   }
+
+  /* .header_menu-header{
+    width: 25px !important;
+    height: auto;
+  } */
 
   /*.header .right-element {*/
   /*  margin-right: 10px;*/

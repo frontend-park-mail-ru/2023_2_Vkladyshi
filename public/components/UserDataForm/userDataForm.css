@@ -6,6 +6,8 @@
   border-radius: 10px;
   width: var(--block-width);
   background: white;
+  /* margin: 3%; */
+
   /*margin: auto;*/
 }
 
@@ -61,8 +63,8 @@
   /*width: auto;*/
   /*height: 20px;*/
   padding: 5px 15px;
-  //margin-bottom: 15%;
-  border-radius: 8px;
+  margin-bottom: 15%;
+  /* border-radius: 8px; */
   border: 1px solid #cdc6c6;
   background: rgba(217, 217, 217, 0.3);
   display: flex;
@@ -81,4 +83,14 @@
   align-content: space-around;
   margin-top: 20px;
   margin-bottom: 20px;
+}
+
+@media screen and (max-width: 750px) {
+  .change-user-data {
+    border-radius: 0px !important ;
+  }
+  .settings__img {
+    width: 200px !important ;
+    height: auto;
+  }
 }
