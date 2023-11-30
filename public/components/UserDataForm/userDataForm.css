@@ -7,7 +7,7 @@
   width: var(--block-width);
   background: white;
   /* margin: 3%; */
-  
+
   /*margin: auto;*/
 }
 
@@ -89,8 +89,8 @@
   .change-user-data {
     border-radius: 0px !important ;
   }
-  .settings__img{
+  .settings__img {
     width: 200px !important ;
     height: auto;
   }
-} 
+}

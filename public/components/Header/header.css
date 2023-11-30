@@ -232,6 +232,11 @@ input::placeholder {
     width: auto;
   }
 
+  /* .header_menu-header{
+    width: 25px !important;
+    height: auto;
+  } */
+
   /*.header .right-element {*/
   /*  margin-right: 10px;*/
   /*}*/

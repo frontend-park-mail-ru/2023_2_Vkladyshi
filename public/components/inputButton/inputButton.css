@@ -26,16 +26,15 @@
   padding: 10px 5% 10px 5%;
 }
 
-@media screen and  (max-width: 1200px) {
-  .input-button{
+@media screen and (max-width: 1200px) {
+  .input-button {
     width: 90%;
     height: 30px;
   }
 }
 
-
-@media screen and  (max-width: 505px) {
-  .input-button{
+@media screen and (max-width: 505px) {
+  .input-button {
     width: 90%;
     height: 20px;
   }
