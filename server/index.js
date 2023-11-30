@@ -461,6 +461,11 @@ app.listen(port, function () {
 });
 
 const users = {
+  Admin: {
+    email: 'Admin.mail.ru',
+    password: 'Admin123',
+    age: 100,
+  },
   dorofeef: {
     email: 'd.dorofeev@corp.mail.ru',
     password: 'Password1',

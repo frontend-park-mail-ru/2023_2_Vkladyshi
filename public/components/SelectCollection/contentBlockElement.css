@@ -127,7 +127,7 @@
   display: flex;
   justify-content: left;
   padding-left: 5%;
-  padding-right : 5%;
+  padding-right: 5%;
   margin-top: 20px;
 }
 
@@ -307,13 +307,13 @@
   border: 2px solid #f5c518;
 }
 
-@media (max-width: 1200px) {
+@media screen and (max-width: 1200px) {
   .search-container {
     width: 100%;
   }
 }
 /* 
-@media (max-width: 505px) {
+@media screen and (max-width: 505px) {
   .search-container__header{
     font-size: 25px;
   }
