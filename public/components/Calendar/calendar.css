@@ -115,7 +115,7 @@
 }
 
 
-@media (max-width: 505px) {
+@media (max-width: var(--screen-size-small-mobile)) {
   .calendar__days {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     .calendar__days__day {
