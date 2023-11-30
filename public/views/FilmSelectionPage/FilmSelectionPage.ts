@@ -12,6 +12,22 @@ import { FilmSelection } from '@components/FilmSelection/filmSelection';
 import { FilmCard } from '@components/filmCard/filmCard';
 import { ActorCard } from '@components/ActorCard/actorCard';
 
+const actors1 = [
+      {
+        actor_id: 1,
+        actor_name: 'Джейсон Стэйтем',
+        actor_photo: '/icons/star.png',
+      },
+      { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
+      { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
+      {
+        actor_id: 4,
+        actor_name: 'Сильвестр Сталлоне',
+        actor_photo: '/icons/star.png',
+      },
+    ]
+
+
 export interface FilmSelectionPage {
   state: {
     dataSection: string;
@@ -43,40 +59,16 @@ export class FilmSelectionPage extends View {
    */
   async render(isMain = false) {
     let buf;
+
+    if (isMain === false) {
+      return
+    }
+
     if (
       window.location.pathname === '/films/' ||
       window.location.pathname === '/films' ||
       window.location.pathname === '/'
     ) {
-      // console.log(window.location, 'search');
-      //
-      // if (!store.getState('resultSearchFilm') && isMain !== true) {
-      //   // console.log(store.getState('resultSearchFilm'), 6665);
-      //   const urlParams = new URLSearchParams(window.location.search);
-      //
-      //   const title = <string>urlParams.get('title');
-      //   const dateFrom = <string>urlParams.get('date_from');
-      //   const dateTo = <string>urlParams.get('date_to');
-      //   const ratingFrom = urlParams.get('rating_from');
-      //   const ratingTo = urlParams.get('rating_to');
-      //   const mpaa = <string>urlParams.get('mpaa');
-      //   const genre = urlParams.get('genre');
-      //   const actors = urlParams.get('actors');
-      //   // this.state.dataSection = `?title=${title}&date_from=${dateFrom}&date_to=${dateTo}&rating_from=${ratingFrom}&rating_to=${ratingTo}&mpaa=${mpaa}&genre=${genre}&actors=${actors}`;
-      //   store.dispatch(actionSearchFilm({
-      //     title: title,
-      //     dateFrom : dateFrom,
-      //     dateTo : dateTo,
-      //     ratingFrom: Number(ratingFrom),
-      //     ratingTo: Number(ratingTo),
-      //     mpaa : mpaa,
-      //     genre: genre,
-      //     actors: actors
-      //   }));
-      //
-      //   return;
-      // }
-
       if (window.location.pathname === '/') {
         await store.dispatch(actionCollectionMain({ collection_id: 0 }));
         buf = store.getState('collectionMain');
@@ -88,24 +80,28 @@ export class FilmSelectionPage extends View {
         this.renderDefaultPage();
       }
 
+      if (buf === undefined || buf === null || buf.body === undefined) {
+        return;
+      }
+
       const contentBlockHTML = document.querySelector('.content-block');
 
       const filmSelect = new FilmSelection(ROOT);
 
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
-        filmSelect.render(buf.body.films)
+        filmSelect.render(buf.body)
       );
 
       const contentBlock = document.querySelector('.film-selection_films');
 
       // eslint-disable-next-line guard-for-in
-      for (const film in buf.body.films) {
+      for (const film in buf.body) {
         const filmCard = new FilmCard(ROOT);
         contentBlock?.insertAdjacentHTML(
           'beforeend',
           filmCard.render({
-            film: buf.body.films[film],
+            film: buf.body[film],
             alreadyFavorite: false,
           })
         );
@@ -113,32 +109,6 @@ export class FilmSelectionPage extends View {
 
       this.componentDidMount(true);
     } else {
-      // if (!store.getState('resultSearchActor')) {
-      //   const urlParams = new URLSearchParams(window.location.search);
-      //
-      //   const name = <string>urlParams.get('name');
-      //   const amplua = <string>urlParams.get('amplua');
-      //   const country = <string>urlParams.get('country');
-      //   const birthday = <string>urlParams.get('birthday');
-      //   const films = urlParams.get('films');
-      //   this.state.dataSection = `?name=${name}&amplua=${amplua}&country=${country}&birthday=${birthday}&films=${films}`;
-      //   store.dispatch(actionSearchActor({
-      //     name: name,
-      //     amplua: amplua,
-      //     county: country,
-      //     birthday: birthday,
-      //     films: films
-      //   }));
-      //
-      //   return;
-      // }
-
-      const buf = store.getState('resultSearchActor');
-
-      if (buf === undefined || buf === null || buf.body === undefined) {
-        return;
-      }
-
       this.renderDefaultPage();
       const contentBlockHTML = document.querySelector('.content-block');
 
@@ -146,18 +116,18 @@ export class FilmSelectionPage extends View {
 
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
-        filmSelect.render(buf.body.actors)
+        filmSelect.render(actors1)
       );
 
-      const actors = store.getState('resultSearchActor')?.body.actors;
+      // const actors = store.getState('resultSearchActor')?.body.actors;
       const contentBlock = document.querySelector('.film-selection_films');
 
       // eslint-disable-next-line guard-for-in
-      for (const actor in actors) {
+      for (const actor in actors1) {
         const actorCard = new ActorCard(ROOT);
         contentBlock?.insertAdjacentHTML(
           'beforeend',
-          actorCard.render({ actor: actors[actor], alreadyFavorite: false })
+          actorCard.render({ actor: actors1[actor], alreadyFavorite: false })
         );
       }
       this.componentDidMount(false);
@@ -191,6 +161,7 @@ export class FilmSelectionPage extends View {
               store.dispatch(actionAddFavoriteFilm({ film_id: filmId }));
             } else {
               store.dispatch(actionAddFavoriteActor({ actor_id: actorId }));
+              this.subscribeSearchActors();
             }
           } else {
             router.go(
@@ -256,7 +227,6 @@ export class FilmSelectionPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-
   subscribeSearchFilms() {
     store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
     router.go(
@@ -272,7 +242,7 @@ export class FilmSelectionPage extends View {
     store.unsubscribe(
       'resultSearchActor',
       this.subscribeSearchActors.bind(this)
-    );
+    ); // props: `/${this.state.dataSection}`
     router.go(
       {
         path: `/actors`,

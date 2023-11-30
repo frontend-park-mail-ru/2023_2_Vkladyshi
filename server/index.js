@@ -42,6 +42,24 @@ const findFilmByTitle = (films, title) => {
   return null;
 };
 
+const csat = {
+  status: 200,
+  body: {
+    statistics: [
+      { number: 1, count: 15 },
+      { number: 2, count: 20 },
+      { number: 3, count: 2 },
+      { number: 4, count: 10 },
+      { number: 5, count: 11 },
+      { number: 6, count: 91 },
+      { number: 7, count: 11 },
+      { number: 8, count: 129 },
+      { number: 9, count: 6 },
+      { number: 10, count: 0 },
+    ],
+  },
+};
+
 const actor = {
   status: 200,
   body: {
@@ -63,8 +81,8 @@ const actor = {
 const calendar = {
   status: 200,
   body: {
-    monthName: 'February 2022',
-    monthText: 'Holidays and Daily Observances in the United States',
+    monthName: 'Февраль 2022',
+    monthText: 'Календарь релизов',
     days: {
       day1: {
         dayNumber: 1,
@@ -443,6 +461,11 @@ app.listen(port, function () {
 });
 
 const users = {
+  Admin: {
+    email: 'Admin.mail.ru',
+    password: 'Admin123',
+    age: 100,
+  },
   dorofeef: {
     email: 'd.dorofeev@corp.mail.ru',
     password: 'Password1',
@@ -550,6 +573,14 @@ app.get('/api/v1/favorite/film/remove', (req, res) => {
   return res.status(200).json({
     status: 200,
   });
+});
+
+app.get('/admin', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/api/v1/admin/csat', (req, res) => {
+  return res.status(200).json(csat);
 });
 
 app.use('/signup', (req, res) => {
@@ -675,8 +706,8 @@ app.get('/film/:filmId', (req, res) => {
 app.use('/api/v1/actor', (req, res) => {
   return res.status(200).json(actor);
 });
-
-app.use('/api/v1/films', (req, res) => {
+// /api/v1/find
+app.use('/api/v1/find', (req, res) => {
   const secFetchSite = req.headers['sec-fetch-site'];
   if (!secFetchSite) {
     res.sendFile(__dirname + '/index.html');
@@ -771,3 +802,25 @@ app.get('/api/v1/comment', (req, res) => {
 app.use('/api/v1/calendar', (req, res) => {
   return res.status(200).json(calendar);
 });
+
+app.use('/api/v1/find', (req, res) => {
+  return res.status(200).json(films);
+});
+
+app.use('/api/v1/search/actors', (req, res) => {
+  return res.status(200).json(favoriteActors);
+});
+
+
+app.use('/api/v1/films', (req, res) => {
+  const secFetchSite = req.headers['sec-fetch-site'];
+  if (!secFetchSite) {
+    res.sendFile(__dirname + '/index.html');
+    return;
+  }
+  if (req.query.collection_id !== 0) {
+    return res.status(200).json(films);
+  }
+  return res.status(200).json(films);
+});
+

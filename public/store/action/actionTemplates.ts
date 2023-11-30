@@ -3,7 +3,7 @@ export const setUser = (user: user) => ({
   value: user,
 });
 
-export const actionAuth = (isAuth = false) => ({
+export const actionAuth = () => ({
   type: 'auth',
 });
 
@@ -114,5 +114,9 @@ export const actionSearchActor = (params: searchActor) => ({
 });
 
 export const actionGetCalendar = () => ({
-  type: 'getCalendar'
+  type: 'getCalendar',
+});
+
+export const actionStatistics = () => ({
+  type: 'getStatistics',
 });

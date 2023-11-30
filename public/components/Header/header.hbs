@@ -1,22 +1,25 @@
 <header>
   <div class='header'>
     <div
-      class='header_brand-header header-button margin-header'
+      class='header_brand-header header-button right-element'
       data-section='{{brand.key}}'
     >
       <img src='/icons/{{brand.png_name}}' class='brand_icon' />
     </div>
 
     <div
-      class='header_menu-header header-button margin-header'
+      class='header_menu-header header-button right-element'
       data-section='{{selection.key}}'
     >
       <img src='/icons/{{selection.png_name}}' class='icon' />
       <span>{{selection.name}}</span>
     </div>
-    <input class='header_search_item' placeholder='Поиск фильмов' />
+    <input
+      class='header_search_item right-element'
+      placeholder='Поиск фильмов'
+    />
     <div
-      class='header_basket-item header-button margin-header'
+      class='header_basket-item header-button right-element'
       data-section='{{basket.key}}'
     >
       <img src='/icons/{{basket.png_name}}' class='icon' />
@@ -28,8 +31,8 @@
         <nav class='navigationProfile' role='navigation'>
           <ul class='ulNavProfile'>
             <li class='liNavProfile'>
-              <ul>
-                <div class='header_header-item header-button margin-header'>
+              <ul class='ul-header'>
+                <div class='header_header-item header-button right-element'>
                   <img src='/icons/{{profile.png_name}}' class='icon' />
                   <span
                     class='header_header-item profile-text'
@@ -38,10 +41,10 @@
               </ul>
               <ul class='dropdown'>
                 <li
-                  class='header_settings-header header-button'
+                  class='header_settings-header'
                   data-section='{{profile.key}}'
                 >Настройки</li>
-                <li class='header_logout-header header-button'>Выйти</li>
+                <li class='header_logout-header'>Выйти</li>
               </ul>
             </li>
           </ul>
@@ -49,7 +52,7 @@
       </div>
     {{else}}
       <div
-        class='header_login-header header-button margin-header'
+        class='header_login-header header-button right-element'
         data-section='{{signin.key}}'
       >
         <img src='/icons/{{signin.png_name}}' class='icon' alt='' />
