@@ -224,6 +224,23 @@ input::placeholder {
   .header .left-element {
     margin-left: 10px;
   }
+}
+
+
+@media screen and (max-width: 600px) {
+
+  .brand_icon {
+    height: 30px;
+    width: auto;
+  }
+
+  /*.header .right-element {*/
+  /*  margin-right: 10px;*/
+  /*}*/
+
+  /*.header .left-element {*/
+  /*  margin-left: 10px;*/
+  /*}*/
 
   /*.header_brand-header {*/
   /*  !*background: url("/icons/brandTitle.svg");*!*/
