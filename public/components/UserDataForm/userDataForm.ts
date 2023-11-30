@@ -12,7 +12,7 @@ export class UserDataForm extends Component {
    * @param result
    * @returns {string} html элемента блока изменения данных
    */
-  render(result) {
+  render (result) {
     return templateUserDataForm(result);
   }
 }

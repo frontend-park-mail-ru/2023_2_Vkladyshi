@@ -13,7 +13,7 @@ class InputButton extends Component {
    * @param info
    * @returns {string} html нижней панели
    */
-  render(info) {
+  render (info) {
     return templateInputButton(info);
   }
 }

@@ -8,7 +8,6 @@ import { slider } from '@components/Slider/slider';
 import { store } from '@store/store';
 import { actionAddFavoriteFilm } from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
-import footer from '@components/Footer/footer.hbs';
 
 /**
  * Класс формирования главной страницы
@@ -20,7 +19,7 @@ export class MainPage extends View {
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     this.renderDefaultPage();
     const contentBlockHTML = document.querySelector('.content-block');
     const mainHTML = document.querySelector('main');
@@ -29,8 +28,6 @@ export class MainPage extends View {
       'afterbegin',
       image.render({ mainPage: true })
     );
-
-    // mainHTML!.innerHTML = image.render({ mainPage: true });
 
     const icon = document.querySelector('.image-container') as HTMLElement;
     // const iconsShadow = document.querySelector('.header__container__shadow') as HTMLElement;
@@ -43,15 +40,12 @@ export class MainPage extends View {
 
     if (contentBlockHTML) {
       const filmSelection = new FilmSelectionPage(ROOT);
-      filmSelection.render(true).then(() => {
-      const divName = document.querySelector('.film-selection_name');
-      divName!.textContent = 'Новинки';
-      });
-      
-      
-      filmSelectionPage.render(false).then((response) => {
-        contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
-        this.componentDidMount(); // @ts-ignore
+      filmSelection.render(false).then((response) => {
+        const divName = document.querySelector('.film-selection_name');
+        if (divName) {
+          divName!.textContent = 'Новинки';
+        }
+
         calendar.render().then((response) => {
           contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
           const currentDate = new Date();
@@ -65,7 +59,7 @@ export class MainPage extends View {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const popup = document.querySelector('.film-selection');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
@@ -80,7 +74,7 @@ export class MainPage extends View {
             router.go(
               {
                 path: '/login',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -94,7 +88,7 @@ export class MainPage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`,
+              props: `/${filmId}`
             },
             { pushState: true, refresh: false }
           );
@@ -106,7 +100,7 @@ export class MainPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const popup = document.querySelector('.film-selection');
     popup?.removeEventListener('click', this.popupEvent);
   }

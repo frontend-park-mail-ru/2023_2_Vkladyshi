@@ -25,11 +25,11 @@ export class Header extends Component {
    * @class
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       config: config.menu,
-      isAuth: false,
+      isAuth: false
     };
     this.eventFunc = () => {};
 
@@ -48,7 +48,7 @@ export class Header extends Component {
    * @readonly
    * @type {Array}
    */
-  get items() {
+  get items () {
     return Object.entries(this.state.config).map(
       // @ts-expect-error
       // eslint-disable-next-line camelcase
@@ -57,7 +57,7 @@ export class Header extends Component {
         href,
         // eslint-disable-next-line camelcase
         png_name,
-        name,
+        name
       })
     );
   }
@@ -66,7 +66,7 @@ export class Header extends Component {
    * Рендер шапки для незарегистрированного пользователя
    * @return {string} - html шапки
    */
-  render() {
+  render () {
     const isAuthorized = this.state.isAuth;
 
     const [brand, signin, basket, profile, selection] = [
@@ -74,7 +74,7 @@ export class Header extends Component {
       'signin',
       'basket',
       'profile',
-      'selection',
+      'selection'
     ].map((key) => this.items.find((item) => item.key === key));
 
     return templateHeader({
@@ -83,14 +83,14 @@ export class Header extends Component {
       basket,
       profile,
       selection,
-      brand,
+      brand
     });
   }
 
   /**
    * Рендер шапки для зарегистрированного пользователя
    */
-  componentDidMount() {
+  componentDidMount () {
     const headerContainer = document.querySelector('header');
     headerContainer?.removeEventListener('click', this.eventFunc);
 
@@ -102,7 +102,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/login',
-              props: '',
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -111,7 +111,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/',
-              props: '',
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -123,7 +123,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/settings',
-              props: '',
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -132,7 +132,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/watchlist/films',
-              props: '',
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -141,7 +141,7 @@ export class Header extends Component {
           router.go(
             {
               path: '/selection',
-              props: '',
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -153,27 +153,27 @@ export class Header extends Component {
     headerContainer?.addEventListener('click', this.eventFunc);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const headerContainer = document.querySelector('header');
     headerContainer?.removeEventListener('click', this.eventFunc);
   }
 
-  subscribeAuthStatus() {
+  subscribeAuthStatus () {
     this.state.isAuth = store.getState('auth').status === 200;
     this.changeHeader();
   }
 
-  subscribeLoginHeaderStatus() {
+  subscribeLoginHeaderStatus () {
     this.state.isAuth = store.getState('login').status === 200;
     this.changeHeader();
   }
 
-  subscribeLogoutStatus() {
+  subscribeLogoutStatus () {
     this.state.isAuth = store.getState('logoutStatus') !== 200;
     this.changeHeader();
   }
 
-  changeHeader() {
+  changeHeader () {
     const headerHTML = document.querySelector('header');
     if (headerHTML) {
       headerHTML!.innerHTML = this.render();

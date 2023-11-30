@@ -15,13 +15,13 @@ export class FilmCard extends Component {
    * @param film.alreadyFavorite
    * @param film
    */
-  render({ film, alreadyFavorite }) {
+  render ({ film, alreadyFavorite }) {
     const result = {
       id: film.id,
       title: film.title,
       poster: film.poster,
       rating: film.rating === undefined ? 8 : film.rating.toFixed(1),
-      alreadyFavorite: alreadyFavorite,
+      alreadyFavorite: alreadyFavorite
     };
 
     return templateFilmCard(result);

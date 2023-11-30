@@ -36,7 +36,7 @@
   padding: 1rem;
 
   font-weight: 300;
-  font-size: 0.8rem;
+  font-size: 1rem;
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 8px 32px 0 rgba(118, 121, 160, 0.37);
@@ -62,6 +62,40 @@
   background: #ffffffa6;
 }
 
+@media (max-width: 768px) {
+  .calendar__days {
+    .calendar__days__day {
+      width: 4rem;
+      height: 4rem;
+
+      margin: 0.25rem;
+
+      border-radius: 0.2rem;
+
+      padding: 0.3rem;
+
+      font-weight: 300;
+      font-size: 0.5rem;
+    }
+  }
+}
+
+@media (max-width: 505px) {
+  .calendar__days {
+    .calendar__days__day {
+      width: 53px;
+      height: 53px;
+
+      margin: 0.25rem;
+
+      border-radius: 0.2rem;
+
+      font-weight: 300;
+      font-size: 0.5rem;
+    }
+  }
+}
+
 @media (max-width: 1300px) {
   .calendar__days__day {
     width: 6rem;
@@ -71,10 +105,14 @@
 
     border-radius: 0.2rem;
 
-    padding: 0.5rem;
+    /*padding: 0.5rem;*/
 
     font-weight: 300;
     font-size: 0.5rem;
+  }
+
+  .calendar__days {
+    padding: 0;
   }
 
   .calendar__days__time {

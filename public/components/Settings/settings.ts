@@ -13,7 +13,7 @@ export class Settings extends Component {
    * @param result
    * @return {string} html авторизации
    */
-  render(result) {
+  render (result) {
     return templateSettings(result);
   }
 }

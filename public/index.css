@@ -24,6 +24,7 @@
 @import './components/Slider/slider.css';
 @import './components/ActorInfo/actorInfo.css';
 @import './components/FavoriteList/favoriteList.css';
+@import './components/Statistics/statistics.css';
 @import './components/Modal/modal.css';
 @import './router/Page404/page404.css';
 @import './components/DirectoryFilms/directoryFilms.css';
@@ -55,18 +56,3 @@ body.none-active {
   z-index: 3;
 }
 
-@media (max-width: 1150px) {
-  .content-block,
-  .header,
-  .footer {
-    width: 100%;
-  }
-
-  .header_brand-header {
-    margin-left: 20px;
-  }
-
-  .header_login-header {
-    margin-right: 20px;
-  }
-}

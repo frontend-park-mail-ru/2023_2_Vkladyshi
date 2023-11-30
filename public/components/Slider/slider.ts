@@ -12,19 +12,19 @@ export class Slider {
    * Метод рендеринга элемента
    * @return {string} html авторизации
    */
-  render() {
+  render () {
     return templateSlider();
   }
 
-  plusSlides() {
+  plusSlides () {
     this.showSlides((this.slideIndex += 1));
   }
 
-  minusSlides() {
+  minusSlides () {
     this.showSlides((this.slideIndex -= 1));
   }
 
-  showSlides(n) {
+  showSlides (n) {
     const slides = document.getElementsByClassName(
       'mySlides'
     ) as HTMLCollectionOf<HTMLElement>;
@@ -43,7 +43,10 @@ export class Slider {
     slides[this.slideIndex - 1].style.display = 'block';
   }
 
-  showSlidesAuto() {
+  showSlidesAuto () {
+    const bannerContainer = document.getElementById('banner-container');
+    bannerContainer?.remove();
+
     let i;
     const slides = document.getElementsByClassName(
       'mySlides'
@@ -60,9 +63,45 @@ export class Slider {
       slides[this.slideIndex - 1].style.display = 'block';
       setTimeout(this.showSlidesAuto.bind(this), 7000);
     } catch {}
+
+    // document.addEventListener('DOMContentLoaded', () => {fetchBanner();});
+
+    // const fetchBanner = () => {
+    //   fetch('http://84.23.53.168:8080/api/v1/getad?id=1')
+    //       .then(response => {
+    //         return response.text();
+    //       })
+    //       .then(data => {
+    //         const bannerContainer = document.getElementById('banner-container');
+    //         bannerContainer!.innerHTML = data;
+    //       })
+    //       .catch(error => {
+    //         console.error('Fetch error:', error);
+    //         const bannerContainer = document.getElementById('banner-container');
+    //         bannerContainer?.remove();
+    //
+    //         let i;
+    //         const slides = document.getElementsByClassName(
+    //             'mySlides'
+    //         ) as HTMLCollectionOf<HTMLElement>;
+    //         for (i = 0; i < slides.length; i++) {
+    //           slides[i].style.display = 'none';
+    //         }
+    //         this.slideIndex++;
+    //         if (this.slideIndex > slides.length) {
+    //           this.slideIndex = 1;
+    //         }
+    //
+    //         try {
+    //           slides[this.slideIndex - 1].style.display = 'block';
+    //           setTimeout(this.showSlidesAuto.bind(this), 7000);
+    //         } catch {
+    //           console.log('ShowSlides', error);
+    //         }
+    //       });
   }
 
-  addEvents() {
+  addEvents () {
     const prev = document.querySelector('.prev');
     const next = document.querySelector('.next');
 
