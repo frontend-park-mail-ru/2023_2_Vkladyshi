@@ -13,8 +13,19 @@
   margin-right: auto;
 }
 
-.center_image {
+.footer__center-image {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+
+@media (max-width: 768px) {
+  .footer {
+    /* justify-content: center; */
+    width: 60%;
+  }
+  .footer__right-text{
+    display: none;
+  }
 }
