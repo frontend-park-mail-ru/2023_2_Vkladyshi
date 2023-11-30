@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { DOMAIN, privateRoutes, ROOT, routes } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
@@ -65,12 +66,12 @@ class Router {
     } else {
       page404.render();
     }
-    // setTimeout(() => {
-    //   ROOT?.insertAdjacentHTML(
-    //     'beforeend',
-    //     '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
-    //   );
-    // }, 6000);
+    setTimeout(() => {
+      ROOT?.insertAdjacentHTML(
+        'beforeend',
+        '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
+      );
+    }, 6000);
   }
 
   start () {
