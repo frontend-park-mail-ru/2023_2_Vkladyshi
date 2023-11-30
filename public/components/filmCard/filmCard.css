@@ -155,14 +155,12 @@
   background-position: center center;
 }
 
-@media (max-width: var(--screen-size-small-mobile)) {
-  .film-selection_film{
+@media (max-width: 505px) {
+  .film-selection_film {
     width: 100px;
   }
-
-
   .film-selection_film-poster {
     width: 100px;
     height: 200px;
-  } 
+  }
 }

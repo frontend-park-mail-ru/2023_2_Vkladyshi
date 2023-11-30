@@ -2,10 +2,9 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  color: #F5C518;
+  color: #f5c518;
   /* color: #ffffff; */
   margin: auto;
-
 }
 
 .calendar__month {
@@ -56,7 +55,6 @@
 
   border: 3px solid #f5c518;
   /* background: #f5c51846; */
-  
 }
 
 .calendar__days__time {
@@ -92,7 +90,6 @@
   }
 }
 
-
 @media (max-width: 768px) {
   .calendar__days {
     .calendar__days__day {
@@ -108,14 +105,13 @@
       font-weight: 300;
       font-size: 0.4rem;
     }
-    .calendar__days__time{
+    .calendar__days__time {
       font-size: 0.8rem;
     }
   }
 }
 
-
-@media (max-width: var(--screen-size-small-mobile)) {
+@media (max-width: 505px) {
   .calendar__days {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     .calendar__days__day {
@@ -127,7 +123,7 @@
       border-radius: 0.2rem;
       font-size: 9px;
     }
-    .calendar__days__time{
+    .calendar__days__time {
       font-size: 0.9rem;
     }
   }

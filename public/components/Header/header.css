@@ -226,9 +226,7 @@ input::placeholder {
   }
 }
 
-
 @media screen and (max-width: 600px) {
-
   .brand_icon {
     height: 30px;
     width: auto;

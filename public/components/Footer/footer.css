@@ -19,13 +19,12 @@
   align-items: center;
 }
 
-
 @media (max-width: 768px) {
   .footer {
     /* justify-content: center; */
     width: 60%;
   }
-  .footer__right-text{
+  .footer__right-text {
     display: none;
   }
 }

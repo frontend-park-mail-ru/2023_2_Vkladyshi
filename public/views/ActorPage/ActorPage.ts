@@ -42,7 +42,7 @@ export class ActorDescritionPage extends View {
 
     if (props !== null) {
       store.dispatch(
-          // @ts-ignore
+        // @ts-ignore
         actionActor({ actorName: parseInt(props.replace('/', '')) })
       );
     }
