@@ -65,12 +65,12 @@ class Router {
     } else {
       page404.render();
     }
-    setTimeout(() => {
-      ROOT?.insertAdjacentHTML(
-        'beforeend',
-        '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
-      );
-    }, 6000);
+    // setTimeout(() => {
+    //   ROOT?.insertAdjacentHTML(
+    //     'beforeend',
+    //     '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
+    //   );
+    // }, 6000);
   }
 
   start () {
