@@ -79,10 +79,10 @@ export class MainPage extends View {
     if (contentBlockHTML) {
       const filmSelection = new FilmSelectionPage(ROOT);
       filmSelection.render(false).then((response) => {
-        const divName = document.querySelector('.film-selection_name');
-        if (divName) {
-          divName!.textContent = 'Новинки';
-        }
+        // const divName = document.querySelector('.film-selection_name');
+        // if (divName) {
+        //   divName!.textContent = 'Новинки';
+        // }
 
         calendar.render().then((response) => {
           contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);

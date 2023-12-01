@@ -810,3 +810,17 @@ app.use('/api/v1/find', (req, res) => {
 app.use('/api/v1/search/actors', (req, res) => {
   return res.status(200).json(favoriteActors);
 });
+
+
+app.use('/api/v1/films', (req, res) => {
+  const secFetchSite = req.headers['sec-fetch-site'];
+  if (!secFetchSite) {
+    res.sendFile(__dirname + '/index.html');
+    return;
+  }
+  if (req.query.collection_id !== 0) {
+    return res.status(200).json(films);
+  }
+  return res.status(200).json(films);
+});
+

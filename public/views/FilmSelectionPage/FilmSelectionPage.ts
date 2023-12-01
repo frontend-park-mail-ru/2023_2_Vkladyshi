@@ -60,14 +60,19 @@ export class FilmSelectionPage extends View {
   async render(isMain = false) {
     let buf;
 
-    console.log(store.getState('resultSearchFilm'), 'resultSearchFilm');
+    if (isMain === false) {
+      return
+    }
+//lel
+    console.log(store.getState('resultSearchFilm'), 'resultSearchFilm', window.location);
+//     console.log(window.location, 'search');
 
     if (
       window.location.pathname === '/films/' ||
       window.location.pathname === '/films' ||
       window.location.pathname === '/'
     ) {
-      // console.log(window.location, 'search');
+      // console.log('yes');
       //
       // if (!store.getState('resultSearchFilm') && isMain !== true) {
       //   // console.log(store.getState('resultSearchFilm'), 6665);
@@ -114,7 +119,7 @@ export class FilmSelectionPage extends View {
 
       const filmSelect = new FilmSelection(ROOT);
 
-      console.log(buf.body, 111, buf.body);
+      // console.log(buf.body, 111, buf.body);
 
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
@@ -137,6 +142,7 @@ export class FilmSelectionPage extends View {
 
       this.componentDidMount(true);
     } else {
+      // console.log('actor1112');
       // if (!store.getState('resultSearchActor')) {
       //   const urlParams = new URLSearchParams(window.location.search);
       //
@@ -157,11 +163,11 @@ export class FilmSelectionPage extends View {
       //   return;
       // }
 
-      const buf = store.getState('resultSearchActor');
-
-      if (buf === undefined || buf === null || buf.body === undefined) {
-        return;
-      }
+      // const buf = store.getState('resultSearchActor');
+      //
+      // if (buf === undefined || buf === null || buf.body === undefined) {
+      //   return;
+      // }
 
       this.renderDefaultPage();
       const contentBlockHTML = document.querySelector('.content-block');
@@ -170,18 +176,18 @@ export class FilmSelectionPage extends View {
 
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
-        filmSelect.render(buf.body.actors)
+        filmSelect.render(actors1)
       );
 
-      const actors = store.getState('resultSearchActor')?.body.actors;
+      // const actors = store.getState('resultSearchActor')?.body.actors;
       const contentBlock = document.querySelector('.film-selection_films');
 
       // eslint-disable-next-line guard-for-in
-      for (const actor in actors) {
+      for (const actor in actors1) {
         const actorCard = new ActorCard(ROOT);
         contentBlock?.insertAdjacentHTML(
           'beforeend',
-          actorCard.render({ actor: actors[actor], alreadyFavorite: false })
+          actorCard.render({ actor: actors1[actor], alreadyFavorite: false })
         );
       }
       this.componentDidMount(false);
@@ -215,6 +221,7 @@ export class FilmSelectionPage extends View {
               store.dispatch(actionAddFavoriteFilm({ film_id: filmId }));
             } else {
               store.dispatch(actionAddFavoriteActor({ actor_id: actorId }));
+              this.subscribeSearchActors();
             }
           } else {
             router.go(
