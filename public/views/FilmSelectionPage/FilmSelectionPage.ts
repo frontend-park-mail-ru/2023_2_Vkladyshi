@@ -12,20 +12,20 @@ import { FilmSelection } from '@components/FilmSelection/filmSelection';
 import { FilmCard } from '@components/filmCard/filmCard';
 import { ActorCard } from '@components/ActorCard/actorCard';
 
-// const actors1 = [
-//       {
-//         actor_id: 1,
-//         actor_name: 'Джейсон Стэйтем',
-//         actor_photo: '/icons/star.png',
-//       },
-//       { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
-//       { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
-//       {
-//         actor_id: 4,
-//         actor_name: 'Сильвестр Сталлоне',
-//         actor_photo: '/icons/star.png',
-//       },
-//     ]
+const actors1 = [
+      {
+        actor_id: 1,
+        actor_name: 'Джейсон Стэйтем',
+        actor_photo: '/icons/star.png',
+      },
+      { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
+      { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
+      {
+        actor_id: 4,
+        actor_name: 'Сильвестр Сталлоне',
+        actor_photo: '/icons/star.png',
+      },
+    ]
 
 
 export interface FilmSelectionPage {
@@ -114,22 +114,22 @@ export class FilmSelectionPage extends View {
 
       const filmSelect = new FilmSelection(ROOT);
 
-      console.log(buf.body, 111, buf.body.films);
+      console.log(buf.body, 111, buf.body);
 
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
-        filmSelect.render(buf.body.films)
+        filmSelect.render(buf.body)
       );
 
       const contentBlock = document.querySelector('.film-selection_films');
 
       // eslint-disable-next-line guard-for-in
-      for (const film in buf.body.films) {
+      for (const film in buf.body) {
         const filmCard = new FilmCard(ROOT);
         contentBlock?.insertAdjacentHTML(
           'beforeend',
           filmCard.render({
-            film: buf.body.films[film],
+            film: buf.body[film],
             alreadyFavorite: false,
           })
         );
