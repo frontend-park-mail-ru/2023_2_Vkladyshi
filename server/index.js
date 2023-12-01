@@ -706,8 +706,8 @@ app.get('/film/:filmId', (req, res) => {
 app.use('/api/v1/actor', (req, res) => {
   return res.status(200).json(actor);
 });
-
-app.use('/api/v1/films', (req, res) => {
+// /api/v1/find
+app.use('/api/v1/find', (req, res) => {
   const secFetchSite = req.headers['sec-fetch-site'];
   if (!secFetchSite) {
     res.sendFile(__dirname + '/index.html');
@@ -801,4 +801,12 @@ app.get('/api/v1/comment', (req, res) => {
 
 app.use('/api/v1/calendar', (req, res) => {
   return res.status(200).json(calendar);
+});
+
+app.use('/api/v1/find', (req, res) => {
+  return res.status(200).json(films);
+});
+
+app.use('/api/v1/search/actors', (req, res) => {
+  return res.status(200).json(favoriteActors);
 });

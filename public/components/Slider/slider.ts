@@ -12,19 +12,19 @@ export class Slider {
    * Метод рендеринга элемента
    * @return {string} html авторизации
    */
-  render () {
+  render() {
     return templateSlider();
   }
 
-  plusSlides () {
+  plusSlides() {
     this.showSlides((this.slideIndex += 1));
   }
 
-  minusSlides () {
+  minusSlides() {
     this.showSlides((this.slideIndex -= 1));
   }
 
-  showSlides (n) {
+  showSlides(n) {
     const slides = document.getElementsByClassName(
       'mySlides'
     ) as HTMLCollectionOf<HTMLElement>;
@@ -43,7 +43,7 @@ export class Slider {
     slides[this.slideIndex - 1].style.display = 'block';
   }
 
-  showSlidesAuto () {
+  showSlidesAuto() {
     const bannerContainer = document.getElementById('banner-container');
     bannerContainer?.remove();
 
@@ -101,7 +101,7 @@ export class Slider {
     //       });
   }
 
-  addEvents () {
+  addEvents() {
     const prev = document.querySelector('.prev');
     const next = document.querySelector('.next');
 

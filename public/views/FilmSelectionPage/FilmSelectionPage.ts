@@ -5,12 +5,28 @@ import { ROOT } from '@utils/config';
 import {
   actionAddFavoriteActor,
   actionAddFavoriteFilm,
-  actionCollectionMain
+  actionCollectionMain,
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { FilmSelection } from '@components/FilmSelection/filmSelection';
 import { FilmCard } from '@components/filmCard/filmCard';
 import { ActorCard } from '@components/ActorCard/actorCard';
+
+// const actors1 = [
+//       {
+//         actor_id: 1,
+//         actor_name: 'Джейсон Стэйтем',
+//         actor_photo: '/icons/star.png',
+//       },
+//       { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
+//       { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
+//       {
+//         actor_id: 4,
+//         actor_name: 'Сильвестр Сталлоне',
+//         actor_photo: '/icons/star.png',
+//       },
+//     ]
+
 
 export interface FilmSelectionPage {
   state: {
@@ -27,10 +43,10 @@ export interface FilmSelectionPage {
 export class FilmSelectionPage extends View {
   private popupEvent: (event) => void;
 
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
-      dataSection: ''
+      dataSection: '',
     };
 
     store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
@@ -41,8 +57,11 @@ export class FilmSelectionPage extends View {
    * Метод рендеринга элемента
    * @param isMain
    */
-  async render (isMain = false) {
+  async render(isMain = false) {
     let buf;
+
+    console.log(store.getState('resultSearchFilm'), 'resultSearchFilm');
+
     if (
       window.location.pathname === '/films/' ||
       window.location.pathname === '/films' ||
@@ -76,7 +95,6 @@ export class FilmSelectionPage extends View {
       //
       //   return;
       // }
-
       if (window.location.pathname === '/') {
         await store.dispatch(actionCollectionMain({ collection_id: 0 }));
         buf = store.getState('collectionMain');
@@ -96,6 +114,8 @@ export class FilmSelectionPage extends View {
 
       const filmSelect = new FilmSelection(ROOT);
 
+      console.log(buf.body, 111, buf.body.films);
+
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
         filmSelect.render(buf.body.films)
@@ -110,7 +130,7 @@ export class FilmSelectionPage extends View {
           'beforeend',
           filmCard.render({
             film: buf.body.films[film],
-            alreadyFavorite: false
+            alreadyFavorite: false,
           })
         );
       }
@@ -168,7 +188,7 @@ export class FilmSelectionPage extends View {
     }
   }
 
-  returnTemplate (collectionId) {
+  returnTemplate(collectionId) {
     return store
       .dispatch(actionCollectionMain({ collection_id: collectionId }))
       .then((response) => {
@@ -177,7 +197,7 @@ export class FilmSelectionPage extends View {
       });
   }
 
-  componentDidMount (isFilms) {
+  componentDidMount(isFilms) {
     const popup = document.querySelector('.film-selection_films');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
@@ -200,7 +220,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/login',
-                props: ``
+                props: ``,
               },
               { pushState: true, refresh: false }
             );
@@ -211,7 +231,7 @@ export class FilmSelectionPage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`
+              props: `/${filmId}`,
             },
             { pushState: true, refresh: false }
           );
@@ -222,7 +242,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/watchlist/actors',
-                props: ``
+                props: ``,
               },
               { pushState: true, refresh: false }
             );
@@ -230,7 +250,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/watchlist/films',
-                props: ``
+                props: ``,
               },
               { pushState: true, refresh: false }
             );
@@ -241,7 +261,7 @@ export class FilmSelectionPage extends View {
           router.go(
             {
               path: '/actor',
-              props: `/${actorId}`
+              props: `/${actorId}`,
             },
             { pushState: true, refresh: false }
           );
@@ -255,31 +275,31 @@ export class FilmSelectionPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const popup = document.querySelector('.film-selection_films');
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  subscribeSearchFilms () {
+  subscribeSearchFilms() {
     store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
     router.go(
       {
         path: `/films`,
-        props: `/${this.state.dataSection}`
+        props: `/${this.state.dataSection}`,
       },
       { pushState: true, refresh: false }
     );
   }
 
-  subscribeSearchActors () {
+  subscribeSearchActors() {
     store.unsubscribe(
       'resultSearchActor',
       this.subscribeSearchActors.bind(this)
-    );
+    ); // props: `/${this.state.dataSection}`
     router.go(
       {
         path: `/actors`,
-        props: `/${this.state.dataSection}`
+        props: `/${this.state.dataSection}`,
       },
       { pushState: true, refresh: false }
     );

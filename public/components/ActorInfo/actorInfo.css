@@ -315,7 +315,6 @@
   }
 }
 
-
 @media screen and (max-width: 505px) {
   .rating {
     width: 300px;
@@ -323,21 +322,21 @@
   .info {
     font-size: 15px;
   }
-  .film-page{
+  .film-page {
     margin: 0;
   }
   .count {
     width: 100px;
     font-size: 15px;
   }
-  .film-name{
+  .film-name {
     font-size: 25px;
   }
-  .video-content-image{
+  .video-content-image {
     height: 220px;
     width: 150px;
   }
-  .number{
+  .number {
     width: 45px;
     height: 45px;
     font-size: 20px;

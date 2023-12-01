@@ -19,7 +19,7 @@ export class AdminPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {};
   }
@@ -27,8 +27,7 @@ export class AdminPage extends View {
   /**
    * Метод создания страницы
    */
-  render () {
-    console.log('admin csat');
+  render() {
     this.renderDefaultPage();
     const contentBlock = document.querySelector('.content-block');
     const stat = new Statistics();
@@ -38,7 +37,7 @@ export class AdminPage extends View {
     });
   }
 
-  componentDidMount () {
+  componentDidMount() {
     // const itemElement = document.querySelector('.item') as HTMLElement;
     // itemElement.style.setProperty('--val', 'новое значение');
     const result = store.getState('getStatistics');
@@ -71,7 +70,7 @@ export class AdminPage extends View {
       div7,
       div8,
       div9,
-      div10
+      div10,
     ];
 
     // Iterate through the div elements and assign the count values
@@ -86,5 +85,5 @@ export class AdminPage extends View {
     });
   }
 
-  componentWillUnmount () {}
+  componentWillUnmount() {}
 }

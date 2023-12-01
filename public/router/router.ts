@@ -20,7 +20,7 @@ interface Router {
   lastView: { path; props };
 }
 class Router {
-  constructor (ROOT) {
+  constructor(ROOT) {
     this.root = ROOT;
     this.lastView = { path: '/', props: '' };
     this.mapViews = new Map();
@@ -31,13 +31,13 @@ class Router {
     store.subscribe('logoutStatus', this.subscribeRouterLogout.bind(this));
   }
 
-  register ({ path, view }, privatePath = false) {
+  register({ path, view }, privatePath = false) {
     privatePath
       ? this.privateMapViews.set(path, view)
       : this.mapViews.set(path, view);
   }
 
-  refresh (redirect = false) {
+  refresh(redirect = false) {
     const url = new URL(window.location.href);
     const names = url.pathname.split('/');
 
@@ -48,7 +48,7 @@ class Router {
       this.go(
         {
           path: url.pathname,
-          props: url.search
+          props: url.search,
         },
         { pushState: !redirect, refresh: !redirect }
       );
@@ -59,22 +59,16 @@ class Router {
       this.go(
         {
           path: `/${names[1]}`,
-          props: `/${names[2]}`
+          props: `/${names[2]}`,
         },
         { pushState: !redirect, refresh: !redirect }
       );
     } else {
       page404.render();
     }
-    setTimeout(() => {
-      ROOT?.insertAdjacentHTML(
-        'beforeend',
-        '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
-      );
-    }, 6000);
   }
 
-  start () {
+  start() {
     store.dispatch(actionCSRF());
     store.dispatch(actionAuth());
 
@@ -104,14 +98,19 @@ class Router {
       this.go({ path, props }, { pushState: false, refresh: false });
     });
     this.refresh();
+    setTimeout(() => {
+      ROOT?.insertAdjacentHTML(
+        'beforeend',
+        '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
+      );
+    }, 36000);
   }
 
-  go (
+  go(
     stateObject: stateObject,
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
     let view = this.mapViews.get(stateObject.path);
-    console.log('main_go');
     if (view) {
       this.navigate(stateObject, pushState);
       // @ts-ignore
@@ -125,7 +124,6 @@ class Router {
     view = this.privateMapViews.get(stateObject.path);
     if (view) {
       this.lastView = { path: stateObject.path, props: stateObject.props };
-      console.log(store.state, store.getState('auth'));
       if (store.getState('auth')?.status !== 200) {
         view = this.mapViews.get('/login');
         stateObject = { props: '', path: '/login' };
@@ -141,7 +139,7 @@ class Router {
     }
   }
 
-  navigate ({ path, props }: stateObject, pushState = false) {
+  navigate({ path, props }: stateObject, pushState = false) {
     const location = DOMAIN;
 
     if ((path === '/films' || path === '/actors') && props === '/') {
@@ -163,14 +161,14 @@ class Router {
     }
   }
 
-  subscribeRouterAuthStatus () {
+  subscribeRouterAuthStatus() {
     const status = store.getState('auth').status;
 
     if (status === 200) {
       router.go(
         {
           path: this.lastView.path,
-          props: this.lastView.props
+          props: this.lastView.props,
         },
         { pushState: true, refresh: false }
       );
@@ -178,7 +176,7 @@ class Router {
     }
   }
 
-  subscribeRouterLogout () {
+  subscribeRouterLogout() {
     const logout = store.getState('logoutStatus');
 
     if (logout === 200) {
@@ -186,14 +184,14 @@ class Router {
       this.go(
         {
           path: '/',
-          props: ''
+          props: '',
         },
         { pushState: true, refresh: false }
       );
     }
   }
 
-  subscribeRouterSigninStatus () {
+  subscribeRouterSigninStatus() {
     const status = store.getState('login').status;
     store.setState({ auth: { status: status } });
 
@@ -201,7 +199,7 @@ class Router {
       router.go(
         {
           path: this.lastView.path,
-          props: this.lastView.props
+          props: this.lastView.props,
         },
         { pushState: true, refresh: false }
       );

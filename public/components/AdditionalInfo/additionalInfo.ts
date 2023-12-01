@@ -12,7 +12,7 @@ export class AddInfo extends Component {
    * @param result
    * @returns {string} html авторизации
    */
-  render (result) {
+  render(result) {
     return templateAdditionalInfo(result);
   }
 }

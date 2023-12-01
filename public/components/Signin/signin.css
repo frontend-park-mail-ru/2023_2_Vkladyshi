@@ -193,3 +193,9 @@
     width: 100%;
   }
 }
+
+@media screen and (max-width: 450px) {
+  .login-form {
+    padding: 55px 25px;
+  }
+}

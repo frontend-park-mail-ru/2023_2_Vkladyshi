@@ -2,12 +2,17 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  color: #f5c518;
+  /*color: #f5c518;*/
   /* color: #ffffff; */
   margin: auto;
 }
 
+.calendar__text {
+  color: white;
+}
+
 .calendar__month {
+  color: white;
   font-weight: 800;
   margin: 1rem 0 0;
 }
@@ -24,6 +29,7 @@
 }
 
 .calendar__days__day {
+  color: white;
   display: flex;
 
   width: 9rem;
@@ -33,7 +39,7 @@
 
   flex-flow: column;
 
-  border-radius: 0.2rem;
+  /*border-radius: 0.2rem;*/
 
   padding: 1rem;
 
@@ -47,15 +53,16 @@
   -webkit-backdrop-filter: blur(4px);
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
+  transition: all 0.5s ease;
 }
 
-.calendar__days__day:hover {
-  /* border: 3px solid rgba(255, 255, 255, 0.7); */
-  /* background: rgba(255, 255, 255, 0.3); */
+/*.calendar__days__day:hover {*/
+/*  !* border: 3px solid rgba(255, 255, 255, 0.7); *!*/
+/*  !* background: rgba(255, 255, 255, 0.3); *!*/
 
-  border: 3px solid #f5c518;
-  /* background: #f5c51846; */
-}
+/*  border: 3px solid #ffffff;*/
+/*  !* background: #f5c51846; *!*/
+/*}*/
 
 .calendar__days__time {
   font-size: 1.8rem;
@@ -92,6 +99,12 @@
 
 @media (max-width: 768px) {
   .calendar__days {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .calendar__days {
     .calendar__days__day {
       width: 4rem;
       height: 4rem;
@@ -125,6 +138,11 @@
     }
     .calendar__days__time {
       font-size: 0.9rem;
+    }
+
+    .calendar__days {
+      display: flex;
+      flex-direction: row;
     }
   }
 }
