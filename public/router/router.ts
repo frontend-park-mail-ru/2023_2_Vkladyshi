@@ -1,6 +1,7 @@
-import { DOMAIN, routes } from '@utils/config';
+/* eslint-disable require-jsdoc */
+import { DOMAIN, privateRoutes, ROOT, routes } from '@utils/config';
 import { store } from '@store/store';
-import { actionCSRF } from '@store/action/actionTemplates';
+import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
 import { page404 } from '@router/Page404/page404';
 
 interface Class {
@@ -16,20 +17,27 @@ interface Router {
   root: Element;
   mapViews: Map<string, Class>;
   privateMapViews: Map<string, Class>;
+  lastView: { path; props };
 }
 class Router {
-  constructor (ROOT) {
+  constructor(ROOT) {
     this.root = ROOT;
+    this.lastView = { path: '/', props: '' };
     this.mapViews = new Map();
     this.privateMapViews = new Map();
+
+    // store.subscribe('auth', this.subscribeRouterAuthStatus.bind(this));
+    store.subscribe('login', this.subscribeRouterSigninStatus.bind(this));
+    store.subscribe('logoutStatus', this.subscribeRouterLogout.bind(this));
   }
 
-  register ({ path, view }, privatePath = false) {
-    this.privateMapViews.set(path, view);
-    this.mapViews.set(path, view);
+  register({ path, view }, privatePath = false) {
+    privatePath
+      ? this.privateMapViews.set(path, view)
+      : this.mapViews.set(path, view);
   }
 
-  refresh (redirect = false) {
+  refresh(redirect = false) {
     const url = new URL(window.location.href);
     const names = url.pathname.split('/');
 
@@ -40,15 +48,18 @@ class Router {
       this.go(
         {
           path: url.pathname,
-          props: url.search
+          props: url.search,
         },
         { pushState: !redirect, refresh: !redirect }
       );
-    } else if (this.mapViews.get(`/${names[1]}`)) {
+    } else if (
+      this.mapViews.get(`/${names[1]}`) ||
+      this.privateMapViews.get(`/${names[1]}`)
+    ) {
       this.go(
         {
           path: `/${names[1]}`,
-          props: `/${names[2]}`
+          props: `/${names[2]}`,
         },
         { pushState: !redirect, refresh: !redirect }
       );
@@ -57,46 +68,83 @@ class Router {
     }
   }
 
-  start () {
+  start() {
     store.dispatch(actionCSRF());
+    store.dispatch(actionAuth());
+
     for (const rout of routes) {
       this.register(rout);
     }
 
+    for (const rout of privateRoutes) {
+      this.register(rout, true);
+    }
+
     window.addEventListener('popstate', () => {
       const url = new URL(window.location.href);
-      const names = url.pathname.split('/');
+
+      const hasNumber = /\d/.test(url.pathname);
 
       let path = '';
-      let props = '';
+      let props: string | undefined = '';
 
-      if (names[1] === '') {
-        path = '/';
+      if (hasNumber) {
+        path = url.pathname.replace(/\/\d+$/, '');
+        props = '/' + url.pathname.match(/\d+$/)?.[0];
       } else {
-        path = `/${names[1]}`;
-      }
-
-      if (names[2]) {
-        props = `/${names[2]}`;
+        path = url.pathname;
       }
 
       this.go({ path, props }, { pushState: false, refresh: false });
     });
     this.refresh();
+    setTimeout(() => {
+      ROOT?.insertAdjacentHTML(
+        'beforeend',
+        '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
+      );
+    }, 36000);
   }
 
-  go (
+  go(
     stateObject: stateObject,
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
-    const view = this.mapViews.get(stateObject.path);
+    let view = this.mapViews.get(stateObject.path);
+    if (view) {
+      this.navigate(stateObject, pushState);
+      // @ts-ignore
+      // eslint-disable-next-line new-cap
+      const viewResult = new view(ROOT);
+      viewResult.render(stateObject.props);
+      window.scrollTo(0, 0);
+      return;
+    }
 
-    view?.render(stateObject.props);
-    this.navigate(stateObject, pushState);
+    view = this.privateMapViews.get(stateObject.path);
+    if (view) {
+      this.lastView = { path: stateObject.path, props: stateObject.props };
+      if (store.getState('auth')?.status !== 200) {
+        view = this.mapViews.get('/login');
+        stateObject = { props: '', path: '/login' };
+      }
+
+      this.navigate(stateObject, pushState);
+      window.scrollTo(0, 0);
+
+      // @ts-ignore
+      // eslint-disable-next-line new-cap
+      const viewResult = new view(ROOT);
+      viewResult.render(stateObject.props);
+    }
   }
 
-  navigate ({ path, props }: stateObject, pushState = false) {
+  navigate({ path, props }: stateObject, pushState = false) {
     const location = DOMAIN;
+
+    if ((path === '/films' || path === '/actors') && props === '/') {
+      return;
+    }
 
     if (pushState) {
       if (props) {
@@ -112,6 +160,62 @@ class Router {
       }
     }
   }
+
+  subscribeRouterAuthStatus() {
+    const status = store.getState('auth').status;
+
+    if (status === 200) {
+      router.go(
+        {
+          path: this.lastView.path,
+          props: this.lastView.props,
+        },
+        { pushState: true, refresh: false }
+      );
+      this.lastView = { path: '/', props: '' };
+    }
+  }
+
+  subscribeRouterLogout() {
+    const logout = store.getState('logoutStatus');
+
+    if (logout === 200) {
+      store.setState({ auth: { status: 400 } });
+      this.go(
+        {
+          path: '/',
+          props: '',
+        },
+        { pushState: true, refresh: false }
+      );
+    }
+  }
+
+  subscribeRouterSigninStatus() {
+    const status = store.getState('login').status;
+    store.setState({ auth: { status: status } });
+
+    if (status === 200) {
+      router.go(
+        {
+          path: this.lastView.path,
+          props: this.lastView.props,
+        },
+        { pushState: true, refresh: false }
+      );
+
+      this.lastView = { path: '/', props: '' };
+    }
+  }
 }
 
-export const router = new Router(document.querySelector('#root'));
+export const router = new Router(ROOT);
+
+// } else if (this.mapViews.get(`/${names[1]}`) && url.search) {
+//   this.go(
+//       {
+//         path: `/${names[1]}`,
+//         props: `/${url.search}`
+//       },
+//       { pushState: !redirect, refresh: !redirect }
+//   );

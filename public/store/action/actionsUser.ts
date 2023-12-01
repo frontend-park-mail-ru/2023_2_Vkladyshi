@@ -2,141 +2,219 @@ import { post, get, getCsrf } from '@utils/ajax';
 import { urls } from '@utils/config';
 
 class ActionsUser {
-  async signin (user) {
+  async signin(user) {
     const response = post({
       url: urls.signin,
-      body: { login: user['login'], password: user['password'] }
+      body: {
+        login: user.login,
+        password: user.password,
+      },
     });
 
     const result = await response;
 
     return {
-      statusLogin: result['status'],
-      userName: user['login']
+      login: result,
     };
   }
 
-  async signup (user) {
+  async signup(user) {
     const response = post({
       url: urls.signup,
       body: {
-        login: user['login'],
-        password: user['password'],
-        email: user['email'],
-        birth_date: user['birthday']
-      }
+        login: user.login,
+        password: user.password,
+        email: user.email,
+        birth_date: user.birthday,
+      },
     });
 
     const result = await response;
     return {
-      statusSignup: result['status']
+      statusSignup: result['status'],
     };
   }
 
-  async auth (isAuth = false) {
-    if (isAuth) {
-      return { statusAuth: 200 };
-    }
-
+  async auth() {
     const response = get({
-      url: urls.authorized
+      url: urls.authorized,
     });
     const result = await response;
 
-    return { statusAuth: result['status'] };
+    return {
+      auth: result,
+    };
   }
 
-  async logout (redirect = false) {
+  async logout(redirect = false) {
     const response = get({
-      url: urls.logout
+      url: urls.logout,
     });
     const result = await response;
     return {
-      logoutStatus: result['status'],
-      redirect: redirect
+      logoutStatus: result.status,
+      redirect: redirect,
     };
   }
 
-  async getSettings () {
+  async getSettings() {
     const response = get({
-      url: urls.settings
+      url: urls.settings,
     });
 
     const result = await response;
     return {
-      getSettingsStatus: result
+      getSettingsStatus: result,
     };
   }
 
-  async getCsrf () {
+  async getCsrf() {
     const response = getCsrf({
-      url: urls.csrf
+      url: urls.csrf,
     });
 
     const result = await response;
     return {
-      csrf: result
+      csrf: result,
     };
   }
 
-  async updateSettings (putSettings) {
+  async updateSettings(putSettings) {
     const response = post({
       url: urls.settings,
       body: putSettings,
-      contentType: true
+      contentType: true,
     });
 
     const result = await response;
     return {
-      postStatusSettings: result['status']
+      postStatusSettings: result['status'],
     };
   }
 
   // eslint-disable-next-line camelcase
-  async userComments ({ page, per_page }: paginator) {
+  async userComments({ page, per_page }: paginator) {
     const response = get({
       url: urls.comments,
-      // eslint-disable-next-line camelcase
-      query: { page: page, per_page: per_page }
+      query: { page: page, per_page: per_page },
     });
 
     const result = await response;
     return {
-      userCommentsStatus: result
+      userCommentsStatus: result,
     };
   }
 
-  // eslint-disable-next-line camelcase
-  async filmComments ({ film_id, page, per_page }: paginatorFilm) {
+  async filmComments({ film_id, page, per_page }: paginatorFilm) {
     const response = get({
       url: urls.comments,
-      // eslint-disable-next-line camelcase
-      query: { film_id: film_id, page: page, per_page: per_page }
+      query: { film_id: film_id, page: page, per_page: per_page },
     });
 
     const result = await response;
     return {
-      filmCommentsStatus: result
+      filmCommentsStatus: result,
     };
   }
 
-  // eslint-disable-next-line camelcase
-  async addComment ({ film_id, rating, text }: addComment) {
+  async addComment({ film_id, rating, text }: addComment) {
     const response = post({
       url: urls.addComment,
-      // eslint-disable-next-line camelcase
-      body: { film_id: film_id, rating: rating, text: text }
+      body: { film_id: film_id, rating: rating, text: text },
     });
 
     const result = await response;
     return {
-      addCommentStatus: result['status']
+      addCommentStatus: result['status'],
     };
   }
 
-  async removeView () {
+  async favoriteFilms({ page, per_page }: paginator) {
+    const response = get({
+      url: urls.favoriteFilms,
+      query: { page: page, per_page: per_page },
+    });
+
+    const result = await response;
     return {
-      removeView: true
+      favoriteFilms: result,
+    };
+  }
+
+  async favoriteActors({ page, per_page }: paginator) {
+    const response = get({
+      url: urls.favoriteActors,
+      query: { page: page, per_page: per_page },
+    });
+
+    const result = await response;
+    return {
+      favoriteActors: result,
+    };
+  }
+
+  async removeView() {
+    return {
+      removeView: true,
+    };
+  }
+
+  async addFavoriteFilm({ film_id }: favoriteFilm) {
+    const response = get({
+      url: urls.addFavoriteFilm,
+      query: { film_id: film_id },
+    });
+
+    const result = await response;
+    return {
+      addFavoriteFilm: result,
+    };
+  }
+
+  async addFavoriteActor({ actor_id }: favoriteActor) {
+    const response = get({
+      url: urls.addFavoriteActor,
+      query: { actor_id: actor_id },
+    });
+
+    const result = await response;
+    return {
+      addFavoriteActor: result,
+    };
+  }
+
+  async removeFavoriteFilm({ film_id }: favoriteFilm) {
+    const response = get({
+      url: urls.removeFilm,
+      query: { film_id: film_id },
+    });
+
+    const result = await response;
+    return {
+      removeFavoriteFilm: result,
+    };
+  }
+
+  async removeFavoriteActor({ actor_id }: favoriteActor) {
+    const response = get({
+      url: urls.removeActor,
+      query: { actor_id: actor_id },
+    });
+
+    const result = await response;
+    return {
+      removeFavoriteActor: result,
+    };
+  }
+
+  async getStatisticsCsat() {
+    const response = get({
+      url: urls.statisticsCsat,
+    });
+    const result = await response;
+
+    return {
+      getStatistics: result,
     };
   }
 }

@@ -13,7 +13,7 @@ class ButtonSubmit extends Component {
    * @param info
    * @return {string} html нижней панели
    */
-  render (info) {
+  render(info) {
     return templateButtonSubmit(info);
   }
 }

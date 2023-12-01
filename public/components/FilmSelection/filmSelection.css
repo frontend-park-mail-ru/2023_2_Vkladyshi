@@ -8,17 +8,23 @@
 .film-selection_films {
   display: flex;
   justify-content: center;
-  align-items: center;
+  /*align-items: center;*/
   flex-wrap: wrap;
+  /*width: 250px;*/
   width: 100%;
+  color: white;
+  padding: 0;
 }
 
 .film-selection_name {
-  width: 100%;
+  width: 97%;
   margin-top: 100px;
+
   padding-bottom: 10px;
   border-bottom: 1px solid #ffffff;
   color: #ffffff;
+  /*border-bottom: 1px solid #F5C518;*/
+  /*color: #F5C518;*/
   font-family: Montserrat, serif;
   font-size: 32px;
   font-style: normal;

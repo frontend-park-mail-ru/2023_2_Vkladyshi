@@ -68,7 +68,7 @@
 }
 
 .errorStringSignup {
-  color: red;
+  color: #d95a5a;
   display: block;
   text-align: center;
   margin-left: auto;
@@ -92,4 +92,14 @@
 .popupSignup.active {
   opacity: 1;
   /*visibility: visible;*/
+}
+
+@media screen and (max-width: 768px) {
+  .signup-form {
+    padding: 55px 45px;
+  }
+
+  .popupSign {
+    margin-top: 85px;
+  }
 }

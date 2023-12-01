@@ -1,9 +1,5 @@
-@media (max-width: 1150px) {
-  .content-block {
-    width: 100px;
-  }
-}
 .content-block {
+  /*width: 1330px;*/
   width: 80%;
   min-height: 100vh;
   /*background-color: #ffffff;*/
@@ -13,4 +9,14 @@
   margin-right: auto;
   /*border-right: 1px solid white;*/
   /*border-left: 1px solid white;*/
+  /*display: flex;*/
+  /*justify-content: center;*/
+}
+
+@media (max-width: 1150px) {
+  .content-block {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }

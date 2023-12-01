@@ -23,5 +23,19 @@
   border: solid white;
   font-size: 19px;
   border-radius: 5px;
-  padding: 0 5% 0 5%;
+  padding: 10px 5% 10px 5%;
+}
+
+@media screen and (max-width: 1200px) {
+  .input-button {
+    width: 90%;
+    height: 30px;
+  }
+}
+
+@media screen and (max-width: 505px) {
+  .input-button {
+    width: 90%;
+    height: 20px;
+  }
 }
