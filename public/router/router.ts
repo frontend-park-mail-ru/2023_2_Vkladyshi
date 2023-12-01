@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { DOMAIN, privateRoutes, ROOT, routes } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
@@ -25,6 +26,7 @@ class Router {
     this.mapViews = new Map();
     this.privateMapViews = new Map();
 
+    // store.subscribe('auth', this.subscribeRouterAuthStatus.bind(this));
     store.subscribe('login', this.subscribeRouterSigninStatus.bind(this));
     store.subscribe('logoutStatus', this.subscribeRouterLogout.bind(this));
   }
@@ -64,13 +66,6 @@ class Router {
     } else {
       page404.render();
     }
-    const main = document.querySelector('main');
-    setTimeout(() => {
-      ROOT?.insertAdjacentHTML(
-        'beforeend',
-        '<iframe class="csat-container" src="https://csat.movie-hub.ru"></iframe>'
-      );
-    }, 6000);
   }
 
   start() {
@@ -103,6 +98,12 @@ class Router {
       this.go({ path, props }, { pushState: false, refresh: false });
     });
     this.refresh();
+    setTimeout(() => {
+      ROOT?.insertAdjacentHTML(
+        'beforeend',
+        '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
+      );
+    }, 36000);
   }
 
   go(
@@ -140,10 +141,8 @@ class Router {
 
   navigate({ path, props }: stateObject, pushState = false) {
     const location = DOMAIN;
-    // console.log(path, props, 111);
 
     if ((path === '/films' || path === '/actors') && props === '/') {
-      // console.log('return');
       return;
     }
 
@@ -159,6 +158,21 @@ class Router {
       } else {
         window.history.replaceState('', '', location + path);
       }
+    }
+  }
+
+  subscribeRouterAuthStatus() {
+    const status = store.getState('auth').status;
+
+    if (status === 200) {
+      router.go(
+        {
+          path: this.lastView.path,
+          props: this.lastView.props,
+        },
+        { pushState: true, refresh: false }
+      );
+      this.lastView = { path: '/', props: '' };
     }
   }
 

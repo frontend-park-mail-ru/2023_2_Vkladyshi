@@ -90,7 +90,6 @@ export class SelectCollectionPage extends View {
 
     const containerHTML = document.querySelector('.search-container');
     this.panelEvent = (event) => {
-      event.preventDefault();
       switch (true) {
         case event.target.closest('.search-container__select__films') !== null:
           this.eventsSearchFilm();
@@ -361,7 +360,7 @@ export class SelectCollectionPage extends View {
     const ratingTo = (
       document.querySelector('.rating-right-input-select') as HTMLInputElement
     )?.value;
-    const mpaa = (
+    let mpaa = (
       document.querySelector('.mpaa-container__input') as HTMLInputElement
     )?.value;
     const dateFrom = (
@@ -373,6 +372,12 @@ export class SelectCollectionPage extends View {
     const actors = (
       document.querySelector('.actors-input-select') as HTMLInputElement
     )?.value.split(' ');
+
+    if (mpaa === 'on') {
+      mpaa = 'NC-17';
+    } else {
+      mpaa = 'G';
+    }
 
     const genres = document.querySelectorAll('.title-type.active');
     const sectionDataArray = Array.from(genres).map((div) =>

@@ -41,8 +41,8 @@ export class ActorDescritionPage extends View {
     store.subscribe('removeView', this.componentWillUnmount);
 
     if (props !== null) {
-      // @ts-ignore
       store.dispatch(
+        // @ts-ignore
         actionActor({ actorName: parseInt(props.replace('/', '')) })
       );
     }

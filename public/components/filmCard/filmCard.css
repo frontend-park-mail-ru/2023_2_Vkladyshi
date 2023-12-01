@@ -39,7 +39,7 @@
 }
 
 .film-selection_film-information {
-  width: 200px;
+  /*width: 200px;*/
 }
 
 .film-selection_film_name {
@@ -153,4 +153,14 @@
 
   background-size: cover;
   background-position: center center;
+}
+
+@media screen and (max-width: 505px) {
+  .film-selection_film {
+    width: 100px;
+  }
+  .film-selection_film-poster {
+    width: 100px;
+    height: 200px;
+  }
 }

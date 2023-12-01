@@ -35,11 +35,7 @@ class ActionsUser {
     };
   }
 
-  async auth(isAuth = false) {
-    if (isAuth) {
-      return { auth: { status: 200 } };
-    }
-
+  async auth() {
     const response = get({
       url: urls.authorized,
     });
@@ -208,6 +204,17 @@ class ActionsUser {
     const result = await response;
     return {
       removeFavoriteActor: result,
+    };
+  }
+
+  async getStatisticsCsat() {
+    const response = get({
+      url: urls.statisticsCsat,
+    });
+    const result = await response;
+
+    return {
+      getStatistics: result,
     };
   }
 }

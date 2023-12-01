@@ -3,6 +3,10 @@ import { actionsFilm } from '@store/action/actionsFilm';
 import { actionsSearch } from '@store/action/actionsSearch';
 
 const handlers = [
+  {
+    type: 'getStatistics',
+    method: actionsUser.getStatisticsCsat.bind(actionsUser),
+  },
   { type: 'searchFilm', method: actionsSearch.searchFilm.bind(actionsSearch) },
   {
     type: 'searchActor',
@@ -71,12 +75,12 @@ const handlers = [
   },
   {
     type: 'film',
-    method: actionsFilm.getFilm.bind(actionsFilm)
+    method: actionsFilm.getFilm.bind(actionsFilm),
   },
   {
     type: 'getCalendar',
-    method: actionsFilm.getCalendar.bind(actionsFilm)
-  }
+    method: actionsFilm.getCalendar.bind(actionsFilm),
+  },
 ];
 
 export { handlers };

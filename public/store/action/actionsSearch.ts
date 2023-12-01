@@ -29,8 +29,8 @@ class ActionsSearch {
 
     const result = await response;
 
-    if (result === undefined || result['status'] !== 200) {
-      console.log(404);
+    if (result === undefined) {
+      console.error(404);
       page404.render();
     }
 
@@ -47,8 +47,8 @@ class ActionsSearch {
 
     const result = await response;
 
-    if (result === undefined || result['status'] !== 200) {
-      // console.log(404)
+    if (result === undefined) {
+      console.error(404)
       page404.render();
     }
 

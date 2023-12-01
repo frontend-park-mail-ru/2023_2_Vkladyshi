@@ -159,12 +159,12 @@ export class Header extends Component {
   }
 
   subscribeAuthStatus() {
-    this.state.isAuth = store.getState('auth').status === 200;
+    this.state.isAuth = store.getState('auth')?.status === 200;
     this.changeHeader();
   }
 
   subscribeLoginHeaderStatus() {
-    this.state.isAuth = store.getState('login').status === 200;
+    this.state.isAuth = store.getState('login')?.status === 200;
     this.changeHeader();
   }
 

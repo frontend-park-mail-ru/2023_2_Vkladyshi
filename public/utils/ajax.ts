@@ -12,6 +12,7 @@ export async function get(params = {}) {
       method: methods.get,
       credentials: 'include',
       mode: 'cors',
+      headers: { 'X-Request-Id': `${Math.floor(Math.random() * 10) + 1}` },
     }
   );
 
@@ -33,7 +34,10 @@ export async function get(params = {}) {
  */
 export async function post({ url, body, contentType = false }) {
   let data;
-  const header = { 'x-csrf-token': <string>localStorage.getItem('csrf') };
+  const header = {
+    'x-csrf-token': <string>localStorage.getItem('csrf'),
+    'X-Request-Id': `${Math.floor(Math.random() * 10) + 1}`,
+  };
 
   if (contentType) {
     data = body.file;
@@ -41,7 +45,7 @@ export async function post({ url, body, contentType = false }) {
     data = JSON.stringify(body);
     header['Content-Type'] = 'application/json';
   }
-  // console.log(data, header, contentType, url);
+
   const response = await fetch(url, {
     method: methods.post,
     credentials: 'include',
@@ -73,6 +77,7 @@ export async function getCsrf(params = {}) {
       mode: 'cors',
       headers: {
         'x-csrf-token': <string>localStorage.getItem('csrf'),
+        'X-Request-Id': `${Math.floor(Math.random() * 10) + 1}`,
       },
     }
   );

@@ -67,14 +67,14 @@ class ActionsFilm {
     };
   }
 
-  async getCalendar () {
+  async getCalendar() {
     const response = get({
-      url: urls.calendar
+      url: urls.calendar,
     });
 
     const result = await response;
     return {
-      calendarInfo: result
+      calendarInfo: result,
     };
   }
 }

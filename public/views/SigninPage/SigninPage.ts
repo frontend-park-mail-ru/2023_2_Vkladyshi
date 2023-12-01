@@ -54,14 +54,13 @@ export class SigninPage extends View {
         password: '',
       },
     };
+    // store.subscribe('auth', this.redirectToMain.bind(this));
   }
 
   /**
    * Метод создания страницы
    */
   render() {
-    store.subscribe('auth', this.redirectToMain.bind(this));
-
     if (document.querySelector('.popupSign') == null) {
       this.renderDefaultPage();
       const mainHTML = document.querySelector('main');
@@ -261,14 +260,6 @@ export class SigninPage extends View {
 
       this.state.userInfo['login'] = '';
       this.state.userInfo['password'] = '';
-
-      // router.go(
-      //   {
-      //     path: '/',
-      //     props: ''
-      //   },
-      //   { pushState: true, refresh: false }
-      // );
     }
   }
 
@@ -276,13 +267,18 @@ export class SigninPage extends View {
     if (store.getState('auth').status === 200) {
       store.unsubscribe('auth', this.redirectToMain.bind(this));
       store.unsubscribe('login', this.subscribeSigninStatus.bind(this));
-      // router.go(
-      //   {
-      //     path: '/',
-      //     props: ''
-      //   },
-      //   { pushState: true, refresh: false }
-      // );
+      const status = store.getState('auth').status;
+
+      if (status === 200) {
+        router.go(
+          {
+            path: router.lastView.path,
+            props: router.lastView.props,
+          },
+          { pushState: true, refresh: false }
+        );
+        router.lastView = { path: '/', props: '' };
+      }
     }
   }
 

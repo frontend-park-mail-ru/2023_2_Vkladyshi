@@ -9,20 +9,24 @@ import { FilmPage } from '@views/FilmPage/FilmPage';
 import { UserPage } from '@views/userPage/userPage';
 import { CommentsPage } from '@views/CommentsPage/CommentsPage';
 import { FavoritePage } from '@views/FavoritePage/FavoritePage';
-
+import { AdminPage } from '@views/AdminPage/AdminPage';
+//kek
 export const ROOT = document.querySelector('#root');
 
-// export const DOMAIN = 'http://127.0.0.1:8001';
-export const DOMAIN = 'https://movie-hub.ru';
+// export const DOMAIN = 'http://localhost:8001';
+export const DOMAIN = 'http://127.0.0.1:8001';
+// export const DOMAIN = 'https://movie-hub.ru';
 
-
+/// api/v1/find
+/// api/v1/films
 export const urls = {
   main: '/',
+  findFilm: '/api/v1/films',
   basket: '/api/v1/films',
   film: '/api/v1/film',
   csrf: '/api/v1/csrf',
   actor: '/api/v1/actor',
-  searchFilm: '/api/v1/search/film',
+  searchFilm: '/api/v1/find',
   searchActor: '/api/v1/search/actor',
   comments: '/api/v1/comment',
   addComment: '/api/v1/comment/add',
@@ -39,8 +43,8 @@ export const urls = {
   selection: '/selection',
   authorized: '/authcheck',
   logout: '/logout',
-  calendar: '/api/v1/calendar'
-
+  calendar: '/api/v1/calendar',
+  statisticsCsat: '/api/v1/admin/csat',
 };
 
 export const methods = {
@@ -83,6 +87,7 @@ export const filmPage = FilmPage;
 export const userPage = UserPage;
 export const commentsPage = CommentsPage;
 export const favoritePage = FavoritePage;
+export const adminPage = AdminPage;
 
 export const config = {
   menu: {
@@ -164,4 +169,5 @@ export const privateRoutes = [
   { path: '/settings', view: userPage },
   { path: '/watchlist/films', view: favoritePage },
   { path: '/watchlist/actors', view: favoritePage },
+  { path: '/admin', view: adminPage },
 ];

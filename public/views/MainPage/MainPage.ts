@@ -8,7 +8,8 @@ import { slider } from '@components/Slider/slider';
 import { store } from '@store/store';
 import { actionAddFavoriteFilm } from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
-import footer from '@components/Footer/footer.hbs';
+
+
 
 /**
  * Класс формирования главной страницы
@@ -25,33 +26,64 @@ export class MainPage extends View {
     const contentBlockHTML = document.querySelector('.content-block');
     const mainHTML = document.querySelector('main');
 
+    // mainHTML?.insertAdjacentHTML(
+    //   'afterbegin', '      <video class="video-container" autoplay muted loop>\n' +
+    //     '          <div class=\'header__container__shadow box-shadow\'></div>\n' +
+    //     '          <source class="video-main" src="/icons/video-main.mp4" type="video/mp4">\n' +
+    //     '      </video>');
+
     mainHTML?.insertAdjacentHTML(
-      'afterbegin',
-      image.render({ mainPage: true })
-    );
+        'afterbegin', '        <div class="video-container1">\n' +
+        '            <video class="video-container" autoplay muted loop>\n' +
+        '                <source class="video-main" src="/icons/video-main.mp4" type="video/mp4">\n' +
+        '            </video>\n' +
+        '            <div class="overlay"></div>\n' +
+        '            <div class=\'header__container__text\'>\n' +
+        '                <div class=\'first-text\'>Подпишитесь на рассылку новинок!</div>\n' +
+        '                <form class="main-email">\n' +
+        '                    <input class="input-main-email" type="email">\n' +
+        '                    <button class="send-email-main" type="submit">Отправить</button>\n' +
+        '                </form>\n' +
+        '            </div>\n' +
+        '        </div>');
 
-    // mainHTML!.innerHTML = image.render({ mainPage: true });
+    // const m = document.querySelector('.video-container') as HTMLElement;
+     // @ts-ignore
+    // m.volume = 0.05;
+    /*
 
-    const icon = document.querySelector('.image-container') as HTMLElement;
+    <div class="video-container1">
+      <video class="video-container" autoplay muted loop>
+        <source class="video-main" src="/icons/video-main.mp4" type="video/mp4">
+      </video>
+      <div class="overlay"></div>
+        <div class='header__container__text'>
+          <div class='first-text'>Добро пожаловать!</div>
+        </div>
+    </div>
+
+
+     */
+
+
+    //<div class='header__container__shadow box-shadow'></div>
+    // const icon = document.querySelector('.image-container') as HTMLElement;
     // const iconsShadow = document.querySelector('.header__container__shadow') as HTMLElement;
     // // iconsShadow.style.background = 'rgb(0 0 0 / 40%) linear-gradient( to top, rgba(0, 0, 0, 0.95) 0, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0.8) 100% );';
     // iconsShadow.style.transform = 'scale(1.2);';
-    icon!.style.backgroundImage = 'url("/icons/mainImagjpg")';
+    // icon!.style.backgroundImage = 'url("/icons/mainImagjpg")';
 
     contentBlockHTML?.insertAdjacentHTML('beforeend', slider.render());
     slider.addEvents();
 
     if (contentBlockHTML) {
       const filmSelection = new FilmSelectionPage(ROOT);
-      filmSelection.render(true).then(() => {
-      const divName = document.querySelector('.film-selection_name');
-      divName!.textContent = 'Новинки';
-      });
-      
-      
-      filmSelectionPage.render(false).then((response) => {
-        contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
-        this.componentDidMount(); // @ts-ignore
+      filmSelection.render(false).then((response) => {
+        // const divName = document.querySelector('.film-selection_name');
+        // if (divName) {
+        //   divName!.textContent = 'Новинки';
+        // }
+
         calendar.render().then((response) => {
           contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
           const currentDate = new Date();
