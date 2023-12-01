@@ -45,7 +45,7 @@ export async function post({ url, body, contentType = false }) {
     data = JSON.stringify(body);
     header['Content-Type'] = 'application/json';
   }
-  // console.log(data, header, contentType, url);
+
   const response = await fetch(url, {
     method: methods.post,
     credentials: 'include',

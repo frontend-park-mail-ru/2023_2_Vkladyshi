@@ -63,43 +63,12 @@ export class FilmSelectionPage extends View {
     if (isMain === false) {
       return
     }
-//lel
-    console.log(store.getState('resultSearchFilm'), 'resultSearchFilm', window.location);
-//     console.log(window.location, 'search');
 
     if (
       window.location.pathname === '/films/' ||
       window.location.pathname === '/films' ||
       window.location.pathname === '/'
     ) {
-      // console.log('yes');
-      //
-      // if (!store.getState('resultSearchFilm') && isMain !== true) {
-      //   // console.log(store.getState('resultSearchFilm'), 6665);
-      //   const urlParams = new URLSearchParams(window.location.search);
-      //
-      //   const title = <string>urlParams.get('title');
-      //   const dateFrom = <string>urlParams.get('date_from');
-      //   const dateTo = <string>urlParams.get('date_to');
-      //   const ratingFrom = urlParams.get('rating_from');
-      //   const ratingTo = urlParams.get('rating_to');
-      //   const mpaa = <string>urlParams.get('mpaa');
-      //   const genre = urlParams.get('genre');
-      //   const actors = urlParams.get('actors');
-      //   // this.state.dataSection = `?title=${title}&date_from=${dateFrom}&date_to=${dateTo}&rating_from=${ratingFrom}&rating_to=${ratingTo}&mpaa=${mpaa}&genre=${genre}&actors=${actors}`;
-      //   store.dispatch(actionSearchFilm({
-      //     title: title,
-      //     dateFrom : dateFrom,
-      //     dateTo : dateTo,
-      //     ratingFrom: Number(ratingFrom),
-      //     ratingTo: Number(ratingTo),
-      //     mpaa : mpaa,
-      //     genre: genre,
-      //     actors: actors
-      //   }));
-      //
-      //   return;
-      // }
       if (window.location.pathname === '/') {
         await store.dispatch(actionCollectionMain({ collection_id: 0 }));
         buf = store.getState('collectionMain');
@@ -118,8 +87,6 @@ export class FilmSelectionPage extends View {
       const contentBlockHTML = document.querySelector('.content-block');
 
       const filmSelect = new FilmSelection(ROOT);
-
-      // console.log(buf.body, 111, buf.body);
 
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
@@ -142,33 +109,6 @@ export class FilmSelectionPage extends View {
 
       this.componentDidMount(true);
     } else {
-      // console.log('actor1112');
-      // if (!store.getState('resultSearchActor')) {
-      //   const urlParams = new URLSearchParams(window.location.search);
-      //
-      //   const name = <string>urlParams.get('name');
-      //   const amplua = <string>urlParams.get('amplua');
-      //   const country = <string>urlParams.get('country');
-      //   const birthday = <string>urlParams.get('birthday');
-      //   const films = urlParams.get('films');
-      //   this.state.dataSection = `?name=${name}&amplua=${amplua}&country=${country}&birthday=${birthday}&films=${films}`;
-      //   store.dispatch(actionSearchActor({
-      //     name: name,
-      //     amplua: amplua,
-      //     county: country,
-      //     birthday: birthday,
-      //     films: films
-      //   }));
-      //
-      //   return;
-      // }
-
-      // const buf = store.getState('resultSearchActor');
-      //
-      // if (buf === undefined || buf === null || buf.body === undefined) {
-      //   return;
-      // }
-
       this.renderDefaultPage();
       const contentBlockHTML = document.querySelector('.content-block');
 

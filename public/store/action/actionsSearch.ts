@@ -48,7 +48,7 @@ class ActionsSearch {
     const result = await response;
 
     if (result === undefined) {
-      // console.log(404)
+      console.error(404)
       page404.render();
     }
 
