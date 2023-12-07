@@ -13,126 +13,126 @@ const calendar12 = {
     days: {
       day1: {
         dayNumber: 1,
-        dayNews: 'Неудержимые 1',
+        dayNews: 'Неудержимые 1'
       },
       day2: {
         dayNumber: 2,
-        dayNews: 'Неудержимые 2',
+        dayNews: 'Неудержимые 2'
       },
       day3: {
         dayNumber: 3,
-        dayNews: 'Неудержимые 3',
+        dayNews: 'Неудержимые 3'
       },
       day4: {
         dayNumber: 4,
-        dayNews: '',
+        dayNews: ''
       },
       day5: {
         dayNumber: 4,
-        dayNews: '',
+        dayNews: ''
       },
       day6: {
         dayNumber: 6,
-        dayNews: '',
+        dayNews: ''
       },
       day7: {
         dayNumber: 7,
-        dayNews: '',
+        dayNews: ''
       },
       day8: {
         dayNumber: 8,
-        dayNews: '',
+        dayNews: ''
       },
       day9: {
         dayNumber: 9,
-        dayNews: '',
+        dayNews: ''
       },
       day10: {
         dayNumber: 10,
-        dayNews: '',
+        dayNews: ''
       },
       day11: {
         dayNumber: 11,
-        dayNews: 'Неудержимые 1',
+        dayNews: 'Неудержимые 1'
       },
       day12: {
         dayNumber: 12,
-        dayNews: 'Неудержимые 2',
+        dayNews: 'Неудержимые 2'
       },
       day13: {
         dayNumber: 13,
-        dayNews: 'Неудержимые 3',
+        dayNews: 'Неудержимые 3'
       },
       day14: {
         dayNumber: 14,
-        dayNews: '',
+        dayNews: ''
       },
       day15: {
         dayNumber: 15,
-        dayNews: '',
+        dayNews: ''
       },
       day16: {
         dayNumber: 16,
-        dayNews: '',
+        dayNews: ''
       },
       day17: {
         dayNumber: 17,
-        dayNews: '',
+        dayNews: ''
       },
       day18: {
         dayNumber: 18,
-        dayNews: '',
+        dayNews: ''
       },
       day19: {
         dayNumber: 19,
-        dayNews: '',
+        dayNews: ''
       },
       day20: {
         dayNumber: 20,
-        dayNews: '',
+        dayNews: ''
       },
       day21: {
         dayNumber: 21,
-        dayNews: 'Неудержимые 1',
+        dayNews: 'Неудержимые 1'
       },
       day22: {
         dayNumber: 22,
-        dayNews: 'Неудержимые 2',
+        dayNews: 'Неудержимые 2'
       },
       day23: {
         dayNumber: 23,
-        dayNews: 'Неудержимые 3',
+        dayNews: 'Неудержимые 3'
       },
       day24: {
         dayNumber: 24,
-        dayNews: '',
+        dayNews: ''
       },
       day25: {
         dayNumber: 25,
-        dayNews: '',
+        dayNews: ''
       },
       day26: {
         dayNumber: 26,
-        dayNews: '',
+        dayNews: ''
       },
       day27: {
         dayNumber: 27,
-        dayNews: '',
+        dayNews: ''
       },
       day28: {
         dayNumber: 28,
-        dayNews: 'kek',
+        dayNews: 'kek'
       },
       day29: {
         dayNumber: 29,
-        dayNews: '',
+        dayNews: ''
       },
       day30: {
         dayNumber: 30,
-        dayNews: '',
-      },
-    },
-  },
+        dayNews: ''
+      }
+    }
+  }
 };
 
 /**
@@ -146,7 +146,7 @@ class Calendar extends Component {
    * @param info
    * @return {string} html нижней панели
    */
-  render() {
+  render () {
     return store.dispatch(actionGetCalendar()).then((response) => {
       // const result = store.getState('calendarInfo')['body'];
       return templateCalendar(calendar12.body);

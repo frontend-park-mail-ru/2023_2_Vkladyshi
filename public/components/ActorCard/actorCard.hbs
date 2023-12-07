@@ -1,14 +1,16 @@
-<div class='actor-selection_actor' data-section='{{id}}' draggable='true'>
+<div class='actor-selection_actor {{addClass}}' data-section='{{id}}' draggable='true'>
   <div
-    class='actor-selection_actor-poster'
+    class='actor-selection_actor-poster {{addClassPoster}}'
     style='background-image: url("{{poster}}")'
   >
     <div class='actor-selection_actor-poster'>
       <div class='actor-selection_actor_header'>
         {{#if alreadyFavorite}}
-          <img class='image-cancel' src='/icons/cancel.png' />
+            <img class='image-cancel' src='/icons/cancel.png' />
+            <img class='image-watchlist noactive' src='/icons/bookmark.png' />
         {{else}}
-          <img class='image-watchlist' src='/icons/bookmark.png' />
+            <img class='image-cancel noactive' src='/icons/cancel.png' />
+            <img class='image-watchlist' src='/icons/bookmark.png' />
         {{/if}}
       </div>
     </div>

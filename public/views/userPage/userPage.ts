@@ -5,7 +5,7 @@ import {
   actionCSRF,
   actionGetSettings,
   actionLogout,
-  actionPutSettings,
+  actionPutSettings
 } from '@store/action/actionTemplates';
 import {
   addErrorsActive,
@@ -13,13 +13,13 @@ import {
   insertText,
   removeErrors,
   removeErrorsActive,
-  returnError,
+  returnError
 } from '@utils/addError';
 import {
   validateBirthday,
   validateEmail,
   validateLogin,
-  validatePassword,
+  validatePassword
 } from '@utils/validate';
 import { dateConverter } from '@utils/dateConverter';
 import { router } from '@router/router';
@@ -46,12 +46,13 @@ export interface UserPage {
  */
 export class UserPage extends View {
   private popupEvent: (event) => void;
+  private changeEvent: (event) => void;
 
   /**
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       errorsHTML: {},
@@ -65,21 +66,18 @@ export class UserPage extends View {
         birthday: '',
         login: '',
         poster: '',
-        password: '',
-      },
+        password: ''
+      }
     };
 
-    this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);
-
-    store.subscribe('getSettingsStatus', this.subscribeActorStatus);
+    store.subscribe('getSettingsStatus', this.subscribeActorStatus.bind(this));
   }
 
   /**
    * Метод создания страницы
    */
-  render() {
-    store.subscribe('unmount', this.componentWillUnmount);
+  render () {
+    store.subscribe('unmount', this.componentWillUnmount.bind(this));
     this.renderDefaultPage();
     store.dispatch(actionGetSettings());
 
@@ -117,7 +115,7 @@ export class UserPage extends View {
       inputButton.render({
         wrap: 'password-first',
         module: 'user-data',
-        type: 'password',
+        type: 'password'
       })
     );
     passwordSecondText!.insertAdjacentHTML(
@@ -125,7 +123,7 @@ export class UserPage extends View {
       inputButton.render({
         wrap: 'password-second',
         module: 'user-data',
-        type: 'password',
+        type: 'password'
       })
     );
     dateText?.insertAdjacentHTML(
@@ -133,7 +131,7 @@ export class UserPage extends View {
       inputButton.render({
         wrap: 'birthday',
         module: 'user-data',
-        type: 'date',
+        type: 'date'
       })
     );
     emailText?.insertAdjacentHTML(
@@ -149,10 +147,24 @@ export class UserPage extends View {
     this.componentDidMount();
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const blockHTML = document.querySelector('.settings');
     const popupEvent = (event) => {
       switch (true) {
+        case event.target.closest('.settings_file') !== null:
+          const file = document.querySelector('.settings_file') as HTMLInputElement;
+          const image = document.querySelector('.settings__img') as HTMLImageElement;
+          // @ts-ignore
+          if (file?.files?.length > 0) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              if (e.target && e.target.result) {
+                image.src = `${e.target.result}`;
+              }
+            };// @ts-ignore
+            reader.readAsDataURL(file.files[0]);
+          }
+          break;
         case event.target.closest('.button-submit') !== null:
           event.preventDefault();
           removeErrors(this.state.errorsHTML);
@@ -166,9 +178,10 @@ export class UserPage extends View {
 
     this.popupEvent = popupEvent;
     blockHTML?.addEventListener('click', popupEvent);
+    blockHTML?.addEventListener('change', popupEvent);
   }
 
-  getForm() {
+  getForm () {
     const elements = this.state.inputsHTML;
 
     const login = elements['login'].value.trim();
@@ -201,7 +214,7 @@ export class UserPage extends View {
     }
   }
 
-  validateForm(login, password, passwordSecond, email, file, birthday) {
+  validateForm (login, password, passwordSecond, email, file, birthday) {
     const elements = this.state.errorsHTML;
     const object = this.state.userInfo;
     const wraps = this.state.wraps;
@@ -305,13 +318,14 @@ export class UserPage extends View {
     return result;
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     store.unsubscribe('unmount', this.componentWillUnmount);
     const popup = document.querySelector('.content-block');
-    popup?.removeEventListener('submit', this.popupEvent);
+    popup?.removeEventListener('click', this.popupEvent);
+    popup?.removeEventListener('change', this.popupEvent);
   }
 
-  handlerStatus() {
+  handlerStatus () {
     const errorClassName = 'change-user-data__error';
 
     switch (this.state.userStatus) {
@@ -321,7 +335,7 @@ export class UserPage extends View {
         router.go(
           {
             path: '/login',
-            props: ``,
+            props: ``
           },
           { pushState: true, refresh: false }
         );
@@ -343,7 +357,7 @@ export class UserPage extends View {
     return false;
   }
 
-  subscribeActorStatus() {
+  subscribeActorStatus () {
     const result = store.getState('getSettingsStatus');
     this.state.userStatus = result.status;
 
@@ -362,7 +376,7 @@ export class UserPage extends View {
         poster: userInfo['photo'],
         infoText: userInfo['info_text'],
         country: userInfo['country'],
-        career: userInfo['career'],
+        career: userInfo['career']
       };
     }
 
@@ -370,7 +384,7 @@ export class UserPage extends View {
     this.setUserInfo();
   }
 
-  setUserInfo() {
+  setUserInfo () {
     const photo = document.querySelector('.settings__img') as HTMLElement;
     // @ts-ignore
     photo.src = this.state.userInfo['poster'];
@@ -378,7 +392,7 @@ export class UserPage extends View {
     insertInInput(this.state.inputsHTML, this.state.userInfo);
   }
 
-  init() {
+  init () {
     const loginHTML = document.querySelector('.login-input-user-data');
     const emailHTML = document.querySelector('.email-input-user-data');
     const passwordFirstHTML = document.querySelector(
@@ -412,14 +426,14 @@ export class UserPage extends View {
       passwordFirst: passwordFirstHTML,
       passwordSecond: passwordSecondHTML,
       birthday: birthdayHTML,
-      file: fileInputHTML,
+      file: fileInputHTML
     };
     this.state.wraps = {
       login: wrapLogin,
       email: wrapEmailHTML,
       passwordFirst: wrapPassword,
       passwordSecond: wrapSecondPassword,
-      birthday: wrapBirthdayHTML,
+      birthday: wrapBirthdayHTML
     };
     this.state.errorsHTML = {
       login: loginError,
@@ -427,7 +441,7 @@ export class UserPage extends View {
       passwordFirst: passwordFirstError,
       passwordSecond: passwordSecondError,
       birthday: dateError,
-      image: imageError,
+      image: imageError
     };
   }
 }

@@ -5,28 +5,12 @@ import { ROOT } from '@utils/config';
 import {
   actionAddFavoriteActor,
   actionAddFavoriteFilm,
-  actionCollectionMain,
+  actionCollectionMain, actionSearchActor, actionSearchFilm
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { FilmSelection } from '@components/FilmSelection/filmSelection';
 import { FilmCard } from '@components/filmCard/filmCard';
 import { ActorCard } from '@components/ActorCard/actorCard';
-
-const actors1 = [
-      {
-        actor_id: 1,
-        actor_name: 'Джейсон Стэйтем',
-        actor_photo: '/icons/star.png',
-      },
-      { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
-      { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
-      {
-        actor_id: 4,
-        actor_name: 'Сильвестр Сталлоне',
-        actor_photo: '/icons/star.png',
-      },
-    ]
-
 
 export interface FilmSelectionPage {
   state: {
@@ -43,10 +27,10 @@ export interface FilmSelectionPage {
 export class FilmSelectionPage extends View {
   private popupEvent: (event) => void;
 
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
-      dataSection: '',
+      dataSection: ''
     };
 
     store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
@@ -57,22 +41,45 @@ export class FilmSelectionPage extends View {
    * Метод рендеринга элемента
    * @param isMain
    */
-  async render(isMain = false) {
+  async render (isMain = false) {
     let buf;
-
-    if (isMain === false) {
-      return
-    }
 
     if (
       window.location.pathname === '/films/' ||
-      window.location.pathname === '/films' ||
-      window.location.pathname === '/'
+        window.location.pathname === '/films' ||
+        window.location.pathname === '/'
     ) {
       if (window.location.pathname === '/') {
         await store.dispatch(actionCollectionMain({ collection_id: 0 }));
         buf = store.getState('collectionMain');
       } else {
+        const url = new URL(window.location.href);
+
+        const searchParams = url.searchParams;
+
+        const title = searchParams.get('title');
+        const dateFrom = searchParams.get('date_from');
+        const dateTo = searchParams.get('date_to');
+        const ratingFrom = searchParams.get('rating_from');
+        const ratingTo = searchParams.get('rating_to');
+        const mpaa = searchParams.get('mpaa');
+        const genre = searchParams.get('genre');
+        const actors = searchParams.get('actors');
+        // console.log(title, dateFrom, dateTo, ratingFrom, ratingTo, mpaa, genre?.split(',').map(Number), actors?.split(','));
+
+        await store.dispatch(
+          actionSearchFilm({
+            title: <string>title,
+            dateFrom: <string>dateFrom,
+            dateTo: <string>dateTo,
+            ratingFrom: Number(ratingFrom),
+            ratingTo: Number(ratingTo),
+            mpaa: mpaa,
+            genre: genre ? genre.split(',').map(Number) : [],
+            actors: actors?.split(',')
+          })
+        );
+
         buf = store.getState('resultSearchFilm');
         if (buf === undefined || buf === null || buf.body === undefined) {
           return;
@@ -96,13 +103,13 @@ export class FilmSelectionPage extends View {
       const contentBlock = document.querySelector('.film-selection_films');
 
       // eslint-disable-next-line guard-for-in
-      for (const film in buf.body) {
+      for (const film in buf.body.films) {
         const filmCard = new FilmCard(ROOT);
         contentBlock?.insertAdjacentHTML(
           'beforeend',
           filmCard.render({
-            film: buf.body[film],
-            alreadyFavorite: false,
+            film: buf.body.films[film],
+            alreadyFavorite: false
           })
         );
       }
@@ -110,40 +117,96 @@ export class FilmSelectionPage extends View {
       this.componentDidMount(true);
     } else {
       this.renderDefaultPage();
+
+      const url = new URL(window.location.href);
+
+      const searchParams = url.searchParams;
+
+      const name = searchParams.get('name');
+      const amplua = searchParams.get('amplua');
+      const country = searchParams.get('country');
+      const birthday = searchParams.get('birthday');
+      const films = searchParams.get('films');
+
+      await store.dispatch(
+        actionSearchActor({
+          name: <string>name,
+          amplua: amplua ? amplua?.split(',') : [''],
+          county: <string>country,
+          birthday: <string>birthday,
+          films: films ? films?.split(',') : ['']
+        })
+      );
+
+      const actors = store.getState('resultSearchActor');
       const contentBlockHTML = document.querySelector('.content-block');
 
       const filmSelect = new FilmSelection(ROOT);
 
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
-        filmSelect.render(actors1)
+        filmSelect.render(actors)
       );
 
       // const actors = store.getState('resultSearchActor')?.body.actors;
       const contentBlock = document.querySelector('.film-selection_films');
 
       // eslint-disable-next-line guard-for-in
-      for (const actor in actors1) {
+      for (const actor in actors) {
         const actorCard = new ActorCard(ROOT);
         contentBlock?.insertAdjacentHTML(
           'beforeend',
-          actorCard.render({ actor: actors1[actor], alreadyFavorite: false })
+          actorCard.render({ actor: actors[actor], alreadyFavorite: false })
         );
       }
       this.componentDidMount(false);
     }
   }
 
-  returnTemplate(collectionId) {
+  renderByElement (HTMLElement) {
     return store
-      .dispatch(actionCollectionMain({ collection_id: collectionId }))
+      .dispatch(actionCollectionMain({ collection_id: 0 }))
       .then((response) => {
+        // const filmSelect = new FilmSelection(ROOT);
+        const buf = store.getState('collectionMain');
+          console.log(buf,44)
+        // if (buf === undefined || buf === null || buf.body === undefined) {
+        //   return;
+        // }
+
+
+
+        const contentBlockHTML = document.querySelector('.similar-movies');
+
         const filmSelect = new FilmSelection(ROOT);
+
+        contentBlockHTML?.insertAdjacentHTML(
+            'beforeend',
+            filmSelect.render(buf.body)
+        );
+
+        const contentBlock = document.querySelector('.film-selection_films');
+
+        // eslint-disable-next-line guard-for-in
+        for (const film in buf.body.films) {
+          const filmCard = new FilmCard(ROOT);
+          contentBlock?.insertAdjacentHTML(
+              'beforeend',
+              filmCard.render({
+                film: buf.body.films[film],
+                alreadyFavorite: false
+              })
+          );
+        }
+
+        this.componentDidMount(true);
+
+
         return filmSelect.render(store.getState('collectionMain')?.body.films);
       });
   }
 
-  componentDidMount(isFilms) {
+  componentDidMount (isFilms) {
     const popup = document.querySelector('.film-selection_films');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
@@ -161,13 +224,13 @@ export class FilmSelectionPage extends View {
               store.dispatch(actionAddFavoriteFilm({ film_id: filmId }));
             } else {
               store.dispatch(actionAddFavoriteActor({ actor_id: actorId }));
-              this.subscribeSearchActors();
+              // this.subscribeSearchActors();
             }
           } else {
             router.go(
               {
                 path: '/login',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -178,7 +241,7 @@ export class FilmSelectionPage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`,
+              props: `/${filmId}`
             },
             { pushState: true, refresh: false }
           );
@@ -189,7 +252,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/watchlist/actors',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -197,7 +260,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/watchlist/films',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -208,7 +271,7 @@ export class FilmSelectionPage extends View {
           router.go(
             {
               path: '/actor',
-              props: `/${actorId}`,
+              props: `/${actorId}`
             },
             { pushState: true, refresh: false }
           );
@@ -222,33 +285,33 @@ export class FilmSelectionPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const popup = document.querySelector('.film-selection_films');
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  subscribeSearchFilms() {
-    store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
-    router.go(
-      {
-        path: `/films`,
-        props: `/${this.state.dataSection}`,
-      },
-      { pushState: true, refresh: false }
-    );
+  subscribeSearchFilms () {
+    // store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
+    // router.go(
+    //     {
+    //       path: `/films`,
+    //       props: `/${this.state.dataSection}`,
+    //     },
+    //     { pushState: true, refresh: false }
+    // );
   }
 
-  subscribeSearchActors() {
-    store.unsubscribe(
-      'resultSearchActor',
-      this.subscribeSearchActors.bind(this)
-    ); // props: `/${this.state.dataSection}`
-    router.go(
-      {
-        path: `/actors`,
-        props: `/${this.state.dataSection}`,
-      },
-      { pushState: true, refresh: false }
-    );
+  subscribeSearchActors () {
+    // store.unsubscribe(
+    //     'resultSearchActor',
+    //     this.subscribeSearchActors.bind(this)
+    // );
+    // router.go(
+    //     {
+    //       path: `/actors`,
+    //       props: `/${this.state.dataSection}`,
+    //     },
+    //     { pushState: true, refresh: false }
+    // );
   }
 }

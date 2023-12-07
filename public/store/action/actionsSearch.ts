@@ -3,7 +3,7 @@ import { urls } from '@utils/config';
 import { page404 } from '@router/Page404/page404';
 
 class ActionsSearch {
-  async searchFilm({
+  async searchFilm ({
     title,
     dateFrom,
     dateTo,
@@ -11,7 +11,7 @@ class ActionsSearch {
     ratingTo,
     mpaa,
     genre,
-    actors,
+    actors
   }: searchFilm) {
     const response = post({
       url: urls.searchFilm,
@@ -23,8 +23,10 @@ class ActionsSearch {
         rating_to: ratingTo || 10,
         mpaa: mpaa || '',
         genres: genre || [],
-        actors: actors || [],
-      },
+        actors: actors || []
+        // page: page,
+        // per_page: per_page
+      }
     });
 
     const result = await response;
@@ -35,25 +37,27 @@ class ActionsSearch {
     }
 
     return {
-      resultSearchFilm: result,
+      resultSearchFilm: result
     };
   }
 
-  async searchActor({ name, films, birthday, amplua }: searchActor) {
-    const response = post({
+  async searchActor ({ name, films, birthday, amplua }: searchActor) {
+    const response = get({
       url: urls.searchActor,
-      body: { name: name, films: films, birthday: birthday, amplua: amplua },
+      body: { name: name, films: films, birthday: birthday, amplua: amplua
+        // page: page, per_page: per_page
+      }
     });
 
     const result = await response;
 
     if (result === undefined) {
-      console.error(404)
+      console.error(404);
       page404.render();
     }
 
     return {
-      resultSearchActor: result,
+      resultSearchActor: result
     };
   }
 }

@@ -227,48 +227,6 @@ const comments = {
         film_id: 7,
         film_name: 'film',
       },
-      {
-        name: 'Login_User',
-        rating: 7,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film',
-      },
-      {
-        name: 'Login_User',
-        rating: 8,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film',
-      },
-      {
-        name: 'Login_User',
-        rating: 9,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film',
-      },
-      {
-        name: 'Login_User',
-        rating: 10,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film',
-      },
-      {
-        name: 'Login_User',
-        rating: 1,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film',
-      },
-      {
-        name: 'Login_User',
-        rating: 2,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film',
-      },
     ],
   },
 };
@@ -654,6 +612,10 @@ app.get('/api/v1/settings', (req, res) => {
   return res.status(200).json(settings);
 });
 
+app.post('/api/v1/add/film', (req, res) => {
+  return res.status(200).json({status: 200});
+});
+
 const formidableMiddleware = require('express-formidable');
 
 app.use(
@@ -803,14 +765,22 @@ app.use('/api/v1/calendar', (req, res) => {
   return res.status(200).json(calendar);
 });
 
-app.use('/api/v1/find', (req, res) => {
-  return res.status(200).json(films);
-});
+// app.use('/api/v1/find', (req, res) => {
+//   return res.status(200).json(films);
+// });
 
 app.use('/api/v1/search/actors', (req, res) => {
+  const secFetchSite = req.headers['sec-fetch-site'];
+  if (!secFetchSite) {
+    res.sendFile(__dirname + '/index.html');
+    return;
+  }
   return res.status(200).json(favoriteActors);
 });
 
+app.use('/actors', (req, res) => {
+    res.sendFile(__dirname + '/index.html');
+});
 
 app.use('/api/v1/films', (req, res) => {
   const secFetchSite = req.headers['sec-fetch-site'];
@@ -824,3 +794,7 @@ app.use('/api/v1/films', (req, res) => {
   return res.status(200).json(films);
 });
 
+app.post((res, req) => {
+  console.log(req.body);
+  return res.status(200);
+});

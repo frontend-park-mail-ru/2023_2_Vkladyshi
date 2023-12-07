@@ -21,7 +21,7 @@ export class Signup extends Component {
    * Метод рендеринга элемента
    * @return {string} html авторизации
    */
-  render() {
+  render () {
     return templateSignup();
   }
 }

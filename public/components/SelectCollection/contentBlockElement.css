@@ -250,7 +250,19 @@
   transition: all 0.5s ease;
 }
 
-.title-type:hover {
+.title-type-admin {
+  cursor: pointer;
+  padding: 5px 10px 5px 10px;
+  border-radius: 8px;
+  border: 2px solid #000000;
+  color: black;
+  margin-right: 5px;
+  margin-top: 5px;
+  transition: all 0.5s ease;
+}
+
+
+.title-type:hover, .title-type-admin:hover {
   background: #f5c518;
   color: black;
   border: 2px solid #f5c518;
@@ -301,7 +313,7 @@
   margin-right: 5px;
 }
 
-.title-type.active {
+.title-type.active, .title-type-admin.active {
   background: #f5c518;
   color: black;
   border: 2px solid #f5c518;
@@ -312,7 +324,7 @@
     width: 100%;
   }
 }
-/* 
+/*
 @media screen and (max-width: 505px) {
   .search-container__header{
     font-size: 25px;

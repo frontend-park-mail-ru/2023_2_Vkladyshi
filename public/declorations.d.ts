@@ -77,8 +77,16 @@ interface searchFilm {
 
 interface searchActor {
   name: string;
-  amplua: string;
+  amplua: any;
   county: string;
   birthday: string;
   films: any;
+}
+
+interface newFilm {
+  title: string,
+  filmInfo: string,
+  genre: any,
+  actors: any,
+  date: string
 }

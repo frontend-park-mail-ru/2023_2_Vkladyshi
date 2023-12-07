@@ -4,6 +4,11 @@
   justify-content: center;
 }
 
+.similar-movies {
+  color: white;
+}
+
+
 .actor-page__comments__header {
   color: white;
   font-size: 32px;
@@ -214,6 +219,11 @@
 }
 
 .actors {
+  grid-column-end: 3;
+  grid-column-start: 1;
+}
+
+.similar-movies {
   grid-column-end: 3;
   grid-column-start: 1;
 }

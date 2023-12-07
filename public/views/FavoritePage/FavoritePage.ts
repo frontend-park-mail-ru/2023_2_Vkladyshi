@@ -6,7 +6,7 @@ import {
   actionFavoriteActors,
   actionFavoriteFilms,
   actionRemoveFavoriteActor,
-  actionRemoveFavoriteFilm,
+  actionRemoveFavoriteFilm
 } from '@store/action/actionTemplates';
 import { FilmCard } from '@components/filmCard/filmCard';
 import { router } from '@router/router';
@@ -25,7 +25,7 @@ export class FavoritePage extends View {
    * @param ROOT
    * @class
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
 
     store.subscribe('favoriteFilms', this.subscribeFavoriteFilms.bind(this));
@@ -35,7 +35,7 @@ export class FavoritePage extends View {
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     this.renderDefaultPage();
     const contentBlockHTML = document.querySelector(
       '.content-block'
@@ -47,7 +47,7 @@ export class FavoritePage extends View {
         'beforeend',
         favoriteList.render({
           title: 'Список фильмов',
-          redirect: 'Любимые акторы',
+          redirect: 'Любимые акторы'
         })
       );
       store
@@ -62,7 +62,7 @@ export class FavoritePage extends View {
       'beforeend',
       favoriteList.render({
         title: 'Список актёров',
-        redirect: 'Любимые фильмы',
+        redirect: 'Любимые фильмы'
       })
     );
     store.dispatch(actionFavoriteActors({ page: 1, per_page: 20 })).then(() => {
@@ -74,7 +74,7 @@ export class FavoritePage extends View {
    * Метод обработки нажатий
    * @param isFilms проверка что рендерим фильмы
    */
-  componentDidMount() {
+  componentDidMount () {
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       const filmId = event.target
@@ -104,7 +104,7 @@ export class FavoritePage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`,
+              props: `/${filmId}`
             },
             { pushState: true, refresh: false }
           );
@@ -115,7 +115,7 @@ export class FavoritePage extends View {
             router.go(
               {
                 path: '/watchlist/actors',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -123,7 +123,7 @@ export class FavoritePage extends View {
             router.go(
               {
                 path: '/watchlist/films',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -134,7 +134,7 @@ export class FavoritePage extends View {
           router.go(
             {
               path: '/actor',
-              props: `/${actorId}`,
+              props: `/${actorId}`
             },
             { pushState: true, refresh: false }
           );
@@ -152,7 +152,7 @@ export class FavoritePage extends View {
   /**
    * Метод отписок
    */
-  componentWillUnmount() {
+  componentWillUnmount () {
     const elements = document.querySelector('.favorite');
     elements?.removeEventListener('click', this.popupEvent);
   }
@@ -160,12 +160,12 @@ export class FavoritePage extends View {
   /**
    * Метод для обработки ответа с фильмами
    */
-  subscribeFavoriteFilms() {
+  subscribeFavoriteFilms () {
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
-    contentBlockHTML.innerHTML = '';
-    const films = store.getState('favoriteFilms')?.body.films;
+    contentBlockHTML!.innerHTML = '';
+    const films = store.getState('favoriteFilms')?.body;
 
     // eslint-disable-next-line guard-for-in
     for (const film in films) {
@@ -182,11 +182,11 @@ export class FavoritePage extends View {
   /**
    * Метод для обработки ответа с актерами
    */
-  subscribeFavoriteActor() {
+  subscribeFavoriteActor () {
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
-    contentBlockHTML.innerHTML = '';
+    contentBlockHTML!.innerHTML = '';
     const actors = store.getState('favoriteActors')?.body.actors;
 
     // eslint-disable-next-line guard-for-in
