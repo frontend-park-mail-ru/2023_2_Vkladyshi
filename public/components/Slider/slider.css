@@ -103,6 +103,9 @@
   }
 }
 
+.slider-wrap {
+  overflow-x: hidden;
+}
 
 
 .slider {
@@ -110,7 +113,7 @@
   /*height: 450px;*/
   display: flex;
   /*margin: 0 auto;*/
-  /*position: relative;*/
+  position: relative;
   overflow-x: hidden;
 
 }
@@ -139,7 +142,17 @@
 .slider-prev, .slider-next {
   width: 50px;
   cursor: pointer;
-  /*margin: 40px;*/
+  position: absolute;
+  z-index: 4;
+  top: 50% ;
+}
+
+.slider-prev {
+  left: 0;
+}
+
+.slider-next {
+  right: 0;
 }
 
 .slider-full {
@@ -181,4 +194,5 @@
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  position: relative;
 }

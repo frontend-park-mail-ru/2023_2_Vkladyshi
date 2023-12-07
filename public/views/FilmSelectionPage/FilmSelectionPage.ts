@@ -201,6 +201,18 @@ export class FilmSelectionPage extends View {
 
         this.componentDidMount(true);
 
+          const divName = document.querySelector('.film-selection_name') as HTMLElement;
+          if (divName) {
+              divName!.textContent = 'Похожие фильмы';
+              divName.style.marginTop = '40px';
+          }
+
+          const sliderContainer = document.querySelector('.slider-container');
+          const films = document.querySelector('.film-selection_films');
+          const slider = document.querySelector('.slider-name');
+          sliderContainer?.appendChild(<Element>films);
+          slider?.appendChild(<Element>divName);
+
 
         return filmSelect.render(store.getState('collectionMain')?.body.films);
       });

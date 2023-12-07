@@ -154,10 +154,7 @@ export class FilmPage extends View {
       filmSelection.renderByElement('kek');
 
 
-      const sliderContainer = document.querySelector('.slider-container');
-      const films = document.querySelector('.film-selection_films');
-      const slider = document.querySelector('.slider-name');
-      // slider?.appendChild(<Element>divName);
+
 
       // filmSelection.renderByElement('kek');
       // sliderContainer?.insertAdjacentHTML('beforeend', filmSelection.renderByElement());
@@ -218,6 +215,7 @@ export class FilmPage extends View {
   addEvents () {
     const popup = document.querySelector('.main-container');
     const popupEvent = (event) => {
+      event.preventDefault();
       this.popupEvent = popupEvent;
       switch (true) {
         case event.target.closest('.table__actor__text') !== null:
@@ -240,6 +238,7 @@ export class FilmPage extends View {
           break;
       }
     };
+    const kek = document.querySelector('.similar-movies');
 
     popup?.addEventListener('click', popupEvent);
   }
