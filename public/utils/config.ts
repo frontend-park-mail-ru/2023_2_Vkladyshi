@@ -17,6 +17,11 @@ export const ROOT = document.querySelector('#root');
 export const DOMAIN = 'http://127.0.0.1:8001';
 // export const DOMAIN = 'https://movie-hub.ru';
 
+export const API = {
+  ws: `ws://${DOMAIN}/api/v1/notifications`,
+};
+
+
 /// api/v1/find
 /// api/v1/films
 export const urls = {
