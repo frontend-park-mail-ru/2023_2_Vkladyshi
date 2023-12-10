@@ -7,7 +7,7 @@ import { inputButton } from '@components/inputButton/inputButton';
 import { addActive, removeActive } from '@utils/std';
 import {
   actionSearchActor,
-  actionSearchFilm,
+  actionSearchFilm
 } from '@store/action/actionTemplates';
 import { SelectCollection } from '@components/SelectCollection/selectCollection';
 
@@ -33,13 +33,13 @@ export class SelectCollectionPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       dataSection: '',
       firstSearchActor: true,
       firstSearchFilm: true,
-      renderedSearchFilm: true,
+      renderedSearchFilm: true
     };
 
     store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
@@ -49,7 +49,7 @@ export class SelectCollectionPage extends View {
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     this.renderDefaultPage();
 
     if (!document.querySelector('.select-collection-frame')) {
@@ -81,7 +81,7 @@ export class SelectCollectionPage extends View {
    * @param searchFilm
    * @return {Promise} Promise ответа
    */
-  componentDidMount(searchFilm = true) {
+  componentDidMount (searchFilm = true) {
     if (searchFilm) {
       this.eventsSearchFilm();
     } else {
@@ -117,7 +117,7 @@ export class SelectCollectionPage extends View {
   /**
    * Метод отписок
    */
-  componentWillUnmount() {
+  componentWillUnmount () {
     const search = document.querySelector('.search-container');
 
     search?.removeEventListener('click', this.popupEvent);
@@ -127,12 +127,12 @@ export class SelectCollectionPage extends View {
   /**
    * Метод для обработки ответа с фильмами
    */
-  subscribeSearchFilms() {
+  subscribeSearchFilms () {
     store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
     router.go(
       {
         path: `/films`,
-        props: `/${this.state.dataSection}`,
+        props: `/${this.state.dataSection}`
       },
       { pushState: true, refresh: false }
     );
@@ -141,7 +141,7 @@ export class SelectCollectionPage extends View {
   /**
    * Метод для обработки ответа с актерами
    */
-  subscribeSearchActors() {
+  subscribeSearchActors () {
     store.unsubscribe(
       'resultSearchActor',
       this.subscribeSearchActors.bind(this)
@@ -149,7 +149,7 @@ export class SelectCollectionPage extends View {
     router.go(
       {
         path: `/actors`,
-        props: `/${this.state.dataSection}`,
+        props: `/${this.state.dataSection}`
       },
       { pushState: true, refresh: false }
     );
@@ -158,7 +158,7 @@ export class SelectCollectionPage extends View {
   /**
    * Метод для рендаринга поиска по фильмам
    */
-  eventsSearchFilm() {
+  eventsSearchFilm () {
     let popup, titleFilm, rating, years, mpaa, sectionActors, genre;
 
     const searchActor = document.querySelector('.search-inputs-actor');
@@ -198,7 +198,7 @@ export class SelectCollectionPage extends View {
         inputButton.render({
           wrap: 'rating-left',
           module: 'select',
-          type: 'number',
+          type: 'number'
         })
       );
       ratingRight?.insertAdjacentHTML(
@@ -206,7 +206,7 @@ export class SelectCollectionPage extends View {
         inputButton.render({
           wrap: 'rating-right',
           module: 'select',
-          type: 'number',
+          type: 'number'
         })
       );
 
@@ -218,7 +218,7 @@ export class SelectCollectionPage extends View {
         inputButton.render({
           wrap: 'years-left',
           module: 'select',
-          type: 'date',
+          type: 'date'
         })
       );
       yearsRight?.insertAdjacentHTML(
@@ -226,7 +226,7 @@ export class SelectCollectionPage extends View {
         inputButton.render({
           wrap: 'years-right',
           module: 'select',
-          type: 'date',
+          type: 'date'
         })
       );
 
@@ -245,7 +245,7 @@ export class SelectCollectionPage extends View {
       '.rating-select': rating,
       '.mpaa-select': mpaa,
       '.years-select': years,
-      '.actors-select': sectionActors,
+      '.actors-select': sectionActors
     };
 
     this.popupEvent = (event) => {
@@ -278,7 +278,7 @@ export class SelectCollectionPage extends View {
   /**
    * Метод для рендаринга поиска по актерам
    */
-  eventsSearchActor() {
+  eventsSearchActor () {
     let popup, name, amplua, birthday, country, filmsSelect;
     const searchActor = document.querySelector('.search-inputs-actor');
     const searchFilm = document.querySelector('.search-inputs-film');
@@ -328,7 +328,7 @@ export class SelectCollectionPage extends View {
         '.amp-lua-select': amplua,
         '.country-select': country,
         '.birthday-select': birthday,
-        '.films-select': filmsSelect,
+        '.films-select': filmsSelect
       };
 
       this.panelEvent = (event) => {
@@ -350,7 +350,7 @@ export class SelectCollectionPage extends View {
   /**
    * Метод для отправки данных для поиска фильма
    */
-  dispatchFilm() {
+  dispatchFilm () {
     const title = (
       document.querySelector('.select-input-select') as HTMLInputElement
     )?.value?.trim();
@@ -393,7 +393,7 @@ export class SelectCollectionPage extends View {
         ratingTo: Number(ratingTo),
         mpaa: mpaa,
         genre: sectionDataArray,
-        actors: actors,
+        actors: actors
       })
     );
   }
@@ -401,7 +401,7 @@ export class SelectCollectionPage extends View {
   /**
    * Метод для отправки данных для поиска актера
    */
-  dispatchActor() {
+  dispatchActor () {
     const name = (
       document.querySelector('.name-input-select') as HTMLInputElement
     )?.value?.trim();
@@ -426,7 +426,7 @@ export class SelectCollectionPage extends View {
         amplua: amplua,
         county: country,
         birthday: birthday,
-        films: films,
+        films: films
       })
     );
   }
@@ -435,7 +435,7 @@ export class SelectCollectionPage extends View {
    * Метод для удаления/добавления active у HTMLelement
    * @param element
    */
-  toggleActive(element) {
+  toggleActive (element) {
     if (!element.closest('.active')) {
       addActive(element);
     } else {

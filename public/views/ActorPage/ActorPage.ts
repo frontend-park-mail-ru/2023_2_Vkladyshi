@@ -20,10 +20,10 @@ export class ActorDescritionPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
-      actorInfo: null,
+      actorInfo: null
     };
 
     this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -36,7 +36,7 @@ export class ActorDescritionPage extends View {
    * Метод создания страницы
    * @param props
    */
-  render(props = null) {
+  render (props = null) {
     this.renderDefaultPage();
     store.subscribe('removeView', this.componentWillUnmount);
 
@@ -48,7 +48,7 @@ export class ActorDescritionPage extends View {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     let result = {};
 
     const res = this.state.actorInfo;
@@ -72,7 +72,7 @@ export class ActorDescritionPage extends View {
         poster: res['poster_href'],
         infoText: res['info_text'] ? res['info_text'] : 'Неизвестно',
         country: res['country'] ? res['country'] : 'Страна неизвестна',
-        career: res['career'],
+        career: res['career']
       };
     }
 
@@ -97,11 +97,11 @@ export class ActorDescritionPage extends View {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     store.unsubscribe('removeView', this.subscribeActorStatus);
   }
 
-  subscribeActorStatus() {
+  subscribeActorStatus () {
     this.state.actorInfo = store.getState('actorInfo');
     this.componentDidMount();
   }

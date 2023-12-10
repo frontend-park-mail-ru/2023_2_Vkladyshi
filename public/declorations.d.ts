@@ -84,10 +84,10 @@ interface searchActor {
 }
 
 interface filmNotifPayload {
-  id: number,
-  poster_ver: string,
-  name: string,
-  rating: number,
-  ticket: string,
-  prod_date: string,
+  id: number;
+  poster_ver: string;
+  name: string;
+  rating: number;
+  ticket: string;
+  prod_date: string;
 }

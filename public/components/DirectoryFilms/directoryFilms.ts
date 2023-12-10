@@ -7,7 +7,7 @@ export class DirectoryFilms extends Component {
    * @param result
    * @return {string} html авторизации
    */
-  render(result) {
+  render (result) {
     return templateDirectoryFilms(result);
   }
 }

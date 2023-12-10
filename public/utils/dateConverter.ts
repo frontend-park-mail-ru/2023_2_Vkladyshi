@@ -8,7 +8,11 @@ export const dateConverter = (date) => {
   return `${year}-${month}-${day}`;
 };
 
-export const decoreDate = (date: string, sep: string = ' ', decoreMonth = true) => {
+export const decoreDate = (
+  date: string,
+  sep: string = ' ',
+  decoreMonth = true
+) => {
   if (!date) {
     return 'нет данных';
   }
@@ -21,7 +25,12 @@ export const decoreDate = (date: string, sep: string = ' ', decoreMonth = true) 
 };
 
 export const getMonthName = (numberMonth: number) => {
-  if (!numberMonth || !isFinite(numberMonth) || numberMonth > 12 || numberMonth === 0) {
+  if (
+    !numberMonth ||
+    !isFinite(numberMonth) ||
+    numberMonth > 12 ||
+    numberMonth === 0
+  ) {
     return 'января';
   }
 
