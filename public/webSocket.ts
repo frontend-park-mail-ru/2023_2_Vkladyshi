@@ -46,7 +46,7 @@ class WebSocketService {
     };
 
     this.subscribe('ANONS_FILM', (payload: filmNotifPayload) => {
-      showNotification('ANONS_FILM', payload);
+      // showNotification('ANONS_FILM', payload);
 
       if (!this.state.isActive && this.state.permission === 'granted') {
         const date = decoreDate(payload.prod_date).split(' ');
@@ -66,6 +66,7 @@ class WebSocketService {
         this.initialize();
 
         Notification.requestPermission().then((permission) => {
+          console.log('ws__Notification_Permission:', permission);
           this.state.permission = permission;
         });
       }

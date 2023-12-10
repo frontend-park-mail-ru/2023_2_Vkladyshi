@@ -16,7 +16,7 @@ export const ROOT = document.querySelector('#root');
 // export const DOMAIN = 'http://localhost:8001';
 export const DOMAIN = 'http://127.0.0.1:8001';
 // export const DOMAIN = 'https://movie-hub.ru';
-export const DOMAIN_SW = 'http://127.0.0.1:8003';
+export const DOMAIN_SW = '127.0.0.1:8003';
 
 
 export const API = {

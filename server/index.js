@@ -831,7 +831,7 @@ app.use('/api/v1/films', (req, res) => {
 const port_ws = process.env.PORT || 8003;
 const wss = new ws.Server({
   port: port_ws
-}, () => console.log(`WSS started on ${port_ws+1}`));
+}, () => console.log(`WSS started on ${port_ws}`));
 
 const premieresFilmsBD = [
   {
@@ -878,7 +878,3 @@ function broadcastMessage (message, id) {
     client.send(JSON.stringify(message));
   });
 }
-
-// app.listen(port_ws, function () {
-//   console.log(`Server listening port ${port_ws}`);
-// });
