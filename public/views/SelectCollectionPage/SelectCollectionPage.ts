@@ -95,15 +95,15 @@ export class SelectCollectionPage extends View {
           this.eventsSearchFilm();
           break;
         case event.target.closest('.search-container__select__actors') !== null:
-          this.eventsSearchActor();
-          break;
-        case event.target.closest('.result-button') !== null:
-          event.preventDefault();
-          if (this.state.renderedSearchFilm) {
-            this.dispatchFilm();
-          } else {
-            this.dispatchActor();
-          }
+        //   this.eventsSearchActor();
+        //   break;
+        // case event.target.closest('.result-button') !== null:
+        //   event.preventDefault();
+        //   if (this.state.renderedSearchFilm) {
+        //     this.dispatchFilm();
+        //   } else {
+        //     this.dispatchActor();
+        //   }
           break;
         default:
           break;
@@ -383,8 +383,6 @@ export class SelectCollectionPage extends View {
     const sectionDataArray = Array.from(genres).map((div) =>
       parseInt(<string>div.getAttribute('data-section'))
     );
-
-    console.log(sectionDataArray, actors);
 
     this.state.dataSection = `?title=${title}&date_from=${dateFrom}&date_to=${dateTo}&rating_from=${ratingFrom}&rating_to=${ratingTo}&mpaa=${mpaaResult}&genre=${sectionDataArray}&actors=${actors}`;
     this.subscribeSearchFilms();

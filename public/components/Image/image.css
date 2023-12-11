@@ -100,6 +100,11 @@
   font-size: 22px;
   /*transition: all 0.5s ease;*/
   cursor: not-allowed;
+  opacity: 1;
+}
+
+.input-main-email::placeholder {
+  color: #ffffff;
 }
 
 .input-main-email:hover {

@@ -75,8 +75,9 @@ export const errorInputs = {
   NotAllElement: '* Обязательно поле',
   LoginExists: 'Логин уже используется',
   ServerError: 'Ошибка сервера',
-  badRequest: 'Почта уже используется'
-};
+  badRequest: 'Почта уже используется',
+  repeatPassword: 'Тот же пароль'
+}
 
 export const mainPage = MainPage;
 export const signinPage = SigninPage;

@@ -110,24 +110,24 @@ export class FavoritePage extends View {
           );
           break;
         case event.target.closest('.redirect-to-favorite') !== null:
-          this.componentWillUnmount();
-          if (this.isFilm) {
-            router.go(
-              {
-                path: '/watchlist/actors',
-                props: ``
-              },
-              { pushState: true, refresh: false }
-            );
-          } else {
-            router.go(
-              {
-                path: '/watchlist/films',
-                props: ``
-              },
-              { pushState: true, refresh: false }
-            );
-          }
+          // this.componentWillUnmount();
+          // if (this.isFilm) {
+          //   router.go(
+          //     {
+          //       path: '/watchlist/actors',
+          //       props: ``
+          //     },
+          //     { pushState: true, refresh: false }
+          //   );
+          // } else {
+          //   router.go(
+          //     {
+          //       path: '/watchlist/films',
+          //       props: ``
+          //     },
+          //     { pushState: true, refresh: false }
+          //   );
+          // }
           break;
         case event.target.closest('.actor-selection_actor') !== null:
           this.componentWillUnmount();

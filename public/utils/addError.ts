@@ -38,6 +38,10 @@ export const insertInInput = (sourceDictionary, targetDictionary) => {
 };
 
 export const removeErrors = (elements) => {
+  if (!elements) {
+  return;
+  }
+
   Object.entries(elements).forEach(([key, value]) => {
     // @ts-ignore
     value.textContent = '';
@@ -54,7 +58,7 @@ export const addErrorsActive = (elements) => {
   } else {
     Object.keys(elements).forEach((key) => {
       const element = elements[key];
-      element.classList.add('active');
+      element?.classList?.add('active');
     });
   }
 };
@@ -62,14 +66,14 @@ export const addErrorsActive = (elements) => {
 export const removeErrorsActive = (elements) => {
   if (Array.isArray(elements)) {
     elements.forEach((element) => {
-      element.classList.remove('active');
+      element?.classList?.remove('active');
     });
   } else if (typeof elements === 'object') {
     Object.keys(elements).forEach((key) => {
       const element = elements[key];
-      element.classList.remove('active');
+      element?.classList?.remove('active');
     });
   } else {
-    elements.classList.remove('active');
+    elements?.classList?.remove('active');
   }
 };

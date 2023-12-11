@@ -33,8 +33,9 @@ export class FilmSelectionPage extends View {
       dataSection: ''
     };
 
-    store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
-    store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
+    // store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
+    // store.subscribe('collectionMain', this.addFilmToMain.bind(this));
+    // store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
   }
 
   /**
@@ -50,9 +51,11 @@ export class FilmSelectionPage extends View {
         window.location.pathname === '/'
     ) {
       if (window.location.pathname === '/') {
-        await store.dispatch(actionCollectionMain({ collection_id: 0 }));
-        buf = store.getState('collectionMain');
+          store.subscribe('collectionMain', this.addFilmToMain.bind(this));
+          store.dispatch(actionCollectionMain({ collection_id: 0 }));
+        // buf = store.getState('collectionMain');
       } else {
+          store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
         const url = new URL(window.location.href);
 
         const searchParams = url.searchParams;
@@ -65,9 +68,13 @@ export class FilmSelectionPage extends View {
         const mpaa = searchParams.get('mpaa');
         const genre = searchParams.get('genre');
         const actors = searchParams.get('actors');
-        // console.log(title, dateFrom, dateTo, ratingFrom, ratingTo, mpaa, genre?.split(',').map(Number), actors?.split(','));
 
-        await store.dispatch(
+          if (!navigator.onLine) {
+              this.Offline();
+              return;
+          }
+
+         store.dispatch(
           actionSearchFilm({
             title: <string>title,
             dateFrom: <string>dateFrom,
@@ -80,42 +87,42 @@ export class FilmSelectionPage extends View {
           })
         );
 
-        buf = store.getState('resultSearchFilm');
-        if (buf === undefined || buf === null || buf.body === undefined) {
-          return;
-        }
-        this.renderDefaultPage();
+          if (!navigator.onLine) {
+              console.error('offline');
+              this.Offline();
+          }
       }
 
-      if (buf === undefined || buf === null || buf.body === undefined) {
-        return;
-      }
-
-      const contentBlockHTML = document.querySelector('.content-block');
-
-      const filmSelect = new FilmSelection(ROOT);
-
-      contentBlockHTML?.insertAdjacentHTML(
-        'beforeend',
-        filmSelect.render(buf.body)
-      );
-
-      const contentBlock = document.querySelector('.film-selection_films');
-
-      // eslint-disable-next-line guard-for-in
-      for (const film in buf.body.films) {
-        const filmCard = new FilmCard(ROOT);
-        contentBlock?.insertAdjacentHTML(
-          'beforeend',
-          filmCard.render({
-            film: buf.body.films[film],
-            alreadyFavorite: false
-          })
-        );
-      }
-
-      this.componentDidMount(true);
+      // if (buf === undefined || buf === null || buf.body === undefined) {
+      //   return;
+      // }
+      //
+      // const contentBlockHTML = document.querySelector('.content-block');
+      //
+      // const filmSelect = new FilmSelection(ROOT);
+      //
+      // contentBlockHTML?.insertAdjacentHTML(
+      //   'beforeend',
+      //   filmSelect.render(buf.body)
+      // );
+      //
+      // const contentBlock = document.querySelector('.film-selection_films');
+      //
+      // // eslint-disable-next-line guard-for-in
+      // for (const film in buf.body.films) {
+      //   const filmCard = new FilmCard(ROOT);
+      //   contentBlock?.insertAdjacentHTML(
+      //     'beforeend',
+      //     filmCard.render({
+      //       film: buf.body.films[film],
+      //       alreadyFavorite: false
+      //     })
+      //   );
+      // }
+      //
+      // this.componentDidMount(true);
     } else {
+        store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
       this.renderDefaultPage();
 
       const url = new URL(window.location.href);
@@ -128,7 +135,12 @@ export class FilmSelectionPage extends View {
       const birthday = searchParams.get('birthday');
       const films = searchParams.get('films');
 
-      await store.dispatch(
+        if (!navigator.onLine) {
+            this.Offline();
+            return;
+        }
+
+      store.dispatch(
         actionSearchActor({
           name: <string>name,
           amplua: amplua ? amplua?.split(',') : [''],
@@ -137,29 +149,6 @@ export class FilmSelectionPage extends View {
           films: films ? films?.split(',') : ['']
         })
       );
-
-      const actors = store.getState('resultSearchActor');
-      const contentBlockHTML = document.querySelector('.content-block');
-
-      const filmSelect = new FilmSelection(ROOT);
-
-      contentBlockHTML?.insertAdjacentHTML(
-        'beforeend',
-        filmSelect.render(actors)
-      );
-
-      // const actors = store.getState('resultSearchActor')?.body.actors;
-      const contentBlock = document.querySelector('.film-selection_films');
-
-      // eslint-disable-next-line guard-for-in
-      for (const actor in actors) {
-        const actorCard = new ActorCard(ROOT);
-        contentBlock?.insertAdjacentHTML(
-          'beforeend',
-          actorCard.render({ actor: actors[actor], alreadyFavorite: false })
-        );
-      }
-      this.componentDidMount(false);
     }
   }
 
@@ -167,14 +156,7 @@ export class FilmSelectionPage extends View {
     return store
       .dispatch(actionCollectionMain({ collection_id: 0 }))
       .then((response) => {
-        // const filmSelect = new FilmSelection(ROOT);
         const buf = store.getState('collectionMain');
-          console.log(buf,44)
-        // if (buf === undefined || buf === null || buf.body === undefined) {
-        //   return;
-        // }
-
-
 
         const contentBlockHTML = document.querySelector('.similar-movies');
 
@@ -303,27 +285,127 @@ export class FilmSelectionPage extends View {
   }
 
   subscribeSearchFilms () {
-    // store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
-    // router.go(
-    //     {
-    //       path: `/films`,
-    //       props: `/${this.state.dataSection}`,
-    //     },
-    //     { pushState: true, refresh: false }
-    // );
+    this.addFilmToPage();
   }
 
   subscribeSearchActors () {
-    // store.unsubscribe(
-    //     'resultSearchActor',
-    //     this.subscribeSearchActors.bind(this)
-    // );
-    // router.go(
-    //     {
-    //       path: `/actors`,
-    //       props: `/${this.state.dataSection}`,
-    //     },
-    //     { pushState: true, refresh: false }
-    // );
+      this.addActorsToPage();
+  }
+
+  addActorsToPage() {
+      store.unsubscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
+      const actors = store.getState('resultSearchActor').body.actors;
+      const contentBlockHTML = document.querySelector('.content-block');
+      const filmSelect = new FilmSelection(ROOT);
+
+      contentBlockHTML?.insertAdjacentHTML(
+          'beforeend',
+          filmSelect.render(actors)
+      );
+
+      // const actors = store.getState('resultSearchActor')?.body.actors;
+      const contentBlock = document.querySelector('.film-selection_films');
+
+      if (actors?.length === 0) {
+          contentBlock?.insertAdjacentHTML('beforeend', '<div>Ничего не найдено</div>');
+          return;
+      }
+
+      // eslint-disable-next-line guard-for-in
+      for (const actor in actors) {
+          const actorCard = new ActorCard(ROOT);
+          contentBlock?.insertAdjacentHTML(
+              'beforeend',
+              actorCard.render({ actor: actors[actor], alreadyFavorite: false })
+          );
+      }
+      this.componentDidMount(false);
+  }
+  addFilmToPage() {
+      store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
+      const buf = store.getState('resultSearchFilm');
+      if (buf === undefined || buf === null || buf.body === undefined) {
+          return;
+      }
+      this.renderDefaultPage();
+
+      const contentBlockHTML = document.querySelector('.content-block');
+
+      const filmSelect = new FilmSelection(ROOT);
+
+      contentBlockHTML?.insertAdjacentHTML(
+          'beforeend',
+          filmSelect.render(buf.body)
+      );
+
+      const contentBlock = document.querySelector('.film-selection_films');
+      // console.log(buf, buf?.body?.films, buf?.body?.films?.length);
+      if (buf?.body?.films?.length === 0) {
+          contentBlock?.insertAdjacentHTML('beforeend', '<div>Ничего не найдено</div>');
+          return;
+      }
+
+      // eslint-disable-next-line guard-for-in
+      for (const film in buf.body.films) {
+          const filmCard = new FilmCard(ROOT);
+          contentBlock?.insertAdjacentHTML(
+              'beforeend',
+              filmCard.render({
+                  film: buf.body.films[film],
+                  alreadyFavorite: false
+              })
+          );
+      }
+
+      this.componentDidMount(true);
+  }
+
+  addFilmToMain() {
+      store.unsubscribe('collectionMain', this.addFilmToMain.bind(this));
+      const buf = store.getState('collectionMain');
+
+      if (buf === undefined || buf === null || buf.body === undefined) {
+          return;
+      }
+
+      const contentBlockHTML = document.querySelector('.content-block');
+
+      const filmSelect = new FilmSelection(ROOT);
+
+      contentBlockHTML?.insertAdjacentHTML(
+          'beforeend',
+          filmSelect.render(buf.body)
+      );
+
+      const contentBlock = document.querySelector('.film-selection_films');
+
+      // eslint-disable-next-line guard-for-in
+      for (const film in buf.body.films) {
+          const filmCard = new FilmCard(ROOT);
+          contentBlock?.insertAdjacentHTML(
+              'beforeend',
+              filmCard.render({
+                  film: buf.body.films[film],
+                  alreadyFavorite: false
+              })
+          );
+      }
+
+      this.componentDidMount(true);
+  }
+
+  Offline() {
+      this.renderDefaultPage();
+      const contentBlockHTML = document.querySelector('.content-block');
+
+      const filmSelect = new FilmSelection(ROOT);
+
+      contentBlockHTML?.insertAdjacentHTML(
+          'beforeend',
+          filmSelect.render('')
+      );
+
+      const contentBlock = document.querySelector('.film-selection_films');
+      contentBlock?.insertAdjacentHTML('beforeend', '<div>Отсутствует интернет</div>');
   }
 }

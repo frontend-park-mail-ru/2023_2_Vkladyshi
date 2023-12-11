@@ -30,6 +30,7 @@ import { settings } from '@components/Settings/settings';
 
 export interface UserPage {
   state: {
+    file: any;
     userStatus: Number;
     result: {};
     userInfo: {};
@@ -46,7 +47,6 @@ export interface UserPage {
  */
 export class UserPage extends View {
   private popupEvent: (event) => void;
-  private changeEvent: (event) => void;
 
   /**
    * Конструктор класса
@@ -55,6 +55,7 @@ export class UserPage extends View {
   constructor (ROOT) {
     super(ROOT);
     this.state = {
+      file: '',
       errorsHTML: {},
       inputsHTML: {},
       wraps: {},
@@ -70,7 +71,8 @@ export class UserPage extends View {
       }
     };
 
-    store.subscribe('getSettingsStatus', this.subscribeActorStatus.bind(this));
+    store.subscribe('getSettingsStatus', this.subscribeGetStatus.bind(this));
+    store.subscribe('postStatusSettings', this.subscribePostStatus.bind(this));
   }
 
   /**
@@ -161,7 +163,13 @@ export class UserPage extends View {
               if (e.target && e.target.result) {
                 image.src = `${e.target.result}`;
               }
-            };// @ts-ignore
+            };
+            // @ts-ignore
+            if (file.files[0]) {
+              // @ts-ignore
+              this.state.file = file.files[0];
+            }
+            // @ts-ignore
             reader.readAsDataURL(file.files[0]);
           }
           break;
@@ -182,14 +190,22 @@ export class UserPage extends View {
   }
 
   getForm () {
-    const elements = this.state.inputsHTML;
 
-    const login = elements['login'].value.trim();
-    const email = elements['email'].value;
-    const birthday = elements['birthday'].value;
-    const password = elements['passwordFirst'].value;
-    const passwordSecond = elements['passwordSecond'].value;
-    const file = elements['file']?.files[0];
+    const elements = this.state.inputsHTML;
+    console.log('file', this.state.file)
+    const login = elements['login']?.value.trim();
+    const email = elements['email']?.value;
+    const birthday = elements['birthday']?.value;
+    const password = elements['passwordFirst']?.value;
+    const passwordSecond = elements['passwordSecond']?.value;
+    let file;
+
+    if (elements['file']?.files[0]) {
+      file = elements['file']?.files[0];
+    } else if (this.state.file !== '') {
+      file = this.state.file;
+    }
+
     const data = new FormData();
 
     data.append('login', login);
@@ -202,9 +218,9 @@ export class UserPage extends View {
       this.validateForm(login, password, passwordSecond, email, file, birthday)
     ) {
       store.dispatch(actionPutSettings({ file: data })).then((response) => {
-        if (response!['postStatusSettings'] === 200) {
+        if (response!['postStatusSettings'].status === 200 ) {
           this.setUserInfo();
-          if (login !== this.state.userInfo['login'] || password.length > 0) {
+          if (login !== this.state.userInfo['login']) {
             store.dispatch(actionLogout({ redirect: true }));
           } else {
             router.refresh();
@@ -327,7 +343,6 @@ export class UserPage extends View {
 
   handlerStatus () {
     const errorClassName = 'change-user-data__error';
-
     switch (this.state.userStatus) {
       case responseStatuses.success:
         return true;
@@ -341,7 +356,14 @@ export class UserPage extends View {
         );
         break;
       case responseStatuses.alreadyExists:
-        returnError(errorInputs.LoginExists, errorClassName);
+        const elements = this.state.errorsHTML;
+        const wraps = this.state.wraps;
+        returnError(errorInputs.repeatPassword, errorClassName);
+        insertText(
+            [elements['passwordFirst'], elements['passwordSecond']],
+            <string>errorInputs.repeatPassword
+        );
+        addErrorsActive([wraps['passwordFirst'], wraps['passwordSecond']]);
         break;
       case responseStatuses.csrfError:
         store.dispatch(actionCSRF()).then((response) => {
@@ -357,7 +379,13 @@ export class UserPage extends View {
     return false;
   }
 
-  subscribeActorStatus () {
+  subscribePostStatus() {
+    const result = store.getState('postStatusSettings');
+    this.state.userStatus = result.status;
+    this.handlerStatus();
+  }
+
+  subscribeGetStatus () {
     const result = store.getState('getSettingsStatus');
     this.state.userStatus = result.status;
 

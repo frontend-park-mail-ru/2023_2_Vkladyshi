@@ -42,7 +42,7 @@ class ActionsSearch {
   }
 
   async searchActor ({ name, films, birthday, amplua }: searchActor) {
-    const response = get({
+    const response = post({
       url: urls.searchActor,
       body: { name: name, films: films, birthday: birthday, amplua: amplua
         // page: page, per_page: per_page

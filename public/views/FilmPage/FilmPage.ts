@@ -144,14 +144,14 @@ export class FilmPage extends View {
         description.render(result)
       );
 
-      const similarMovies = document.querySelector('.similar-movies');
-
-      const sliderFilms = new Slider();
-      similarMovies?.insertAdjacentHTML('beforeend', sliderFilms.render());
-      sliderFilms.addEventsLine();
-
-      const filmSelection = new FilmSelectionPage(ROOT);
-      filmSelection.renderByElement('kek');
+      // const similarMovies = document.querySelector('.similar-movies');
+      //
+      // const sliderFilms = new Slider();
+      // similarMovies?.insertAdjacentHTML('beforeend', sliderFilms.render());
+      // sliderFilms.addEventsLine();
+      //
+      // const filmSelection = new FilmSelectionPage(ROOT);
+      // filmSelection.renderByElement('kek');
 
 
 
@@ -238,7 +238,7 @@ export class FilmPage extends View {
           break;
       }
     };
-    const kek = document.querySelector('.similar-movies');
+    // const kek = document.querySelector('.similar-movies');
 
     popup?.addEventListener('click', popupEvent);
   }

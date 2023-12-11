@@ -111,7 +111,6 @@ class Router {
     stateObject: stateObject,
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
-    console.log('go');
     let view = this.mapViews.get(stateObject.path);
     if (view) {
       this.navigate(stateObject, pushState);
@@ -165,11 +164,13 @@ class Router {
 
   subscribeRouterAuthStatus () {
     const status = store.getState('auth').status;
-    // console.log('auth', status, this.lastView.path)
+
+    if (window.location.pathname === '/') {
+      return;
+    }
+
     if (
-      status === 200 &&
-      this.lastView.path !== '/' &&
-      this.lastView.path !== '/login'
+      status === 200
     ) {
       router.go(
         {

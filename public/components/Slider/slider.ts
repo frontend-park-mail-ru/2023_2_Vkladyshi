@@ -118,7 +118,6 @@ export class Slider {
     });
 
     next?.addEventListener('click', () => {
-      console.log(111)
       sliders.style.scrollBehavior = 'smooth';
       sliders.scrollLeft += 280;
     });

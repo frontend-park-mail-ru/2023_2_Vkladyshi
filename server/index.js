@@ -630,6 +630,12 @@ app.post('/api/v1/settings', (req, res) => {
   console.log(req.body);
   console.log(req.file);
   console.log(req.fields);
+  console.log('KEEKK/SETT', req.fields.password)
+
+  if (req.fields.password === 'Andrey111') {
+    res.status(200).json({ status: 409 }).end();
+    return;
+  }
 
   res.status(200).json({ status: 200 }).end();
 });

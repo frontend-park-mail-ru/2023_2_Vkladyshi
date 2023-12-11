@@ -42,7 +42,9 @@ export class ReviewForm extends Component {
 
     if (store.getState('auth').status === 200) {
       textHTML.style.height = '200px';
+      console.log('pre_sub')
       const Event = (event) => {
+        console.log('post_sub')
         event.preventDefault();
 
         const selectHTML = document.querySelector('.rating__form');
@@ -77,8 +79,9 @@ export class ReviewForm extends Component {
             }
           });
       };
-      const review = document.querySelector('.review-form');
-      review?.addEventListener('submit', Event);
+      const review = document.querySelector('.review-form__body__button');
+      console.log(review, 'review')
+      review?.addEventListener('click', Event);
     } else if (store.getState('auth').status !== 200) {
       // router.go(
       //   { path: '/login', props: `` },

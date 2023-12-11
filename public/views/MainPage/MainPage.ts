@@ -1,8 +1,6 @@
-/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
-import { methods, ROOT } from '@utils/config';
+import { ROOT } from '@utils/config';
 import { router } from '@router/router';
-import { image } from '@components/Image/image';
 import { calendar } from '@components/Calendar/calendar';
 import { Slider } from '@components/Slider/slider';
 import { store } from '@store/store';
@@ -34,7 +32,7 @@ export class MainPage extends View {
         "            <div class='header__container__text'>\n" +
         "                <div class='first-text'>Подпишитесь на рассылку новинок!</div>\n" +
         '                <form class="main-email">\n' +
-        '                    <input class="input-main-email" type="email">\n' +
+        '                    <input class="input-main-email" placeholder="Введите вашу почту!" type="email">\n' +
         '                    <button class="send-email-main" type="submit">Подписаться</button>\n' +
         '                </form>\n' +
         '            </div>\n' +
@@ -56,23 +54,25 @@ export class MainPage extends View {
 
         const sliderFilms = new Slider();
         contentBlockHTML?.insertAdjacentHTML('beforeend', sliderFilms.render());
-        sliderFilms.addEventsLine();
 
-        const sliderContainer = document.querySelector('.slider-container');
-        const films = document.querySelector('.film-selection_films');
-        const slider = document.querySelector('.slider-name');
-        slider?.appendChild(<Element>divName);
-        sliderContainer?.appendChild(<Element>films);
-
-        calendar.render().then((response) => {
-          contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
-          const currentDate = new Date();
-          const searchDay = String(currentDate.getDate());
-          const currentDaysHTML = contentBlockHTML.querySelector(
-            '.day__' + searchDay
-          );
-          currentDaysHTML?.classList.add('calendar__days__day_today');
-        });
+        this.componentDidMount();
+        // sliderFilms.addEventsLine();
+        //
+        // const sliderContainer = document.querySelector('.slider-container');
+        // const films = document.querySelector('.film-selection_films');
+        // const slider = document.querySelector('.slider-name');
+        // slider?.appendChild(<Element>divName);
+        // sliderContainer?.appendChild(<Element>films);
+        //
+        // calendar.render().then((response) => {
+        //   contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
+        //   const currentDate = new Date();
+        //   const searchDay = String(currentDate.getDate());
+        //   const currentDaysHTML = contentBlockHTML.querySelector(
+        //     '.day__' + searchDay
+        //   );
+        //   currentDaysHTML?.classList.add('calendar__days__day_today');
+        // });
       });
     }
   }
@@ -115,6 +115,23 @@ export class MainPage extends View {
           break;
       }
     };
+
+    console.log('pre_sub')
+    const sendEmail = document.querySelector('.send-email-main');
+    sendEmail?.addEventListener('click', (event)=>{
+      const email = document.querySelector('.input-main-email') as HTMLInputElement;
+      const text = document.querySelector('.header__container__text');
+      // event.preventDefault();
+      console.log('post__SUBMIT 123 MAIL', email.value);
+      if (/.@./.test(email.value)) {
+        event.preventDefault();
+        text!.innerHTML = '<h2>Спасибо за подписку!</h2>';
+      } else if (email.value === '') {
+        event.preventDefault();
+      }
+      // event.preventDefault();
+    });
+
     popup?.addEventListener('click', popupEvent);
   }
 

@@ -4,8 +4,6 @@ const blackSearchUrls = /object=user_avatar|user\/\d+/;
 
 const assetUrls = [
   '/',
-  // '/index.html',
-  // '/settings'
 ];
 
 const cachedReg =
@@ -43,6 +41,8 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
 
   const url = new URL(request.url);
+
+
   if (
     event.request.method !== 'GET' ||
     !cachedReg.test(url.pathname) ||
@@ -50,6 +50,7 @@ self.addEventListener('fetch', (event) => {
   ) {
     return;
   }
+
   event.respondWith(networkFirst(request, /\/$/.test(url.pathname)));
 });
 

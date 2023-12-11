@@ -123,6 +123,14 @@
   transition: all 0.5s ease;
 }
 
+.search-container__select__films {
+  cursor: pointer;
+}
+
+.search-container__select__actors {
+  cursor: not-allowed;
+}
+
 .search-container__result-button {
   display: flex;
   justify-content: left;

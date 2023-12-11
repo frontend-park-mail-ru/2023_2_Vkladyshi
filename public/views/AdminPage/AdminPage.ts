@@ -40,7 +40,6 @@ export class AdminPage extends View {
    * Метод создания страницы
    */
   render () {
-    console.log(store.state)
     this.renderDefaultPage();
     const footer = document.querySelector('.footer');
     const contentBlock = document.querySelector('.content-block');
@@ -131,7 +130,6 @@ export class AdminPage extends View {
     };
 
     this.changeEvent = (event) => {
-      console.log('event')
       switch (true) {
         case event.target.closest('.settings_file') !== null:
           const file = document.querySelector('.settings_file') as HTMLInputElement;
@@ -289,7 +287,15 @@ export class AdminPage extends View {
     allActors!.innerHTML = '';
 
     store.subscribe('resultSearchActor', this.resultFindActors.bind(this));
-    store.dispatch(actionSearchActor({ name: nameActor, amplua: '', county: '', birthday: '', films: [] }));
+    store.dispatch(
+        actionSearchActor({
+          name: nameActor,
+          amplua: [''],
+          county: '',
+          birthday: '',
+          films: ['']
+        })
+    );
   }
 
   componentWillUnmount () {

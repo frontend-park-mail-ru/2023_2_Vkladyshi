@@ -88,7 +88,7 @@ class ActionsUser {
 
     const result = await response;
     return {
-      postStatusSettings: result['status']
+      postStatusSettings: result
     };
   }
 
@@ -219,7 +219,6 @@ class ActionsUser {
   }
 
   async addFilm (newFilm) {
-    console.log(newFilm);
     const response = post({
       url: urls.addFilm,
       body: newFilm,

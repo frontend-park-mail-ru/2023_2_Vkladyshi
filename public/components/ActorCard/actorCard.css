@@ -148,8 +148,8 @@
 }
 
 .actor-selection_actor-poster {
-  /*width: 125px;*/
-  /*height: 210px;*/
+  width: 125px;
+  height: 210px;
 
   background-size: cover;
   background-position: center center;
