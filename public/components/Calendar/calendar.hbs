@@ -3,11 +3,11 @@
   <p class='calendar__text'>{{monthText}}</p>
   <ul class='calendar__days'>
     {{#each days}}
-      <li class='calendar__days__day day__{{this.dayNumber}}'>
+      <li class='calendar__days__day day__{{this.dayNumber}}' data-section='{{this.filmID}}'>
         <time class='calendar__days__time' datetime='2022-02-01'>
           {{this.dayNumber}}
         </time>
-        {{this.dayNews}}
+        <p>{{this.dayNews}}</p>
       </li>
     {{/each}}
   </ul>

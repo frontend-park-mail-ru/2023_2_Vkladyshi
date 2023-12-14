@@ -78,4 +78,3 @@ async function networkFirst(request, html) {
     return cached;
   }
 }
-

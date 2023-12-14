@@ -18,7 +18,6 @@ export const DOMAIN = 'http://127.0.0.1:8001';
 // export const DOMAIN = 'https://movie-hub.ru';
 export const DOMAIN_SW = '127.0.0.1:8003';
 
-
 export const API = {
   ws: `ws://${DOMAIN_SW}/api/v1/notifications`
 };

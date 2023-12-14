@@ -16,6 +16,7 @@ import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
  */
 export class MainPage extends View {
   private popupEvent: (event) => void;
+  private calendarEvent: (event) => void;
   /**
    * Метод создания страницы
    */
@@ -90,6 +91,8 @@ export class MainPage extends View {
             '.day__' + searchDay
           );
           currentDaysHTML?.classList.add('calendar__days__day_today');
+
+          this.componentDidMount();
         });
       });
     }
@@ -116,6 +119,9 @@ export class MainPage extends View {
             );
           }
           break;
+        case event.target.closest('.calendar') !== null:
+          console.log(event.target);
+          break;
         case event.target.closest('.film-selection_film') !== null:
           const filmId = event.target
             .closest('.film-selection_film')
@@ -133,11 +139,41 @@ export class MainPage extends View {
           break;
       }
     };
+
+    const calendar = document.querySelector('.calendar');
+    const calendarEvent = (event) => {
+      this.calendarEvent = calendarEvent;
+      switch (true) {
+        case event.target.closest('.calendar__days') !== null:
+          const filmId = event.target
+            .closest('.calendar__days__day')
+            .getAttribute('data-section');
+          if (filmId !== '') {
+            console.log(filmId);
+            this.componentWillUnmount();
+            router.go(
+              {
+                path: '/film',
+                props: `/${filmId}`
+              },
+              { pushState: true, refresh: false }
+            );
+          };
+          break;
+        default:
+          break;
+      }
+    };
+
     popup?.addEventListener('click', popupEvent);
+    calendar?.addEventListener('click', calendarEvent);
   }
 
   componentWillUnmount () {
     const popup = document.querySelector('.film-selection');
     popup?.removeEventListener('click', this.popupEvent);
+
+    const calendar = document.querySelector('.calendar');
+    calendar?.removeEventListener('click', this.calendarEvent);
   }
 }
