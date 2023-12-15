@@ -91,3 +91,8 @@ interface filmNotifPayload {
   ticket: string;
   prod_date: string;
 }
+
+interface SubscribeCalendar {
+  login: string;
+  subscribeFilmID: number;
+}

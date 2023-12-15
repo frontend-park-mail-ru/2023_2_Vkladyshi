@@ -120,3 +120,8 @@ export const actionGetCalendar = () => ({
 export const actionStatistics = () => ({
   type: 'getStatistics'
 });
+
+export const actionCheckSubscribeCalendar = (params: SubscribeCalendar) => ({
+  type: 'subscribeCalendar',
+  value: params
+});

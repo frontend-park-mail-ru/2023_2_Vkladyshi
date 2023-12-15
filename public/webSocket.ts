@@ -1,7 +1,7 @@
 /* eslint-disable no-return-assign */
 /* eslint-disable no-new */
 /* eslint-disable require-jsdoc */
-import { API } from '@utils/config';
+import { API, urls } from '@utils/config';
 import { showNotification } from '@components/Notification/notification';
 import { store } from '@store/store';
 import { decoreDate } from '@utils/dateConverter';
@@ -19,12 +19,14 @@ class WebSocketService {
   private _ws: WebSocket | null;
   private _wsUrl: string;
   private mapActionHandlers: Map<string, Callback>;
+  private mapNotification: Map<number, boolean>;
   private openHandler: EventListener;
   private messageHadnler: EventListener;
   private errorHandler: EventListener;
   private closeHandler: EventListener;
   private storeHandler: Function;
   private logoutHandler: Function;
+  private addDeleteHandler: Function;
   private state: {
     user: string | null;
     permission: string | null;
@@ -32,11 +34,12 @@ class WebSocketService {
     logoutStatus: number | null;
   };
 
-  constructor (url: string = API.ws) {
+  constructor (url: string = urls.ws) {
     console.log('ws_constructor');
     this._wsUrl = url;
     this._ws = null;
     this.mapActionHandlers = new Map();
+    this.mapNotification = new Map();
 
     this.state = {
       user: null,
@@ -48,7 +51,7 @@ class WebSocketService {
     this.subscribe('ANONS_FILM', (payload: filmNotifPayload) => {
       // showNotification('ANONS_FILM', payload);
 
-      if (!this.state.isActive && this.state.permission === 'granted') {
+      if (!this.state.isActive && this.state.permission === 'granted' && this.mapNotification.has(payload.id)) {
         const date = decoreDate(payload.prod_date).split(' ');
         new Notification('Премьера фильма!', {
           body: `${payload.name} в Кино с ${date[0]} ${date[1]}`
@@ -75,12 +78,24 @@ class WebSocketService {
     store.subscribe('auth', this.storeHandler);
 
     this.logoutHandler = () => {
-      this.state.logoutStatus = store.getState('logoutStatus');
-      if (this.state.logoutStatus) {
+      this.state.logoutStatus = store.getState('auth').status;
+      if (this.state.logoutStatus === 200) {
         this.cancel();
       }
     };
     store.subscribe('logoutStatus', this.logoutHandler);
+
+    this.addDeleteHandler = () => {
+      console.log(store.getState('subscribeCalendar_res'));
+      const newNotification = store.getState('subscribeCalendar_res')['body'];
+      if (this.mapNotification.has(newNotification['notificationID']) === false && newNotification['subscribe'] === true) {
+        this.mapNotification.set(newNotification['notificationID'], true);
+      };
+      if (this.mapNotification.has(newNotification['notificationID']) && newNotification['subscribe'] === false) {
+        this.mapNotification.delete(newNotification['notificationID']);
+      };
+    };
+    store.subscribe('subscribeCalendar_res', this.addDeleteHandler);
 
     window.onfocus = () => (this.state.isActive = true);
     window.onblur = () => (this.state.isActive = false);
@@ -162,4 +177,4 @@ class WebSocketService {
   }
 }
 
-export const webSocket = new WebSocketService(API.ws);
+export const webSocket = new WebSocketService(urls.ws);

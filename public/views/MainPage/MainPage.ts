@@ -1,13 +1,14 @@
 /* eslint-disable require-jsdoc */
 import { View } from '@views/view';
-import { methods, ROOT } from '@utils/config';
+import { methods, ROOT, urls } from '@utils/config';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
 import { calendar } from '@components/Calendar/calendar';
 import { slider } from '@components/Slider/slider';
 import { store } from '@store/store';
-import { actionAddFavoriteFilm } from '@store/action/actionTemplates';
+import { actionAddFavoriteFilm, actionCheckSubscribeCalendar } from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
+import { webSocket } from '@/webSocket';
 
 /**
  * Класс формирования главной страницы
@@ -99,16 +100,68 @@ export class MainPage extends View {
   }
 
   componentDidMount () {
-    const popup = document.querySelector('.film-selection');
-    const popupEvent = (event) => {
-      this.popupEvent = popupEvent;
+    // const popup = document.querySelector('.film-selection');
+    // const popupEvent = (event) => {
+    //   this.popupEvent = popupEvent;
+    //   switch (true) {
+    //     case event.target.closest('.image-watchlist') !== null:
+    //       if (store.getState('auth').status === 200) {
+    //         const filmFavoriteId = event.target
+    //           .closest('.film-selection_film')
+    //           .getAttribute('data-section');
+    //         store.dispatch(actionAddFavoriteFilm({ film_id: filmFavoriteId }));
+    //       } else {
+    //         router.go(
+    //           {
+    //             path: '/login',
+    //             props: ``
+    //           },
+    //           { pushState: true, refresh: false }
+    //         );
+    //       }
+    //       break;
+    //     case event.target.closest('.calendar') !== null:
+    //       console.log(event.target);
+    //       break;
+    //     case event.target.closest('.film-selection_film') !== null:
+    //       const filmId = event.target
+    //         .closest('.film-selection_film')
+    //         .getAttribute('data-section');
+    //       this.componentWillUnmount();
+    //       router.go(
+    //         {
+    //           path: '/film',
+    //           props: `/${filmId}`
+    //         },
+    //         { pushState: true, refresh: false }
+    //       );
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // };
+
+    const calendar = document.querySelector('.calendar');
+    const calendarEvent = (event) => {
+      this.calendarEvent = calendarEvent;
+      const filmId = event.target
+        .closest('.calendar__days__day')
+        .getAttribute('data-section');
       switch (true) {
-        case event.target.closest('.image-watchlist') !== null:
+        case event.target.className === 'calendar__days__subscribe':
           if (store.getState('auth').status === 200) {
-            const filmFavoriteId = event.target
-              .closest('.film-selection_film')
-              .getAttribute('data-section');
-            store.dispatch(actionAddFavoriteFilm({ film_id: filmFavoriteId }));
+            // console.log(store.getState('auth').login, filmId);
+            store.dispatch(actionCheckSubscribeCalendar({ login: 'login', subscribeFilmID: 2 })).then((response) => {
+              const result = store.getState('subscribeCalendar_res');
+              console.log(result);
+              if (result['status'] === 200) {
+                if (result['body']['subscribe'] === true) {
+                  event.target.style.backgroundColor = 'orange';
+                } else {
+                  event.target.style.backgroundColor = 'transparent';
+                };
+              };
+            });
           } else {
             router.go(
               {
@@ -119,35 +172,7 @@ export class MainPage extends View {
             );
           }
           break;
-        case event.target.closest('.calendar') !== null:
-          console.log(event.target);
-          break;
-        case event.target.closest('.film-selection_film') !== null:
-          const filmId = event.target
-            .closest('.film-selection_film')
-            .getAttribute('data-section');
-          this.componentWillUnmount();
-          router.go(
-            {
-              path: '/film',
-              props: `/${filmId}`
-            },
-            { pushState: true, refresh: false }
-          );
-          break;
-        default:
-          break;
-      }
-    };
-
-    const calendar = document.querySelector('.calendar');
-    const calendarEvent = (event) => {
-      this.calendarEvent = calendarEvent;
-      switch (true) {
         case event.target.closest('.calendar__days') !== null:
-          const filmId = event.target
-            .closest('.calendar__days__day')
-            .getAttribute('data-section');
           if (filmId !== '') {
             console.log(filmId);
             this.componentWillUnmount();
@@ -158,20 +183,20 @@ export class MainPage extends View {
               },
               { pushState: true, refresh: false }
             );
-          };
+          }
           break;
         default:
           break;
       }
     };
 
-    popup?.addEventListener('click', popupEvent);
+    // popup?.addEventListener('click', popupEvent);
     calendar?.addEventListener('click', calendarEvent);
   }
 
   componentWillUnmount () {
-    const popup = document.querySelector('.film-selection');
-    popup?.removeEventListener('click', this.popupEvent);
+    // const popup = document.querySelector('.film-selection');
+    // popup?.removeEventListener('click', this.popupEvent);
 
     const calendar = document.querySelector('.calendar');
     calendar?.removeEventListener('click', this.calendarEvent);

@@ -1,4 +1,4 @@
-import { ROOT, API } from '@utils/config';
+import { ROOT, API, urls } from '@utils/config';
 import { getMonthName } from '@utils/dateConverter';
 import { roundFloat } from '@utils/std';
 
@@ -15,14 +15,14 @@ export const showNotification = (
       // console.log(
       //   // ...payload,
       //   roundFloat(payload.rating),
-      //   // API.img.poster_ver(payload.poster_ver),
+      //   // urls.img.poster_ver(payload.poster_ver),
       //   `В Кино с ${+sepDate[0]} ${getMonthName(+sepDate[1])}!`,
       //   payload.ticket || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley');
 
       // content = NotificationUI.renderTemplate({
       //   ...payload,
       //   rating: roundFloat(payload.rating),
-      //   poster_ver: API.img.poster_ver(payload.poster_ver),
+      //   poster_ver: urls.img.poster_ver(payload.poster_ver),
       //   description: `В Кино с ${+sepDate[0]} ${getMonthName(+sepDate[1])}!`,
       //   ticket: payload.ticket || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley'
       // });

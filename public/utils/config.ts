@@ -49,7 +49,9 @@ export const urls = {
   authorized: '/authcheck',
   logout: '/logout',
   calendar: '/api/v1/calendar',
-  statisticsCsat: '/api/v1/admin/csat'
+  statisticsCsat: '/api/v1/admin/csat',
+  subscribeCalendar: '/api/v1/subscribe/calendar',
+  ws: `ws://${DOMAIN_SW}/api/v1/notifications`
 };
 
 export const methods = {

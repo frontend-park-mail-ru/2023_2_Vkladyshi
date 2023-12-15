@@ -80,6 +80,10 @@ const handlers = [
   {
     type: 'getCalendar',
     method: actionsFilm.getCalendar.bind(actionsFilm)
+  },
+  {
+    type: 'subscribeCalendar',
+    method: actionsFilm.subscribeCalendar.bind(actionsFilm)
   }
 ];
 

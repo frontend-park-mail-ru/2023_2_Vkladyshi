@@ -3,8 +3,16 @@
   <p class='calendar__text'>{{monthText}}</p>
   <ul class='calendar__days'>
     {{#each days}}
-      <li class='calendar__days__day day__{{this.dayNumber}}' data-section='{{this.filmID}}'>
+      <li
+        class='calendar__days__day day__{{this.dayNumber}}'
+        data-section='{{this.filmID}}'
+      >
         <time class='calendar__days__time' datetime='2022-02-01'>
+          {{!-- <img class='calendar__days__subscribe' src="../icons/bells.png" alt='Подписаться на новинку'> --}}
+          <img class='calendar__days__subscribe' src="../icons/bell3.svg" alt='Подписаться на новинку'>
+          {{!-- <svg class='calendar__days__subscribe'>
+            <use href="../icons/bell3.svg"></use>
+          </svg> --}}
           {{this.dayNumber}}
         </time>
         <p>{{this.dayNews}}</p>
