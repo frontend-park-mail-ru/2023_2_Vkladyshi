@@ -1,15 +1,14 @@
 /* eslint-disable require-jsdoc */
 import { View } from '@views/view';
-import { methods, ROOT } from '@utils/config';
+import { methods, ROOT, urls } from '@utils/config';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
 import { calendar } from '@components/Calendar/calendar';
 import { slider } from '@components/Slider/slider';
 import { store } from '@store/store';
-import { actionAddFavoriteFilm } from '@store/action/actionTemplates';
+import { actionAddFavoriteFilm, actionCheckSubscribeCalendar } from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
-
-
+import { webSocket } from '@/webSocket';
 
 /**
  * Класс формирования главной страницы
@@ -18,10 +17,11 @@ import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
  */
 export class MainPage extends View {
   private popupEvent: (event) => void;
+  private calendarEvent: (event) => void;
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     this.renderDefaultPage();
     const contentBlockHTML = document.querySelector('.content-block');
     const mainHTML = document.querySelector('main');
@@ -33,22 +33,24 @@ export class MainPage extends View {
     //     '      </video>');
 
     mainHTML?.insertAdjacentHTML(
-        'afterbegin', '        <div class="video-container1">\n' +
+      'afterbegin',
+      '        <div class="video-container1">\n' +
         '            <video class="video-container" autoplay muted loop>\n' +
         '                <source class="video-main" src="/icons/video-main.mp4" type="video/mp4">\n' +
         '            </video>\n' +
         '            <div class="overlay"></div>\n' +
-        '            <div class=\'header__container__text\'>\n' +
-        '                <div class=\'first-text\'>Подпишитесь на рассылку новинок!</div>\n' +
+        "            <div class='header__container__text'>\n" +
+        "                <div class='first-text'>Подпишитесь на рассылку новинок!</div>\n" +
         '                <form class="main-email">\n' +
         '                    <input class="input-main-email" type="email">\n' +
         '                    <button class="send-email-main" type="submit">Отправить</button>\n' +
         '                </form>\n' +
         '            </div>\n' +
-        '        </div>');
+        '        </div>'
+    );
 
     // const m = document.querySelector('.video-container') as HTMLElement;
-     // @ts-ignore
+    // @ts-ignore
     // m.volume = 0.05;
     /*
 
@@ -62,11 +64,9 @@ export class MainPage extends View {
         </div>
     </div>
 
-
      */
 
-
-    //<div class='header__container__shadow box-shadow'></div>
+    // <div class='header__container__shadow box-shadow'></div>
     // const icon = document.querySelector('.image-container') as HTMLElement;
     // const iconsShadow = document.querySelector('.header__container__shadow') as HTMLElement;
     // // iconsShadow.style.background = 'rgb(0 0 0 / 40%) linear-gradient( to top, rgba(0, 0, 0, 0.95) 0, rgba(0, 0, 0, 1) 60%, rgba(0, 0, 0, 0.8) 100% );';
@@ -92,54 +92,113 @@ export class MainPage extends View {
             '.day__' + searchDay
           );
           currentDaysHTML?.classList.add('calendar__days__day_today');
+
+          this.componentDidMount();
         });
       });
     }
   }
 
-  componentDidMount() {
-    const popup = document.querySelector('.film-selection');
-    const popupEvent = (event) => {
-      this.popupEvent = popupEvent;
+  componentDidMount () {
+    // const popup = document.querySelector('.film-selection');
+    // const popupEvent = (event) => {
+    //   this.popupEvent = popupEvent;
+    //   switch (true) {
+    //     case event.target.closest('.image-watchlist') !== null:
+    //       if (store.getState('auth').status === 200) {
+    //         const filmFavoriteId = event.target
+    //           .closest('.film-selection_film')
+    //           .getAttribute('data-section');
+    //         store.dispatch(actionAddFavoriteFilm({ film_id: filmFavoriteId }));
+    //       } else {
+    //         router.go(
+    //           {
+    //             path: '/login',
+    //             props: ``
+    //           },
+    //           { pushState: true, refresh: false }
+    //         );
+    //       }
+    //       break;
+    //     case event.target.closest('.calendar') !== null:
+    //       console.log(event.target);
+    //       break;
+    //     case event.target.closest('.film-selection_film') !== null:
+    //       const filmId = event.target
+    //         .closest('.film-selection_film')
+    //         .getAttribute('data-section');
+    //       this.componentWillUnmount();
+    //       router.go(
+    //         {
+    //           path: '/film',
+    //           props: `/${filmId}`
+    //         },
+    //         { pushState: true, refresh: false }
+    //       );
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // };
+
+    const calendar = document.querySelector('.calendar');
+    const calendarEvent = (event) => {
+      this.calendarEvent = calendarEvent;
+      const filmId = event.target
+        .closest('.calendar__days__day')
+        .getAttribute('data-section');
       switch (true) {
-        case event.target.closest('.image-watchlist') !== null:
+        case event.target.className === 'calendar__days__subscribe':
           if (store.getState('auth').status === 200) {
-            const filmFavoriteId = event.target
-              .closest('.film-selection_film')
-              .getAttribute('data-section');
-            store.dispatch(actionAddFavoriteFilm({ film_id: filmFavoriteId }));
+            // console.log(store.getState('auth').login, filmId);
+            store.dispatch(actionCheckSubscribeCalendar({ login: 'login', subscribeFilmID: 2 })).then((response) => {
+              const result = store.getState('subscribeCalendar_res');
+              console.log(result);
+              if (result['status'] === 200) {
+                if (result['body']['subscribe'] === true) {
+                  event.target.style.backgroundColor = 'orange';
+                } else {
+                  event.target.style.backgroundColor = 'transparent';
+                };
+              };
+            });
           } else {
             router.go(
               {
                 path: '/login',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
           }
           break;
-        case event.target.closest('.film-selection_film') !== null:
-          const filmId = event.target
-            .closest('.film-selection_film')
-            .getAttribute('data-section');
-          this.componentWillUnmount();
-          router.go(
-            {
-              path: '/film',
-              props: `/${filmId}`,
-            },
-            { pushState: true, refresh: false }
-          );
+        case event.target.closest('.calendar__days') !== null:
+          if (filmId !== '') {
+            console.log(filmId);
+            this.componentWillUnmount();
+            router.go(
+              {
+                path: '/film',
+                props: `/${filmId}`
+              },
+              { pushState: true, refresh: false }
+            );
+          }
           break;
         default:
           break;
       }
     };
-    popup?.addEventListener('click', popupEvent);
+
+    // popup?.addEventListener('click', popupEvent);
+    calendar?.addEventListener('click', calendarEvent);
   }
 
-  componentWillUnmount() {
-    const popup = document.querySelector('.film-selection');
-    popup?.removeEventListener('click', this.popupEvent);
+  componentWillUnmount () {
+    // const popup = document.querySelector('.film-selection');
+    // popup?.removeEventListener('click', this.popupEvent);
+
+    const calendar = document.querySelector('.calendar');
+    calendar?.removeEventListener('click', this.calendarEvent);
   }
 }

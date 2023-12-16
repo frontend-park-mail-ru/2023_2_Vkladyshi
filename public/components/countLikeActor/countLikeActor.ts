@@ -12,7 +12,7 @@ export class CountLikeActor extends Component {
    * @param result
    * @returns {string} html авторизации
    */
-  render(result) {
+  render (result) {
     return templateLikeStar(result);
   }
 }

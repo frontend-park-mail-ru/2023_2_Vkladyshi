@@ -11,7 +11,7 @@ export class ContentBlock extends Component {
    * Метод рендеринга элемента
    * @return {string} html авторизации
    */
-  render() {
+  render () {
     return templateContentBlock();
   }
 }

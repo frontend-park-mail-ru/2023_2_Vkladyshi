@@ -15,12 +15,12 @@ export class ActorCard extends Component {
    * @param actor.alreadyFavorite
    * @param actor
    */
-  render({ actor, alreadyFavorite }) {
+  render ({ actor, alreadyFavorite }) {
     const result = {
       id: actor.actor_id,
       title: actor.actor_name,
       poster: actor.actor_photo,
-      alreadyFavorite: alreadyFavorite,
+      alreadyFavorite: alreadyFavorite
     };
 
     return templateActorCard(result);
