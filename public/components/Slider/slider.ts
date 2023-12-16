@@ -145,15 +145,14 @@ export class Slider {
     let startX = 0; // Инициализируем startX значением 0
     const handleTouchStart = (event) => {
       startX = event.touches[0].clientX; // Запоминаем позицию касания относительно слайдера
-    }
+    };
 
     const handleTouchMove = (event) => {
       const currentX = event.touches[0].clientX;
       const diffX = startX - currentX;
 
       sliders.scrollLeft = diffX;
-
-    }
+    };
 
     sliderContainer?.addEventListener('touchstart', handleTouchStart, false);
     sliderContainer?.addEventListener('touchmove', handleTouchMove, false);

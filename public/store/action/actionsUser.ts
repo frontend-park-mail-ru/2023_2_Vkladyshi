@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { post, get, getCsrf } from '@utils/ajax';
 import { urls } from '@utils/config';
 import { router } from '@router/router';

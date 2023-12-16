@@ -108,7 +108,7 @@ export class ActorDescritionPage extends View {
 
   addEvents () {
     const popup = document.querySelector('.video-content');
-    //@ts-ignore
+    // @ts-ignore
     const id = parseInt(location?.pathname?.match(/\d+/)[0]);
     const popupEvent = (event) => {
       event.preventDefault();
@@ -153,13 +153,13 @@ export class ActorDescritionPage extends View {
     store.unsubscribe('removeView', this.subscribeActorStatus);
   }
 
-  getFavoriteActorsList() {
+  getFavoriteActorsList () {
     const favoriteActors = store.getState('favoriteActors');
     store.unsubscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
-    //@ts-ignore
+    // @ts-ignore
     const id = parseInt(location?.pathname?.match(/\d+/)[0]);
     if (favoriteActors?.status !== 200) {
-      return
+      return;
     }
     const array = favoriteActors?.body?.actors;
     array?.forEach((key) => {

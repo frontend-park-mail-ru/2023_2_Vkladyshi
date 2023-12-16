@@ -119,7 +119,6 @@ class Router {
     stateObject: stateObject,
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
-
     let view = this.mapViews.get(stateObject.path);
     if (view) {
       if (stateObject.path === '/login' || stateObject.path === '/registration') {
@@ -152,7 +151,7 @@ class Router {
       if (this.lastViewClass) {
         this?.lastViewClass?.componentWillUnmount();
       }
-      // window.scrollTo(0, 0);
+
       // @ts-ignore
       // eslint-disable-next-line new-cap
       this.lastViewClass = new view(ROOT);
@@ -224,7 +223,6 @@ class Router {
     if (
       status === 200 && (!this.firstView || window.location.pathname === '/login')
     ) {
-
       router.go(
         {
           path: this.lastView.path,
@@ -266,11 +264,11 @@ class Router {
       this.role = 'user';
       if (this.privateMapViews.get(window.location.pathname)) {
         this.go(
-            {
-              path: '/',
-              props: ''
-            },
-            { pushState: true, refresh: false }
+          {
+            path: '/',
+            props: ''
+          },
+          { pushState: true, refresh: false }
         );
       }
     }

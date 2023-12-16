@@ -16,6 +16,11 @@ export const ROOT = document.querySelector('#root');
 // export const DOMAIN = 'http://localhost:8001';
 export const DOMAIN = 'http://127.0.0.1:8001';
 // export const DOMAIN = 'https://movie-hub.ru';
+export const DOMAIN_SW = '127.0.0.1:8003';
+
+export const API = {
+  ws: `ws://${DOMAIN_SW}/api/v1/notifications`
+};
 
 export const urls = {
   main: '/',
@@ -44,7 +49,9 @@ export const urls = {
   logout: '/logout',
   calendar: '/api/v1/calendar',
   statisticsCsat: '/api/v1/admin/csat',
-  addFilm: '/api/v1/add/film'
+  addFilm: '/api/v1/add/film',
+  subscribeCalendar: '/api/v1/subscribe/calendar',
+  ws: `ws://${DOMAIN_SW}/api/v1/notifications`
 };
 
 export const methods = {

@@ -10,13 +10,14 @@ export class ActorCard extends Component {
   con;
   /**
    * Метод рендеринга элемента
-   * @return {string}
+   * @returns {string}
    * @param actor.actor
    * @param actor.alreadyFavorite
    * @param actor.addClass
    * @param actor.addClassPoster
    * @param actor
    */
+
   render ({ actor, alreadyFavorite, addClass= '', addClassPoster = '' }) {
     const result = {
       id: actor.actor_id,

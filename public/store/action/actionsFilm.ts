@@ -77,6 +77,21 @@ class ActionsFilm {
       calendarInfo: result
     };
   }
+
+  async subscribeCalendar ({ login, subscribeFilmID }: SubscribeCalendar) {
+    const response = get({
+      url: urls.subscribeCalendar,
+      query: {
+        login: login,
+        subscribeFilmID: subscribeFilmID
+      }
+    });
+
+    const result = await response;
+    return {
+      subscribeCalendar_res: result
+    };
+  }
 }
 
 export const actionsFilm = new ActionsFilm();

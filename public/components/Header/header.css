@@ -322,11 +322,11 @@ input::placeholder {
     width: 50px;
   }
 
-  .brand_icon {
+  /* .brand_icon {
     height: 30px;
     width: auto;
     background: url('/icons/brandTitle.svg');
-  }
+  } */
 
   .ul-header {
     padding-left: 0;
@@ -387,11 +387,11 @@ input::placeholder {
     height: 60px;
   }
 
-  .brand_icon {
+  /* .brand_icon {
     height: 25px;
     width: auto;
     background: url('/icons/brandTitle.svg');
-  }
+  } */
   .header .right-element {
     margin-right: 0;
   }

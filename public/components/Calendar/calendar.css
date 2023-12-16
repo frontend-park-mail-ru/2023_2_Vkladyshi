@@ -73,6 +73,12 @@
   font-weight: 500;
 }
 
+.calendar__days__subscribe {
+  width: 30%;
+  height: auto;
+  fill: orange;
+}
+
 .calendar__days__day_today {
   font-weight: 800;
   /* background: #ffffffa6; */

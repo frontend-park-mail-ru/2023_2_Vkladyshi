@@ -157,19 +157,19 @@ export class UserPage extends View {
           const file = document.querySelector('.settings_file') as HTMLInputElement;
           const image = document.querySelector('.settings__img') as HTMLImageElement;
           // @ts-ignore
-          if (file?.files?.length > 0) { //@ts-ignore
-              if (!file.files[0]?.type?.startsWith('image/')) {
-                insertText(
-                    document.querySelector('.error-image'),
-                    'Ошибка: Загруженный файл не является изображением'
-                );
-                return;
-              } else  {
-                removeErrors({image: this.state.errorsHTML['image']});
-              }
+          if (file?.files?.length > 0) { // @ts-ignore
+            if (!file.files[0]?.type?.startsWith('image/')) {
+              insertText(
+                document.querySelector('.error-image'),
+                'Ошибка: Загруженный файл не является изображением'
+              );
+              return;
+            } else {
+              removeErrors({ image: this.state.errorsHTML['image'] });
+            }
 
             const reader = new FileReader();
-            reader.onload = function (e) {// @ts-ignore
+            reader.onload = function (e) { // @ts-ignore
               // console.log(e?.target?.result, e.target, file.files[0])
               if (e.target && e.target.result) {
                 image.src = `${e.target.result}`;
@@ -182,7 +182,6 @@ export class UserPage extends View {
             }
             // @ts-ignore
             reader.readAsDataURL(file.files[0]);
-
           }
           break;
         case event.target.closest('.button-submit') !== null:

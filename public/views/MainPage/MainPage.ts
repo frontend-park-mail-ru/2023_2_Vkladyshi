@@ -1,11 +1,12 @@
 import { View } from '@views/view';
-import { ROOT } from '@utils/config';
+import { methods, ROOT, urls } from '@utils/config';
 import { router } from '@router/router';
 import { calendar } from '@components/Calendar/calendar';
 import { Slider } from '@components/Slider/slider';
 import { store } from '@store/store';
-import { actionAddFavoriteFilm } from '@store/action/actionTemplates';
+import { actionAddFavoriteFilm, actionCheckSubscribeCalendar } from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
+import { webSocket } from '@/webSocket';
 
 /**
  * Класс формирования главной страницы
@@ -14,6 +15,7 @@ import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
  */
 export class MainPage extends View {
   private popupEvent: (event) => void;
+  private calendarEvent: (event) => void;
   /**
    * Метод создания страницы
    */
@@ -80,20 +82,81 @@ export class MainPage extends View {
   }
   addCalendar () {
     store.unsubscribe('collectionMain', this.addCalendar.bind(this));
-    calendar.render().then((response) => {
-      const contentBlockHTML = document.querySelector('.content-block');
-      contentBlockHTML?.insertAdjacentHTML('beforeend', <string>response);
-      const currentDate = new Date();
-      const searchDay = String(currentDate.getDate());
-      const currentDaysHTML = contentBlockHTML?.querySelector(
-        '.day__' + searchDay
-      );
-      currentDaysHTML?.classList.add('calendar__days__day_today');
-    });
+
+
+    if (calendar) {
+      calendar.render().then((response) => {
+        const contentBlockHTML = document.querySelector('.content-block');
+        contentBlockHTML?.insertAdjacentHTML('beforeend', <string>response);
+        const currentDate = new Date();
+        const searchDay = String(currentDate.getDate());
+        const currentDaysHTML = contentBlockHTML?.querySelector(
+          '.day__' + searchDay
+        );
+        currentDaysHTML?.classList.add('calendar__days__day_today');
+
+        const calendarSelector = document.querySelector('.calendar');
+        const calendarEvent = (event) => {
+          this.calendarEvent = calendarEvent;
+          const filmId = event.target
+              .closest('.calendar__days__day')
+              .getAttribute('data-section');
+          switch (true) {
+            case event.target.className === 'calendar__days__subscribe':
+              if (store.getState('auth').status === 200) {
+                // console.log(store.getState('auth').login, filmId);
+                store.dispatch(actionCheckSubscribeCalendar({ login: 'login', subscribeFilmID: 2 })).then((response) => {
+                  const result = store.getState('subscribeCalendar_res');
+                  console.log(result);
+                  if (result['status'] === 200) {
+                    if (result['body']['subscribe'] === true) {
+                      event.target.style.backgroundColor = 'orange';
+                    } else {
+                      event.target.style.backgroundColor = 'transparent';
+                    };
+                  };
+                });
+              } else {
+                router.go(
+                    {
+                      path: '/login',
+                      props: ``
+                    },
+                    { pushState: true, refresh: false }
+                );
+              }
+              break;
+            case event.target.closest('.calendar__days') !== null:
+              if (filmId !== '') {
+                console.log(filmId);
+                this.componentWillUnmount();
+                router.go(
+                    {
+                      path: '/film',
+                      props: `/${filmId}`
+                    },
+                    { pushState: true, refresh: false }
+                );
+              }
+              break;
+            default:
+              break;
+          }
+        };
+
+        calendarSelector?.addEventListener('click', calendarEvent);
+      });
+    }
   }
 
   componentWillUnmount () {
+    // const popup = document.querySelector('.film-selection');
+    // popup?.removeEventListener('click', this.popupEvent);
+
     const popup = document.querySelector('.film-selection');
     popup?.removeEventListener('click', this.popupEvent);
+
+    const calendar = document.querySelector('.calendar');
+    calendar?.removeEventListener('click', this.calendarEvent);
   }
 }

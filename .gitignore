@@ -3,4 +3,4 @@ doc/
 .idea
 public/components/*/*.precompiled.js
 dist/
-icons
+

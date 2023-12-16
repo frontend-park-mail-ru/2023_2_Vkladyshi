@@ -155,8 +155,7 @@ export class FilmPage extends View {
 
       const filmSelection = new FilmSelectionPage(ROOT);
 
-      filmSelection.renderByElement('')
-
+      filmSelection.renderByElement('');
     }
 
     this.addEvents();
@@ -297,14 +296,14 @@ export class FilmPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  getFavoriteFilmsList() {
+  getFavoriteFilmsList () {
     const favoriteFilms = store.getState('favoriteFilms');
     store.unsubscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     if (favoriteFilms?.status !== 200) {
-      return
+      return;
     }
     const array = favoriteFilms?.body;
-    array?.forEach((key) =>{
+    array?.forEach((key) => {
       const film = document.querySelector('.image-watchlist');
       if (film && key?.id === this.state.fildId) {
         const red = document?.querySelector('.red-watchlist') as HTMLElement;
@@ -313,7 +312,6 @@ export class FilmPage extends View {
         orange?.classList.add('noactive');
         red?.classList.remove('noactive');
         red?.classList.add('active');
-        return;
       }
       // console.log(key?.id)
     });

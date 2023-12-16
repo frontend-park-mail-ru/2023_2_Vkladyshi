@@ -24,8 +24,6 @@ class ActionsSearch {
         mpaa: mpaa || '',
         genres: genre || [],
         actors: actors || []
-        // page: page,
-        // per_page: per_page
       }
     });
 

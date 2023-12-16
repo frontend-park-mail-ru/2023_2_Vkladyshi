@@ -19,14 +19,14 @@ class Calendar extends Component {
   render () {
     return store.dispatch(actionGetCalendar()).then((response) => {
       const result = store.getState('calendarInfo')['body'];
-
       const calendar = {
         monthName: result.monthName,
         monthText: result.monthText,
         currentDay: result.currentDay,
         days: Array.from({ length: 30 }, (_, i) => ({
           dayNumber: i + 1,
-          dayNews: (result?.days.find(day => day.dayNumber === i + 1)?.dayNews || '')
+          dayNews: (result?.days.find(day => day.dayNumber === i + 1)?.dayNews || ''),
+          filmID: (result?.days.find(day => day.dayNumber === i + 1)?.id || '')
         }))
       };
 

@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 'use strict';
 
 const express = require('express');
@@ -6,6 +7,8 @@ const cors = require('cors');
 const cookie = require('cookie-parser');
 const morgan = require('morgan');
 const multer = require('multer');
+
+const ws = require('ws');
 
 const uuid = require('uuid').v4;
 const path = require('path');
@@ -19,7 +22,7 @@ app.use(webpackDevMiddleware(webpack(webpackConfig)));
 app.use(
   cors({
     origin: ['http://localhost:8001', 'http://127.0.0.1:8001'],
-    credentials: true,
+    credentials: true
   })
 );
 
@@ -55,9 +58,9 @@ const csat = {
       { number: 7, count: 11 },
       { number: 8, count: 129 },
       { number: 9, count: 6 },
-      { number: 10, count: 0 },
-    ],
-  },
+      { number: 10, count: 0 }
+    ]
+  }
 };
 
 const actor = {
@@ -74,8 +77,8 @@ const actor = {
     headersItems: ['Биография', 'Фото'],
     info_text:
       'Родился 6 июля 1946 года в Нью-Йорке. Его отец, парикмахер Фрэнк Сталлоне-старший (англ. Frank Stallone, Sr., 1919—2011), — иммигрант из Сицилии; мать, Жаклин Лейбофиш (1921—2020).',
-    number: '8 млн.',
-  },
+    number: '8 млн.'
+  }
 };
 
 const calendar = {
@@ -85,8 +88,8 @@ const calendar = {
     monthText: 'Календарь релизов',
     currentDay: 13,
     days: [
-      {dayNumber: 14, dayNews: 'Kostolom'},
-      {dayNumber: 21, dayNews: 'Night'}
+      {dayNumber: 14, dayNews: 'Kostolom', id: 10 },
+      {dayNumber: 21, dayNews: 'Night', id:5 }
     ],
   },
 };
@@ -101,14 +104,14 @@ const comments = {
         text: 'Фильм отличный 11/10',
         film_id: 7,
         film_name: 'film',
-        photo: '/icons/star.png',
+        photo: '/icons/star.png'
       },
       {
         name: 'Login_User',
         rating: 4,
         text: 'Фильм отличный 11/10',
         film_id: 7,
-        film_name: 'film',
+        film_name: 'film'
       },
     ],
   },
@@ -163,17 +166,17 @@ const favoriteActors = {
       {
         actor_id: 1,
         actor_name: 'Джейсон Стэйтем',
-        actor_photo: '/icons/star.png',
+        actor_photo: '/icons/star.png'
       },
       { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
       { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
       {
         actor_id: 4,
         actor_name: 'Сильвестр Сталлоне',
-        actor_photo: '/icons/star.png',
-      },
-    ],
-  },
+        actor_photo: '/icons/star.png'
+      }
+    ]
+  }
 };
 
 const films = {
@@ -231,7 +234,7 @@ const film = {
       release_date: '2023-12-30',
       country: 'USA',
       mpaa: 'R',
-      info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
+      info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.'
     },
     genre: [{ id: 0, title: 'war' }],
     rating: 10,
@@ -240,18 +243,18 @@ const film = {
       {
         actor_id: 1,
         actor_name: 'Джейсон Стэйтем',
-        actor_photo: '/icons/star.png',
+        actor_photo: '/icons/star.png'
       },
       { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
       { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
       {
         actor_id: 4,
         actor_name: 'Сильвестр Сталлоне',
-        actor_photo: '/icons/star.png',
-      },
+        actor_photo: '/icons/star.png'
+      }
     ],
-    directors: [{ directors_id: 1, directors_name: 'POHUI' }],
-  },
+    directors: [{ directors_id: 1, directors_name: 'POHUI' }]
+  }
 };
 
 // eslint-disable-next-line camelcase
@@ -264,34 +267,34 @@ const films_tags = {
         poster: '/icons/bastards.jpg',
         title: 'Бесславные ублюдки',
         rating: 8,
-        film_id: 11,
+        film_id: 11
       },
       film3: {
         poster: '/icons/bastards.jpg',
         title: 'film_1 111110000000000000000000000000000000000000000001',
         rating: 1,
-        film_id: 11,
+        film_id: 11
       },
       film4: {
         poster: '/icons/bastards.jpg',
         title: 'film_1',
         rating: 1,
-        film_id: 11,
+        film_id: 11
       },
       film5: {
         poster: '/icons/bastards.jpg',
         title: 'film_1 111',
         rating: 1,
-        film_id: 11,
+        film_id: 11
       },
       film6: {
         poster: '/icons/bastards.jpg',
         title: 'film_1 111110000000000000000000000000000000000000000001',
         rating: 1,
-        film_id: 11,
-      },
-    },
-  },
+        film_id: 11
+      }
+    }
+  }
 };
 
 app.listen(port, function () {
@@ -302,32 +305,32 @@ const users = {
   Admin: {
     email: 'Admin.mail.ru',
     password: 'Admin123',
-    age: 100,
+    age: 100
   },
   dorofeef: {
     email: 'd.dorofeev@corp.mail.ru',
     password: 'Password1',
-    age: 21,
+    age: 21
   },
   volodin: {
     email: 'Password2@mail.ru',
     password: 'Password1',
-    age: 25,
+    age: 25
   },
   Andrey111: {
     email: 'Andrey@111',
-    password: 'Andrey111',
+    password: 'Andrey111'
   },
   login: {
     email: 'email@mail.ru',
     password: 'Password1',
-    age: 28,
+    age: 28
   },
   ostapenko: {
     email: 'a.ostapenko@corp.mail.ru',
     password: 'Password1',
-    age: 21,
-  },
+    age: 21
+  }
 };
 const ids = {};
 
@@ -337,8 +340,8 @@ const settings = {
     login: 'Andrey111',
     email: 'Andrey@111',
     photo: '/icons/star.png',
-    birthday: '2010-01-01',
-  },
+    birthday: '2010-01-01'
+  }
 };
 
 app.get(express.static('dist'));
@@ -385,31 +388,31 @@ app.use('/registration', (req, res) => {
 
 app.get('/api/v1/csrf', (req, res) => {
   return res.status(200).json({
-    status: 200,
+    status: 200
   });
 });
 
 app.get('/api/v1/favorite/film/add', (req, res) => {
   return res.status(200).json({
-    status: 200,
+    status: 200
   });
 });
 
 app.get('/api/v1/favorite/actor/add', (req, res) => {
   return res.status(200).json({
-    status: 200,
+    status: 200
   });
 });
 
 app.get('/api/v1/favorite/actor/remove', (req, res) => {
   return res.status(200).json({
-    status: 200,
+    status: 200
   });
 });
 
 app.get('/api/v1/favorite/film/remove', (req, res) => {
   return res.status(200).json({
-    status: 200,
+    status: 200
   });
 });
 
@@ -435,7 +438,7 @@ app.use('/signup', (req, res) => {
   }
   if (users[login] !== undefined) {
     return res.status(200).json({
-      status: 409,
+      status: 409
     });
   }
 
@@ -502,7 +505,7 @@ app.use(
   formidableMiddleware({
     encoding: 'utf-8',
     uploadDir: '/home/andr/go',
-    multiples: true, // req.files to be arrays of files
+    multiples: true // req.files to be arrays of files
   })
 );
 
@@ -575,6 +578,7 @@ app.use('/api/v1/film', (req, res) => {
   }
   return res.status(200).json({ body: film.body, status: film.status });
 });
+
 
 app.use('/api/v1/search/film', (req, res) => {
   res.status(200).json({ status: 200 }).end();
@@ -669,7 +673,73 @@ app.use('/api/v1/films', (req, res) => {
   return res.status(200).json(films);
 });
 
-app.post((res, req) => {
-  console.log(req.body);
-  return res.status(200);
+
+app.use('/api/v1/subscribe/calendar', (req, res) => {
+  console.log(req['subscribeFilmID']);
+  console.log('calendar_subscribe');
+  return res.status(200).json({ status: 200, body: { notificationID: 11, subscribe: true } });
 });
+
+/// /------------------------------------------------------------------
+
+const port_ws = process.env.PORT || 8003;
+const wss = new ws.Server(
+  {
+    port: port_ws
+  },
+  () => console.log(`WSS started on ${port_ws}`)
+);
+
+const premieresFilmsBD = [
+  {
+    id: 11,
+    name: 'Дом дракона',
+    poster_hor:
+      'https://upload.wikimedia.org/wikipedia/ru/6/67/%D0%94%D0%BE%D0%BC%D0%94%D1%80%D0%B0%D0%BA%D0%BE%D0%BD%D0%B0%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg',
+    rating: -1.8,
+    ticket_link: 'https://rutracker.org/forum/viewtopic.php?t=6249419',
+    prod_date: '2022.11.12'
+  },
+  {
+    id: 10,
+    name: 'С широко закрытыми глазами',
+    poster_hor:
+      'https://upload.wikimedia.org/wikipedia/ru/a/aa/EyesWideShutPoster.jpg',
+    rating: 7.8,
+    ticket_link: 'https://www.kinopoisk.ru/film/3608/',
+    prod_date: '2022.11.05'
+  }
+];
+
+const timer = setInterval(
+  () =>
+    broadcastMessage({
+      action: 'ANONS_FILM',
+      payload:
+        premieresFilmsBD[Math.floor(Math.random() * premieresFilmsBD.length)]
+    }),
+  5000
+);
+
+wss.on('connection', function connection (ws, request, client) {
+  ws.on('message', function (message) {
+    message = JSON.parse(message);
+    switch (message.action) {
+      case 'CLOSE':
+        clearInterval(timer);
+        break;
+    }
+  });
+});
+
+/**
+ *
+ * @param message
+ * @param id
+ */
+function broadcastMessage (message, id) {
+  wss.clients.forEach((client) => {
+    client.send(JSON.stringify(message));
+  });
+}
+

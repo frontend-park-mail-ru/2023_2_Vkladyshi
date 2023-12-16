@@ -88,7 +88,12 @@ const handlers = [
   {
     type: 'addFilm',
     method: actionsUser.addFilm.bind(actionsUser)
+  },
+  {
+    type: 'subscribeCalendar',
+    method: actionsFilm.subscribeCalendar.bind(actionsFilm)
   }
+
 ];
 
 export { handlers };

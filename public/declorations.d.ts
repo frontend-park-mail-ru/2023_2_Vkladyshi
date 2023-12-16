@@ -90,3 +90,17 @@ interface newFilm {
   actors: any,
   date: string
 }
+
+interface filmNotifPayload {
+  id: number;
+  poster_ver: string;
+  name: string;
+  rating: number;
+  ticket: string;
+  prod_date: string;
+}
+
+interface SubscribeCalendar {
+  login: string;
+  subscribeFilmID: number;
+}
