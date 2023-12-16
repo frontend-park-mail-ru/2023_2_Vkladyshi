@@ -39,7 +39,7 @@ export const insertInInput = (sourceDictionary, targetDictionary) => {
 
 export const removeErrors = (elements) => {
   if (!elements) {
-  return;
+    return;
   }
 
   Object.entries(elements).forEach(([key, value]) => {
@@ -76,4 +76,15 @@ export const removeErrorsActive = (elements) => {
   } else {
     elements?.classList?.remove('active');
   }
+};
+
+export const defaultVariable = (elements) => {
+  if (!elements) {
+    return;
+  }
+
+  Object.entries(elements).forEach(([key, value]) => {
+    // @ts-ignore
+    value.value = '';
+  });
 };

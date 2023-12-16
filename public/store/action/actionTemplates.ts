@@ -73,6 +73,11 @@ export const actionAddComment = (params: addComment) => ({
   value: params
 });
 
+export const actionAddCommentTwo = (params: addComment) => ({
+  type: 'addCommentTwo',
+  value: params
+});
+
 export const actionFavoriteFilms = (params: paginator) => ({
   type: 'favoriteFilms',
   value: params

@@ -1,7 +1,7 @@
 import { Component } from '@components/component';
 import * as templateReviewForm from '@components/ReviewForm/reviewForm.hbs';
 import { store } from '@store/store';
-import { actionAddComment } from '@store/action/actionTemplates';
+import { actionAddComment, actionAddCommentTwo } from '@store/action/actionTemplates';
 import { validateReview } from '@utils/validate';
 import { addErrorsActive, insertText } from '@utils/addError';
 import { router } from '@router/router';
@@ -41,10 +41,11 @@ export class ReviewForm extends Component {
     ) as HTMLElement;
 
     if (store.getState('auth').status === 200) {
-      textHTML.style.height = '200px';
-      console.log('pre_sub')
+      if (textHTML) {
+        textHTML.style.height = '200px';
+      }
+
       const Event = (event) => {
-        console.log('post_sub')
         event.preventDefault();
 
         const selectHTML = document.querySelector('.rating__form');
@@ -78,9 +79,14 @@ export class ReviewForm extends Component {
                 '<h4>Вы уже писали отзыв</h4>';
             }
           });
+
+        store.dispatch(actionAddCommentTwo({
+          film_id: this.state.fildId,
+          rating: select,
+          text: text
+        }));
       };
       const review = document.querySelector('.review-form__body__button');
-      console.log(review, 'review')
       review?.addEventListener('click', Event);
     } else if (store.getState('auth').status !== 200) {
       // router.go(

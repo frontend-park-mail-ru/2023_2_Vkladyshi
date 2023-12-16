@@ -26,6 +26,10 @@ const handlers = [
     method: actionsUser.addComment.bind(actionsUser)
   },
   {
+    type: 'addCommentTwo',
+    method: actionsUser.addCommentTwo.bind(actionsUser)
+  },
+  {
     type: 'favoriteFilms',
     method: actionsUser.favoriteFilms.bind(actionsUser)
   },

@@ -7,15 +7,22 @@ import {
   actionStatistics
 } from '@store/action/actionTemplates';
 import { AdminPanel } from '@components/AdminPanel/adminPanel';
-import { collections, ROOT } from '@utils/config';
+import { collections, errorInputs, ROOT } from '@utils/config';
 import { AddFilm } from '@components/AddFilm/addFilm';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 import { ActorCard } from '@components/ActorCard/actorCard';
-import {router} from '@router/router';
+import { router } from '@router/router';
+import { addErrorsActive, defaultVariable, insertText, removeErrors, removeErrorsActive } from '@utils/addError';
 
 export interface AdminPage {
-  state: {};
+  state: {
+    errorsHTML: {};
+    wraps: {};
+    inputsHTML: {};
+    file: any;
+    defaultImage: any;
+  };
 }
 
 /**
@@ -33,18 +40,27 @@ export class AdminPage extends View {
    */
   constructor (ROOT) {
     super(ROOT);
-    this.state = {};
+    this.state = {
+      errorsHTML: {},
+      wraps: {},
+      inputsHTML: {},
+      file: '',
+      defaultImage: ''
+    };
+
+    // console.log('constructor');
   }
 
   /**
    * Метод создания страницы
    */
   render () {
-    this.renderDefaultPage();
-    const footer = document.querySelector('.footer');
+    // console.log('render admin');
+    this.renderDefaultPage({});
     const contentBlock = document.querySelector('.content-block');
+    const footer = document.querySelector('.footer');
     footer?.remove();
-    contentBlock!.innerHTML = '';
+    // contentBlock!.innerHTML = '';
     const stat = new Statistics();
     const addFilm = new AddFilm(ROOT);
     const adminPanel = new AdminPanel(ROOT);
@@ -52,10 +68,6 @@ export class AdminPage extends View {
     contentBlock?.insertAdjacentHTML('afterbegin', stat.render());
     contentBlock?.insertAdjacentHTML('afterbegin', addFilm.render());
     store.dispatch(actionStatistics()).then(() => {
-      const csat = document.querySelector('.statistic-chart');
-      const filmPage = document.querySelector('.add-film');
-      csat?.classList.add('noactive');
-      filmPage?.classList.add('noactive');
       this.addFilmForm();
       this.componentDidMount();
     });
@@ -65,6 +77,8 @@ export class AdminPage extends View {
     const adminPanel = document.querySelector('.admin-panel');
     const addFilm = document.querySelector('.add-film');
     const installPoster = document.querySelector('.add-film__left__poster');
+    const actorFind = document.querySelector('.actors-find') as HTMLElement;
+    actorFind!.style.marginTop = '20px';
     this.popupEvent = (event) => {
       switch (true) {
         case event.target.closest('.center-text') !== null:
@@ -107,6 +121,8 @@ export class AdminPage extends View {
           break;
         case event.target.closest('.button-submit') !== null:
           event.preventDefault();
+          removeErrors(this.state.errorsHTML);
+          removeErrorsActive(this.state.wraps);
           this.getForm();
           break;
         case event.target.closest('.title-type-admin') !== null:
@@ -134,6 +150,7 @@ export class AdminPage extends View {
         case event.target.closest('.settings_file') !== null:
           const file = document.querySelector('.settings_file') as HTMLInputElement;
           const image = document.querySelector('.settings__img') as HTMLImageElement;
+          this.state.defaultImage = image.src;
           // @ts-ignore
           if (file?.files?.length > 0) {
             const reader = new FileReader();
@@ -141,14 +158,20 @@ export class AdminPage extends View {
               if (e.target && e.target.result) {
                 image.src = `${e.target.result}`;
               }
-            };// @ts-ignore
+            };
+            // @ts-ignore
+            if (file.files[0]) {
+              // @ts-ignore
+              this.state.file = file.files[0];
+            }
+            // @ts-ignore
             reader.readAsDataURL(file.files[0]);
           }
           break;
         default:
           break;
       }
-    }
+    };
 
     installPoster?.addEventListener('change', this.changeEvent);
     adminPanel?.addEventListener('click', this.popupEvent);
@@ -204,6 +227,7 @@ export class AdminPage extends View {
     const settings = document.querySelector('.change-user-data') as HTMLElement;
     const title = document.querySelector('.title-text');
     const date = document.querySelector('.date-text');
+    const country = document.querySelector('.country-text');
     const button = document.querySelector('.add-film__left');
     const genre = document.querySelector('.section-title-type');
     // @ts-ignore
@@ -223,12 +247,17 @@ export class AdminPage extends View {
       inputButton.render({ wrap: 'title', module: 'add-film' })
     );
 
+    country!.insertAdjacentHTML(
+      'beforeend',
+      inputButton.render({ wrap: 'country', module: 'add-film' })
+    );
+
     date!.insertAdjacentHTML(
       'beforeend',
       inputButton.render({
         wrap: 'date',
         module: 'add-film',
-        type: 'date'
+        type: 'number'
       })
     );
 
@@ -242,43 +271,128 @@ export class AdminPage extends View {
       'beforeend',
       inputButton.render({ wrap: 'name', module: 'select' })
     );
+
+    this.init();
   }
 
   getForm () {
-    const titleHTML = document.querySelector('.title-input-add-film') as HTMLInputElement;
-    const infoHTML = document.querySelector('.review-form__body__text') as HTMLInputElement;
-    const dateHTML = document.querySelector('.date-input-add-film') as HTMLInputElement;
-    const fileInputHTML = document.querySelector('.settings_file') as HTMLInputElement;
-
+    const elements = this.state.inputsHTML;
     const genres = document.querySelectorAll('.title-type-admin.active');
     // @ts-ignore
     const actors = document.querySelector('.selected-actors').querySelectorAll('.actor-selection_actor');
 
-    const sectionDataArray = Array.from(genres).map((div) =>
+    const sectionDataArray = Array.from(genres).map((div) => // @ts-ignore
       parseInt(<string>div.getAttribute('data-section'))
     );
-    const sectionActorsArray = Array.from(actors).map((div) =>
+    const sectionActorsArray = Array.from(actors).map((div) => // @ts-ignore
       parseInt(<string>div.getAttribute('data-section'))
     );
 
-    const title = titleHTML?.value.trim();
-    const info = infoHTML.value;
-    const date = dateHTML.value;
-    const file = fileInputHTML?.files ? fileInputHTML.files[0] : null;
+    const title = elements['title']?.value.trim();
+    const info = elements['textArea'].value;
+    const country = elements['country'].value.trim();
+    const date = elements['date'].value;
+    let file;
+
+    if (elements['file']?.files[0]) {
+      file = elements['file']?.files[0];
+    } else if (this.state.file !== '') {
+      file = this.state.file;
+    }
+
     const data = new FormData();
 
     data.append('title', title);
     data.append('info', info);
     data.append('date', date);
+    data.append('country', country);
     data.append('genre', sectionDataArray.join(','));
+    data.append('actors', sectionActorsArray.join(','));
     if (file) {
       data.append('photo', file);
     }
 
-    store.dispatch(actionAddFilm({ file: data })).then(response => {
-      this.componentWillUnmount();
-      router.refresh();
-    });
+    if (this.validateForm({ title: title, info: info, date: date, country: country, file: file, actors: actors, genre: genres })) {
+      store.dispatch(actionAddFilm({ file: data })).then(() => {
+        // @ts-ignore
+        if (store.getState('addFilm').status === 200) {
+          setTimeout(() => {
+            ROOT?.insertAdjacentHTML(
+              'beforeend',
+              '<img class="create-successfully" src="/icons/icon-success.png"/>'
+            );
+          });
+          setTimeout(() => { document.querySelector('.create-successfully')?.remove(); }, 4000);
+          const selectedActors = document.querySelector('.selected-actors');
+          const allActors = document.querySelector('.results-actors');
+          selectedActors!.innerHTML = '';
+          allActors!.innerHTML = '';
+
+          genres.forEach(genre => {
+            genre.classList.remove('active');
+          });
+          defaultVariable(this.state.inputsHTML);
+
+          const image = document.querySelector('.settings__img') as HTMLImageElement;
+          image.src = '/icons/space6.jpg';
+        }
+      });
+    }
+  }
+
+  validateForm (dir) {
+    let result = true;
+    const elements = this.state.errorsHTML;
+    const wraps = this.state.wraps;
+
+    if (dir.title === '') {
+      insertText(elements['title'], errorInputs.NotAllElement);
+      addErrorsActive(wraps['title']);
+      result = false;
+    }
+
+    if (dir.info === '') {
+      insertText(elements['textArea'], errorInputs.NotAllElement);
+      addErrorsActive(wraps['textArea']);
+      result = false;
+    }
+
+    if (dir.country === '') {
+      insertText(elements['country'], errorInputs.NotAllElement);
+      addErrorsActive(wraps['country']);
+      result = false;
+    }
+
+    if (dir.date === '') {
+      insertText(elements['date'], errorInputs.NotAllElement);
+      addErrorsActive(wraps['date']);
+      result = false;
+    } else if (Number(dir.date) < 1895 || Number(dir.date) > 2028) {
+      insertText(elements['date'], errorInputs.VariableError);
+      addErrorsActive(wraps['date']);
+      result = false;
+    }
+
+    if ((dir.file && (dir.file?.type?.startsWith('image/')))) {
+    } else {
+      insertText(
+        document.querySelector('.error-image'),
+        'Ошибка: Загруженный файл не является изображение или файл отсутствует'
+      );
+      result = false;
+    }
+
+    if (dir.genre.length === 0) {
+      insertText(elements['genre'], errorInputs.NotAllElement);
+      result = false;
+    }
+
+    if (dir.actors.length === 0) {
+      insertText(elements['actors'], errorInputs.NotAllElement);
+      result = false;
+    }
+
+    return result;
   }
 
   getFormActors () {
@@ -288,13 +402,13 @@ export class AdminPage extends View {
 
     store.subscribe('resultSearchActor', this.resultFindActors.bind(this));
     store.dispatch(
-        actionSearchActor({
-          name: nameActor,
-          amplua: [''],
-          county: '',
-          birthday: '',
-          films: ['']
-        })
+      actionSearchActor({
+        name: nameActor,
+        amplua: [''],
+        county: '',
+        birthday: '',
+        films: ['']
+      })
     );
   }
 
@@ -325,5 +439,57 @@ export class AdminPage extends View {
         );
       }
     }
+  }
+
+  init () {
+    const inputHtml = document.querySelector('.error-login');
+    const textAreaHtml = document.querySelector('.error-text-area');
+    const countryHtml = document.querySelector('.error-country');
+    const dateHtml = document.querySelector('.error-birthday');
+    const genreHtml = document.querySelector('.error-genre');
+    const actorsHtml = document.querySelector('.error-actors');
+    const imageError = document.querySelector('.error-image');
+
+    const wrapLogin = document.querySelector('.title');
+    const wrapInfo = document.querySelector('.text-area');
+    const wrapCountry = document.querySelector('.country');
+    const wrapDate = document.querySelector('.date');
+
+    const titleHTML = document.querySelector('.title-input-add-film') as HTMLInputElement;
+    const infoHTML = document.querySelector('.review-form__body__text') as HTMLInputElement;
+    const dateHTML = document.querySelector('.date-input-add-film') as HTMLInputElement;
+    const fileInputHTML = document.querySelector('.settings_file') as HTMLInputElement;
+    const countryHTML = document.querySelector('.country-input-add-film') as HTMLInputElement;
+
+    const genres = document.querySelectorAll('.title-type-admin.active');
+    // @ts-ignore
+    const actors = document.querySelector('.selected-actors').querySelectorAll('.actor-selection_actor');
+
+    this.state.errorsHTML = {
+      title: inputHtml,
+      textArea: textAreaHtml,
+      country: countryHtml,
+      genre: genreHtml,
+      date: dateHtml,
+      actors: actorsHtml,
+      image: imageError
+    };
+
+    this.state.wraps = {
+      title: wrapLogin,
+      textArea: wrapInfo,
+      country: wrapCountry,
+      date: wrapDate
+    };
+
+    this.state.inputsHTML = {
+      title: titleHTML,
+      textArea: infoHTML,
+      country: countryHTML,
+      date: dateHTML,
+      genre: genres,
+      actors: actors,
+      image: fileInputHTML
+    };
   }
 }

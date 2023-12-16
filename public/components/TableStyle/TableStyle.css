@@ -1,7 +1,6 @@
 .table__header {
   /*color: #ffffff;*/
   text-align: center;
-  font-family: Montserrat;
   font-size: 40px;
   font-style: normal;
   font-weight: 600;
@@ -25,7 +24,6 @@
 
 .table__row__title {
   color: #ffffff;
-  font-family: Montserrat;
   font-size: 30px;
   /*font-style: italic;*/
   font-weight: 400;
@@ -36,7 +34,6 @@
 
 .table__row__text {
   /*color: #ffffff;*/
-  font-family: Montserrat, serif;
   font-size: 30px;
   font-style: normal;
   font-weight: 200;

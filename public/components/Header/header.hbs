@@ -14,10 +14,35 @@
       <img src='/icons/{{selection.png_name}}' class='icon' />
       <span>{{selection.name}}</span>
     </div>
-    <input
-      class='header_search_item right-element'
-      placeholder='Поиск фильмов'
-    />
+<!--    <input-->
+<!--      class='header_search_item right-element'-->
+<!--      placeholder='Поиск фильмов'-->
+<!--    />-->
+      <div class="header_search_item right-element">
+          <div class="header_search_item__select-search">
+              <div class="header_search_item__select-search__text films-search-header">Фильмы</div>
+              <div class="header_search_item__select-search__text actors-search-header">Актёры</div>
+              <img class="header_search_item__select-search__arrow-header" src="/icons/strelka.png"/>
+              <div class="header_search__list-search">
+                  <div class="header_search__list-search__films">
+                      <img class="image-select" src="/icons/youtube.png"/>
+                      <div class="text-select">Фильмы</div>
+                  </div>
+                  <div class="header_search__list-search__actors">
+                      <img class="image-select" src="/icons/people.png"/>
+                      <div class="text-select">Актёры</div>
+                  </div>
+              </div>
+          </div>
+          <input
+                  class='header_search_item__input'
+                  placeholder='Поиск'
+          />
+          <div class="header_search_item__lope-container">
+              <img class="header_search_item__lope" src="/icons/loupe.png"/>
+          </div>
+
+      </div>
     <div
       class='header_basket-item header-button right-element'
       data-section='{{basket.key}}'

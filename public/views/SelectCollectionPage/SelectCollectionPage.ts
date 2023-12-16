@@ -42,15 +42,15 @@ export class SelectCollectionPage extends View {
       renderedSearchFilm: true
     };
 
-    store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
-    store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
+    // store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
+    // store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
   }
 
   /**
    * Метод создания страницы
    */
   render () {
-    this.renderDefaultPage();
+    this.renderDefaultPage({});
 
     if (!document.querySelector('.select-collection-frame')) {
       const main = ROOT?.querySelector('main');
@@ -92,18 +92,20 @@ export class SelectCollectionPage extends View {
     this.panelEvent = (event) => {
       switch (true) {
         case event.target.closest('.search-container__select__films') !== null:
+          store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
           this.eventsSearchFilm();
           break;
         case event.target.closest('.search-container__select__actors') !== null:
-        //   this.eventsSearchActor();
-        //   break;
-        // case event.target.closest('.result-button') !== null:
-        //   event.preventDefault();
-        //   if (this.state.renderedSearchFilm) {
-        //     this.dispatchFilm();
-        //   } else {
-        //     this.dispatchActor();
-        //   }
+          store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
+          this.eventsSearchActor();
+          break;
+        case event.target.closest('.result-button') !== null:
+          event.preventDefault();
+          if (this.state.renderedSearchFilm) {
+            this.dispatchFilm();
+          } else {
+            this.dispatchActor();
+          }
           break;
         default:
           break;
@@ -386,18 +388,6 @@ export class SelectCollectionPage extends View {
 
     this.state.dataSection = `?title=${title}&date_from=${dateFrom}&date_to=${dateTo}&rating_from=${ratingFrom}&rating_to=${ratingTo}&mpaa=${mpaaResult}&genre=${sectionDataArray}&actors=${actors}`;
     this.subscribeSearchFilms();
-    // store.dispatch(
-    //     actionSearchFilm({
-    //       title: title,
-    //       dateFrom: dateFrom,
-    //       dateTo: dateTo,
-    //       ratingFrom: Number(ratingFrom),
-    //       ratingTo: Number(ratingTo),
-    //       mpaa: mpaaResult,
-    //       genre: sectionDataArray,
-    //       actors: actors,
-    //     })
-    // );
   }
 
   /**
@@ -407,9 +397,6 @@ export class SelectCollectionPage extends View {
     const name = (
         document.querySelector('.name-input-select') as HTMLInputElement
     )?.value?.trim();
-    // const amplua = (
-    //     document.querySelector('.amp-lua-input-select') as HTMLInputElement
-    // )?.value;
 
     const amplua = (
         document.querySelector('.actors-input-select') as HTMLInputElement
@@ -428,15 +415,6 @@ export class SelectCollectionPage extends View {
     )?.value.split(' ');
     this.state.dataSection = `?name=${name}&amplua=${amplua}&country=${country}&birthday=${birthday}&films=${films}`;
     this.subscribeSearchActors();
-    // store.dispatch(
-    //     actionSearchActor({
-    //       name: name,
-    //       amplua: amplua,
-    //       county: country,
-    //       birthday: birthday,
-    //       films: films,
-    //     })
-    // );
   }
 
   /**

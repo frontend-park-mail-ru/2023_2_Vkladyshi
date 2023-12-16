@@ -80,7 +80,7 @@ export class UserPage extends View {
    */
   render () {
     store.subscribe('unmount', this.componentWillUnmount.bind(this));
-    this.renderDefaultPage();
+    this.renderDefaultPage({});
     store.dispatch(actionGetSettings());
 
     const mainHTML = document.querySelector('main');
@@ -157,9 +157,20 @@ export class UserPage extends View {
           const file = document.querySelector('.settings_file') as HTMLInputElement;
           const image = document.querySelector('.settings__img') as HTMLImageElement;
           // @ts-ignore
-          if (file?.files?.length > 0) {
+          if (file?.files?.length > 0) { //@ts-ignore
+              if (!file.files[0]?.type?.startsWith('image/')) {
+                insertText(
+                    document.querySelector('.error-image'),
+                    'Ошибка: Загруженный файл не является изображением'
+                );
+                return;
+              } else  {
+                removeErrors({image: this.state.errorsHTML['image']});
+              }
+
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = function (e) {// @ts-ignore
+              // console.log(e?.target?.result, e.target, file.files[0])
               if (e.target && e.target.result) {
                 image.src = `${e.target.result}`;
               }
@@ -171,6 +182,7 @@ export class UserPage extends View {
             }
             // @ts-ignore
             reader.readAsDataURL(file.files[0]);
+
           }
           break;
         case event.target.closest('.button-submit') !== null:
@@ -190,9 +202,7 @@ export class UserPage extends View {
   }
 
   getForm () {
-
     const elements = this.state.inputsHTML;
-    console.log('file', this.state.file)
     const login = elements['login']?.value.trim();
     const email = elements['email']?.value;
     const birthday = elements['birthday']?.value;
@@ -218,7 +228,7 @@ export class UserPage extends View {
       this.validateForm(login, password, passwordSecond, email, file, birthday)
     ) {
       store.dispatch(actionPutSettings({ file: data })).then((response) => {
-        if (response!['postStatusSettings'].status === 200 ) {
+        if (response!['postStatusSettings'].status === 200) {
           this.setUserInfo();
           if (login !== this.state.userInfo['login']) {
             store.dispatch(actionLogout({ redirect: true }));
@@ -360,7 +370,7 @@ export class UserPage extends View {
         const wraps = this.state.wraps;
         returnError(errorInputs.repeatPassword, errorClassName);
         insertText(
-            [elements['passwordFirst'], elements['passwordSecond']],
+          [elements['passwordFirst'], elements['passwordSecond']],
             <string>errorInputs.repeatPassword
         );
         addErrorsActive([wraps['passwordFirst'], wraps['passwordSecond']]);
@@ -379,7 +389,7 @@ export class UserPage extends View {
     return false;
   }
 
-  subscribePostStatus() {
+  subscribePostStatus () {
     const result = store.getState('postStatusSettings');
     this.state.userStatus = result.status;
     this.handlerStatus();
@@ -456,6 +466,7 @@ export class UserPage extends View {
       birthday: birthdayHTML,
       file: fileInputHTML
     };
+
     this.state.wraps = {
       login: wrapLogin,
       email: wrapEmailHTML,

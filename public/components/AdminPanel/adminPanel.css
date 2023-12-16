@@ -7,6 +7,11 @@
     padding-top: 100px;
 }
 
+.add-film__left__poster {
+    /*padding-right: 10px;*/
+    margin-right: 20px;
+}
+
 .center-text {
     text-align: center;
     padding: 15px 6px;
@@ -34,4 +39,13 @@
 
 .add-film.noactive {
     display: none;
+}
+
+.create-successfully {
+    position: fixed;
+    right: 10px;
+    bottom: 20px;
+    width: 100px;
+    height: 100px;
+    /*background-color: #73a32f;*/
 }

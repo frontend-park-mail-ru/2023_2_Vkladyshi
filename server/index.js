@@ -81,130 +81,13 @@ const actor = {
 const calendar = {
   status: 200,
   body: {
-    monthName: 'Февраль 2022',
+    monthName: 'Декабрь 2023',
     monthText: 'Календарь релизов',
-    days: {
-      day1: {
-        dayNumber: 1,
-        dayNews: 'Неудержимые 1',
-      },
-      day2: {
-        dayNumber: 2,
-        dayNews: 'Неудержимые 2',
-      },
-      day3: {
-        dayNumber: 3,
-        dayNews: 'Неудержимые 3',
-      },
-      day4: {
-        dayNumber: 4,
-        dayNews: '',
-      },
-      day5: {
-        dayNumber: 4,
-        dayNews: '',
-      },
-      day6: {
-        dayNumber: 6,
-        dayNews: '',
-      },
-      day7: {
-        dayNumber: 7,
-        dayNews: '',
-      },
-      day8: {
-        dayNumber: 8,
-        dayNews: '',
-      },
-      day9: {
-        dayNumber: 9,
-        dayNews: '',
-      },
-      day10: {
-        dayNumber: 10,
-        dayNews: '',
-      },
-      day11: {
-        dayNumber: 11,
-        dayNews: 'Неудержимые 1',
-      },
-      day12: {
-        dayNumber: 12,
-        dayNews: 'Неудержимые 2',
-      },
-      day13: {
-        dayNumber: 13,
-        dayNews: 'Неудержимые 3',
-      },
-      day14: {
-        dayNumber: 14,
-        dayNews: '',
-      },
-      day15: {
-        dayNumber: 15,
-        dayNews: '',
-      },
-      day16: {
-        dayNumber: 16,
-        dayNews: '',
-      },
-      day17: {
-        dayNumber: 17,
-        dayNews: '',
-      },
-      day18: {
-        dayNumber: 18,
-        dayNews: '',
-      },
-      day19: {
-        dayNumber: 19,
-        dayNews: '',
-      },
-      day20: {
-        dayNumber: 20,
-        dayNews: '',
-      },
-      day21: {
-        dayNumber: 21,
-        dayNews: 'Неудержимые 1',
-      },
-      day22: {
-        dayNumber: 22,
-        dayNews: 'Неудержимые 2',
-      },
-      day23: {
-        dayNumber: 23,
-        dayNews: 'Неудержимые 3',
-      },
-      day24: {
-        dayNumber: 24,
-        dayNews: '',
-      },
-      day25: {
-        dayNumber: 25,
-        dayNews: '',
-      },
-      day26: {
-        dayNumber: 26,
-        dayNews: '',
-      },
-      day27: {
-        dayNumber: 27,
-        dayNews: '',
-      },
-      day28: {
-        dayNumber: 28,
-        dayNews: '',
-      },
-      day29: {
-        dayNumber: 29,
-        dayNews: '',
-      },
-      day30: {
-        dayNumber: 30,
-        dayNews: '',
-      },
-    },
+    currentDay: 13,
+    days: [
+      {dayNumber: 14, dayNews: 'Kostolom'},
+      {dayNumber: 21, dayNews: 'Night'}
+    ],
   },
 };
 
@@ -233,47 +116,44 @@ const comments = {
 
 const favoriteFilms = {
   status: 200,
-  body: {
-    collection_name: 'Новинки',
-    films: [
+  body: [
       {
         id: 3,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 4.5,
+        rating: 1,
       },
       {
         id: 8,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4.1,
+        rating: 2,
       },
       {
-        id: 3,
+        id: 4,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 4.5,
+        rating: 3,
       },
       {
-        film: { id: 8 },
+        id: 5,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4.1,
+        rating: 4,
       },
       {
-        film: { id: 3 },
+        id: 30,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 4.5,
+        rating: 5,
       },
       {
-        film: { id: 8 },
+        id: 10,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4.1,
+        rating: 6,
       },
-    ],
-  },
+  ],
 };
 
 const favoriteActors = {
@@ -305,37 +185,37 @@ const films = {
         id: 3,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 4.5,
+        rating: 1,
       },
       {
-        film: { id: 8 },
+        id: 8,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4.1,
+        rating: 2,
       },
       {
-        film: { id: 3 },
+        id: 4,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 4.5,
+        rating: 3,
       },
       {
-        film: { id: 8 },
+        id: 5,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4.1,
+        rating: 4,
       },
       {
-        film: { id: 3 },
+        id: 30,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 4.5,
+        rating: 5,
       },
       {
-        film: { id: 8 },
+        id: 10,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4.1,
+        rating: 6,
       },
     ],
   },
@@ -490,7 +370,7 @@ app.use('/signin', (req, res) => {
   ids[id] = login;
 
   res.cookie('session_id', id, {
-    expires: new Date(Date.now() + 1000 * 60 * 10),
+    expires: new Date(Date.now() + 1000 * 60 * 100),
   });
 
   // res.cookie('session_id', { httpOnly: true });
@@ -575,7 +455,7 @@ app.get('/authcheck', (req, res) => {
     return res.status(200).json({ status: 401 }).end();
   }
 
-  return res.status(200).json({ status: 200, login: 'volodin' }).end();
+  return res.status(200).json({ status: 200, body: {role: 'super1',  login: 'volodin'} }).end();
 });
 
 app.get('/logout', (req, res) => {
@@ -696,17 +576,6 @@ app.use('/api/v1/film', (req, res) => {
   return res.status(200).json({ body: film.body, status: film.status });
 });
 
-// app.use('/api/v1/search/film', (req, res) => {
-//   return res.status(200).json({ body: favoriteFilms.body, status: favoriteFilms.status });
-// });
-const urlencodedParser = express.urlencoded({ extended: false });
-// app.use('/api/v1/search/film', urlencodedParser, (request, response) => {
-//   // if(!request.body) return response.sendStatus(400);
-//   console.log(request.body, 55551);
-//   return res.status(200).json({ body: favoriteFilms.body, status: favoriteFilms.status });
-// });
-
-//http://127.0.0.1:8001/films?title=kek&date_from=kek&date_to=kek&rating_from=0&rating_to=9&mpaa=kek&genre=kek&actors=kek
 app.use('/api/v1/search/film', (req, res) => {
   res.status(200).json({ status: 200 }).end();
 });

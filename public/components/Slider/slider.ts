@@ -101,7 +101,7 @@ export class Slider {
     //       });
   }
 
-  showSliders() {
+  showSliders () {
     const sliders = document.querySelector('.slider') as HTMLElement;
     const prev = document.querySelector('.slider-prev');
     const next = document.querySelector('.slider-next');
@@ -110,7 +110,7 @@ export class Slider {
       event.preventDefault();
       sliders.scrollLeft += event.deltaY;
       sliders.style.scrollBehavior = 'smooth';
-    })
+    });
 
     prev?.addEventListener('click', () => {
       sliders.style.scrollBehavior = 'smooth';
@@ -136,9 +136,27 @@ export class Slider {
     this.showSlidesAuto();
   }
 
-  addEventsLine() {
+  addEventsLine () {
     const sliderFull = document.querySelector('.slider-full');
+    const sliderContainer = document.querySelector('.slider-container');
+    const sliders = document.querySelector('.slider') as HTMLElement;
     sliderFull?.classList.remove('noactive');
+
+    let startX = 0; // Инициализируем startX значением 0
+    const handleTouchStart = (event) => {
+      startX = event.touches[0].clientX; // Запоминаем позицию касания относительно слайдера
+    }
+
+    const handleTouchMove = (event) => {
+      const currentX = event.touches[0].clientX;
+      const diffX = startX - currentX;
+
+      sliders.scrollLeft = diffX;
+
+    }
+
+    sliderContainer?.addEventListener('touchstart', handleTouchStart, false);
+    sliderContainer?.addEventListener('touchmove', handleTouchMove, false);
 
     this.showSliders();
   }

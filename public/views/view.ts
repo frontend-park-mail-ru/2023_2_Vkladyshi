@@ -9,7 +9,7 @@ import { ContentBlock } from '@components/ContentBlock/contentBlock';
  * @typedef {View}
  */
 export class View extends Component {
-  renderDefaultPage = () => {
+  renderDefaultPage = (data) => {
     let main = document.querySelector('main');
 
     if (main == null) {

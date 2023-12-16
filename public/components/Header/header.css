@@ -64,16 +64,16 @@ input::placeholder {
 
 .header_search_item {
   /*text-align: left;*/
-  cursor: not-allowed;
-  display: block;
-  width: 25%;
+  cursor: pointer;
+  display: flex;
+  width: 38%;
   /*max-height: 32px;*/
   border-radius: 8px;
   border: 0;
   /*border: 1px solid white;*/
   /*background: rgba(0,0,0,0.8);*/
   transition: border 0.3s ease;
-  padding: 8px 30px 8px 30px;
+  /*padding: 8px 30px 8px 30px;*/
   outline: none;
 }
 
@@ -86,7 +86,6 @@ input::placeholder {
   padding: 1rem;
   cursor: pointer;
   background: #141414;
-  font-family: 'Montserrat', sans-serif;
   display: block;
   float: left;
   position: relative;
@@ -99,12 +98,16 @@ input::placeholder {
 
 .header_settings-header:hover,
 .header_logout-header:hover {
-  padding: 1rem;
+  /*padding: 1rem;*/
   background: #5e5c5c;
 }
 
+/*.header_search_item__select-search:hover {*/
+/*  opacity: 0.8;*/
+/*}*/
+
 .navigationProfile {
-  font-family: monospace;
+  /*font-family: monospace;*/
 }
 
 .ulNavProfile {
@@ -116,7 +119,6 @@ input::placeholder {
 
 .liNavProfile {
   /*background: #141414;*/
-  font-family: 'Montserrat', sans-serif;
   display: block;
   float: left;
   position: relative;
@@ -148,11 +150,117 @@ input::placeholder {
   }
 }
 
+.header_search_item__select-search {
+  width: 30%;
+  background: #f5c518;
+  border-radius:8px 0 0 8px;
+  border: 1px solid #f3c23c;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  transition: all 0.5s ease;
+}
+
+.actors-search-header {
+  display: none;
+}
+
+.films-search-header {
+  /*display: none;*/
+}
+
+.header_search_item__lope-container {
+  background: white;
+  border-radius:0 8px 8px 0;
+  /*height: 70px;*/
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 10%;
+  cursor: auto;
+}
+
+.header_search_item__input {
+  width: 60%;
+  /*height: 70px;*/
+  /*border-radius:0 8px 8px 0;*/
+  border: 0;
+  border-right: none;
+  padding: 8px 15px 8px 5px;
+  /*border: 1px solid #f3c23c;*/
+}
+
+.header_search__list-search {
+  display: none;
+  margin-top: 180px;
+  position: absolute;
+  width: 200px;
+  /*height: 100px;*/
+  /*border: 2px solid red;*/
+  background: #141414;;
+
+}
+.header_search__list-search__films, .header_search__list-search__actors {
+  display: flex;
+  flex-direction: row;
+  color: white;
+  justify-content: space-around;
+  transition-duration: 0.5s;
+  padding: 1rem;
+}
+
+.header_search_item__lope {
+  /*width: 12px;*/
+  height: 20px;
+  min-width: auto;
+  cursor: pointer;
+  border-left: none;
+  /*min-height: auto;*/
+}
+
+.header_search__list-search__actors {
+  border-radius: 0 0 8px 8px;
+}
+
+.header_search__list-search__films:hover, .header_search__list-search__actors:hover {
+  /*opacity: 0.8;*/
+  background: #5e5c5c;
+}
+
+
+.header_search_item__select-search__arrow-header {
+  width: 15px;
+  height: 15px;
+}
+
+@media screen and (max-width: 1250px){
+  .header .right-element {
+    margin-right: 10px;
+  }
+
+  .header .left-element {
+    margin-left: 10px;
+  }
+
+  .header_brand-header {
+    margin-left: 20px;
+  }
+
+  .header_login-header {
+    margin-right: 20px;
+  }
+}
+
+
 @media screen and (max-width: 1150px) {
   .content-block,
   .header,
   .footer {
     width: 100%;
+  }
+
+  .header {
+  padding: 0 20px 0 20px;
   }
 
   header {
@@ -205,6 +313,10 @@ input::placeholder {
     display: none;
   }
 
+  .header_search_item {
+    width: 45%;
+  }
+
   .icon {
     height: 50px;
     width: 50px;
@@ -241,6 +353,27 @@ input::placeholder {
     height: 30px;
     width: auto;
   }
+
+
+  .header_search_item__input {
+    padding: 8px 1px 8px 1px;
+  }
+
+  .films-search-header, .actors-search-header {
+    font-size: 12px;
+  }
+
+  /*.header_search_item__select-search__text {*/
+  /*  width: 45%;*/
+  /*}*/
+
+  .header_search_item__select-search {
+    width: 55%;
+  }
+
+  /*.header_search_item__input {*/
+  /*  width: 55%;*/
+  /*}*/
 }
 
 @media screen and (max-width: 450px) {
@@ -268,7 +401,7 @@ input::placeholder {
   }
 
   .header_search_item {
-    width: 30px;
+    width: 130px;
   }
 
   .header_brand-header {
@@ -286,5 +419,11 @@ input::placeholder {
   .icon {
     width: 35px;
     height: 35px;
+  }
+
+  .films-search-header {
+    /*white-space: nowrap;*/
+    /*overflow: hidden;*/
+    /*text-overflow: ellipsis;*/
   }
 }

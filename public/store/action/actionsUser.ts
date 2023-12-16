@@ -1,5 +1,6 @@
 import { post, get, getCsrf } from '@utils/ajax';
 import { urls } from '@utils/config';
+import { router } from '@router/router';
 
 class ActionsUser {
   async signin (user) {
@@ -126,6 +127,18 @@ class ActionsUser {
     const result = await response;
     return {
       addCommentStatus: result['status']
+    };
+  }
+
+  async addCommentTwo ({ film_id, rating, text }: addComment) {
+    const response = post({
+      url: urls.addCommentTwo,
+      body: { film_id: film_id, rating: rating, text: text }
+    });
+
+    const result = await response;
+    return {
+      addCommentTwoStatus: result['status']
     };
   }
 

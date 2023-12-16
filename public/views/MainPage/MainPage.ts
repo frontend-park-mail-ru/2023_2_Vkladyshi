@@ -18,7 +18,9 @@ export class MainPage extends View {
    * Метод создания страницы
    */
   render () {
-    this.renderDefaultPage();
+    this.renderDefaultPage({});
+
+    store.subscribe('collectionMain', this.addCalendar.bind(this));
     const contentBlockHTML = document.querySelector('.content-block');
     const mainHTML = document.querySelector('main');
 
@@ -43,6 +45,8 @@ export class MainPage extends View {
     contentBlockHTML?.insertAdjacentHTML('beforeend', slider.render());
     slider.addEvents();
 
+    // const sliderNew = new Slider();
+    // sliderNew.addEventsLine();
     if (contentBlockHTML) {
       const filmSelection = new FilmSelectionPage(ROOT);
       filmSelection.render(true).then((response) => {
@@ -52,77 +56,17 @@ export class MainPage extends View {
           // divName.style.marginTop = '0px';
         }
 
-        const sliderFilms = new Slider();
-        contentBlockHTML?.insertAdjacentHTML('beforeend', sliderFilms.render());
-
         this.componentDidMount();
-        // sliderFilms.addEventsLine();
-        //
-        // const sliderContainer = document.querySelector('.slider-container');
-        // const films = document.querySelector('.film-selection_films');
-        // const slider = document.querySelector('.slider-name');
-        // slider?.appendChild(<Element>divName);
-        // sliderContainer?.appendChild(<Element>films);
-        //
-        // calendar.render().then((response) => {
-        //   contentBlockHTML.insertAdjacentHTML('beforeend', <string>response);
-        //   const currentDate = new Date();
-        //   const searchDay = String(currentDate.getDate());
-        //   const currentDaysHTML = contentBlockHTML.querySelector(
-        //     '.day__' + searchDay
-        //   );
-        //   currentDaysHTML?.classList.add('calendar__days__day_today');
-        // });
       });
     }
   }
 
   componentDidMount () {
-    const popup = document.querySelector('.film-selection');
-    const popupEvent = (event) => {
-      this.popupEvent = popupEvent;
-      switch (true) {
-        case event.target.closest('.image-watchlist') !== null:
-          if (store.getState('auth').status === 200) {
-            const filmFavoriteId = event.target
-              .closest('.film-selection_film')
-              .getAttribute('data-section');
-            store.dispatch(actionAddFavoriteFilm({ film_id: filmFavoriteId }));
-          } else {
-            router.go(
-              {
-                path: '/login',
-                props: ``
-              },
-              { pushState: true, refresh: false }
-            );
-          }
-          break;
-        case event.target.closest('.film-selection_film') !== null:
-          const filmId = event.target
-            .closest('.film-selection_film')
-            .getAttribute('data-section');
-          this.componentWillUnmount();
-          router.go(
-            {
-              path: '/film',
-              props: `/${filmId}`
-            },
-            { pushState: true, refresh: false }
-          );
-          break;
-        default:
-          break;
-      }
-    };
-
-    console.log('pre_sub')
     const sendEmail = document.querySelector('.send-email-main');
-    sendEmail?.addEventListener('click', (event)=>{
+    sendEmail?.addEventListener('click', (event) => {
       const email = document.querySelector('.input-main-email') as HTMLInputElement;
       const text = document.querySelector('.header__container__text');
       // event.preventDefault();
-      console.log('post__SUBMIT 123 MAIL', email.value);
       if (/.@./.test(email.value)) {
         event.preventDefault();
         text!.innerHTML = '<h2>Спасибо за подписку!</h2>';
@@ -132,7 +76,20 @@ export class MainPage extends View {
       // event.preventDefault();
     });
 
-    popup?.addEventListener('click', popupEvent);
+    // popup?.addEventListener('click', popupEvent);
+  }
+  addCalendar () {
+    store.unsubscribe('collectionMain', this.addCalendar.bind(this));
+    calendar.render().then((response) => {
+      const contentBlockHTML = document.querySelector('.content-block');
+      contentBlockHTML?.insertAdjacentHTML('beforeend', <string>response);
+      const currentDate = new Date();
+      const searchDay = String(currentDate.getDate());
+      const currentDaysHTML = contentBlockHTML?.querySelector(
+        '.day__' + searchDay
+      );
+      currentDaysHTML?.classList.add('calendar__days__day_today');
+    });
   }
 
   componentWillUnmount () {

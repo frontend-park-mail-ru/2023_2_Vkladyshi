@@ -9,6 +9,8 @@ export interface Header {
   state: {
     config: any;
     isAuth: boolean;
+    selectSearch: string;
+    dataSection: string;
   };
 }
 
@@ -20,6 +22,7 @@ export interface Header {
 export class Header extends Component {
   private readonly config = {};
   private eventFunc: (event) => void;
+  private eventSearch: (event) => void;
   /**
    * Конструктор для формирования родительского элемента
    * @class
@@ -29,7 +32,9 @@ export class Header extends Component {
     super(ROOT);
     this.state = {
       config: config.menu,
-      isAuth: false
+      isAuth: false,
+      selectSearch: 'film',
+      dataSection: ''
     };
     this.eventFunc = () => {};
 
@@ -146,6 +151,45 @@ export class Header extends Component {
             { pushState: true, refresh: false }
           );
           break;
+        case target.closest('.header_search_item__lope') !== null:
+          const lope = (document.querySelector('.header_search_item__input') as HTMLInputElement)?.value;
+          if (this.state.selectSearch === 'film') {
+            // this.state.dataSection = `?name=${lope}&amplua=&country=&birthday=&films=`;
+            // this.redirectToSearch('actors',`?name=${lope}&amplua=&country=&birthday=&films=`);
+
+            this.redirectToSearch('films', `?title=${lope}&date_from=&date_to=&rating_from=&rating_to=&mpaa=&genre=&actors=`);
+          } else {
+            // this.state.dataSection = `?title=${lope}&date_from=&date_to=&rating_from=&rating_to=&mpaa=&genre=&actors=`;
+            // this.redirectToSearch('films',`?title=${lope}&date_from=&date_to=&rating_from=&rating_to=&mpaa=&genre=&actors=`);
+            this.redirectToSearch('actors', `?name=${lope}&amplua=&country=&birthday=&films=`);
+          }
+          break;
+        case target.closest('.header_search_item__select-search') !== null:
+          const films = document.querySelector('.films-search-header');
+          const actors = document.querySelector('.actors-search-header');
+          if (target.closest('.header_search__list-search__films')) {
+            this.state.selectSearch = 'film';
+            // @ts-ignore
+            films?.style?.display = 'block';
+            // @ts-ignore
+            actors?.style?.display = 'none';
+          } else if (target.closest('.header_search__list-search__actors')) {
+            this.state.selectSearch = 'actor';
+            // @ts-ignore
+            films?.style?.display = 'none';
+            // @ts-ignore
+            actors?.style?.display = 'block';
+          }
+
+          const select = document.querySelector('.header_search_item__select-search');
+          if (!event.target.closest('.header_search_item__select-search.active')) {
+            select?.classList.add('active');
+            this.addSearchList();
+          } else {
+            select?.classList.remove('active');
+            this.removeSearchList();
+          }
+          break;
         default:
           break;
       }
@@ -179,5 +223,28 @@ export class Header extends Component {
       headerHTML!.innerHTML = this.render();
       this.componentDidMount();
     }
+  }
+
+  addSearchList () {
+    const select = document.querySelector('.header_search__list-search');
+    // select?.insertAdjacentHTML('beforeend', '<div class="header_search__list-search">Hhehhe</div>');
+    // @ts-ignore
+    select?.style?.display = 'block';
+  }
+
+  removeSearchList () {
+    const select = document.querySelector('.header_search__list-search');
+    // @ts-ignore
+    select?.style?.display = 'none';
+  }
+
+  redirectToSearch (namePage, dataSection) {
+    router.go(
+      {
+        path: `/${namePage}`,
+        props: `/${dataSection}`
+      },
+      { pushState: true, refresh: false }
+    );
   }
 }

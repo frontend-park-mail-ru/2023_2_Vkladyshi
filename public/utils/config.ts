@@ -17,8 +17,6 @@ export const ROOT = document.querySelector('#root');
 export const DOMAIN = 'http://127.0.0.1:8001';
 // export const DOMAIN = 'https://movie-hub.ru';
 
-/// api/v1/find
-/// api/v1/films
 export const urls = {
   main: '/',
   findFilm: '/api/v1/films',
@@ -30,6 +28,7 @@ export const urls = {
   searchActor: '/api/v1/search/actor',
   comments: '/api/v1/comment',
   addComment: '/api/v1/comment/add',
+  addCommentTwo: '/api/v1/rating/add',
   favoriteFilms: '/api/v1/favorite/films',
   favoriteActors: '/api/v1/favorite/actors',
   addFavoriteFilm: '/api/v1/favorite/film/add',
@@ -76,8 +75,9 @@ export const errorInputs = {
   LoginExists: 'Логин уже используется',
   ServerError: 'Ошибка сервера',
   badRequest: 'Почта уже используется',
-  repeatPassword: 'Тот же пароль'
-}
+  repeatPassword: 'Тот же пароль',
+  VariableError: 'Невалидное значение'
+};
 
 export const mainPage = MainPage;
 export const signinPage = SigninPage;

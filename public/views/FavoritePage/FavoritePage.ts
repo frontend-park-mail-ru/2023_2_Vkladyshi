@@ -36,7 +36,7 @@ export class FavoritePage extends View {
    * Метод создания страницы
    */
   render () {
-    this.renderDefaultPage();
+    this.renderDefaultPage({});
     const contentBlockHTML = document.querySelector(
       '.content-block'
     ) as HTMLElement;
@@ -47,9 +47,15 @@ export class FavoritePage extends View {
         'beforeend',
         favoriteList.render({
           title: 'Список фильмов',
-          redirect: 'Любимые акторы'
+          redirect: 'Любимые актёры'
         })
       );
+
+      const body = document.querySelector('.favorite__body');
+      if (body) {
+        body!.innerHTML = '';
+      }
+
       store
         .dispatch(actionFavoriteFilms({ page: 1, per_page: 20 }))
         .then(() => {
@@ -110,24 +116,24 @@ export class FavoritePage extends View {
           );
           break;
         case event.target.closest('.redirect-to-favorite') !== null:
-          // this.componentWillUnmount();
-          // if (this.isFilm) {
-          //   router.go(
-          //     {
-          //       path: '/watchlist/actors',
-          //       props: ``
-          //     },
-          //     { pushState: true, refresh: false }
-          //   );
-          // } else {
-          //   router.go(
-          //     {
-          //       path: '/watchlist/films',
-          //       props: ``
-          //     },
-          //     { pushState: true, refresh: false }
-          //   );
-          // }
+          this.componentWillUnmount();
+          if (this.isFilm) {
+            router.go(
+              {
+                path: '/watchlist/actors',
+                props: ``
+              },
+              { pushState: true, refresh: false }
+            );
+          } else {
+            router.go(
+              {
+                path: '/watchlist/films',
+                props: ``
+              },
+              { pushState: true, refresh: false }
+            );
+          }
           break;
         case event.target.closest('.actor-selection_actor') !== null:
           this.componentWillUnmount();
@@ -155,6 +161,9 @@ export class FavoritePage extends View {
   componentWillUnmount () {
     const elements = document.querySelector('.favorite');
     elements?.removeEventListener('click', this.popupEvent);
+
+    store.unsubscribe('favoriteFilms', this.subscribeFavoriteFilms.bind(this));
+    store.unsubscribe('favoriteActors', this.subscribeFavoriteActor.bind(this));
   }
 
   /**
@@ -164,8 +173,13 @@ export class FavoritePage extends View {
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
-    contentBlockHTML!.innerHTML = '';
+    // contentBlockHTML!.innerHTML = '';
     const films = store.getState('favoriteFilms')?.body;
+
+    const body = document.querySelector('.favorite__body');
+    if (body) {
+      body!.innerHTML = '';
+    }
 
     // eslint-disable-next-line guard-for-in
     for (const film in films) {

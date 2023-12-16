@@ -1,4 +1,4 @@
-<div class="add-film">
+<div class="add-film noactive">
    <div class="add-film__left">
        <div class="add-film__left__poster">
            <div class="film-poster">
@@ -18,6 +18,7 @@
                        />
                        Загрузить постер
                    </label>
+                   <span class='error-image error-string'></span>
                </div>
            </div>
        </div>
@@ -42,8 +43,12 @@
                             type='text'
                     ></textarea>
               </div>
-                <span class='error-email error-string'></span>
-                <span class='text-form date-text'>Дата создания</span>
+                <span class='error-text-area error-string'></span>
+
+                <span class='text-form country-text'>Страна</span>
+                <span class='error-country error-string'></span>
+
+                <span class='text-form date-text'>Год релиза</span>
                 <span class='error-birthday error-string'></span>
                 <span class='text-form genre-text'>Жанры</span>
                 <span class='error-genre error-string'></span>

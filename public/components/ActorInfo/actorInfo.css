@@ -119,7 +119,6 @@
 
 .film-page {
   /*background: rgb(31,31,31);*/
-  font-family: Montserrat;
   position: relative;
   margin-top: 80px;
 }
@@ -245,6 +244,15 @@
     justify-content: center;
     height: auto;
   }
+
+  .film-name {
+    font-size: 30px;
+  }
+
+  .column, .player {
+    margin-top: 100px;
+  }
+
 
   .video-buttons {
     display: flex;

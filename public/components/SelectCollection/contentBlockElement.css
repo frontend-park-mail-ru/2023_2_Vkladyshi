@@ -128,7 +128,8 @@
 }
 
 .search-container__select__actors {
-  cursor: not-allowed;
+  /*cursor: not-allowed;*/
+  cursor: pointer;
 }
 
 .search-container__result-button {

@@ -79,7 +79,7 @@ export class SignupPage extends View {
    */
   render () {
     if (document.querySelector('.popupSign') == null) {
-      this.renderDefaultPage();
+      this.renderDefaultPage({});
       const mainHTML = document.querySelector('main');
       const popup = document.createElement('div');
       popup.classList.add('popupSign');

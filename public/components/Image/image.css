@@ -83,15 +83,17 @@
 }
 
 .first-text {
-  /*margin-top: 10px;*/
+  margin-bottom: 10px;
   font-size: 55px;
   /*position: absolute;*/
 }
 
+
+
 .input-main-email {
   /*width: 100%;*/
   height: 50px;
-  width: 90%;
+  width: 85%;
   background-color: transparent;
   border: 1px solid #f3c23c;
   border-radius: 8px 0 0 8px;
@@ -120,7 +122,7 @@
 }
 
 .send-email-main {
-  width: 10%;
+  width: 15%;
   height: 54px;
   background: #f3c23c;
   border-radius: 0 8px 8px 0;
@@ -139,7 +141,7 @@
   opacity: 0.8;
 }
 
-.input-main-email:focus {
+input:focus {
   outline: none;
 }
 
@@ -179,6 +181,10 @@
 
   .first-text {
     font-size: 22px;
+  }
+
+  .input-main-email::placeholder {
+    font-size: 14px;
   }
 }
 
