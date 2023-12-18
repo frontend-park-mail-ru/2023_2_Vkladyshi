@@ -167,6 +167,10 @@
   margin-left: 5px;
 }
 
+.birthday-input-select input-button {
+
+}
+
 .yellow-line {
   width: 100%;
   background: #f5c518;
@@ -192,6 +196,7 @@
 .image-select {
   width: 30px;
   height: 30px;
+  margin-right: 5px;
   /*margin-right: 10px;*/
 }
 
@@ -338,6 +343,13 @@
   /*margin-left: 15px;*/
 }
 
+.section-years__row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-right: 15px;
+}
+
 .section-rating__left,
 .section-rating__right,
 .years-select__left,
@@ -357,12 +369,18 @@
     width: 100%;
   }
 }
-/*
-@media screen and (max-width: 505px) {
-  .search-container__header{
-    font-size: 25px;
+
+@media screen and (max-width: 545px) {
+  .section-rating.active,
+  .section-years.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /*margin-left: 15px;*/
   }
-  .search-container__text{
-    font-size: 15px;
+
+  .section-years__row {
+    margin-top: 10px;
   }
-} */
+}

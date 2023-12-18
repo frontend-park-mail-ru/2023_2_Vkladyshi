@@ -33,7 +33,7 @@
 .calendar__days__day {
   color: white;
   display: flex;
-  cursor: pointer;
+  /*cursor: not-allowed;*/
 
   width: 9rem;
   height: 9rem;
@@ -46,14 +46,14 @@
 
   padding: 1rem;
 
-  font-weight: 300;
+  /*font-weight: 300;*/
   font-size: 15px;
-  line-height: normal;
+  /*line-height: normal;*/
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 8px 32px 0 rgba(118, 121, 160, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  /*backdrop-filter: blur(4px);*/
+  /*-webkit-backdrop-filter: blur(4px);*/
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
   /*transition: all 0.5s ease;*/
@@ -61,9 +61,9 @@
 
 .calendar__days__day:hover {
    /*border: 3px solid rgba(255, 255, 255, 0.7); */
-   background: rgba(255, 255, 255, 0.3);
+  /* background: rgba(255, 255, 255, 0.3);*/
 
-  border: 3px solid #ffffff;
+  /*border: 3px solid #ffffff;*/
   /* background: #f5c51846; */
 }
 
@@ -77,6 +77,11 @@
   width: 30%;
   height: auto;
   fill: orange;
+  cursor: not-allowed;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .calendar__days__day_today {
@@ -96,8 +101,8 @@
 
     padding: 0.7rem;
 
-    font-weight: 300;
-    font-size: 0.5rem;
+    /*font-weight: 300;*/
+    font-size: 1rem;
   }
 
   .calendar__days__time {
@@ -124,8 +129,8 @@
 
       padding: 0.3rem;
 
-      font-weight: 300;
-      font-size: 0.4rem;
+      /*font-weight: 300;*/
+      font-size: 1rem;
     }
     .calendar__days__time {
       font-size: 0.8rem;
@@ -143,7 +148,7 @@
       margin: 0.25rem;
 
       border-radius: 0.2rem;
-      font-size: 9px;
+      font-size: 12px;
     }
     .calendar__days__time {
       font-size: 0.9rem;

@@ -72,6 +72,7 @@ export class SigninPage extends View {
       mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
       const icon = document.querySelector('.image-container') as HTMLElement;
       icon!.style.backgroundImage = 'url("/icons/loginImage.jpg")';
+      icon!.style.justifyContent = 'center';
 
       const containerHTML = document.querySelector('.image-container');
       containerHTML?.appendChild(popup);
@@ -86,6 +87,7 @@ export class SigninPage extends View {
       const loginText = document.querySelector('.login-text');
       const passwordText = document.querySelector('.password-text');
       const button = document.querySelector('.container-login');
+
 
       loginText!.insertAdjacentHTML(
         'beforeend',

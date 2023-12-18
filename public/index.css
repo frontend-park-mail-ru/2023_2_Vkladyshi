@@ -59,3 +59,7 @@ body.none-active {
   border: 0;
   z-index: 3;
 }
+
+ul {
+  list-style-type: none;
+}

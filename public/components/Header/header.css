@@ -159,6 +159,8 @@ input::placeholder {
   justify-content: space-around;
   align-items: center;
   transition: all 0.5s ease;
+  padding: 0 8px 0 8px;
+  gap: 5px;
 }
 
 .actors-search-header {
@@ -182,7 +184,7 @@ input::placeholder {
 
 .header_search_item__input {
   width: 60%;
-  /*height: 70px;*/
+  height: 30px;
   /*border-radius:0 8px 8px 0;*/
   border: 0;
   border-right: none;
@@ -357,6 +359,10 @@ header__search-mobile__input::placeholder {
     display: none;
   }
 
+  .header_search_item__lope-container {
+    width: 20%;
+  }
+
   .content-block,
   .header,
   .footer {
@@ -415,6 +421,10 @@ header__search-mobile__input::placeholder {
 /*@media screen and (max-width: 768px) {*/
   .search-container__text {
     display: none;
+  }
+
+  .image-container {
+    justify-content: flex-start;
   }
 
   .header_search_item {

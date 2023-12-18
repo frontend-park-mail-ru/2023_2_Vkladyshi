@@ -200,8 +200,9 @@ export class FilmSelectionPage extends View {
       popup = document.querySelector('.film-selection_films');
     } else if (this.state.current === 'main') {
       popup = document.querySelector('.slider-container');
+    } else {
+      popup = document.querySelector('.film-selection_films');
     }
-
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       const filmId = event.target
@@ -365,6 +366,7 @@ export class FilmSelectionPage extends View {
         actorCard.render({ actor: actors[actor], alreadyFavorite: false })
       );
     }
+    // console.log(document.querySelector('.film-selection_films'))
     this.componentDidMount(false);
   }
   addFilmToPage () {

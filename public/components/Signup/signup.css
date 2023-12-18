@@ -99,9 +99,9 @@
     padding: 55px 45px;
   }
 
-  .popupSign {
-    margin-top: 85px;
-  }
+  /*.popupSign {*/
+  /*  margin-top: 0;*/
+  /*}*/
 }
 
 @media screen and (max-width: 440px) {

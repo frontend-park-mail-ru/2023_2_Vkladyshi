@@ -181,6 +181,7 @@ input:focus {
   animation: moveUp 1s forwards;
 }
 
+
 @media screen and (max-width: 1150px) {
   .video-container {
     margin-top: 50px;
@@ -198,6 +199,12 @@ input:focus {
 
   .send-email-main {
     width: 20%;
+  }
+}
+
+@media screen and (max-width: 800px){
+  .image-container {
+    justify-content: flex-start;
   }
 }
 

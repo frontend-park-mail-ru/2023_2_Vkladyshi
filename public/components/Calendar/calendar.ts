@@ -16,6 +16,8 @@ class Calendar extends Component {
    * @param info
    * @return {string} html нижней панели
    */
+
+
   render () {
     return store.dispatch(actionGetCalendar()).then((response) => {
       const result = store.getState('calendarInfo')['body'];
@@ -23,15 +25,26 @@ class Calendar extends Component {
         monthName: result.monthName,
         monthText: result.monthText,
         currentDay: result.currentDay,
-        days: Array.from({ length: 30 }, (_, i) => ({
-          dayNumber: i + 1,
-          dayNews: (result?.days.find(day => day.dayNumber === i + 1)?.dayNews || ''),
-          filmID: (result?.days.find(day => day.dayNumber === i + 1)?.id || '')
-        }))
+        days: Array.from({ length: 30 }, (_, i) => {
+          const dayNumber = i + 1;
+          const dayNews = (result?.days.find(day => day.dayNumber === dayNumber)?.dayNews || '');
+          const filmID = (result?.days.find(day => day.dayNumber === dayNumber)?.id || '');
+
+          // if (dayNews !== '' && filmID !== '') {
+          //   const divElement = document.querySelector(`li[data-section="${filmID}"]`);
+          //   console.log(divElement)
+          //   if (divElement) {
+          //     divElement.classList.add('pointer');
+          //   }
+          // }
+
+          return { dayNumber, dayNews, filmID };
+        })
       };
 
       return templateCalendar(calendar);
     });
+
   }
 }
 export const calendar = new Calendar(ROOT);

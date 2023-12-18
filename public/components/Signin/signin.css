@@ -182,8 +182,9 @@
 }
 
 @media screen and (max-width: 768px) {
-  .popupSign {
-  }
+  /*.popupSign {*/
+  /*  margin-top: 0;*/
+  /*}*/
 
   .login-form {
     padding: 55px 45px;

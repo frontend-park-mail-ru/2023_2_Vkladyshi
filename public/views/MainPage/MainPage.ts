@@ -94,6 +94,21 @@ export class MainPage extends View {
         );
         currentDaysHTML?.classList.add('calendar__days__day_today');
 
+        const subs = document.querySelectorAll('.calendar__days__subscribe')
+
+        subs.forEach(div => {
+          if (div.getAttribute('data-section')) {
+            div.classList.remove('noactive');
+
+            const divElement = document.querySelector(`li[data-section="${div.getAttribute('data-section')}"]`);
+            console.log(divElement)
+            if (divElement) {
+              divElement.classList.add('pointer');
+            }
+          }
+        });
+
+
         const calendarSelector = document.querySelector('.calendar');
         const calendarEvent = (event) => {
           this.calendarEvent = calendarEvent;
@@ -103,10 +118,8 @@ export class MainPage extends View {
           switch (true) {
             case event.target.className === 'calendar__days__subscribe':
               if (store.getState('auth').status === 200) {
-                // console.log(store.getState('auth').login, filmId);
                 store.dispatch(actionCheckSubscribeCalendar({ login: 'login', subscribeFilmID: 2 })).then((response) => {
                   const result = store.getState('subscribeCalendar_res');
-                  console.log(result);
                   if (result['status'] === 200) {
                     if (result['body']['subscribe'] === true) {
                       event.target.style.backgroundColor = 'orange';
@@ -127,7 +140,6 @@ export class MainPage extends View {
               break;
             case event.target.closest('.calendar__days') !== null:
               if (filmId !== '') {
-                console.log(filmId);
                 this.componentWillUnmount();
                 router.go(
                     {
