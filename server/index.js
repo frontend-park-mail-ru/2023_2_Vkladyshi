@@ -18,6 +18,13 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('../webpack.config.ts');
 
+const admin = require('firebase-admin');
+const serviceAccount = require('./vkladishi-1114b-firebase-adminsdk-bsvk2-a19d858f15.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount)
+});
+
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 app.use(
   cors({
@@ -88,10 +95,10 @@ const calendar = {
     monthText: 'Календарь релизов',
     currentDay: 13,
     days: [
-      {dayNumber: 14, dayNews: 'Kostolom', id: 10 },
-      {dayNumber: 21, dayNews: 'Night', id:5 }
-    ],
-  },
+      { dayNumber: 14, dayNews: 'Kostolom', id: 10 },
+      { dayNumber: 21, dayNews: 'Night', id: 5 }
+    ]
+  }
 };
 
 const comments = {
@@ -112,51 +119,51 @@ const comments = {
         text: 'Фильм отличный 11/10',
         film_id: 7,
         film_name: 'film'
-      },
-    ],
-  },
+      }
+    ]
+  }
 };
 
 const favoriteFilms = {
   status: 200,
   body: [
-      {
-        id: 3,
-        poster: '/icons/bastards.jpg',
-        title: 'film_1 111111',
-        rating: 1,
-      },
-      {
-        id: 8,
-        poster: '/icons/Poster.jpg',
-        title: 'film_2',
-        rating: 2,
-      },
-      {
-        id: 4,
-        poster: '/icons/bastards.jpg',
-        title: 'film_1 111111',
-        rating: 3,
-      },
-      {
-        id: 5,
-        poster: '/icons/Poster.jpg',
-        title: 'film_2',
-        rating: 4,
-      },
-      {
-        id: 30,
-        poster: '/icons/bastards.jpg',
-        title: 'film_1 111111',
-        rating: 5,
-      },
-      {
-        id: 10,
-        poster: '/icons/Poster.jpg',
-        title: 'film_2',
-        rating: 6,
-      },
-  ],
+    {
+      id: 3,
+      poster: '/icons/bastards.jpg',
+      title: 'film_1 111111',
+      rating: 1
+    },
+    {
+      id: 8,
+      poster: '/icons/Poster.jpg',
+      title: 'film_2',
+      rating: 2
+    },
+    {
+      id: 4,
+      poster: '/icons/bastards.jpg',
+      title: 'film_1 111111',
+      rating: 3
+    },
+    {
+      id: 5,
+      poster: '/icons/Poster.jpg',
+      title: 'film_2',
+      rating: 4
+    },
+    {
+      id: 30,
+      poster: '/icons/bastards.jpg',
+      title: 'film_1 111111',
+      rating: 5
+    },
+    {
+      id: 10,
+      poster: '/icons/Poster.jpg',
+      title: 'film_2',
+      rating: 6
+    }
+  ]
 };
 
 const favoriteActors = {
@@ -188,40 +195,40 @@ const films = {
         id: 3,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 1,
+        rating: 1
       },
       {
         id: 8,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 2,
+        rating: 2
       },
       {
         id: 4,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 3,
+        rating: 3
       },
       {
         id: 5,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4,
+        rating: 4
       },
       {
         id: 30,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 5,
+        rating: 5
       },
       {
         id: 10,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 6,
-      },
-    ],
-  },
+        rating: 6
+      }
+    ]
+  }
 };
 
 const film = {
@@ -236,7 +243,7 @@ const film = {
       mpaa: 'R',
       info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.'
     },
-    genre: [{ id: 0, title: 'war' }],
+    genre: [{ id: 0, title: 'Военные' }, { id: 2, title: 'Боевики' }],
     rating: 10,
     number: 11,
     actors: [
@@ -373,7 +380,7 @@ app.use('/signin', (req, res) => {
   ids[id] = login;
 
   res.cookie('session_id', id, {
-    expires: new Date(Date.now() + 1000 * 60 * 100),
+    expires: new Date(Date.now() + 1000 * 60 * 100)
   });
 
   // res.cookie('session_id', { httpOnly: true });
@@ -458,7 +465,7 @@ app.get('/authcheck', (req, res) => {
     return res.status(200).json({ status: 401 }).end();
   }
 
-  return res.status(200).json({ status: 200, body: {role: 'super1',  login: 'volodin'} }).end();
+  return res.status(200).json({ status: 200, body: { role: 'super1', login: 'volodin' } }).end();
 });
 
 app.get('/logout', (req, res) => {
@@ -496,7 +503,7 @@ app.get('/api/v1/settings', (req, res) => {
 });
 
 app.post('/api/v1/add/film', (req, res) => {
-  return res.status(200).json({status: 200});
+  return res.status(200).json({ status: 200 });
 });
 
 const formidableMiddleware = require('express-formidable');
@@ -513,7 +520,7 @@ app.post('/api/v1/settings', (req, res) => {
   console.log(req.body);
   console.log(req.file);
   console.log(req.fields);
-  console.log('KEEKK/SETT', req.fields.password)
+  console.log('KEEKK/SETT', req.fields.password);
 
   if (req.fields.password === 'Andrey111') {
     res.status(200).json({ status: 409 }).end();
@@ -578,7 +585,6 @@ app.use('/api/v1/film', (req, res) => {
   }
   return res.status(200).json({ body: film.body, status: film.status });
 });
-
 
 app.use('/api/v1/search/film', (req, res) => {
   res.status(200).json({ status: 200 }).end();
@@ -658,7 +664,7 @@ app.use('/api/v1/search/actors', (req, res) => {
 });
 
 app.use('/actors', (req, res) => {
-    res.sendFile(__dirname + '/index.html');
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.use('/api/v1/films', (req, res) => {
@@ -673,11 +679,19 @@ app.use('/api/v1/films', (req, res) => {
   return res.status(200).json(films);
 });
 
-
 app.use('/api/v1/subscribe/calendar', (req, res) => {
   console.log(req['subscribeFilmID']);
   console.log('calendar_subscribe');
   return res.status(200).json({ status: 200, body: { notificationID: 11, subscribe: true } });
+});
+
+app.use('/api/v1/user/subscribePush', (req, res) => {
+  const notificationPayload = {
+      title: 'Заголовок',
+      body: 'Текст'
+  };
+
+  return res.status(200).json({ status: 200, body:notificationPayload });
 });
 
 /// /------------------------------------------------------------------
@@ -742,4 +756,3 @@ function broadcastMessage (message, id) {
     client.send(JSON.stringify(message));
   });
 }
-

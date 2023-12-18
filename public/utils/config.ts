@@ -30,6 +30,7 @@ export const urls = {
   csrf: '/api/v1/csrf',
   actor: '/api/v1/actor',
   searchFilm: '/api/v1/find',
+  calendarSub: '/api/v1/user/subscribePush',
   searchActor: '/api/v1/search/actor',
   comments: '/api/v1/comment',
   addComment: '/api/v1/comment/add',

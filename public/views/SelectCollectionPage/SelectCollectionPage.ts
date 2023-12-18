@@ -92,10 +92,22 @@ export class SelectCollectionPage extends View {
     this.panelEvent = (event) => {
       switch (true) {
         case event.target.closest('.search-container__select__films') !== null:
+          const actorButtom1 = document.querySelector('.film-selection__header__yellow-selection-actor');
+          const filmButtom1 = document.querySelector('.film-selection__header__yellow-selection-film');
+          filmButtom1?.classList.remove('noactive-opacity');
+          actorButtom1?.classList.add('noactive-opacity');
+          actorButtom1?.classList.remove('active-opacity');
           store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
           this.eventsSearchFilm();
           break;
         case event.target.closest('.search-container__select__actors') !== null:
+          const actorButtom = document.querySelector('.film-selection__header__yellow-selection-actor');
+          const filmButtom = document.querySelector('.film-selection__header__yellow-selection-film');
+          actorButtom?.classList.add('active-opacity');
+          actorButtom?.classList.remove('noactive-opacity');
+          filmButtom?.classList.remove('active-opacity');
+          filmButtom?.classList.add('noactive-opacity');
+          console.log(112)
           store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
           this.eventsSearchActor();
           break;

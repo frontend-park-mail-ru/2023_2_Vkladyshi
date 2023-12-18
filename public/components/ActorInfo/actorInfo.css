@@ -35,7 +35,7 @@
 }
 
 .player {
-  grid-row-end: 4;
+  grid-row-end: 3;
   grid-row-start: 1;
 }
 
@@ -44,6 +44,7 @@
   color: white;
   text-align: center;
   line-height: 44px;
+  margin-bottom: 15px;
 }
 
 .info {
@@ -67,7 +68,7 @@
 }
 
 .rating {
-  width: 500px;
+  width: 350px;
   height: 100px;
   background-color: hsla(0, 0%, 100%, 0.18);
   color: white;
@@ -80,11 +81,11 @@
   display: flex;
   align-content: center;
   align-items: center;
-  margin-left: 30px;
+  margin-left: 10px;
 }
 
 .right {
-  margin-right: 30px;
+  margin-right: 10px;
   display: flex;
   align-content: center;
   align-items: center;
@@ -100,8 +101,8 @@
 }
 
 .count {
-  margin-left: 20px;
-  font-size: 19px;
+  margin-left: 8px;
+  font-size: 17px;
 }
 
 .column {
@@ -110,7 +111,8 @@
 }
 
 .review-button {
-  font-size: 19px;
+  font-size: 17px;
+  cursor: pointer;
 }
 
 .review-button:hover {
@@ -330,9 +332,9 @@
   .info {
     font-size: 15px;
   }
-  .film-page {
-    margin: 0;
-  }
+  /*.film-page {*/
+  /*  margin: 0;*/
+  /*}*/
   .count {
     width: 100px;
     font-size: 15px;

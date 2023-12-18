@@ -36,7 +36,7 @@ export class MainPage extends View {
         "            <div class='header__container__text'>\n" +
         "                <div class='first-text'>Подпишитесь на рассылку новинок!</div>\n" +
         '                <form class="main-email">\n' +
-        '                    <input class="input-main-email" placeholder="Введите вашу почту!" type="email">\n' +
+        '                    <input class="input-main-email email-main-page" placeholder="Введите вашу почту!" type="email">\n' +
         '                    <button class="send-email-main" type="submit">Подписаться</button>\n' +
         '                </form>\n' +
         '            </div>\n' +
@@ -82,7 +82,6 @@ export class MainPage extends View {
   }
   addCalendar () {
     store.unsubscribe('collectionMain', this.addCalendar.bind(this));
-
 
     if (calendar) {
       calendar.render().then((response) => {

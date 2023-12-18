@@ -152,21 +152,30 @@ export class Header extends Component {
           );
           break;
         case target.closest('.header_search_item__lope') !== null:
-          const lope = (document.querySelector('.header_search_item__input') as HTMLInputElement)?.value;
-          if (this.state.selectSearch === 'film') {
-            // this.state.dataSection = `?name=${lope}&amplua=&country=&birthday=&films=`;
-            // this.redirectToSearch('actors',`?name=${lope}&amplua=&country=&birthday=&films=`);
+          let lope;
+          if (document?.querySelector('header')!.offsetWidth < 800) {
+            const inputMobile = document.querySelector('.header__search-mobile');
+            // inputMobile?.classList.remove('noactive')
+            // @ts-ignore
+            inputMobile.style.display = 'flex';
+            lope = (document.querySelector('.header__search-mobile__input') as HTMLInputElement)?.value;
+          } else {
+            lope = (document.querySelector('.header_search_item__input') as HTMLInputElement)?.value;
+          }
 
+
+          if (this.state.selectSearch === 'film') {
             this.redirectToSearch('films', `?title=${lope}&date_from=&date_to=&rating_from=&rating_to=&mpaa=&genre=&actors=`);
           } else {
-            // this.state.dataSection = `?title=${lope}&date_from=&date_to=&rating_from=&rating_to=&mpaa=&genre=&actors=`;
-            // this.redirectToSearch('films',`?title=${lope}&date_from=&date_to=&rating_from=&rating_to=&mpaa=&genre=&actors=`);
             this.redirectToSearch('actors', `?name=${lope}&amplua=&country=&birthday=&films=`);
           }
           break;
         case target.closest('.header_search_item__select-search') !== null:
           const films = document.querySelector('.films-search-header');
+          const imageStrelka = document.querySelector('.header_search_item__select-search__arrow-header') as HTMLImageElement;
           const actors = document.querySelector('.actors-search-header');
+
+
           if (target.closest('.header_search__list-search__films')) {
             this.state.selectSearch = 'film';
             // @ts-ignore
@@ -183,11 +192,40 @@ export class Header extends Component {
 
           const select = document.querySelector('.header_search_item__select-search');
           if (!event.target.closest('.header_search_item__select-search.active')) {
-            select?.classList.add('active');
-            this.addSearchList();
+            select?.classList.add('active');//@ts-ignore
+            imageStrelka?.style.transform = 'rotateX(180deg)';
+            this.addSearchList(document.querySelector('.header_search__list-search'));
           } else {
-            select?.classList.remove('active');
-            this.removeSearchList();
+            select?.classList.remove('active');//@ts-ignore
+            imageStrelka?.style.transform = 'rotateX(0deg)';
+            this.removeSearchList(document.querySelector('.header_search__list-search'));
+          }
+          break;
+        case target.closest('.header__search-mobile__select') !== null:
+          const selectMobile = document.querySelector('.header__search-mobile__select');
+          const inputButtonMobile = document.querySelector('.header__search-mobile__input');
+          const listMobile = document.querySelector('.header__search-mobile__select__list');
+          const imageStrelkaMobile = document.querySelector('.header_search_item__select-search__arrow') as HTMLImageElement;
+
+          if (target.closest('.header__search-mobile__select__films')) {
+            this.state.selectSearch = 'film';
+            // @ts-ignore
+            inputButtonMobile?.placeholder = 'Фильмы';
+          } else if (target.closest('.header__search-mobile__select__actors')) {
+            console.log('actors', inputButtonMobile)
+            this.state.selectSearch = 'actor';
+            // @ts-ignore
+            inputButtonMobile?.placeholder = 'Актёры';
+          }
+
+          if (!event.target.closest('.header__search-mobile__select.active')) {
+            selectMobile?.classList.add('active'); //@ts-ignore
+            imageStrelkaMobile?.style.transform = 'rotateX(180deg)';
+            this.addSearchList(document.querySelector('.header__search-mobile__select__list'));
+          } else {
+            selectMobile?.classList.remove('active');//@ts-ignore
+            imageStrelkaMobile?.style.transform = 'rotateX(0deg)';
+            this.removeSearchList(document.querySelector('.header__search-mobile__select__list'));
           }
           break;
         default:
@@ -195,6 +233,26 @@ export class Header extends Component {
       }
     };
     headerContainer?.addEventListener('click', this.eventFunc);
+
+    window.addEventListener('resize', (e) => {
+      const width = document.body.clientWidth;
+      if (width > 800) {
+        const mobile = document.querySelector('.header__search-mobile') as HTMLElement;
+        // @ts-ignore
+        mobile?.style.display = 'none';
+      }
+    });
+
+
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+
+    if (isMobile) {
+      document.querySelector('.header__search-mobile')?.addEventListener('touchmove', function(e) {
+        e.preventDefault(); // Предотвращаем стандартное поведение при касании
+        this.style.display = 'none'; // Убираем див
+      });
+    }
+
   }
 
   componentWillUnmount () {
@@ -225,17 +283,14 @@ export class Header extends Component {
     }
   }
 
-  addSearchList () {
-    const select = document.querySelector('.header_search__list-search');
-    // select?.insertAdjacentHTML('beforeend', '<div class="header_search__list-search">Hhehhe</div>');
+  addSearchList (elementHTML) {
     // @ts-ignore
-    select?.style?.display = 'block';
+    elementHTML?.style?.display = 'block';
   }
 
-  removeSearchList () {
-    const select = document.querySelector('.header_search__list-search');
+  removeSearchList (elementHTML) {
     // @ts-ignore
-    select?.style?.display = 'none';
+    elementHTML?.style?.display = 'none';
   }
 
   redirectToSearch (namePage, dataSection) {

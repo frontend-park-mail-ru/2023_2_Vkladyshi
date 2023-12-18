@@ -13,9 +13,9 @@ class ActionsSearch {
     genre,
     actors
   }: searchFilm) {
-    const response = post({
+    const response = get({
       url: urls.searchFilm,
-      body: {
+      query: {
         title: title || '',
         date_from: dateFrom || '',
         date_to: dateTo || '',
@@ -40,9 +40,9 @@ class ActionsSearch {
   }
 
   async searchActor ({ name, films, birthday, amplua }: searchActor) {
-    const response = post({
+    const response = get({
       url: urls.searchActor,
-      body: { name: name, films: films, birthday: birthday, amplua: amplua
+      query: { name: name, films: films, birthday: birthday, amplua: amplua
         // page: page, per_page: per_page
       }
     });

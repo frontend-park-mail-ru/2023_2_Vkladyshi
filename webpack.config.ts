@@ -41,6 +41,10 @@ module.exports = {
           from: path.resolve(__dirname, './public/sw.js'),
           to: path.resolve(__dirname, 'dist'),
         },
+        {
+          from: path.resolve(__dirname, './public/notif-sw.js'),
+          to: path.resolve(__dirname, 'dist'),
+        }
       ],
     }),
   ],

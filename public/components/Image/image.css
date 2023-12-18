@@ -105,6 +105,10 @@
   opacity: 1;
 }
 
+.email-main-page {
+  text-align: center;
+}
+
 .input-main-email::placeholder {
   color: #ffffff;
 }
@@ -149,6 +153,21 @@ input:focus {
   margin-top: 10px;
   font-size: 30px;
 }
+
+@keyframes moveDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(80px);
+  }
+}
+
+.header__search-mobile {
+  animation: moveDown 1s forwards;
+}
+
+
 
 @media screen and (max-width: 1150px) {
   .video-container {

@@ -71,6 +71,7 @@ class WebSocketService {
         Notification.requestPermission().then((permission) => {
           console.log('ws__Notification_Permission:', permission);
           this.state.permission = permission;
+          console.log(permission)
         });
       }
     };

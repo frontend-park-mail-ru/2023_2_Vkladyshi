@@ -131,66 +131,68 @@ export class FilmSelectionPage extends View {
     }
   }
 
-  renderByElement (HTMLElement) {
-    return store
-      .dispatch(actionCollectionMain({ collection_id: 0 }))
-      .then((response) => {
-        const buf = store.getState('collectionMain');
-
-        // const contentBlockHTML = document.querySelector('.similar-movies');
-        //
-        // const filmSelect = new FilmSelection(ROOT);
-        //
-        // contentBlockHTML?.insertAdjacentHTML(
-        //   'beforeend',
-        //   filmSelect.render(buf.body)
-        // );
-
-        const sliderNew = new Slider();
-        sliderNew.addEventsLine();
-        const sliderLiner = document.querySelector('.slider-container');
-        const sliderNAme = document.querySelector('.slider-name');
-
-        const filmSelect = new FilmSelection(ROOT);
-
-        sliderNAme?.insertAdjacentHTML(
-          'beforeend',
-          filmSelect.render(buf.body)
-        );
-        const header = document.querySelector('.film-selection') as HTMLElement;
-        if (header) {
-          header.style.width = '100%';
-        }
-
-        // const contentBlock = document.querySelector('.film-selection_films');
-
-        // eslint-disable-next-line guard-for-in
-        for (const film in buf.body.films) {
-          const filmCard = new FilmCard(ROOT);
-          sliderLiner?.insertAdjacentHTML(
-            'beforeend',
-            filmCard.render({
-              film: buf.body.films[film],
-              alreadyFavorite: false
-            })
-          );
-        }
-
-        this.componentDidMount(true);
-
-        const divName = document.querySelector('.film-selection_name') as HTMLElement;
-        if (divName) {
-              divName!.textContent = 'Похожие фильмы';
-          // divName.style.marginTop = '40px';
-        }
-
-        // const sliderContainer = document.querySelector('.slider-container');
-        // const films = document.querySelector('.film-selection_films');
-        // const slider = document.querySelector('.slider-name');
-        // sliderContainer?.appendChild(<Element>films);
-        // slider?.appendChild(<Element>divName);
-      });
-  }
+  // renderByElement (HTMLElement) {
+  //   return store
+  //     .dispatch(actionCollectionMain({ collection_id: 0 }))
+  //     .then((response) => {
+  //       const buf = store.getState('collectionMain');
+  //
+  //       // const contentBlockHTML = document.querySelector('.similar-movies');
+  //       //
+  //       // const filmSelect = new FilmSelection(ROOT);
+  //       //
+  //       // contentBlockHTML?.insertAdjacentHTML(
+  //       //   'beforeend',
+  //       //   filmSelect.render(buf.body)
+  //       // );
+  //
+  //       const sliderNew = new Slider();
+  //       sliderNew.addEventsLine();
+  //       const sliderLiner = document.querySelector('.slider-container');
+  //       const sliderNAme = document.querySelector('.slider-name');
+  //
+  //       const filmSelect = new FilmSelection(ROOT);
+  //
+  //       sliderNAme?.insertAdjacentHTML(
+  //         'beforeend',
+  //         filmSelect.render(buf.body)
+  //       );
+  //       const header = document.querySelector('.film-selection') as HTMLElement;
+  //       if (header) {
+  //         header.style.width = '100%';
+  //       }
+  //
+  //       // const contentBlock = document.querySelector('.film-selection_films');
+  //
+  //       // eslint-disable-next-line guard-for-in
+  //       for (const film in buf.body.films) {
+  //         const filmCard = new FilmCard(ROOT);
+  //         sliderLiner?.insertAdjacentHTML(
+  //           'beforeend',
+  //           filmCard.render({
+  //             film: buf.body.films[film],
+  //             alreadyFavorite: false
+  //           })
+  //         );
+  //       }
+  //
+  //       this.componentDidMount(true);
+  //
+  //       const divName = document.querySelector('.film-selection_name') as HTMLElement;
+  //       const divFilm = document.querySelector('.film-selection_films');
+  //       if (divName) {
+  //             divName!.textContent = 'Похожие фильмы';
+  //         // divName.style.marginTop = '40px';
+  //       }
+  //       divFilm?.remove();
+  //
+  //       // const sliderContainer = document.querySelector('.slider-container');
+  //       // const films = document.querySelector('.film-selection_films');
+  //       // const slider = document.querySelector('.slider-name');
+  //       // sliderContainer?.appendChild(<Element>films);
+  //       // slider?.appendChild(<Element>divName);
+  //     });
+  // }
 
   componentDidMount (isFilms) {
     let popup;
@@ -497,10 +499,12 @@ export class FilmSelectionPage extends View {
     }
 
     const divName = document.querySelector('.film-selection_name') as HTMLElement;
+    const divFilm = document.querySelector('.film-selection_films');
     if (divName) {
-          divName!.textContent = 'Новинки';
-      // divName.style.marginTop = '0px';
+      divName!.textContent = 'Похожие фильмы';
+      // divName.style.marginTop = '40px';
     }
+    divFilm?.remove();
 
     this.componentDidMount(true);
   }

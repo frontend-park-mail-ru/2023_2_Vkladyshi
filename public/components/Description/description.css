@@ -20,6 +20,10 @@
   margin-bottom: 20px;
 }
 
+.film-page__genre {
+  padding-right: 20px;
+}
+
 .actor-page__theme__content-block {
   width: 1150px;
   display: grid;
@@ -31,9 +35,52 @@
 }
 
 .param-list {
-  font-size: 19px;
+  font-size: 17px;
   text-align: center;
   padding: 0;
+  display: flex;
+  flex-direction: row;
+}
+
+.content-card {
+  display: grid;
+  grid-auto-rows: auto;
+  grid-template-columns: 200px auto;
+}
+
+
+.param-list__left {
+  grid-column-start: 1;
+}
+.param-list__right {
+  grid-column-start: 2;
+}
+
+.param-list__left,
+.param-list__right {
+  text-align: left;
+}
+
+.param-list__left__row1,
+.param-list__left__row2,
+.param-list__left__row3,
+.param-list__right__date,
+.param-list__right__country,
+.param-list__right__row-genre {
+  padding: 10px 10px 10px 0;
+  font-size: 22px;
+  text-align: left;
+}
+
+.param-list__right__date,
+.param-list__right__country {
+  cursor: pointer;
+}
+
+.param-list__right__row-genre {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: left;
 }
 
 .actor-page__comments {
@@ -43,7 +90,7 @@
 }
 
 .player {
-  grid-row-end: 4;
+  grid-row-end: 3;
   grid-row-start: 1;
 }
 
@@ -55,6 +102,7 @@
 }
 
 .film-info {
+
   font-size: 22px;
   color: white;
   font-style: normal;
@@ -64,7 +112,7 @@
   text-overflow: ellipsis;
   grid-column-start: 2;
   grid-row-start: 2;
-  text-align: center;
+  text-align: left;
 }
 
 .number {
@@ -91,11 +139,11 @@
   display: flex;
   align-content: center;
   align-items: center;
-  margin-left: 30px;
+  margin-left: 10px;
 }
 
 .right {
-  margin-right: 30px;
+  margin-right: 10px;
   display: flex;
   align-content: center;
   align-items: center;
@@ -111,7 +159,7 @@
 }
 
 .count {
-  margin-left: 20px;
+  margin-left: 8px;
   font-size: 19px;
 }
 
@@ -121,7 +169,7 @@
 }
 
 .review-button {
-  font-size: 19px;
+  font-size: 17px;
 }
 
 .review-button:hover {
@@ -224,6 +272,7 @@
 }
 
 .actors {
+  margin-top: 30px;
   grid-column-end: 3;
   grid-column-start: 1;
 }
@@ -322,7 +371,7 @@
   }
 
   .film-info {
-    text-align: center;
+    text-align: left;
     grid-row: 10;
     grid-column: 1;
     margin-left: 10%;
@@ -333,8 +382,20 @@
 @media (max-width: 505px) {
   .rating {
     flex-direction: row;
-    width: 300px !important;
+    width: 300px;
   }
+
+  .param-list__left__row1,
+  .param-list__left__row2,
+  .param-list__left__row3,
+  .param-list__right__date,
+  .param-list__right__country,
+  .param-list__right__row-genre {
+    padding: 10px 10px 10px 20px;
+    font-size: 22px;
+    text-align: left;
+  }
+
   .video-content__watchlist {
     left: 50px;
   }
@@ -344,7 +405,7 @@
     font-size: 15px;
   }
   .film-info {
-    font-size: 15px;
+    font-size: 20px;
     margin-left: 20%;
     margin-right: 20%;
     width: 350px;
@@ -355,7 +416,8 @@
     height: auto;
   }
   .actors-list {
-    justify-content: center;
+    justify-content: left;
+    padding-left: 5%;
   }
 
   .actors-header {

@@ -1,4 +1,24 @@
 <header>
+    <div class="header__search-mobile">
+        <div class="header__search-mobile__select">
+<!--            <div class="header_search_item__select-search__text films-search-header">Фильмы</div>-->
+            <img class="header_search_item__select-search__arrow icon" src="/icons/strelka-white.svg"/>
+            <div class="header__search-mobile__select__list">
+                <div class="header__search-mobile__select__films">
+                    <img class="image-select" src="/icons/youtube.png"/>
+                </div>
+                <div class="header__search-mobile__select__actors">
+                    <img class="image-select" src="/icons/people.png"/>
+                </div>
+            </div>
+        </div>
+        <input class="header__search-mobile__input" placeholder="Фильмы">
+        <div class="header__search-mobile__search">
+<!--            <div class="search-mobile header-button right-element">-->
+                <img class="header_search_item__lope search-mobile-lope" src="/icons/loupe-white.png"/>
+<!--            </div>-->
+        </div>
+    </div>
   <div class='header'>
     <div
       class='header_brand-header header-button right-element'
@@ -43,6 +63,11 @@
           </div>
 
       </div>
+
+      <div class="search-mobile header-button right-element">
+          <img class="header_search_item__lope" src="/icons/loupe-white.png"/>
+      </div>
+
     <div
       class='header_basket-item header-button right-element'
       data-section='{{basket.key}}'

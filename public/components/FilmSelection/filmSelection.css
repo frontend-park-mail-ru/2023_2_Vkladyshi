@@ -10,7 +10,7 @@
   display: flex;
   width: 100%;
   flex-direction: row;
-  /*margin-top: 100px;*/
+  margin-top: 100px;
 }
 
 .film-selection__header__yellow {
@@ -19,6 +19,7 @@
   background: #f5c518;
   border-radius: 8px;
   margin-right: 5px;
+  margin-left: 5px;
 }
 
 .film-selection_films {

@@ -103,3 +103,12 @@
     margin-top: 85px;
   }
 }
+
+@media screen and (max-width: 440px) {
+  .signup {
+    width: 100%;
+  }
+}
+
+
+

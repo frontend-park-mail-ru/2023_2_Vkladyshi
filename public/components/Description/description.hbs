@@ -4,12 +4,35 @@
       <div class='column'>
         <div class='film-name'>{{title}}</div>
         <div class='content-card'>
-          <ul class='param-list'>{{date}} {{mpaa}}</ul>
-          <ul class='param-list'>{{country}}
-            {{#each body.genre}}
-              {{title}}
-            {{/each}}
-          </ul>
+
+            <div class="param-list__left">
+                <div class="param-list__left__row1">Год релиза</div>
+                <div class="param-list__left__row2">Страна</div>
+                <div class="param-list__left__row3">Жанры</div>
+            </div>
+            <div class="param-list__right">
+                <div class="param-list__right__date">{{date}}</div>
+                <div class="param-list__right__country">{{country}}</div>
+                <section class='param-list__right__row-genre'></section>
+            </div>
+
+
+<!--          <ul class='param-list'>-->
+<!--              <div class="param-list__left">Год релиза</div>-->
+<!--              <div class="param-list__right">{{date}}</div>-->
+<!--          </ul>-->
+<!--          <ul class='param-list'>-->
+<!--              <div class="param-list__left">Страна</div>-->
+<!--              <div class="param-list__right"> {{country}}</div>-->
+<!--          </ul>-->
+<!--            <ul class='param-list'>-->
+<!--                <div class="param-list__left">Жанры</div>-->
+<!--                <div class="param-list__right">-->
+<!--                    {{#each body.genre}}-->
+<!--                        {{title}}-->
+<!--                    {{/each}}-->
+<!--                </div>-->
+<!--            </ul>-->
         </div>
       </div>
       <div class='player'>
@@ -35,17 +58,27 @@
           </div>
           <div class='cinema'>Смотреть</div>
         </div>
+
+          <div class='rating'>
+              <div class='left'>
+                  <div class='number'>{{mark}}</div>
+                  <div class='count'>{{mark_number}} оценок</div>
+              </div>
+              <div class='right'>
+                  <div class='review-button'>Оставить отзыв</div>
+              </div>
+          </div>
       </div>
       <div class='film-info'>{{infoText}}</div>
-      <div class='rating'>
-        <div class='left'>
-          <div class='number'>{{mark}}</div>
-          <div class='count'>{{mark_number}} оценок</div>
-        </div>
-        <div class='right'>
-          <div class='review-button'>Оставить отзыв</div>
-        </div>
-      </div>
+<!--      <div class='rating'>-->
+<!--        <div class='left'>-->
+<!--          <div class='number'>{{mark}}</div>-->
+<!--          <div class='count'>{{mark_number}} оценок</div>-->
+<!--        </div>-->
+<!--        <div class='right'>-->
+<!--          <div class='review-button'>Оставить отзыв</div>-->
+<!--        </div>-->
+<!--      </div>-->
       <div class='actors'>
         <div class='actors-header'>Актёры</div>
         <div class='actors-list'>
