@@ -151,13 +151,22 @@ export class Header extends Component {
             { pushState: true, refresh: false }
           );
           break;
-        case target.closest('.header_search_item__lope') !== null:
-          let lope;
+        case target.closest('.header__search-mobile__input__cancel') !== null:
+          const inputMobile = document.querySelector('.header__search-mobile');// @ts-ignore
+          inputMobile.classList.add('reverse');
+          break;
+        case target.closest('.header_search_item__mobile-lope') !== null:
           if (document?.querySelector('header')!.offsetWidth < 800) {
-            const inputMobile = document.querySelector('.header__search-mobile');
+            const inputMobile = document.querySelector('.header__search-mobile'); // @ts-ignore
+            inputMobile.classList.remove('reverse');
             // inputMobile?.classList.remove('noactive')
             // @ts-ignore
             inputMobile.style.display = 'flex';
+          }
+          break;
+        case target.closest('.header_search_item__lope') !== null || target.closest('.header_search_item__mobile-lope-search') !== null:
+          let lope;
+          if (document?.querySelector('header')!.offsetWidth < 800) {
             lope = (document.querySelector('.header__search-mobile__input') as HTMLInputElement)?.value;
           } else {
             lope = (document.querySelector('.header_search_item__input') as HTMLInputElement)?.value;

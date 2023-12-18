@@ -163,11 +163,23 @@ input:focus {
   }
 }
 
+@keyframes moveUp {
+  from {
+    transform: translateY(80px);
+  }
+  to {
+    transform: translateY(0);
+    /*display: none;*/
+  }
+}
+
 .header__search-mobile {
   animation: moveDown 1s forwards;
 }
 
-
+.header__search-mobile.reverse {
+  animation: moveUp 1s forwards;
+}
 
 @media screen and (max-width: 1150px) {
   .video-container {

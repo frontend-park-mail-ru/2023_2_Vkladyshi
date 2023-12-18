@@ -207,6 +207,12 @@ input::placeholder {
   background: #141414;
 }
 
+.header__search-mobile__search-input {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+}
+
 
 .header_search__list-search__films, .header_search__list-search__actors {
   display: flex;
@@ -242,18 +248,36 @@ input::placeholder {
   display: none;
   color: white;
   background-color: #141414;;
+}
 
+.search-mobile-lope {
+  cursor: pointer;
 }
 
 .header__search-mobile__input {
-  width: 70%;
+  width: 85%;
   border:none;
-  border-radius: 8px;
+  border-radius: 8px 0 0 8px;
   height: 60px;
   font-size: 22px;
   text-align: center;
   background-color: #5e5c5c;
   color: white;
+}
+
+.header__search-mobile__input::placeholder {
+  color: white;
+  opacity: 0.5;
+}
+
+.header__search-mobile__input__cancel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #5e5c5c;
+  border-radius:0 8px 8px 0;
+  width: 15%;
+  cursor: pointer;
 }
 
 header__search-mobile__input::placeholder {
@@ -397,7 +421,7 @@ header__search-mobile__input::placeholder {
     width: 45%;
   }
 
-  .header_search_item__lope {
+  .header_search_item__lope, .header_search_item__mobile-lope {
     height: 50px;
     width: 50px;
   }
@@ -410,7 +434,7 @@ header__search-mobile__input::placeholder {
     display: flex;
   }
 
-  .icon{
+  .icon ,.search-mobile-lope{
     height: 50px;
     width: 50px;
   }

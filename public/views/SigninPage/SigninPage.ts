@@ -105,12 +105,12 @@ export class SigninPage extends View {
         'afterbegin',
         buttonSubmit.render({ text: 'Войти' })
       );
-
-      this.componentDidMount();
-      this.init();
-      this.setUserInfo();
-      store.subscribe('login', this.subscribeSigninStatus.bind(this));
     }
+
+    this.componentDidMount();
+    this.init();
+    this.setUserInfo();
+    store.subscribe('login', this.subscribeSigninStatus.bind(this));
   }
 
   getForm () {
