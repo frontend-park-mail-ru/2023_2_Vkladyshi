@@ -12,19 +12,19 @@ export class Slider {
    * Метод рендеринга элемента
    * @return {string} html авторизации
    */
-  render () {
+  render() {
     return templateSlider();
   }
 
-  plusSlides () {
+  plusSlides() {
     this.showSlides((this.slideIndex += 1));
   }
 
-  minusSlides () {
+  minusSlides() {
     this.showSlides((this.slideIndex -= 1));
   }
 
-  showSlides (n) {
+  showSlides(n) {
     const slides = document.getElementsByClassName(
       'mySlides'
     ) as HTMLCollectionOf<HTMLElement>;
@@ -43,7 +43,7 @@ export class Slider {
     slides[this.slideIndex - 1].style.display = 'block';
   }
 
-  showSlidesAuto () {
+  showSlidesAuto() {
     const bannerContainer = document.getElementById('banner-container');
     bannerContainer?.remove();
 
@@ -65,7 +65,7 @@ export class Slider {
     } catch {}
   }
 
-  showSliders () {
+  showSliders() {
     const sliders = document.querySelector('.slider-container') as HTMLElement;
     const prev = document.querySelector('.slider-prev');
     const next = document.querySelector('.slider-next');
@@ -87,7 +87,7 @@ export class Slider {
     });
   }
 
-  addEvents () {
+  addEvents() {
     const prev = document.querySelector('.prev');
     const next = document.querySelector('.next');
 
@@ -100,10 +100,9 @@ export class Slider {
     this.showSlidesAuto();
   }
 
-  addEventsLine () {
+  addEventsLine() {
     const sliderFull = document.querySelector('.slider-full');
     sliderFull?.classList.remove('noactive');
-
 
     this.addEvents();
     this.showSliders();

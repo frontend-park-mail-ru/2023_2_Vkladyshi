@@ -8,14 +8,19 @@
         data-section='{{this.filmID}}'
       >
         <time class='calendar__days__time' datetime='2022-02-01'>
-          {{!-- <img class='calendar__days__subscribe' src="../icons/bells.png" alt='Подписаться на новинку'> --}}
-          <img class='calendar__days__subscribe noactive' data-section='{{this.filmID}}' src="/icons/bell.png" alt='Подписаться на новинку'>
-          {{!-- <svg class='calendar__days__subscribe'>
+          {{! <img class='calendar__days__subscribe' src="../icons/bells.png" alt='Подписаться на новинку'> }}
+          <img
+            class='calendar__days__subscribe noactive'
+            data-section='{{this.filmID}}'
+            src='/icons/bell.png'
+            alt='Подписаться на новинку'
+          />
+          {{! <svg class='calendar__days__subscribe'>
             <use href="../icons/bell3.svg"></use>
-          </svg> --}}
+          </svg> }}
           {{this.dayNumber}}
         </time>
-        <p class="calendar__days__name">{{this.dayNews}}</p>
+        <p class='calendar__days__name'>{{this.dayNews}}</p>
       </li>
     {{/each}}
   </ul>

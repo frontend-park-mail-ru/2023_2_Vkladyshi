@@ -1,3 +1,1 @@
-console.log('sw.js')
-
-
+console.log('sw.js');

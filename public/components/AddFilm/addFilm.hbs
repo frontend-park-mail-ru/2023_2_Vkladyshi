@@ -1,70 +1,74 @@
-<div class="add-film noactive">
-   <div class="add-film__left">
-       <div class="add-film__left__poster">
-           <div class="film-poster">
-               <img class='settings__img' src='/icons/space6.jpg' alt='settings__img' />
-           </div>
-           <div class="add-film-poster">
-               <div class='change-user-data__form user-data-buttons'>
-                   <label class='change-user-data__form__file button button__text'>
-                       <img
-                               class='change-user-data__form__img'
-                               src='/icons/Иконка файлов.svg'
-                               alt=''
-                       />
-                       <input
-                               class='change-user-data__form__file settings_file'
-                               type='file'
-                       />
-                       Загрузить постер
-                   </label>
-                   <span class='error-image error-string'></span>
-               </div>
-           </div>
-       </div>
-   </div>
-    <div class="add-film__right">
-        <div class='change-user-data'>
-            <form
-                    class='change-user-data__form'
-                    enctype='multipart/form-data'
-                    method='post'
-            >
-                    <div class='change-user-data__header table__header'>
-                        Создание нового фильма
-                    </div>
-
-                <span class='text-form title-text'>Название</span>
-                <span class='error-login error-string'></span>
-                <span class='text-form film-information-text'>Информация</span>
-                <div class='wrap text-area'>
-                    <textarea
-                            class='input-button review-form__body__text'
-                            type='text'
-                    ></textarea>
-              </div>
-                <span class='error-text-area error-string'></span>
-
-                <span class='text-form country-text'>Страна</span>
-                <span class='error-country error-string'></span>
-
-                <span class='text-form date-text'>Год релиза</span>
-                <span class='error-birthday error-string'></span>
-                <span class='text-form genre-text'>Жанры</span>
-                <span class='error-genre error-string'></span>
-                <section class='section-title-type active'></section>
-
-                <span class='text-form actors-text'>Актёры</span>
-                <div class="selected-actors"></div>
-                <span class='error-actors error-string'></span>
-            </form>
+<div class='add-film noactive'>
+  <div class='add-film__left'>
+    <div class='add-film__left__poster'>
+      <div class='film-poster'>
+        <img
+          class='settings__img'
+          src='/icons/space6.jpg'
+          alt='settings__img'
+        />
+      </div>
+      <div class='add-film-poster'>
+        <div class='change-user-data__form user-data-buttons'>
+          <label class='change-user-data__form__file button button__text'>
+            <img
+              class='change-user-data__form__img'
+              src='/icons/Иконка файлов.svg'
+              alt=''
+            />
+            <input
+              class='change-user-data__form__file settings_file'
+              type='file'
+            />
+            Загрузить постер
+          </label>
+          <span class='error-image error-string'></span>
         </div>
+      </div>
     </div>
-    <div class="add-film__actors">
-        <div class="add-film__actors__body">
-            <span class='text-form actors-text-add'>Поиск актёров</span>
-            <button class="button-submit actors-find" type="submit">Найти</button>
+  </div>
+  <div class='add-film__right'>
+    <div class='change-user-data'>
+      <form
+        class='change-user-data__form'
+        enctype='multipart/form-data'
+        method='post'
+      >
+        <div class='change-user-data__header table__header'>
+          Создание нового фильма
         </div>
-        <div class="results-actors"></div>
+
+        <span class='text-form title-text'>Название</span>
+        <span class='error-login error-string'></span>
+        <span class='text-form film-information-text'>Информация</span>
+        <div class='wrap text-area'>
+          <textarea
+            class='input-button review-form__body__text'
+            type='text'
+          ></textarea>
+        </div>
+        <span class='error-text-area error-string'></span>
+
+        <span class='text-form country-text'>Страна</span>
+        <span class='error-country error-string'></span>
+
+        <span class='text-form date-text'>Год релиза</span>
+        <span class='error-birthday error-string'></span>
+        <span class='text-form genre-text'>Жанры</span>
+        <span class='error-genre error-string'></span>
+        <section class='section-title-type active'></section>
+
+        <span class='text-form actors-text'>Актёры</span>
+        <div class='selected-actors'></div>
+        <span class='error-actors error-string'></span>
+      </form>
     </div>
+  </div>
+  <div class='add-film__actors'>
+    <div class='add-film__actors__body'>
+      <span class='text-form actors-text-add'>Поиск актёров</span>
+      <button class='button-submit actors-find' type='submit'>Найти</button>
+    </div>
+    <div class='results-actors'></div>
+  </div>
 </div>

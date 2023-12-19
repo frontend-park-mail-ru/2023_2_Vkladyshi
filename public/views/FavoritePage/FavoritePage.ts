@@ -6,7 +6,7 @@ import {
   actionFavoriteActors,
   actionFavoriteFilms,
   actionRemoveFavoriteActor,
-  actionRemoveFavoriteFilm
+  actionRemoveFavoriteFilm,
 } from '@store/action/actionTemplates';
 import { FilmCard } from '@components/filmCard/filmCard';
 import { router } from '@router/router';
@@ -25,7 +25,7 @@ export class FavoritePage extends View {
    * @param ROOT
    * @class
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
 
     store.subscribe('favoriteFilms', this.subscribeFavoriteFilms.bind(this));
@@ -35,7 +35,7 @@ export class FavoritePage extends View {
   /**
    * Метод создания страницы
    */
-  render () {
+  render() {
     this.renderDefaultPage({});
     const contentBlockHTML = document.querySelector(
       '.content-block'
@@ -47,7 +47,7 @@ export class FavoritePage extends View {
         'beforeend',
         favoriteList.render({
           title: 'Список фильмов',
-          redirect: 'Любимые актёры'
+          redirect: 'Любимые актёры',
         })
       );
 
@@ -68,7 +68,7 @@ export class FavoritePage extends View {
       'beforeend',
       favoriteList.render({
         title: 'Список актёров',
-        redirect: 'Любимые фильмы'
+        redirect: 'Любимые фильмы',
       })
     );
     store.dispatch(actionFavoriteActors({ page: 1, per_page: 20 })).then(() => {
@@ -80,7 +80,7 @@ export class FavoritePage extends View {
    * Метод обработки нажатий
    * @param isFilms проверка что рендерим фильмы
    */
-  componentDidMount () {
+  componentDidMount() {
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       const filmId = event.target
@@ -105,10 +105,17 @@ export class FavoritePage extends View {
           const element = document.querySelector(`[data-section="${id}"]`);
           element?.remove();
 
-          const elementsWithDataSetion = document.querySelectorAll('.actor-selection_actor ');
-          const elementsFilms = document.querySelectorAll('.film-selection_film');
-          if (elementsWithDataSetion.length === 0 && elementsFilms.length === 0) {
-            const body = document.querySelector('.favorite__body')
+          const elementsWithDataSetion = document.querySelectorAll(
+            '.actor-selection_actor '
+          );
+          const elementsFilms = document.querySelectorAll(
+            '.film-selection_film'
+          );
+          if (
+            elementsWithDataSetion.length === 0 &&
+            elementsFilms.length === 0
+          ) {
+            const body = document.querySelector('.favorite__body');
             body!.innerHTML = '<div>Ваш список пуст</div>';
           }
 
@@ -118,7 +125,7 @@ export class FavoritePage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`
+              props: `/${filmId}`,
             },
             { pushState: true, refresh: false }
           );
@@ -129,7 +136,7 @@ export class FavoritePage extends View {
             router.go(
               {
                 path: '/watchlist/actors',
-                props: ``
+                props: ``,
               },
               { pushState: true, refresh: false }
             );
@@ -137,7 +144,7 @@ export class FavoritePage extends View {
             router.go(
               {
                 path: '/watchlist/films',
-                props: ``
+                props: ``,
               },
               { pushState: true, refresh: false }
             );
@@ -148,7 +155,7 @@ export class FavoritePage extends View {
           router.go(
             {
               path: '/actor',
-              props: `/${actorId}`
+              props: `/${actorId}`,
             },
             { pushState: true, refresh: false }
           );
@@ -166,7 +173,7 @@ export class FavoritePage extends View {
   /**
    * Метод отписок
    */
-  componentWillUnmount () {
+  componentWillUnmount() {
     const elements = document.querySelector('.favorite');
     elements?.removeEventListener('click', this.popupEvent);
 
@@ -177,7 +184,7 @@ export class FavoritePage extends View {
   /**
    * Метод для обработки ответа с фильмами
    */
-  subscribeFavoriteFilms () {
+  subscribeFavoriteFilms() {
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
@@ -213,7 +220,7 @@ export class FavoritePage extends View {
   /**
    * Метод для обработки ответа с актерами
    */
-  subscribeFavoriteActor () {
+  subscribeFavoriteActor() {
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
@@ -222,10 +229,16 @@ export class FavoritePage extends View {
     const status = store.getState('favoriteActors')?.status;
 
     if (actors?.length === 0 || status === 404) {
-      contentBlockHTML?.insertAdjacentHTML('beforeend', '<div>Ваш список пуст</div>');
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        '<div>Ваш список пуст</div>'
+      );
       return;
     } else if (status !== 200) {
-      contentBlockHTML?.insertAdjacentHTML('beforeend', '<div>Ошибка сервера!</div>');
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        '<div>Ошибка сервера!</div>'
+      );
       return;
     }
 

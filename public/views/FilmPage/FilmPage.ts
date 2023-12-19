@@ -1,12 +1,17 @@
 /* eslint-disable require-jsdoc */
 import { View } from '@views/view';
-import {collections, ROOT} from '@utils/config';
+import { collections, ROOT } from '@utils/config';
 import { store } from '@store/store';
 import {
   actionAddFavoriteActor,
-  actionAddFavoriteFilm, actionCollectionMain, actionFavoriteFilms,
+  actionAddFavoriteFilm,
+  actionCollectionMain,
+  actionFavoriteFilms,
   actionFilm,
-  actionGetCommentsFilm, actionRemoveFavoriteActor, actionRemoveFavoriteFilm, actionSearchFilm
+  actionGetCommentsFilm,
+  actionRemoveFavoriteActor,
+  actionRemoveFavoriteFilm,
+  actionSearchFilm,
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
@@ -34,14 +39,14 @@ export class FilmPage extends View {
    * @param ROOT
    * @class
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       filmInfo: null,
       fildId: 0,
       commentsInfo: [],
       rewiewBunch: 1,
-      mapFilms: {}
+      mapFilms: {},
     };
 
     store.subscribe(
@@ -53,7 +58,7 @@ export class FilmPage extends View {
    * Метод создания страницы
    * @param props
    */
-  render (props) {
+  render(props) {
     store.subscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.subscribe('removeView', this.componentWillUnmount.bind(this));
     // store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
@@ -66,14 +71,14 @@ export class FilmPage extends View {
           actionGetCommentsFilm({
             film_id: this.state.fildId,
             page: this.state.rewiewBunch,
-            per_page: 5
+            per_page: 5,
           })
         );
       });
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const contentBlockHTML = document.querySelector(
       '.content-block'
     ) as HTMLElement;
@@ -118,11 +123,11 @@ export class FilmPage extends View {
           false,
           false,
           false,
-          false
+          false,
         ],
         // @ts-ignore
         mark: rating.toFixed(1),
-        mark_number: number
+        mark_number: number,
       };
     }
 
@@ -148,18 +153,18 @@ export class FilmPage extends View {
         description.render(result)
       );
 
-     const genre = document.querySelector('.param-list__right__row-genre');
+      const genre = document.querySelector('.param-list__right__row-genre');
       const collectionGenreItems = result.genre;
       for (let i = 0; i < collectionGenreItems.length; i++) {
         const item = collectionGenreItems[i];
         genre?.insertAdjacentHTML(
-            'beforeend',
-            `<div class="film-page__genre" >${item.title}</div>`
+          'beforeend',
+          `<div class="film-page__genre" >${item.title}</div>`
         );
       }
 
       const sliderFilms = new Slider();
-      sliderFilms.addEventsLine()
+      sliderFilms.addEventsLine();
 
       const filmSelection = new FilmSelectionPage(ROOT);
       filmSelection.renderByElement();
@@ -168,74 +173,70 @@ export class FilmPage extends View {
     this.addEvents();
   }
 
-  renderByElement (HTMLElement) {
+  renderByElement(HTMLElement) {
     return store
-        .dispatch(actionCollectionMain({ collection_id: 0 }))
-        .then((response) => {
-          const buf = store.getState('collectionMain');
+      .dispatch(actionCollectionMain({ collection_id: 0 }))
+      .then((response) => {
+        const buf = store.getState('collectionMain');
 
-          // const contentBlockHTML = document.querySelector('.similar-movies');
-          //
-          // const filmSelect = new FilmSelection(ROOT);
-          //
-          // contentBlockHTML?.insertAdjacentHTML(
-          //   'beforeend',
-          //   filmSelect.render(buf.body)
-          // );
+        // const contentBlockHTML = document.querySelector('.similar-movies');
+        //
+        // const filmSelect = new FilmSelection(ROOT);
+        //
+        // contentBlockHTML?.insertAdjacentHTML(
+        //   'beforeend',
+        //   filmSelect.render(buf.body)
+        // );
 
-          // const sliderNew = new Slider();
-          // sliderNew.addEventsLine();
-          // const sliderLiner = document.querySelector('.slider-container');
-          // const sliderNAme = document.querySelector('.slider-name');
-          //
-          // const filmSelect = new FilmSelection(ROOT);
-          //
-          // sliderNAme?.insertAdjacentHTML(
-          //     'beforeend',
-          //     filmSelect.render(buf.body)
-          // );
-          // const header = document.querySelector('.film-selection') as HTMLElement;
-          // if (header) {
-          //   header.style.width = '100%';
-          // }
+        // const sliderNew = new Slider();
+        // sliderNew.addEventsLine();
+        // const sliderLiner = document.querySelector('.slider-container');
+        // const sliderNAme = document.querySelector('.slider-name');
+        //
+        // const filmSelect = new FilmSelection(ROOT);
+        //
+        // sliderNAme?.insertAdjacentHTML(
+        //     'beforeend',
+        //     filmSelect.render(buf.body)
+        // );
+        // const header = document.querySelector('.film-selection') as HTMLElement;
+        // if (header) {
+        //   header.style.width = '100%';
+        // }
 
-          // const contentBlock = document.querySelector('.film-selection_films');
+        // const contentBlock = document.querySelector('.film-selection_films');
 
-          // eslint-disable-next-line guard-for-in
-          // for (const film in buf.body.films) {
-          //   const filmCard = new FilmCard(ROOT);
-          //   sliderLiner?.insertAdjacentHTML(
-          //       'beforeend',
-          //       filmCard.render({
-          //         film: buf.body.films[film],
-          //         alreadyFavorite: false
-          //       })
-          //   );
-          // }
+        // eslint-disable-next-line guard-for-in
+        // for (const film in buf.body.films) {
+        //   const filmCard = new FilmCard(ROOT);
+        //   sliderLiner?.insertAdjacentHTML(
+        //       'beforeend',
+        //       filmCard.render({
+        //         film: buf.body.films[film],
+        //         alreadyFavorite: false
+        //       })
+        //   );
+        // }
 
-
-          //
-          // const divName = document.querySelector('.film-selection_name') as HTMLElement;
-          // const divFilm = document.querySelector('.film-selection_films');
-          // if (divName) {
-          //   divName!.textContent = 'Похожие фильмы';
-          //   // divName.style.marginTop = '40px';
-          // }
-          // // divFilm?.remove();
-          //
-          // this.componentDidMount();
-          // const sliderContainer = document.querySelector('.slider-container');
-          // const films = document.querySelector('.film-selection_films');
-          // const slider = document.querySelector('.slider-name');
-          // sliderContainer?.appendChild(<Element>films);
-          // slider?.appendChild(<Element>divName);
-        });
+        //
+        // const divName = document.querySelector('.film-selection_name') as HTMLElement;
+        // const divFilm = document.querySelector('.film-selection_films');
+        // if (divName) {
+        //   divName!.textContent = 'Похожие фильмы';
+        //   // divName.style.marginTop = '40px';
+        // }
+        // // divFilm?.remove();
+        //
+        // this.componentDidMount();
+        // const sliderContainer = document.querySelector('.slider-container');
+        // const films = document.querySelector('.film-selection_films');
+        // const slider = document.querySelector('.slider-name');
+        // sliderContainer?.appendChild(<Element>films);
+        // slider?.appendChild(<Element>divName);
+      });
   }
 
-
-
-
-  insertComments () {
+  insertComments() {
     const mainHTML = document.querySelector(
       '.film-page__comments'
     ) as HTMLElement;
@@ -256,7 +257,7 @@ export class FilmPage extends View {
         photo: res['photo'],
         name: res['name'],
         rating: res['rating'],
-        text: res['text']
+        text: res['text'],
       };
 
       const result = document.createElement('buf');
@@ -284,20 +285,24 @@ export class FilmPage extends View {
     // this.componentDidMount();
   }
 
-  addEvents () {
+  addEvents() {
     const popup = document.querySelector('.main-container');
     const popupEvent = (event) => {
       const filmId = event.target
-          .closest('.film-selection_film')
-          ?.getAttribute('data-section');
+        .closest('.film-selection_film')
+        ?.getAttribute('data-section');
       event.preventDefault();
       this.popupEvent = popupEvent;
       switch (true) {
         case event.target.closest('.image-watchlist.main-film-card') !== null:
           let active = true;
           const element = document.querySelector(`.video-content`);
-          const orange = element?.querySelector('.red-watchlist') as HTMLElement;
-          const red = element?.querySelector('.orange-watchlist') as HTMLElement;
+          const orange = element?.querySelector(
+            '.red-watchlist'
+          ) as HTMLElement;
+          const red = element?.querySelector(
+            '.orange-watchlist'
+          ) as HTMLElement;
           if (element?.querySelector('.orange-watchlist.active')) {
             active = true;
             red.classList.remove('active');
@@ -313,9 +318,13 @@ export class FilmPage extends View {
           }
 
           if (active) {
-            store.dispatch(actionAddFavoriteFilm({ film_id: this.state.fildId }));
+            store.dispatch(
+              actionAddFavoriteFilm({ film_id: this.state.fildId })
+            );
           } else {
-            store.dispatch(actionRemoveFavoriteFilm({ film_id: this.state.fildId }));
+            store.dispatch(
+              actionRemoveFavoriteFilm({ film_id: this.state.fildId })
+            );
           }
           break;
         case event.target.closest('.table__actor__text') !== null:
@@ -326,7 +335,7 @@ export class FilmPage extends View {
           router.go(
             {
               path: '/actor',
-              props: `/${actorId}`
+              props: `/${actorId}`,
             },
             { pushState: true, refresh: false }
           );
@@ -342,13 +351,13 @@ export class FilmPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  redirectToComments () {
+  redirectToComments() {
     const status = store.getState('auth').status;
     if (status !== 200) {
       router.go(
         {
           path: '/login',
-          props: ``
+          props: ``,
         },
         { pushState: true, refresh: false }
       );
@@ -358,7 +367,7 @@ export class FilmPage extends View {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     store.unsubscribe('removeView', this.componentWillUnmount.bind(this));
     store.unsubscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.unsubscribe(
@@ -370,7 +379,7 @@ export class FilmPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  getFavoriteFilmsList () {
+  getFavoriteFilmsList() {
     const favoriteFilms = store.getState('favoriteFilms');
     store.unsubscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     if (favoriteFilms?.status !== 200) {
@@ -381,7 +390,9 @@ export class FilmPage extends View {
       const film = document.querySelector('.image-watchlist');
       if (film && key?.id === this.state.fildId) {
         const red = document?.querySelector('.red-watchlist') as HTMLElement;
-        const orange = document?.querySelector('.orange-watchlist') as HTMLElement;
+        const orange = document?.querySelector(
+          '.orange-watchlist'
+        ) as HTMLElement;
         orange?.classList.remove('active');
         orange?.classList.add('noactive');
         red?.classList.remove('noactive');
@@ -391,7 +402,7 @@ export class FilmPage extends View {
     });
   }
 
-  subscribeActorStatus () {
+  subscribeActorStatus() {
     this.state.filmInfo = store.getState('filmInfo');
     store.unsubscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.unsubscribe('removeView', this.componentWillUnmount.bind(this));
@@ -401,7 +412,7 @@ export class FilmPage extends View {
     this.componentDidMount();
   }
 
-  subscribeCommentsStatrus () {
+  subscribeCommentsStatrus() {
     const result = store.getState('filmCommentsStatus');
     if (result?.status === 200) {
       store.unsubscribe(

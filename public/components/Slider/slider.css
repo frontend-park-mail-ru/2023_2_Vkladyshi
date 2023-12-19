@@ -107,7 +107,6 @@
   overflow-x: hidden;
 }
 
-
 .slider {
   width: 100%;
   /*height: 450px;*/
@@ -115,7 +114,6 @@
   /*margin: 0 auto;*/
   position: relative;
   overflow-x: hidden;
-
 }
 
 .slider-container img {
@@ -139,13 +137,13 @@
   overflow: auto;
 }
 
-.slider-prev, .slider-next {
+.slider-prev,
+.slider-next {
   width: 50px;
   cursor: pointer;
   position: absolute;
   z-index: 2;
   top: calc(50% - 50px);
-
 }
 
 .slider-prev {
@@ -205,13 +203,13 @@
   }
 }
 
-
 @media screen and (max-width: 505px) {
   .slider-container {
     grid-gap: 0px;
   }
 
-  .slider-prev, .slider-next {
+  .slider-prev,
+  .slider-next {
     display: none;
   }
 }

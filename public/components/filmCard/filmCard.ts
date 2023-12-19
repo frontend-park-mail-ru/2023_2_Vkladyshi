@@ -1,13 +1,13 @@
 import { Component } from '@components/component';
 import * as templateFilmCard from '@components/filmCard/filmCard.hbs';
-import {router} from "@router/router";
-import {store} from "@store/store";
+import { router } from '@router/router';
+import { store } from '@store/store';
 import {
   actionAddFavoriteActor,
   actionAddFavoriteFilm,
   actionRemoveFavoriteActor,
-  actionRemoveFavoriteFilm
-} from "@store/action/actionTemplates";
+  actionRemoveFavoriteFilm,
+} from '@store/action/actionTemplates';
 
 /**
  * Класс рендеринга формирования подборки фильмов
@@ -18,37 +18,46 @@ export class FilmCard extends Component {
   con;
   /**
    * Метод рендеринга элемента
-   * @returns {string}
+   * @return {string}
    * @param film.film
    * @param film.alreadyFavorite
+   * @param film.haveRating
    * @param film
    */
-  render ({ film, alreadyFavorite, haveRating= false }) {
+  render({ film, alreadyFavorite, haveRating = false }) {
     const result = {
       id: film.id,
       title: film.title,
       poster: film.poster,
       rating: film.rating === undefined ? 8 : film.rating.toFixed(1),
       alreadyFavorite: alreadyFavorite,
-      haveRating: haveRating
+      haveRating: haveRating,
     };
 
     return templateFilmCard(result);
   }
 
   addEvent(filmId) {
-    const element = document.querySelector(`[data-section="${filmId}"].film-selection_film`);
+    const element = document.querySelector(
+      `[data-section="${filmId}"].film-selection_film`
+    );
 
-    element?.addEventListener('click', (event)=> {
+    element?.addEventListener('click', (event) => {
       if (!event) {
         return;
       }
 
-      switch (true) { //@ts-ignore
-        case event.target.closest('.image-watchlist') !== null: //@ts-ignore
+      switch (
+        true
+      ) {// @ts-ignore
+        case event.target.closest('.image-watchlist') !== null: // @ts-ignore
           let active;
-          const orange = element?.querySelector('.red-watchlist') as HTMLElement;
-          const red = element?.querySelector('.orange-watchlist') as HTMLElement;
+          const orange = element?.querySelector(
+            '.red-watchlist'
+          ) as HTMLElement;
+          const red = element?.querySelector(
+            '.orange-watchlist'
+          ) as HTMLElement;
           if (element?.querySelector('.orange-watchlist.active')) {
             active = true;
             red.classList.remove('active');
@@ -64,31 +73,30 @@ export class FilmCard extends Component {
           }
 
           if (store.getState('auth').status === 200) {
-                store.dispatch(actionAddFavoriteFilm({ film_id: filmId }));
+            store.dispatch(actionAddFavoriteFilm({ film_id: filmId }));
           } else {
             router.go(
-                {
-                  path: '/login',
-                  props: ``
-                },
-                { pushState: true, refresh: false }
+              {
+                path: '/login',
+                props: ``,
+              },
+              { pushState: true, refresh: false }
             );
           }
           break;
         // @ts-ignore
         case event.target.closest('.film-selection_film') !== null:
           router.go(
-              {
-                path: '/film',
-                props: `/${filmId}`
-              },
-              { pushState: true, refresh: false }
+            {
+              path: '/film',
+              props: `/${filmId}`,
+            },
+            { pushState: true, refresh: false }
           );
           break;
         default:
           break;
       }
-
-    })
+    });
   }
 }

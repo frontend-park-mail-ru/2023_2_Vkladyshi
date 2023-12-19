@@ -1,51 +1,51 @@
 .admin-panel {
-    display: grid;
-    color: white;
-    grid-template-columns: 100px 180px;
-    grid-gap: 30px;
-    justify-content: center;
-    padding-top: 100px;
+  display: grid;
+  color: white;
+  grid-template-columns: 100px 180px;
+  grid-gap: 30px;
+  justify-content: center;
+  padding-top: 100px;
 }
 
 .add-film__left__poster {
-    /*padding-right: 10px;*/
-    margin-right: 20px;
+  /*padding-right: 10px;*/
+  margin-right: 20px;
 }
 
 .center-text {
-    text-align: center;
-    padding: 15px 6px;
-    border-radius: 8px;
-    border: 2px solid white;
-    /*margin-top: 5px;*/
-    transition: all 0.5s ease;
+  text-align: center;
+  padding: 15px 6px;
+  border-radius: 8px;
+  border: 2px solid white;
+  /*margin-top: 5px;*/
+  transition: all 0.5s ease;
 }
 
 .center-text:hover {
-    background: #f5c518;
-    color: black;
-    border: 2px solid #f5c518;
+  background: #f5c518;
+  color: black;
+  border: 2px solid #f5c518;
 }
 
 .center-text.active {
-    background: #f5c518;
-    color: black;
-    border: 2px solid #f5c518;
+  background: #f5c518;
+  color: black;
+  border: 2px solid #f5c518;
 }
 
 .statistic-chart.noactive {
-    display: none;
+  display: none;
 }
 
 .add-film.noactive {
-    display: none;
+  display: none;
 }
 
 .create-successfully {
-    position: fixed;
-    right: 10px;
-    bottom: 20px;
-    width: 100px;
-    height: 100px;
-    /*background-color: #73a32f;*/
+  position: fixed;
+  right: 10px;
+  bottom: 20px;
+  width: 100px;
+  height: 100px;
+  /*background-color: #73a32f;*/
 }

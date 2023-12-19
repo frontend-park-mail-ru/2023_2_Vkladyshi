@@ -10,7 +10,6 @@
   flex-direction: row;
 }
 
-
 .actor-page__comments__header {
   color: white;
   font-size: 32px;
@@ -47,7 +46,6 @@
   grid-auto-rows: auto;
   grid-template-columns: 200px auto;
 }
-
 
 .param-list__left {
   grid-column-start: 1;
@@ -102,7 +100,6 @@
 }
 
 .film-info {
-
   font-size: 22px;
   color: white;
   font-style: normal;
@@ -252,7 +249,7 @@
   position: relative;
 }
 
-.slider-equal{
+.slider-equal {
   width: 80%;
 }
 

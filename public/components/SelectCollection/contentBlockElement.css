@@ -158,7 +158,8 @@
   padding: 5%;
 }
 
-.film-selection__header__yellow-selection-film, .film-selection__header__yellow-selection-actor {
+.film-selection__header__yellow-selection-film,
+.film-selection__header__yellow-selection-actor {
   width: 5px;
   height: 32px;
   background: #f5c518;
@@ -168,7 +169,6 @@
 }
 
 .birthday-input-select input-button {
-
 }
 
 .yellow-line {
@@ -291,7 +291,6 @@
   transition: all 0.5s ease;
 }
 
-
 /*.title-type:hover, .title-type-admin:hover {*/
 /*  background: #f5c518;*/
 /*  color: black;*/
@@ -358,7 +357,8 @@
   margin-right: 5px;
 }
 
-.title-type.active, .title-type-admin.active {
+.title-type.active,
+.title-type-admin.active {
   background: #f5c518;
   color: black;
   border: 2px solid #f5c518;

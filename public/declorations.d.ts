@@ -84,11 +84,11 @@ interface searchActor {
 }
 
 interface newFilm {
-  title: string,
-  filmInfo: string,
-  genre: any,
-  actors: any,
-  date: string
+  title: string;
+  filmInfo: string;
+  genre: any;
+  actors: any;
+  date: string;
 }
 
 interface filmNotifPayload {

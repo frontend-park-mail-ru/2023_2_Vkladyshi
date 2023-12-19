@@ -251,10 +251,9 @@
     font-size: 30px;
   }
 
-  .column, {
+  .column {
     margin-top: 100px;
   }
-
 
   .video-buttons {
     display: flex;

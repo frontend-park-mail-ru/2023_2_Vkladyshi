@@ -4,7 +4,7 @@ import { Statistics } from '@components/Statistics/statistics';
 import {
   actionAddFilm,
   actionSearchActor,
-  actionStatistics
+  actionStatistics,
 } from '@store/action/actionTemplates';
 import { AdminPanel } from '@components/AdminPanel/adminPanel';
 import { collections, errorInputs, ROOT } from '@utils/config';
@@ -13,7 +13,13 @@ import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 import { ActorCard } from '@components/ActorCard/actorCard';
 import { router } from '@router/router';
-import { addErrorsActive, defaultVariable, insertText, removeErrors, removeErrorsActive } from '@utils/addError';
+import {
+  addErrorsActive,
+  defaultVariable,
+  insertText,
+  removeErrors,
+  removeErrorsActive,
+} from '@utils/addError';
 
 export interface AdminPage {
   state: {
@@ -38,21 +44,21 @@ export class AdminPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       errorsHTML: {},
       wraps: {},
       inputsHTML: {},
       file: '',
-      defaultImage: ''
+      defaultImage: '',
     };
   }
 
   /**
    * Метод создания страницы
    */
-  render () {
+  render() {
     this.renderDefaultPage({});
     const contentBlock = document.querySelector('.content-block');
     const footer = document.querySelector('.footer');
@@ -70,7 +76,7 @@ export class AdminPage extends View {
     });
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const adminPanel = document.querySelector('.admin-panel');
     const addFilm = document.querySelector('.add-film');
     const installPoster = document.querySelector('.add-film__left__poster');
@@ -94,22 +100,36 @@ export class AdminPage extends View {
         case event.target.closest('.actor-selection_actor') !== null:
           const selected = document.querySelector('.selected-actors');
           const allActors = document.querySelector('.results-actors');
-          const watchlist = event.target.closest('.actor-selection_actor')?.querySelector('.image-watchlist');
-          const remove = event.target.closest('.actor-selection_actor')?.querySelector('.image-cancel');
+          const watchlist = event.target
+            .closest('.actor-selection_actor')
+            ?.querySelector('.image-watchlist');
+          const remove = event.target
+            .closest('.actor-selection_actor')
+            ?.querySelector('.image-cancel');
 
           if (event.target.closest('.image-watchlist') !== null) {
             watchlist?.classList?.add('noactive');
             remove?.classList?.remove('noactive');
-            selected?.appendChild(event.target.closest('.actor-selection_actor'));
+            selected?.appendChild(
+              event.target.closest('.actor-selection_actor')
+            );
 
             // @ts-ignore
-            event.target.closest('.actor-selection_actor')?.querySelector('.actor-selection_actor_name').style.color = 'black';
+            event.target
+              .closest('.actor-selection_actor')
+              ?.querySelector('.actor-selection_actor_name').style.color =
+              'black';
           } else {
             watchlist?.classList?.remove('noactive');
             remove?.classList?.add('noactive');
-            allActors?.appendChild(event.target.closest('.actor-selection_actor'));
+            allActors?.appendChild(
+              event.target.closest('.actor-selection_actor')
+            );
             // @ts-ignore
-            event.target.closest('.actor-selection_actor')?.querySelector('.actor-selection_actor_name').style.color = 'white';
+            event.target
+              .closest('.actor-selection_actor')
+              ?.querySelector('.actor-selection_actor_name').style.color =
+              'white';
           }
           break;
         case event.target.closest('.actors-find') !== null:
@@ -145,8 +165,12 @@ export class AdminPage extends View {
     this.changeEvent = (event) => {
       switch (true) {
         case event.target.closest('.settings_file') !== null:
-          const file = document.querySelector('.settings_file') as HTMLInputElement;
-          const image = document.querySelector('.settings__img') as HTMLImageElement;
+          const file = document.querySelector(
+            '.settings_file'
+          ) as HTMLInputElement;
+          const image = document.querySelector(
+            '.settings__img'
+          ) as HTMLImageElement;
           this.state.defaultImage = image.src;
           // @ts-ignore
           if (file?.files?.length > 0) {
@@ -204,7 +228,7 @@ export class AdminPage extends View {
       div7,
       div8,
       div9,
-      div10
+      div10,
     ];
 
     // Iterate through the div elements and assign the count values
@@ -220,7 +244,7 @@ export class AdminPage extends View {
     });
   }
 
-  addFilmForm () {
+  addFilmForm() {
     const settings = document.querySelector('.change-user-data') as HTMLElement;
     const title = document.querySelector('.title-text');
     const date = document.querySelector('.date-text');
@@ -254,7 +278,7 @@ export class AdminPage extends View {
       inputButton.render({
         wrap: 'date',
         module: 'add-film',
-        type: 'number'
+        type: 'number',
       })
     );
 
@@ -272,17 +296,23 @@ export class AdminPage extends View {
     this.init();
   }
 
-  getForm () {
+  getForm() {
     const elements = this.state.inputsHTML;
     const genres = document.querySelectorAll('.title-type-admin.active');
     // @ts-ignore
-    const actors = document.querySelector('.selected-actors').querySelectorAll('.actor-selection_actor');
+    const actors = document
+      .querySelector('.selected-actors')
+      .querySelectorAll('.actor-selection_actor');
 
-    const sectionDataArray = Array.from(genres).map((div) => // @ts-ignore
-      parseInt(<string>div.getAttribute('data-section'))
+    const sectionDataArray = Array.from(genres).map(
+      (
+        div // @ts-ignore
+      ) => parseInt(<string>div.getAttribute('data-section'))
     );
-    const sectionActorsArray = Array.from(actors).map((div) => // @ts-ignore
-      parseInt(<string>div.getAttribute('data-section'))
+    const sectionActorsArray = Array.from(actors).map(
+      (
+        div // @ts-ignore
+      ) => parseInt(<string>div.getAttribute('data-section'))
     );
 
     const title = elements['title']?.value.trim();
@@ -309,7 +339,17 @@ export class AdminPage extends View {
       data.append('photo', file);
     }
 
-    if (this.validateForm({ title: title, info: info, date: date, country: country, file: file, actors: actors, genre: genres })) {
+    if (
+      this.validateForm({
+        title: title,
+        info: info,
+        date: date,
+        country: country,
+        file: file,
+        actors: actors,
+        genre: genres,
+      })
+    ) {
       store.dispatch(actionAddFilm({ file: data })).then(() => {
         // @ts-ignore
         if (store.getState('addFilm').status === 200) {
@@ -319,25 +359,29 @@ export class AdminPage extends View {
               '<img class="create-successfully" src="/icons/icon-success.png"/>'
             );
           });
-          setTimeout(() => { document.querySelector('.create-successfully')?.remove(); }, 4000);
+          setTimeout(() => {
+            document.querySelector('.create-successfully')?.remove();
+          }, 4000);
           const selectedActors = document.querySelector('.selected-actors');
           const allActors = document.querySelector('.results-actors');
           selectedActors!.innerHTML = '';
           allActors!.innerHTML = '';
 
-          genres.forEach(genre => {
+          genres.forEach((genre) => {
             genre.classList.remove('active');
           });
           defaultVariable(this.state.inputsHTML);
 
-          const image = document.querySelector('.settings__img') as HTMLImageElement;
+          const image = document.querySelector(
+            '.settings__img'
+          ) as HTMLImageElement;
           image.src = '/icons/space6.jpg';
         }
       });
     }
   }
 
-  validateForm (dir) {
+  validateForm(dir) {
     let result = true;
     const elements = this.state.errorsHTML;
     const wraps = this.state.wraps;
@@ -370,7 +414,7 @@ export class AdminPage extends View {
       result = false;
     }
 
-    if ((dir.file && (dir.file?.type?.startsWith('image/')))) {
+    if (dir.file && dir.file?.type?.startsWith('image/')) {
     } else {
       insertText(
         document.querySelector('.error-image'),
@@ -392,8 +436,10 @@ export class AdminPage extends View {
     return result;
   }
 
-  getFormActors () {
-    const nameActor = (document.querySelector('.name-input-select') as HTMLInputElement).value.trim();
+  getFormActors() {
+    const nameActor = (
+      document.querySelector('.name-input-select') as HTMLInputElement
+    ).value.trim();
     const allActors = document.querySelector('.results-actors') as HTMLElement;
     allActors!.innerHTML = '';
 
@@ -404,12 +450,12 @@ export class AdminPage extends View {
         amplua: [''],
         county: '',
         birthday: '',
-        films: ['']
+        films: [''],
       })
     );
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const adminPanel = document.querySelector('.admin-panel');
     const addFilm = document.querySelector('.add-film');
     const installPoster = document.querySelector('.settings__img');
@@ -421,7 +467,7 @@ export class AdminPage extends View {
     addFilm?.removeEventListener('click', this.popupEvent);
   }
 
-  resultFindActors () {
+  resultFindActors() {
     const response = store.getState('resultSearchActor');
     store.unsubscribe('resultSearchActor', this.resultFindActors.bind(this));
     const body = document.querySelector('.results-actors');
@@ -432,13 +478,18 @@ export class AdminPage extends View {
         const actorCard = new ActorCard(ROOT);
         body?.insertAdjacentHTML(
           'beforeend',
-          actorCard.render({ actor: response?.body.actors[actor], alreadyFavorite: false, addClass: 'actor', addClassPoster: 'actor-poster' })
+          actorCard.render({
+            actor: response?.body.actors[actor],
+            alreadyFavorite: false,
+            addClass: 'actor',
+            addClassPoster: 'actor-poster',
+          })
         );
       }
     }
   }
 
-  init () {
+  init() {
     const inputHtml = document.querySelector('.error-login');
     const textAreaHtml = document.querySelector('.error-text-area');
     const countryHtml = document.querySelector('.error-country');
@@ -452,15 +503,27 @@ export class AdminPage extends View {
     const wrapCountry = document.querySelector('.country');
     const wrapDate = document.querySelector('.date');
 
-    const titleHTML = document.querySelector('.title-input-add-film') as HTMLInputElement;
-    const infoHTML = document.querySelector('.review-form__body__text') as HTMLInputElement;
-    const dateHTML = document.querySelector('.date-input-add-film') as HTMLInputElement;
-    const fileInputHTML = document.querySelector('.settings_file') as HTMLInputElement;
-    const countryHTML = document.querySelector('.country-input-add-film') as HTMLInputElement;
+    const titleHTML = document.querySelector(
+      '.title-input-add-film'
+    ) as HTMLInputElement;
+    const infoHTML = document.querySelector(
+      '.review-form__body__text'
+    ) as HTMLInputElement;
+    const dateHTML = document.querySelector(
+      '.date-input-add-film'
+    ) as HTMLInputElement;
+    const fileInputHTML = document.querySelector(
+      '.settings_file'
+    ) as HTMLInputElement;
+    const countryHTML = document.querySelector(
+      '.country-input-add-film'
+    ) as HTMLInputElement;
 
     const genres = document.querySelectorAll('.title-type-admin.active');
     // @ts-ignore
-    const actors = document.querySelector('.selected-actors').querySelectorAll('.actor-selection_actor');
+    const actors = document
+      .querySelector('.selected-actors')
+      .querySelectorAll('.actor-selection_actor');
 
     this.state.errorsHTML = {
       title: inputHtml,
@@ -469,14 +532,14 @@ export class AdminPage extends View {
       genre: genreHtml,
       date: dateHtml,
       actors: actorsHtml,
-      image: imageError
+      image: imageError,
     };
 
     this.state.wraps = {
       title: wrapLogin,
       textArea: wrapInfo,
       country: wrapCountry,
-      date: wrapDate
+      date: wrapDate,
     };
 
     this.state.inputsHTML = {
@@ -486,7 +549,7 @@ export class AdminPage extends View {
       date: dateHTML,
       genre: genres,
       actors: actors,
-      image: fileInputHTML
+      image: fileInputHTML,
     };
   }
 }

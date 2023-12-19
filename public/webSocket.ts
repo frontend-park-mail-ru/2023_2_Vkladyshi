@@ -34,7 +34,7 @@ class WebSocketService {
     logoutStatus: number | null;
   };
 
-  constructor (url: string = urls.ws) {
+  constructor(url: string = urls.ws) {
     this._wsUrl = url;
     this._ws = null;
     this.mapActionHandlers = new Map();
@@ -44,16 +44,20 @@ class WebSocketService {
       user: null,
       permission: null,
       isActive: true,
-      logoutStatus: null
+      logoutStatus: null,
     };
 
     this.subscribe('ANONS_FILM', (payload: filmNotifPayload) => {
       // showNotification('ANONS_FILM', payload);
 
-      if (!this.state.isActive && this.state.permission === 'granted' && this.mapNotification.has(payload.id)) {
+      if (
+        !this.state.isActive &&
+        this.state.permission === 'granted' &&
+        this.mapNotification.has(payload.id)
+      ) {
         const date = decoreDate(payload.prod_date).split(' ');
         new Notification('Премьера фильма!', {
-          body: `${payload.name} в Кино с ${date[0]} ${date[1]}`
+          body: `${payload.name} в Кино с ${date[0]} ${date[1]}`,
         });
       }
     });
@@ -70,7 +74,7 @@ class WebSocketService {
         Notification.requestPermission().then((permission) => {
           console.log('ws__Notification_Permission:', permission);
           this.state.permission = permission;
-          console.log(permission)
+          console.log(permission);
         });
       }
     };
@@ -88,12 +92,18 @@ class WebSocketService {
     this.addDeleteHandler = () => {
       console.log(store.getState('subscribeCalendar_res'));
       const newNotification = store.getState('subscribeCalendar_res')['body'];
-      if (this.mapNotification.has(newNotification['notificationID']) === false && newNotification['subscribe'] === true) {
+      if (
+        this.mapNotification.has(newNotification['notificationID']) === false &&
+        newNotification['subscribe'] === true
+      ) {
         this.mapNotification.set(newNotification['notificationID'], true);
-      };
-      if (this.mapNotification.has(newNotification['notificationID']) && newNotification['subscribe'] === false) {
+      }
+      if (
+        this.mapNotification.has(newNotification['notificationID']) &&
+        newNotification['subscribe'] === false
+      ) {
         this.mapNotification.delete(newNotification['notificationID']);
-      };
+      }
     };
     store.subscribe('subscribeCalendar_res', this.addDeleteHandler);
 
@@ -101,7 +111,7 @@ class WebSocketService {
     window.onblur = () => (this.state.isActive = false);
   }
 
-  initialize () {
+  initialize() {
     console.log('ws_initialize --- ', this._ws);
     if (!this._ws) {
       return;
@@ -129,19 +139,19 @@ class WebSocketService {
     this._ws.addEventListener('close', this.closeHandler);
   }
 
-  send (action: string, payload: anyObject) {
+  send(action: string, payload: anyObject) {
     console.log('ws_send');
     if (this._ws != null) {
       this._ws.send(
         JSON.stringify({
           action,
-          payload
+          payload,
         })
       );
     }
   }
 
-  emit (actions: string[], payload: anyObject) {
+  emit(actions: string[], payload: anyObject) {
     console.log('ws_emit');
     if (this.mapActionHandlers !== undefined) {
       // @ts-ignore
@@ -149,7 +159,7 @@ class WebSocketService {
     }
   }
 
-  subscribe (action: string, callback: Callback) {
+  subscribe(action: string, callback: Callback) {
     console.log('ws_subscribe');
     if (this.mapActionHandlers.has(action)) {
       return;
@@ -157,14 +167,14 @@ class WebSocketService {
     this.mapActionHandlers.set(action, callback);
   }
 
-  unsubscribe (action: string) {
+  unsubscribe(action: string) {
     console.log('ws_unsubscribe');
     if (this.mapActionHandlers.has(action)) {
       this.mapActionHandlers.delete(action);
     }
   }
 
-  cancel () {
+  cancel() {
     if (this._ws) {
       this._ws.removeEventListener('open', this.openHandler);
       this._ws.removeEventListener('message', this.messageHadnler);

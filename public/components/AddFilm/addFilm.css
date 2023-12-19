@@ -1,52 +1,52 @@
 .add-film {
-    color: white;
-    padding-top: 50px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
+  color: white;
+  padding-top: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
 }
 
 .add-film__left {
-    width: 350px;
-    height: 700px;
+  width: 350px;
+  height: 700px;
 }
 
 .add-film__right {
-    width: 500px;
-    height: 700px;
+  width: 500px;
+  height: 700px;
 }
 
 .selected-actors {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .add-film__actors {
-    width: 700px;
-    height: 200px;
-    display: flex;
-    /*justify-content: center;*/
-    flex-direction: column;
-    margin-left: 20px;
+  width: 700px;
+  height: 200px;
+  display: flex;
+  /*justify-content: center;*/
+  flex-direction: column;
+  margin-left: 20px;
 }
 
 .add-film__actors__body {
-    /*width: 100%;*/
-    height: 200px;
-    background: white;
-    padding: 10px;
-    border-radius: 8px;
-    margin-right: 20px;
-    /*padding-right: 20px;*/
+  /*width: 100%;*/
+  height: 200px;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-right: 20px;
+  /*padding-right: 20px;*/
 }
 
 .actors-text-add {
-    text-align: left;
+  text-align: left;
 }
 
 .results-actors {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }

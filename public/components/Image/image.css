@@ -88,8 +88,6 @@
   /*position: absolute;*/
 }
 
-
-
 .input-main-email {
   /*width: 100%;*/
   height: 50px;
@@ -181,7 +179,6 @@ input:focus {
   animation: moveUp 1s forwards;
 }
 
-
 @media screen and (max-width: 1150px) {
   .video-container {
     margin-top: 50px;
@@ -202,7 +199,7 @@ input:focus {
   }
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 800px) {
   .image-container {
     justify-content: flex-start;
   }

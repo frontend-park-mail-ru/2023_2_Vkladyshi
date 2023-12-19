@@ -1,62 +1,62 @@
 export const setUser = (user: user) => ({
   type: 'setUser',
-  value: user
+  value: user,
 });
 
 export const actionAuth = () => ({
-  type: 'auth'
+  type: 'auth',
 });
 
 export const actionCSRF = () => ({
-  type: 'csrf'
+  type: 'csrf',
 });
 
 export const actionLogout = (redirect) => ({
-  type: 'logout'
+  type: 'logout',
 });
 
 export const actionSignin = (user: user) => ({
   type: 'signin',
-  value: user
+  value: user,
 });
 
 export const actionSignup = (user: user) => ({
   type: 'signup',
-  value: user
+  value: user,
 });
 
 export const actionCollectionMain = (params: collectionParams) => ({
   type: 'collectionMain',
-  value: params
+  value: params,
 });
 
 export const actionCollectionMenu = (params: collectionParams) => ({
   type: 'collectionMenu',
-  value: params
+  value: params,
 });
 
 export const actionActor = (params: { actorName: number }) => ({
   type: 'actor',
-  value: params
+  value: params,
 });
 
 export const actionFilm = (params: film) => ({
   type: 'film',
-  value: params
+  value: params,
 });
 
 export const actionPutSettings = (params: settings) => ({
   type: 'putSettings',
-  value: params
+  value: params,
 });
 
 export const actionGetSettings = () => ({
-  type: 'getSettings'
+  type: 'getSettings',
 });
 
 export const actionGetCommentsUser = (params: paginator) => ({
   type: 'userComments',
-  value: params
+  value: params,
 });
 
 export const actionGetCommentsFilm = (params: {
@@ -65,73 +65,73 @@ export const actionGetCommentsFilm = (params: {
   page: number;
 }) => ({
   type: 'filmComments',
-  value: params
+  value: params,
 });
 
 export const actionAddComment = (params: addComment) => ({
   type: 'addComment',
-  value: params
+  value: params,
 });
 
 export const actionAddCommentTwo = (params: addComment) => ({
   type: 'addCommentTwo',
-  value: params
+  value: params,
 });
 
 export const actionFavoriteFilms = (params: paginator) => ({
   type: 'favoriteFilms',
-  value: params
+  value: params,
 });
 
 export const actionFavoriteActors = (params: paginator) => ({
   type: 'favoriteActors',
-  value: params
+  value: params,
 });
 
 export const actionAddFavoriteFilm = (params: favoriteFilm) => ({
   type: 'addFavoriteFilm',
-  value: params
+  value: params,
 });
 
 export const actionAddFavoriteActor = (params: favoriteActor) => ({
   type: 'addFavoriteActor',
-  value: params
+  value: params,
 });
 
 export const actionRemoveFavoriteFilm = (params: favoriteFilm) => ({
   type: 'removeFavoriteFilm',
-  value: params
+  value: params,
 });
 
 export const actionRemoveFavoriteActor = (params: favoriteActor) => ({
   type: 'removeFavoriteActor',
-  value: params
+  value: params,
 });
 
 export const actionSearchFilm = (params: searchFilm) => ({
   type: 'searchFilm',
-  value: params
+  value: params,
 });
 
 export const actionSearchActor = (params: searchActor) => ({
   type: 'searchActor',
-  value: params
+  value: params,
 });
 
 export const actionAddFilm = (params: settings) => ({
   type: 'addFilm',
-  value: params
+  value: params,
 });
 
 export const actionGetCalendar = () => ({
-  type: 'getCalendar'
+  type: 'getCalendar',
 });
 
 export const actionStatistics = () => ({
-  type: 'getStatistics'
+  type: 'getStatistics',
 });
 
 export const actionCheckSubscribeCalendar = (params: SubscribeCalendar) => ({
   type: 'subscribeCalendar',
-  value: params
+  value: params,
 });

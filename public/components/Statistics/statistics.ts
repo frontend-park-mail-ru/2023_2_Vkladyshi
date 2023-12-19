@@ -1,7 +1,7 @@
 import * as templateStatistics from '@components/Statistics/statistics.hbs';
 
 export class Statistics {
-  render () {
+  render() {
     return templateStatistics();
   }
 }

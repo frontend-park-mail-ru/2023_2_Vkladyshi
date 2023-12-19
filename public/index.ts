@@ -1,7 +1,7 @@
 import { router } from '@router/router';
 import './index.css';
-import {get} from "@utils/ajax";
-import {urls} from "@utils/config";
+import { get } from '@utils/ajax';
+import { urls } from '@utils/config';
 // import { webSocket } from '@/webSocket';
 // import { initializeApp } from 'firebase/app';
 // import { getMessaging, onMessage, getToken } from 'firebase/messaging';
@@ -33,12 +33,11 @@ if (!('PushManager' in window)) {
   console.error('Браузер не поддерживает push-уведомления.');
 }
 
-
 const registerSW = async () => {
   return navigator.serviceWorker.register('/notif-sw.js');
-}
+};
 
-let lastText ='';
+let lastText = '';
 
 const reqiestNotif = async () => {
   const perm = await Notification.requestPermission();
@@ -47,7 +46,7 @@ const reqiestNotif = async () => {
     setTimeout(sendNotify, 3000);
     setInterval(sendNotify, 60000);
   }
-}
+};
 
 const sendNotify = async (data) => {
   const response = await get({
@@ -59,21 +58,17 @@ const sendNotify = async (data) => {
       lastText = response.body.title;
     }
   }
-}
+};
 
 const renderUI = (data) => {
-
   const notif = {
     body: data.body,
     icon: 'https://movie-hub.ru/icons/brandTitle.svg',
-    requireInteraction: true
-  }
+    requireInteraction: true,
+  };
 
-  const notifUI= new Notification(data.title, notif);
-}
+  const notifUI = new Notification(data.title, notif);
+};
 
 registerSW();
 reqiestNotif();
-
-
-

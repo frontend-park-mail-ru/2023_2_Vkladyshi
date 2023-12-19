@@ -2,9 +2,7 @@ const CACHE_NAME = 'moviehub-1';
 
 const blackSearchUrls = /object=user_avatar|user\/\d+/;
 
-const assetUrls = [
-  '/',
-];
+const assetUrls = ['/'];
 
 const cachedReg =
   /\/api|(.png|.ttf|.woff2|.js|.ts|.jpg|.jpeg|.icon|.svg|.css|\/)$/;
@@ -41,7 +39,6 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
 
   const url = new URL(request.url);
-
 
   if (
     event.request.method !== 'GET' ||

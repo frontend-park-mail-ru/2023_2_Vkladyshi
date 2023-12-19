@@ -7,7 +7,6 @@ import { store } from '@store/store';
 import { actionCheckSubscribeCalendar } from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
 
-
 /**
  * Класс формирования главной страницы
  * @class MainPage
@@ -19,7 +18,7 @@ export class MainPage extends View {
   /**
    * Метод создания страницы
    */
-  render () {
+  render() {
     this.renderDefaultPage({});
 
     store.subscribe('collectionMain', this.addCalendar.bind(this));
@@ -52,7 +51,9 @@ export class MainPage extends View {
     if (contentBlockHTML) {
       const filmSelection = new FilmSelectionPage(ROOT);
       filmSelection.render(true).then((response) => {
-        const divName = document.querySelector('.film-selection_name') as HTMLElement;
+        const divName = document.querySelector(
+          '.film-selection_name'
+        ) as HTMLElement;
         if (divName) {
           divName!.textContent = 'Новинки';
           // divName.style.marginTop = '0px';
@@ -63,10 +64,12 @@ export class MainPage extends View {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const sendEmail = document.querySelector('.send-email-main');
     sendEmail?.addEventListener('click', (event) => {
-      const email = document.querySelector('.input-main-email') as HTMLInputElement;
+      const email = document.querySelector(
+        '.input-main-email'
+      ) as HTMLInputElement;
       const text = document.querySelector('.header__container__text');
       // event.preventDefault();
       if (/.@./.test(email.value)) {
@@ -80,7 +83,7 @@ export class MainPage extends View {
 
     // popup?.addEventListener('click', popupEvent);
   }
-  addCalendar () {
+  addCalendar() {
     store.unsubscribe('collectionMain', this.addCalendar.bind(this));
 
     if (calendar) {
@@ -94,7 +97,7 @@ export class MainPage extends View {
         );
         currentDaysHTML?.classList.add('calendar__days__day_today');
 
-        const subs = document.querySelectorAll('.calendar__days__subscribe')
+        const subs = document.querySelectorAll('.calendar__days__subscribe');
 
         // subs.forEach(div => {
         //   if (div.getAttribute('data-section')) {
@@ -107,33 +110,39 @@ export class MainPage extends View {
         //   }
         // });
 
-
         const calendarSelector = document.querySelector('.calendar');
         const calendarEvent = (event) => {
           this.calendarEvent = calendarEvent;
           const filmId = event.target
-              .closest('.calendar__days__day')
-              .getAttribute('data-section');
+            .closest('.calendar__days__day')
+            .getAttribute('data-section');
           switch (true) {
             case event.target.className === 'calendar__days__subscribe':
               if (store.getState('auth').status === 200) {
-                store.dispatch(actionCheckSubscribeCalendar({ login: 'login', subscribeFilmID: 2 })).then((response) => {
-                  const result = store.getState('subscribeCalendar_res');
-                  if (result['status'] === 200) {
-                    if (result['body']['subscribe'] === true) {
-                      event.target.style.backgroundColor = 'orange';
-                    } else {
-                      event.target.style.backgroundColor = 'transparent';
-                    };
-                  };
-                });
+                store
+                  .dispatch(
+                    actionCheckSubscribeCalendar({
+                      login: 'login',
+                      subscribeFilmID: 2,
+                    })
+                  )
+                  .then((response) => {
+                    const result = store.getState('subscribeCalendar_res');
+                    if (result['status'] === 200) {
+                      if (result['body']['subscribe'] === true) {
+                        event.target.style.backgroundColor = 'orange';
+                      } else {
+                        event.target.style.backgroundColor = 'transparent';
+                      }
+                    }
+                  });
               } else {
                 router.go(
-                    {
-                      path: '/login',
-                      props: ``
-                    },
-                    { pushState: true, refresh: false }
+                  {
+                    path: '/login',
+                    props: ``,
+                  },
+                  { pushState: true, refresh: false }
                 );
               }
               break;
@@ -141,11 +150,11 @@ export class MainPage extends View {
               if (filmId !== '') {
                 this.componentWillUnmount();
                 router.go(
-                    {
-                      path: '/film',
-                      props: `/${filmId}`
-                    },
-                    { pushState: true, refresh: false }
+                  {
+                    path: '/film',
+                    props: `/${filmId}`,
+                  },
+                  { pushState: true, refresh: false }
                 );
               }
               break;
@@ -159,7 +168,7 @@ export class MainPage extends View {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     // const popup = document.querySelector('.film-selection');
     // popup?.removeEventListener('click', this.popupEvent);
 

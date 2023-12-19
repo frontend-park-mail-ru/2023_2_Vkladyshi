@@ -153,7 +153,7 @@ input::placeholder {
 .header_search_item__select-search {
   width: 30%;
   background: #f5c518;
-  border-radius:8px 0 0 8px;
+  border-radius: 8px 0 0 8px;
   border: 1px solid #f3c23c;
   display: flex;
   justify-content: space-around;
@@ -173,7 +173,7 @@ input::placeholder {
 
 .header_search_item__lope-container {
   background: white;
-  border-radius:0 8px 8px 0;
+  border-radius: 0 8px 8px 0;
   /*height: 70px;*/
   display: flex;
   justify-content: center;
@@ -215,8 +215,8 @@ input::placeholder {
   width: 70%;
 }
 
-
-.header_search__list-search__films, .header_search__list-search__actors {
+.header_search__list-search__films,
+.header_search__list-search__actors {
   display: flex;
   flex-direction: row;
   color: white;
@@ -225,7 +225,8 @@ input::placeholder {
   padding: 1rem;
 }
 
-.header__search-mobile__select__films, .header__search-mobile__select__actors {
+.header__search-mobile__select__films,
+.header__search-mobile__select__actors {
   display: flex;
   flex-direction: row;
   color: white;
@@ -259,7 +260,7 @@ input::placeholder {
 
 .header__search-mobile__input {
   width: 85%;
-  border:none;
+  border: none;
   border-radius: 8px 0 0 8px;
   height: 60px;
   font-size: 22px;
@@ -278,7 +279,7 @@ input::placeholder {
   justify-content: center;
   align-items: center;
   background-color: #5e5c5c;
-  border-radius:0 8px 8px 0;
+  border-radius: 0 8px 8px 0;
   width: 15%;
   cursor: pointer;
 }
@@ -325,18 +326,19 @@ header__search-mobile__input::placeholder {
   border-radius: 0 0 8px 8px;
 }
 
-.header_search__list-search__films:hover, .header_search__list-search__actors:hover {
+.header_search__list-search__films:hover,
+.header_search__list-search__actors:hover {
   /*opacity: 0.8;*/
   background: #5e5c5c;
 }
 
-
-.header_search_item__select-search__arrow-header, .header_search_item__select-search__arrow {
+.header_search_item__select-search__arrow-header,
+.header_search_item__select-search__arrow {
   width: 15px;
   height: 15px;
 }
 
-@media screen and (max-width: 1250px){
+@media screen and (max-width: 1250px) {
   .header .right-element {
     margin-right: 10px;
   }
@@ -354,7 +356,6 @@ header__search-mobile__input::placeholder {
   }
 }
 
-
 @media screen and (max-width: 1150px) {
   .header__search-mobile {
     display: none;
@@ -371,7 +372,7 @@ header__search-mobile__input::placeholder {
   }
 
   .header {
-  padding: 0 20px 0 20px;
+    padding: 0 20px 0 20px;
   }
 
   header {
@@ -419,7 +420,7 @@ header__search-mobile__input::placeholder {
   }
 }
 @media screen and (max-width: 800px) {
-/*@media screen and (max-width: 768px) {*/
+  /*@media screen and (max-width: 768px) {*/
   .search-container__text {
     display: none;
   }
@@ -450,7 +451,8 @@ header__search-mobile__input::placeholder {
     display: flex;
   }
 
-  .icon ,.search-mobile-lope{
+  .icon,
+  .search-mobile-lope {
     height: 50px;
     width: 50px;
   }
@@ -487,12 +489,12 @@ header__search-mobile__input::placeholder {
     width: auto;
   }
 
-
   .header_search_item__input {
     padding: 8px 1px 8px 1px;
   }
 
-  .films-search-header, .actors-search-header {
+  .films-search-header,
+  .actors-search-header {
     font-size: 12px;
   }
 
@@ -549,7 +551,9 @@ header__search-mobile__input::placeholder {
     margin-right: 0;
   }
 
-  .icon, .header_search_item__lope, .header_search_item__mobile-lope-search {
+  .icon,
+  .header_search_item__lope,
+  .header_search_item__mobile-lope-search {
     width: 35px;
     height: 35px;
   }
