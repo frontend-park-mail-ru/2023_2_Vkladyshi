@@ -49,8 +49,8 @@ export class FilmCard extends Component {
 
       switch (
         true
-      ) {// @ts-ignore
-        case event.target.closest('.image-watchlist') !== null: // @ts-ignore
+      ) {
+        case (event?.target as Element | null)?.closest('.image-watchlist') !== null: // @ts-ignore
           let active;
           const orange = element?.querySelector(
             '.red-watchlist'
