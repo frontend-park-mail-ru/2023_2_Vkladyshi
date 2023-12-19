@@ -292,11 +292,11 @@
 }
 
 
-.title-type:hover, .title-type-admin:hover {
-  background: #f5c518;
-  color: black;
-  border: 2px solid #f5c518;
-}
+/*.title-type:hover, .title-type-admin:hover {*/
+/*  background: #f5c518;*/
+/*  color: black;*/
+/*  border: 2px solid #f5c518;*/
+/*}*/
 
 .section-title-type.active {
   display: flex;

@@ -45,16 +45,16 @@
 .actor-selection_actor_name {
   /*width: 80%;*/
   /*white-space: nowrap;*/
-  overflow: hidden;
-  text-overflow: ellipsis;
+  /*overflow: hidden;*/
+  /*text-overflow: ellipsis;*/
   margin-top: 10px;
 
   color: #f5f5f5;
   font-size: 17px;
-  font-style: normal;
-  font-weight: 700;
-  line-height: normal;
-  letter-spacing: 0.51px;
+  /*font-style: normal;*/
+  /*font-weight: 700;*/
+  /*line-height: normal;*/
+  /*letter-spacing: 0.51px;*/
 
   margin-bottom: 0;
 }

@@ -152,8 +152,14 @@ export class Header extends Component {
           );
           break;
         case target.closest('.header__search-mobile__input__cancel') !== null:
-          const inputMobile = document.querySelector('.header__search-mobile');// @ts-ignore
-          inputMobile.classList.add('reverse');
+          const inputMobile = document.querySelector('.header__search-mobile');
+          const selectNew = document.querySelector('.header__search-mobile__select');
+          const imageStrelkaNew = document.querySelector('.header_search_item__select-search__arrow') as HTMLImageElement;
+          // @ts-ignore
+          imageStrelkaNew?.style.transform = 'rotateX(0deg)';
+          this.removeSearchList(document.querySelector('.header__search-mobile__select__list'));
+          selectNew?.classList.remove('active');
+          inputMobile?.classList.add('reverse');
           break;
         case target.closest('.header_search_item__mobile-lope') !== null:
           if (document?.querySelector('header')!.offsetWidth < 800) {
@@ -221,7 +227,6 @@ export class Header extends Component {
             // @ts-ignore
             inputButtonMobile?.placeholder = 'Фильмы';
           } else if (target.closest('.header__search-mobile__select__actors')) {
-            console.log('actors', inputButtonMobile)
             this.state.selectSearch = 'actor';
             // @ts-ignore
             inputButtonMobile?.placeholder = 'Актёры';

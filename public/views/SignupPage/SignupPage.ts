@@ -335,13 +335,13 @@ export class SignupPage extends View {
 
       this.state.statusSignup = 0;
       this.componentWillUnmount();
-      // router.go(
-      //   {
-      //     path: '/',
-      //     props: ''
-      //   },
-      //   { pushState: true, refresh: false }
-      // );
+      router.go(
+        {
+          path: '/',
+          props: ''
+        },
+        { pushState: true, refresh: false }
+      );
       return;
     }
 
@@ -434,15 +434,15 @@ export class SignupPage extends View {
   }
 
   redirectToMain () {
-    if (store.getState('login').status === 200) {
-      store.unsubscribe('login', this.redirectToMain.bind(this));
-      // router.go(
-      //   {
-      //     path: '/',
-      //     props: ''
-      //   },
-      //   { pushState: true, refresh: false }
-      // );
-    }
+    // if (store.getState('login').status === 200) {
+    //   store.unsubscribe('login', this.redirectToMain.bind(this));
+    //   router.go(
+    //     {
+    //       path: '/',
+    //       props: ''
+    //     },
+    //     { pushState: true, refresh: false }
+    //   );
+    // }
   }
 }

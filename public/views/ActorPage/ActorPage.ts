@@ -3,8 +3,7 @@ import { store } from '@store/store';
 import {
   actionActor,
   actionAddFavoriteActor,
-  actionAddFavoriteFilm, actionFavoriteActors, actionRemoveFavoriteActor,
-  actionRemoveFavoriteFilm
+  actionFavoriteActors, actionRemoveFavoriteActor,
 } from '@store/action/actionTemplates';
 import { image } from '@components/Image/image';
 import { actorInfo } from '@components/ActorInfo/actorInfo';
@@ -33,10 +32,8 @@ export class ActorDescritionPage extends View {
       actorInfo: null
     };
 
-    this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
-    this.componentWillUnmount = this.componentWillUnmount.bind(this);
-
-    store.subscribe('actorInfo', this.subscribeActorStatus);
+    // this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
+    // this.componentWillUnmount = this.componentWillUnmount.bind(this);
   }
 
   /**
@@ -45,7 +42,9 @@ export class ActorDescritionPage extends View {
    */
   render (props = null) {
     this.renderDefaultPage({});
-    store.subscribe('removeView', this.componentWillUnmount);
+    store.unsubscribe('removeView', this.subscribeActorStatus.bind(this));
+    store.subscribe('removeView', this.componentWillUnmount.bind(this));
+    store.subscribe('actorInfo', this.subscribeActorStatus.bind(this));
 
     if (props !== null) {
       store.dispatch(
@@ -78,7 +77,7 @@ export class ActorDescritionPage extends View {
         date: formattedDate,
         poster: res['poster_href'],
         infoText: res['info_text'] ? res['info_text'] : 'Неизвестно',
-        country: res['country'] ? res['country'] : 'Страна неизвестна',
+        country: res['country'] ? res['country'] : 'Неизвестно',
         career: res['career']
       };
     }
@@ -115,6 +114,7 @@ export class ActorDescritionPage extends View {
       this.popupEvent = popupEvent;
       switch (true) {
         case event.target.closest('.image-watchlist') !== null:
+
           const element = document.querySelector(`.video-content`);
           let active = true;
 
@@ -146,11 +146,17 @@ export class ActorDescritionPage extends View {
     };
     // const kek = document.querySelector('.similar-movies');
 
+    popup?.removeEventListener('click', this.popupEvent);
+    popup?.removeEventListener('click', popupEvent);
     popup?.addEventListener('click', popupEvent);
   }
 
   componentWillUnmount () {
-    store.unsubscribe('removeView', this.subscribeActorStatus);
+    store.unsubscribe('removeView', this.subscribeActorStatus.bind(this));
+    store.unsubscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
+    store.unsubscribe('actorInfo', this.subscribeActorStatus.bind(this));
+    const popup = document.querySelector('.video-content');
+    popup?.removeEventListener('click', this.popupEvent);
   }
 
   getFavoriteActorsList () {

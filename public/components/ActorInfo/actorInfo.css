@@ -25,7 +25,7 @@
   grid-template-columns: minmax(300px, auto) auto;
   grid-gap: 30px;
   margin-top: 20px;
-  padding-bottom: 100px;
+  /*padding-bottom: 100px;*/
 }
 
 .param-list {
@@ -251,7 +251,7 @@
     font-size: 30px;
   }
 
-  .column, .player {
+  .column, {
     margin-top: 100px;
   }
 
@@ -310,7 +310,6 @@
     padding: 0;
     grid-row: 1;
     grid-column: 1;
-    height: 100px;
   }
 
   .param-list {

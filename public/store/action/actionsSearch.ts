@@ -1,4 +1,4 @@
-import { get, post } from '@utils/ajax';
+import {get, post} from '@utils/ajax';
 import { urls } from '@utils/config';
 import { page404 } from '@router/Page404/page404';
 
@@ -13,9 +13,9 @@ class ActionsSearch {
     genre,
     actors
   }: searchFilm) {
-    const response = get({
+    const response = post({
       url: urls.searchFilm,
-      query: {
+      body: {
         title: title || '',
         date_from: dateFrom || '',
         date_to: dateTo || '',
@@ -40,9 +40,9 @@ class ActionsSearch {
   }
 
   async searchActor ({ name, films, birthday, amplua }: searchActor) {
-    const response = get({
+    const response = post({
       url: urls.searchActor,
-      query: { name: name, films: films, birthday: birthday, amplua: amplua
+      body: { name: name, films: films, birthday: birthday, amplua: amplua
         // page: page, per_page: per_page
       }
     });

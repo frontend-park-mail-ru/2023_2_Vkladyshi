@@ -11,6 +11,8 @@
           <img class='image-watchlist orange-watchlist active' src='/icons/bookmark2.svg' />
             <img class='image-watchlist red-watchlist noactive' src='/icons/bookmark1.svg' />
         {{/if}}
+          {{# if haveRating}}
+          {{else}}
         <div class='film-rating'>
           {{#if rating}}
             {{rating}}
@@ -18,6 +20,7 @@
             8
           {{/if}}
         </div>
+          {{/if}}
       </div>
     </div>
   </div>

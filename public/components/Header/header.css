@@ -249,7 +249,8 @@ input::placeholder {
   align-items: center;
   display: none;
   color: white;
-  background-color: #141414;;
+  background-color: #141414;
+  z-index: 2;
 }
 
 .search-mobile-lope {
@@ -431,7 +432,12 @@ header__search-mobile__input::placeholder {
     width: 45%;
   }
 
-  .header_search_item__lope, .header_search_item__mobile-lope {
+  .header_search_item__mobile-lope {
+    height: 30px;
+    width: 30px;
+  }
+
+  .header_search_item__lope {
     height: 50px;
     width: 50px;
   }
@@ -543,7 +549,7 @@ header__search-mobile__input::placeholder {
     margin-right: 0;
   }
 
-  .icon, .header_search_item__lope {
+  .icon, .header_search_item__lope, .header_search_item__mobile-lope-search {
     width: 35px;
     height: 35px;
   }

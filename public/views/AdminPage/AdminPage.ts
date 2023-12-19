@@ -47,15 +47,12 @@ export class AdminPage extends View {
       file: '',
       defaultImage: ''
     };
-
-    // console.log('constructor');
   }
 
   /**
    * Метод создания страницы
    */
   render () {
-    // console.log('render admin');
     this.renderDefaultPage({});
     const contentBlock = document.querySelector('.content-block');
     const footer = document.querySelector('.footer');

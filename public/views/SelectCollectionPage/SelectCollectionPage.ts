@@ -82,6 +82,15 @@ export class SelectCollectionPage extends View {
    * @return {Promise} Promise ответа
    */
   componentDidMount (searchFilm = true) {
+
+    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+      // Отключение hover у дива
+      const divElement = document.querySelectorAll('.title-type');
+      divElement.forEach((elem)=>{ //@ts-ignore
+        elem?.style.isHovered = 'none';
+      })
+    }
+
     if (searchFilm) {
       this.eventsSearchFilm();
     } else {
@@ -107,7 +116,6 @@ export class SelectCollectionPage extends View {
           actorButtom?.classList.remove('noactive-opacity');
           filmButtom?.classList.remove('active-opacity');
           filmButtom?.classList.add('noactive-opacity');
-          console.log(112)
           store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
           this.eventsSearchActor();
           break;

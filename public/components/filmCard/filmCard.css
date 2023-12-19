@@ -47,19 +47,9 @@
 }
 
 .film-selection_film_name {
-  /*width: 80%;*/
-  /*white-space: nowrap;*/
-  /*overflow: hidden;*/
-  /*text-overflow: ellipsis;*/
   margin-top: 10px;
-
   color: #f5f5f5;
-  font-size: 20px;
-  /*font-style: normal;*/
-  /*font-weight: 700;*/
-  /*line-height: normal;*/
-  /*letter-spacing: 0.51px;*/
-
+  font-size: 18px;
   margin-bottom: 0;
 }
 
@@ -165,5 +155,9 @@
   .film-selection_film-poster {
     width: 100px;
     height: 200px;
+  }
+
+  .film-selection_film_name {
+    font-size: 15px;
   }
 }

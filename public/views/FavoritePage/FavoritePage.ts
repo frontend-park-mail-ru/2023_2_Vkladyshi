@@ -104,6 +104,14 @@ export class FavoritePage extends View {
 
           const element = document.querySelector(`[data-section="${id}"]`);
           element?.remove();
+
+          const elementsWithDataSetion = document.querySelectorAll('.actor-selection_actor ');
+          const elementsFilms = document.querySelectorAll('.film-selection_film');
+          if (elementsWithDataSetion.length === 0 && elementsFilms.length === 0) {
+            const body = document.querySelector('.favorite__body')
+            body!.innerHTML = '<div>Ваш список пуст</div>';
+          }
+
           break;
         case event.target.closest('.film-selection_film') !== null:
           this.componentWillUnmount();
@@ -175,10 +183,19 @@ export class FavoritePage extends View {
     ) as HTMLElement;
     // contentBlockHTML!.innerHTML = '';
     const films = store.getState('favoriteFilms')?.body;
+    const status = store.getState('favoriteFilms')?.status;
 
     const body = document.querySelector('.favorite__body');
     if (body) {
       body!.innerHTML = '';
+    }
+
+    if (films?.length === 0 || status === 404) {
+      body?.insertAdjacentHTML('beforeend', '<div>Ваш список пуст</div>');
+      return;
+    } else if (status !== 200) {
+      body?.insertAdjacentHTML('beforeend', '<div>Ошибка сервера!</div>');
+      return;
     }
 
     // eslint-disable-next-line guard-for-in
@@ -202,6 +219,15 @@ export class FavoritePage extends View {
     ) as HTMLElement;
     contentBlockHTML!.innerHTML = '';
     const actors = store.getState('favoriteActors')?.body.actors;
+    const status = store.getState('favoriteActors')?.status;
+
+    if (actors?.length === 0 || status === 404) {
+      contentBlockHTML?.insertAdjacentHTML('beforeend', '<div>Ваш список пуст</div>');
+      return;
+    } else if (status !== 200) {
+      contentBlockHTML?.insertAdjacentHTML('beforeend', '<div>Ошибка сервера!</div>');
+      return;
+    }
 
     // eslint-disable-next-line guard-for-in
     for (const actor in actors) {

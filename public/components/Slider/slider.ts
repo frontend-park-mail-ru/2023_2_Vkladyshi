@@ -77,24 +77,19 @@ export class Slider {
     // });
 
     prev?.addEventListener('click', () => {
-      console.log(111, sliders.scrollLeft)
       sliders.style.scrollBehavior = 'smooth';
       sliders.scrollLeft -= 280;
     });
 
     next?.addEventListener('click', () => {
-      console.log(222)
       sliders.style.scrollBehavior = 'smooth';
       sliders.scrollLeft += 280;
-      console.log(111, sliders.scrollLeft)
     });
   }
 
   addEvents () {
     const prev = document.querySelector('.prev');
     const next = document.querySelector('.next');
-
-    console.log(prev, next)
 
     prev?.addEventListener('click', this.minusSlides.bind(this));
     next?.addEventListener('click', this.plusSlides.bind(this));

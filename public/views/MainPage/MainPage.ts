@@ -4,9 +4,9 @@ import { router } from '@router/router';
 import { calendar } from '@components/Calendar/calendar';
 import { Slider } from '@components/Slider/slider';
 import { store } from '@store/store';
-import { actionAddFavoriteFilm, actionCheckSubscribeCalendar } from '@store/action/actionTemplates';
+import { actionCheckSubscribeCalendar } from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
-import { webSocket } from '@/webSocket';
+
 
 /**
  * Класс формирования главной страницы
@@ -96,17 +96,16 @@ export class MainPage extends View {
 
         const subs = document.querySelectorAll('.calendar__days__subscribe')
 
-        subs.forEach(div => {
-          if (div.getAttribute('data-section')) {
-            div.classList.remove('noactive');
-
-            const divElement = document.querySelector(`li[data-section="${div.getAttribute('data-section')}"]`);
-            console.log(divElement)
-            if (divElement) {
-              divElement.classList.add('pointer');
-            }
-          }
-        });
+        // subs.forEach(div => {
+        //   if (div.getAttribute('data-section')) {
+        //     div.classList.remove('noactive');
+        //
+        //     const divElement = document.querySelector(`li[data-section="${div.getAttribute('data-section')}"]`);
+        //     if (divElement) {
+        //       divElement.classList.add('pointer');
+        //     }
+        //   }
+        // });
 
 
         const calendarSelector = document.querySelector('.calendar');

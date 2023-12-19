@@ -95,8 +95,8 @@ const calendar = {
     monthText: 'Календарь релизов',
     currentDay: 13,
     days: [
-      { dayNumber: 14, dayNews: 'Kostolom', id: 10 },
-      { dayNumber: 21, dayNews: 'Night', id: 5 }
+      { dayNumber: 14, dayNews: 'Kostolom111 Kostolom111', id: 10 },
+      { dayNumber: 21, dayNews: 'Night1 Night', id: 5 }
     ]
   }
 };
@@ -236,14 +236,14 @@ const film = {
   body: {
     film: {
       id: 10,
-      title: 'film',
+      title: 'Леди Баг и Супер-Кот: Пробуждение силы',
       poster: '/icons/Poster.jpg',
       release_date: '2023-12-30',
       country: 'USA',
       mpaa: 'R',
       info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.'
     },
-    genre: [{ id: 0, title: 'Военные' }, { id: 2, title: 'Боевики' }],
+    genre: [{ id: 0, title: 'Военные' }, { id: 2, title: 'Боевики' },{ id: 0, title: 'Военные' }, { id: 2, title: 'Боевики' }],
     rating: 10,
     number: 11,
     actors: [
@@ -465,7 +465,7 @@ app.get('/authcheck', (req, res) => {
     return res.status(200).json({ status: 401 }).end();
   }
 
-  return res.status(200).json({ status: 200, body: { role: 'super1', login: 'volodin' } }).end();
+  return res.status(200).json({ status: 200, body: { role: 'super', login: 'volodin' } }).end();
 });
 
 app.get('/logout', (req, res) => {
@@ -567,6 +567,7 @@ app.use('/api/v1/actor', (req, res) => {
 // /api/v1/find
 app.use('/api/v1/find', (req, res) => {
   const secFetchSite = req.headers['sec-fetch-site'];
+  console.log(req.query)
   if (!secFetchSite) {
     res.sendFile(__dirname + '/index.html');
     return;

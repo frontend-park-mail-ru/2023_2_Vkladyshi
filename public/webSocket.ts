@@ -35,7 +35,6 @@ class WebSocketService {
   };
 
   constructor (url: string = urls.ws) {
-    console.log('ws_constructor');
     this._wsUrl = url;
     this._ws = null;
     this.mapActionHandlers = new Map();
@@ -178,4 +177,4 @@ class WebSocketService {
   }
 }
 
-export const webSocket = new WebSocketService(urls.ws);
+// export const webSocket = new WebSocketService(urls.ws);

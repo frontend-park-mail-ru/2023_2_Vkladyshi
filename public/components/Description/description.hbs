@@ -41,8 +41,8 @@
                 {{#if alreadyFavorite}}
                     <img class='image-cancel' src='/icons/cancel.png' />
                 {{else}}
-                    <img class='image-watchlist orange-watchlist active' src='/icons/bookmark2.svg' />
-                    <img class='image-watchlist red-watchlist noactive' src='/icons/bookmark1.svg' />
+                    <img class='image-watchlist main-film-card orange-watchlist active' src='/icons/bookmark2.svg' />
+                    <img class='image-watchlist main-film-card red-watchlist noactive' src='/icons/bookmark1.svg' />
                 {{/if}}
 
             </div>
@@ -102,10 +102,36 @@
           {{/each}}
         </div>
       </div>
-        <div class="similar-movies"></div>
+<!--        <div class="slider-equal">-->
+<!--            <div class="slider-equal-films">-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
   </div>
-  <div class='film-page__comments'>
-    <div class='film-page__comments__header'>Отзывы</div>
-  </div>
+</div>
+
+<div class="film-block">
+    <div class="slider-equal">
+        <div class="film-selection__header">
+            <div class="film-selection__header__yellow"></div>
+            <div class="film-selection_name">Похожие фильмы</div>
+        </div>
+        <div class="slider">
+            <img src="/icons/back.png" class="slider-prev">
+            <div class="slider-container"></div>
+            <img src="/icons/next.png" class="slider-next">
+        </div>
+
+    </div>
+
+<!--    <img src="/icons/back.png" class="slider-prev">-->
+
+    </div>
+<!--    <img src="/icons/next.png" class="slider-next">-->
+
+    <div class="film-page-comments">
+        <div class='film-page__comments'>
+            <div class='film-page__comments__header'>Отзывы</div>
+        </div>
+    </div>
 </div>

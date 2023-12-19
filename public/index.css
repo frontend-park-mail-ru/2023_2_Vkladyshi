@@ -63,3 +63,11 @@ body.none-active {
 ul {
   list-style-type: none;
 }
+
+.image404-ui {
+  width: 300px;
+  height: auto;
+  position: absolute;
+  margin-top: 80px;
+
+}
