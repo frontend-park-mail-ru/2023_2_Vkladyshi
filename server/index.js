@@ -93,9 +93,10 @@ const calendar = {
   body: {
     monthName: 'Декабрь 2023',
     monthText: 'Календарь релизов',
-    currentDay: 13,
+    currentDay: 19,
     days: [
       { dayNumber: 14, dayNews: 'Kostolom111 Kostolom111', id: 10 },
+      { dayNumber: 19, dayNews: 'Night1', id: 3 },
       { dayNumber: 21, dayNews: 'Night1 Night', id: 5 },
     ],
   },
@@ -696,10 +697,17 @@ app.use('/api/v1/subscribe/calendar', (req, res) => {
     .json({ status: 200, body: { notificationID: 11, subscribe: true } });
 });
 
+let lastSubscribe = false;
+
 app.use('/api/v1/user/subscribePush', (req, res) => {
+  if (lastSubscribe === false) {
+    lastSubscribe = true;
+  } else {
+    lastSubscribe = false;
+  }
+
   const notificationPayload = {
-    title: 'Заголовок',
-    body: 'Текст',
+    subscribe: lastSubscribe,
   };
 
   return res.status(200).json({ status: 200, body: notificationPayload });

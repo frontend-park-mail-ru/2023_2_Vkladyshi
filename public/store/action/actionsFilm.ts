@@ -78,13 +78,10 @@ class ActionsFilm {
     };
   }
 
-  async subscribeCalendar({ login, subscribeFilmID }: SubscribeCalendar) {
+  async subscribeCalendar() {
     const response = get({
-      url: urls.subscribeCalendar,
-      query: {
-        login: login,
-        subscribeFilmID: subscribeFilmID,
-      },
+      url: urls.calendarSub,
+      query: {},
     });
 
     const result = await response;

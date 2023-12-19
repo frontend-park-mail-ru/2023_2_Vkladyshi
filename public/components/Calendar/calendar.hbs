@@ -1,5 +1,12 @@
 <div class='calendar'>
-  <h1 class='calendar__month'>{{monthName}}</h1>
+  <h1 class='calendar__month'>
+    <img
+      class='calendar__days__subscribe'
+      data-section='{{this.filmID}}'
+      src='/icons/bell.png'
+      alt='Подписаться на новинку'
+    />
+    {{monthName}}</h1>
   <p class='calendar__text'>{{monthText}}</p>
   <ul class='calendar__days'>
     {{#each days}}

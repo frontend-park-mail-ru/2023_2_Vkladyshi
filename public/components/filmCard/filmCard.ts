@@ -47,10 +47,9 @@ export class FilmCard extends Component {
         return;
       }
 
-      switch (
-        true
-      ) {
-        case (event?.target as Element | null)?.closest('.image-watchlist') !== null: // @ts-ignore
+      switch (true) {
+        case (event?.target as Element | null)?.closest('.image-watchlist') !==
+          null:
           let active;
           const orange = element?.querySelector(
             '.red-watchlist'

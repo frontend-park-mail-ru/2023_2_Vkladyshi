@@ -4,8 +4,12 @@ import { router } from '@router/router';
 import { calendar } from '@components/Calendar/calendar';
 import { Slider } from '@components/Slider/slider';
 import { store } from '@store/store';
-import { actionCheckSubscribeCalendar } from '@store/action/actionTemplates';
+import {
+  actionCheckSubscribeCalendar,
+  actionGetCalendar,
+} from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
+import { notification } from '@/notification';
 
 /**
  * Класс формирования главной страницы
@@ -78,10 +82,7 @@ export class MainPage extends View {
       } else if (email.value === '') {
         event.preventDefault();
       }
-      // event.preventDefault();
     });
-
-    // popup?.addEventListener('click', popupEvent);
   }
   addCalendar() {
     store.unsubscribe('collectionMain', this.addCalendar.bind(this));
@@ -98,41 +99,38 @@ export class MainPage extends View {
         currentDaysHTML?.classList.add('calendar__days__day_today');
 
         const subs = document.querySelectorAll('.calendar__days__subscribe');
-
-        // subs.forEach(div => {
-        //   if (div.getAttribute('data-section')) {
-        //     div.classList.remove('noactive');
-        //
-        //     const divElement = document.querySelector(`li[data-section="${div.getAttribute('data-section')}"]`);
-        //     if (divElement) {
-        //       divElement.classList.add('pointer');
-        //     }
-        //   }
-        // });
-
         const calendarSelector = document.querySelector('.calendar');
+
         const calendarEvent = (event) => {
           this.calendarEvent = calendarEvent;
-          const filmId = event.target
-            .closest('.calendar__days__day')
-            .getAttribute('data-section');
+          const filmId = event?.target
+            ?.closest('.calendar__days__day')
+            ?.getAttribute('data-section');
           switch (true) {
             case event.target.className === 'calendar__days__subscribe':
               if (store.getState('auth').status === 200) {
                 store
-                  .dispatch(
-                    actionCheckSubscribeCalendar({
-                      login: 'login',
-                      subscribeFilmID: 2,
-                    })
-                  )
-                  .then((response) => {
+                  .dispatch(actionCheckSubscribeCalendar())
+                  .then(async (response) => {
                     const result = store.getState('subscribeCalendar_res');
+                    console.log(store.state);
                     if (result['status'] === 200) {
-                      if (result['body']['subscribe'] === true) {
-                        event.target.style.backgroundColor = 'orange';
+                      await notification.reqiestNotif();
+
+                      if (result?.body?.subscribe === false) {
+                        notification.renderUI({
+                          title: 'Отписка от уведомлений о новинках',
+                          body: 'Вы успешно отписались от новостей',
+                        });
+
+                        notification.cancelSending();
                       } else {
-                        event.target.style.backgroundColor = 'transparent';
+                        notification.renderUI({
+                          title: 'Подписка на уведомления о новинках',
+                          body: 'Благодарим Вас за подсписку!',
+                        });
+
+                        notification.startSending();
                       }
                     }
                   });
