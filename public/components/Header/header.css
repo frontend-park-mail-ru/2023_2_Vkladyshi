@@ -171,14 +171,24 @@ input::placeholder {
   /*display: none;*/
 }
 
-.header_search_item__lope-container {
+.header_search_item__lope-container  {
   background: white;
   border-radius: 0 8px 8px 0;
   /*height: 70px;*/
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 10%;
+  width: 6%;
+  cursor: auto;
+}
+
+.header_search_item__all-search-container {
+  background: white;
+  border-radius: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 6%;
   cursor: auto;
 }
 
@@ -313,7 +323,7 @@ header__search-mobile__input::placeholder {
   /*border-bottom: 1px solid #f3c23c;*/
 }
 
-.header_search_item__lope {
+.header_search_item__lope, .header_search_item__all-search {
   /*width: 12px;*/
   height: 20px;
   min-width: auto;
@@ -361,7 +371,7 @@ header__search-mobile__input::placeholder {
     display: none;
   }
 
-  .header_search_item__lope-container {
+  .header_search_item__lope-container, .header_search_item__all-search-container  {
     width: 20%;
   }
 

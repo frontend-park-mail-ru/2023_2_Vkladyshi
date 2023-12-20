@@ -10,7 +10,7 @@ import {
   actionRemoveFavoriteActor,
   actionRemoveFavoriteFilm,
   actionSearchActor,
-  actionSearchFilm,
+  actionSearchFilm
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { FilmSelection } from '@components/FilmSelection/filmSelection';
@@ -34,11 +34,11 @@ export interface FilmSelectionPage {
 export class FilmSelectionPage extends View {
   private popupEvent: (event) => void;
 
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       dataSection: '',
-      current: 'none',
+      current: 'none'
     };
 
     // store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
@@ -50,7 +50,7 @@ export class FilmSelectionPage extends View {
    * Метод рендеринга элемента
    * @param isMain
    */
-  async render(isMain = false) {
+  async render (isMain = false) {
     let buf;
 
     if (
@@ -94,7 +94,7 @@ export class FilmSelectionPage extends View {
             ratingTo: Number(ratingTo),
             mpaa: mpaa,
             genre: genre ? genre.split(',').map(Number) : [],
-            actors: actors?.split(','),
+            actors: actors?.split(',')
           })
         );
 
@@ -131,13 +131,13 @@ export class FilmSelectionPage extends View {
           amplua: amplua ? amplua?.split(',') : [''],
           county: <string>country,
           birthday: <string>birthday,
-          films: films ? films?.split(',') : [''],
+          films: films ? films?.split(',') : ['']
         })
       );
     }
   }
 
-  async renderEqualFilms() {
+  async renderEqualFilms () {
     // await store.dispatch(actionCollectionMain({collection_id: 0}));/
     const genre = store.getState('filmInfo')?.genre;
 
@@ -151,7 +151,7 @@ export class FilmSelectionPage extends View {
         ratingTo: 10,
         mpaa: '',
         genre: genre ? genre.map((elem) => elem.genre_id) : [],
-        actors: [''],
+        actors: ['']
       })
     );
 
@@ -166,13 +166,14 @@ export class FilmSelectionPage extends View {
       return;
     }
 
+    // eslint-disable-next-line guard-for-in
     for (const film in buf.body.films) {
       const filmCard = new FilmCard(ROOT);
       sliderLiner?.insertAdjacentHTML(
         'beforeend',
         filmCard.render({
           film: buf.body.films[film],
-          alreadyFavorite: false,
+          alreadyFavorite: false
         })
       );
 
@@ -180,11 +181,11 @@ export class FilmSelectionPage extends View {
     }
   }
 
-  renderByElement() {
+  renderByElement () {
     this.renderEqualFilms();
   }
 
-  componentDidMount(isFilms) {
+  componentDidMount (isFilms) {
     let popup;
     if (this.state.current === 'film') {
       popup = document.querySelector('.film-selection_films');
@@ -253,7 +254,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/login',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -265,7 +266,7 @@ export class FilmSelectionPage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`,
+              props: `/${filmId}`
             },
             { pushState: true, refresh: false }
           );
@@ -276,7 +277,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/watchlist/actors',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -284,7 +285,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/watchlist/films',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -295,7 +296,7 @@ export class FilmSelectionPage extends View {
           router.go(
             {
               path: '/actor',
-              props: `/${actorId}`,
+              props: `/${actorId}`
             },
             { pushState: true, refresh: false }
           );
@@ -309,20 +310,20 @@ export class FilmSelectionPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const popup = document.querySelector('.film-selection_films');
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  subscribeSearchFilms() {
+  subscribeSearchFilms () {
     this.addFilmToPage();
   }
 
-  subscribeSearchActors1() {
+  subscribeSearchActors1 () {
     this.addActorsToPage();
   }
 
-  addActorsToPage() {
+  addActorsToPage () {
     store.unsubscribe(
       'resultSearchActor',
       this.subscribeSearchActors1.bind(this)
@@ -376,7 +377,7 @@ export class FilmSelectionPage extends View {
     // console.log(document.querySelector('.film-selection_films'))
     this.componentDidMount(false);
   }
-  addFilmToPage() {
+  addFilmToPage () {
     store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
     store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     this.state.current = 'film';
@@ -418,7 +419,7 @@ export class FilmSelectionPage extends View {
         'beforeend',
         filmCard.render({
           film: buf.body.films[film],
-          alreadyFavorite: false,
+          alreadyFavorite: false
         })
       );
     }
@@ -426,7 +427,7 @@ export class FilmSelectionPage extends View {
     this.componentDidMount(true);
   }
 
-  getFavoriteFilmsList() {
+  getFavoriteFilmsList () {
     const favoriteFilms = store.getState('favoriteFilms');
     store.unsubscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     if (favoriteFilms?.status !== 200) {
@@ -446,7 +447,7 @@ export class FilmSelectionPage extends View {
     });
   }
 
-  getFavoriteActorsList() {
+  getFavoriteActorsList () {
     const favoriteActors = store.getState('favoriteActors');
     store.unsubscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
     if (favoriteActors?.status !== 200) {
@@ -466,7 +467,7 @@ export class FilmSelectionPage extends View {
     });
   }
 
-  addFilmToMain() {
+  addFilmToMain () {
     store.unsubscribe('collectionMain', this.addFilmToMain.bind(this));
     this.state.current = 'main';
     store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
@@ -494,7 +495,7 @@ export class FilmSelectionPage extends View {
         filmCard.render({
           film: buf.body.films[film],
           alreadyFavorite: false,
-          haveRating: true,
+          haveRating: true
         })
       );
     }
@@ -512,7 +513,7 @@ export class FilmSelectionPage extends View {
     this.componentDidMount(true);
   }
 
-  Offline() {
+  Offline () {
     this.renderDefaultPage({});
     const contentBlockHTML = document.querySelector('.content-block');
 

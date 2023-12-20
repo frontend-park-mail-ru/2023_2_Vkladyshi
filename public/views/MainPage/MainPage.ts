@@ -4,9 +4,7 @@ import { router } from '@router/router';
 import { calendar } from '@components/Calendar/calendar';
 import { Slider } from '@components/Slider/slider';
 import { store } from '@store/store';
-import {
-  actionCheckSubscribeCalendar,
-  actionGetCalendar,
+import { actionSubCalendar
 } from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
 import { notification } from '@/notification';
@@ -22,7 +20,7 @@ export class MainPage extends View {
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     this.renderDefaultPage({});
 
     store.subscribe('collectionMain', this.addCalendar.bind(this));
@@ -37,11 +35,7 @@ export class MainPage extends View {
         '            </video>\n' +
         '            <div class="overlay"></div>\n' +
         "            <div class='header__container__text'>\n" +
-        "                <div class='first-text'>Подпишитесь на рассылку новинок!</div>\n" +
-        '                <form class="main-email">\n' +
-        '                    <input class="input-main-email email-main-page" placeholder="Введите вашу почту!" type="email">\n' +
-        '                    <button class="send-email-main" type="submit">Подписаться</button>\n' +
-        '                </form>\n' +
+        "                <div class='first-text'>Добро пожаловать!</div>\n" +
         '            </div>\n' +
         '        </div>'
     );
@@ -50,8 +44,6 @@ export class MainPage extends View {
     contentBlockHTML?.insertAdjacentHTML('beforeend', slider.render());
     slider.addEvents();
 
-    // const sliderNew = new Slider();
-    // sliderNew.addEventsLine();
     if (contentBlockHTML) {
       const filmSelection = new FilmSelectionPage(ROOT);
       filmSelection.render(true).then((response) => {
@@ -68,7 +60,7 @@ export class MainPage extends View {
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const sendEmail = document.querySelector('.send-email-main');
     sendEmail?.addEventListener('click', (event) => {
       const email = document.querySelector(
@@ -84,7 +76,7 @@ export class MainPage extends View {
       }
     });
   }
-  addCalendar() {
+  addCalendar () {
     store.unsubscribe('collectionMain', this.addCalendar.bind(this));
 
     if (calendar) {
@@ -110,7 +102,7 @@ export class MainPage extends View {
             case event.target.className === 'calendar__days__subscribe':
               if (store.getState('auth').status === 200) {
                 store
-                  .dispatch(actionCheckSubscribeCalendar())
+                  .dispatch(actionSubCalendar())
                   .then(async (response) => {
                     const result = store.getState('subscribeCalendar_res');
                     console.log(store.state);
@@ -120,14 +112,14 @@ export class MainPage extends View {
                       if (result?.body?.subscribe === false) {
                         notification.renderUI({
                           title: 'Отписка от уведомлений о новинках',
-                          body: 'Вы успешно отписались от новостей',
+                          body: 'Вы успешно отписались от новостей'
                         });
 
                         notification.cancelSending();
                       } else {
                         notification.renderUI({
                           title: 'Подписка на уведомления о новинках',
-                          body: 'Благодарим Вас за подсписку!',
+                          body: 'Благодарим Вас за подсписку!'
                         });
 
                         notification.startSending();
@@ -138,7 +130,7 @@ export class MainPage extends View {
                 router.go(
                   {
                     path: '/login',
-                    props: ``,
+                    props: ``
                   },
                   { pushState: true, refresh: false }
                 );
@@ -150,7 +142,7 @@ export class MainPage extends View {
                 router.go(
                   {
                     path: '/film',
-                    props: `/${filmId}`,
+                    props: `/${filmId}`
                   },
                   { pushState: true, refresh: false }
                 );
@@ -166,7 +158,7 @@ export class MainPage extends View {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     // const popup = document.querySelector('.film-selection');
     // popup?.removeEventListener('click', this.popupEvent);
 

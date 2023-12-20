@@ -3,11 +3,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'production';
 const isProd = !isDev;
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: ['./public/index.ts'],
   output: {
     filename: 'index.js',

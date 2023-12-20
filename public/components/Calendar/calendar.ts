@@ -17,7 +17,7 @@ class Calendar extends Component {
    * @returns {string} html нижней панели
    */
 
-  render() {
+  render () {
     return store.dispatch(actionGetCalendar()).then((response) => {
       const result = store.getState('calendarInfo')['body'];
       const calendar = {
@@ -41,7 +41,7 @@ class Calendar extends Component {
           // }
 
           return { dayNumber, dayNews, filmID };
-        }),
+        })
       };
 
       return templateCalendar(calendar);

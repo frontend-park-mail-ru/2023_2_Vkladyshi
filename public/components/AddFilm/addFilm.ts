@@ -13,7 +13,7 @@ export class AddFilm extends Component {
    * @param result
    * @return {string} html авторизации
    */
-  render() {
+  render () {
     return templateAddFilm();
   }
 }

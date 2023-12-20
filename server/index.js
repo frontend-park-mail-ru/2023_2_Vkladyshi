@@ -697,6 +697,13 @@ app.use('/api/v1/subscribe/calendar', (req, res) => {
     .json({ status: 200, body: { notificationID: 11, subscribe: true } });
 });
 
+app.use('/api/v1/user/isSubscribed', (req, res) => {
+  const notificationPayload = {
+    subscribe: lastSubscribe,
+  };
+  return res.status(200).json({ status: 200, body: notificationPayload });
+})
+
 let lastSubscribe = false;
 
 app.use('/api/v1/user/subscribePush', (req, res) => {

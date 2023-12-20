@@ -46,7 +46,7 @@ export const showNotification = (
 
   //   placeholder?.insertAdjacentHTML('afterbegin', content);
 
-  const cancelHandler = function callback(e: Event) {
+  const cancelHandler = function callback (e: Event) {
     e.preventDefault();
     e.target?.removeEventListener('click', callback);
     (e.target as HTMLElement).closest('.js-notification')?.remove();

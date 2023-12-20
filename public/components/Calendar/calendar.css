@@ -109,8 +109,8 @@
 
 @media (max-width: 1300px) {
   .calendar__days__day {
-    width: 6rem;
-    height: 6rem;
+    width: 105px;
+    height: 105px;
 
     margin: 0.25rem;
 
@@ -119,7 +119,7 @@
     /*padding: 0.7rem;*/
 
     /*font-weight: 300;*/
-    font-size: 1rem;
+    font-size: 12px;
   }
 
   .calendar__days__time {
@@ -137,8 +137,8 @@
 
   .calendar__days {
     .calendar__days__day {
-      width: 6rem;
-      height: 6rem;
+      width: 105px;
+      height: 105px;
 
       margin: 0.25rem;
 
@@ -147,7 +147,7 @@
       /*padding: 0.3rem;*/
 
       /*font-weight: 300;*/
-      font-size: 1rem;
+      font-size: 12px;
     }
     .calendar__days__time {
       font-size: 0.8rem;
