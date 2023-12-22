@@ -14,14 +14,8 @@ import { AdminPage } from '@views/AdminPage/AdminPage';
 export const ROOT = document.querySelector('#root');
 
 // export const DOMAIN = 'http://localhost:8001';
-// export const DOMAIN = 'http://127.0.0.1:8001';
-export const DOMAIN = 'https://movie-hub.ru';
-export const DOMAIN_SW = '127.0.0.1:8003';
-
-export const API = {
-  ws: `ws://${DOMAIN_SW}/api/v1/notifications`
-};
-
+export const DOMAIN = 'http://127.0.0.1:8001';
+// export const DOMAIN = 'https://movie-hub.ru';
 export const urls = {
   main: '/',
   findFilm: '/api/v1/films',
@@ -53,7 +47,6 @@ export const urls = {
   statisticsCsat: '/api/v1/admin/csat',
   addFilm: '/api/v1/add/film',
   subscribeCalendar: '/api/v1/subscribe/calendar',
-  ws: `ws://${DOMAIN_SW}/api/v1/notifications`
 };
 
 export const methods = {

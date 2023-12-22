@@ -1,5 +1,5 @@
 <div
-  class='actor-selection_actor {{addClass}}'
+  class='actor-selection_actor {{addClass}} active'
   data-section='{{id}}'
   draggable='true'
 >
@@ -12,6 +12,7 @@
         {{#if alreadyFavorite}}
           <img class='image-cancel' src='/icons/cancel.png' />
           <img class='image-watchlist noactive' src='/icons/bookmark2.svg' />
+        {{else if adminPanel}}
         {{else}}
           <img
             class='image-watchlist red-watchlist noactive'

@@ -8,6 +8,16 @@
   /*background-color: var(--content-block-color);*/
 }
 
+.pencil-image {
+  width: 15px;
+  height: 15px;
+  cursor: pointer;
+}
+
+.change-user-data__form-warning {
+  display: none;
+}
+
 .settings__img {
   width: 270px;
   height: auto;
@@ -35,15 +45,28 @@
   color: #555555;
   margin-bottom: 5px;
   margin-top: 25px;
+  display: flex;
+  justify-content: space-between;
+
 }
 
-.change-user-data__form {
+.change-user-data__form, .change-user-data__form-save {
   display: flex;
   flex-direction: column;
   text-align: left;
   width: 90%;
-
   margin: 2% auto;
+
+}
+
+.change-user-data {
+  min-width: 370px;
+  min-height: 10px;
+}
+
+.change-user-data__form-save {
+  min-width: 300px;
+  min-height: 10px;
 }
 
 .change-user-data__form__file[type='file'] {

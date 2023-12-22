@@ -317,13 +317,11 @@
   height: 40px;
 }
 
-/*.noactive {*/
-/*    display: none;*/
-/*}*/
-
 .noactive {
-  display: none;
+    display: none;
 }
+
+
 
 .noactive-opacity {
   opacity: 0;

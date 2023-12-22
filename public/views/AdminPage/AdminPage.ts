@@ -2,7 +2,7 @@ import { View } from '@views/view';
 import { store } from '@store/store';
 import { Statistics } from '@components/Statistics/statistics';
 import {
-  actionAddFilm,
+  actionAddFilm, actionFavoriteActors, actionFavoriteFilms,
   actionSearchActor,
   actionStatistics
 } from '@store/action/actionTemplates';
@@ -12,7 +12,6 @@ import { AddFilm } from '@components/AddFilm/addFilm';
 import { inputButton } from '@components/inputButton/inputButton';
 import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
 import { ActorCard } from '@components/ActorCard/actorCard';
-import { router } from '@router/router';
 import {
   addErrorsActive,
   defaultVariable,
@@ -20,12 +19,15 @@ import {
   removeErrors,
   removeErrorsActive
 } from '@utils/addError';
+import {addActive, removeActive} from '@utils/std';
 
 export interface AdminPage {
   state: {
     errorsHTML: {};
     wraps: {};
     inputsHTML: {};
+    pageNumber: number;
+    perPage: number;
     file: any;
     defaultImage: any;
   };
@@ -50,6 +52,8 @@ export class AdminPage extends View {
       errorsHTML: {},
       wraps: {},
       inputsHTML: {},
+      pageNumber: 1,
+      perPage: 10,
       file: '',
       defaultImage: ''
     };
@@ -63,7 +67,6 @@ export class AdminPage extends View {
     const contentBlock = document.querySelector('.content-block');
     const footer = document.querySelector('.footer');
     footer?.remove();
-    // contentBlock!.innerHTML = '';
     const stat = new Statistics();
     const addFilm = new AddFilm(ROOT);
     const adminPanel = new AdminPanel(ROOT);
@@ -100,16 +103,9 @@ export class AdminPage extends View {
         case event.target.closest('.actor-selection_actor') !== null:
           const selected = document.querySelector('.selected-actors');
           const allActors = document.querySelector('.results-actors');
-          const watchlist = event.target
-            .closest('.actor-selection_actor')
-            ?.querySelector('.image-watchlist');
-          const remove = event.target
-            .closest('.actor-selection_actor')
-            ?.querySelector('.image-cancel');
-
-          if (event.target.closest('.image-watchlist') !== null) {
-            watchlist?.classList?.add('noactive');
-            remove?.classList?.remove('noactive');
+          console.log(event.target.closest('.actor-selection_actor'))
+          if (event.target.closest('.actor-selection_actor.active') !== null) {
+            event.target.closest('.actor-selection_actor')?.classList.remove('active');
             selected?.appendChild(
               event.target.closest('.actor-selection_actor')
             );
@@ -120,8 +116,7 @@ export class AdminPage extends View {
               ?.querySelector('.actor-selection_actor_name').style.color =
               'black';
           } else {
-            watchlist?.classList?.remove('noactive');
-            remove?.classList?.add('noactive');
+            event.target.closest('.actor-selection_actor')?.classList.add('active');
             allActors?.appendChild(
               event.target.closest('.actor-selection_actor')
             );
@@ -134,6 +129,10 @@ export class AdminPage extends View {
           break;
         case event.target.closest('.actors-find') !== null:
           event.preventDefault();
+          this.state.pageNumber = 1;
+          this.getFormActors();
+          break;
+        case event.target.closest('.more-elements') !== null:
           this.getFormActors();
           break;
         case event.target.closest('.button-submit') !== null:
@@ -440,8 +439,11 @@ export class AdminPage extends View {
     const nameActor = (
       document.querySelector('.name-input-select') as HTMLInputElement
     ).value.trim();
-    const allActors = document.querySelector('.results-actors') as HTMLElement;
-    allActors!.innerHTML = '';
+
+    if (this.state.pageNumber === 1) {
+      const allActors = document.querySelector('.results-actors') as HTMLElement;
+      allActors!.innerHTML = '';
+    }
 
     store.subscribe('resultSearchActor', this.resultFindActors.bind(this));
     store.dispatch(
@@ -450,7 +452,9 @@ export class AdminPage extends View {
         amplua: [''],
         county: '',
         birthday: '',
-        films: ['']
+        films: [''],
+        page: this.state.pageNumber++,
+        per_page: this.state.perPage
       })
     );
   }
@@ -471,21 +475,31 @@ export class AdminPage extends View {
     const response = store.getState('resultSearchActor');
     store.unsubscribe('resultSearchActor', this.resultFindActors.bind(this));
     const body = document.querySelector('.results-actors');
+    const more = document.querySelector('.more-elements');
 
+    let countActor = 0;
     if (response?.status === 200) {
       // eslint-disable-next-line guard-for-in
       for (const actor in response?.body.actors) {
+        countActor++;
         const actorCard = new ActorCard(ROOT);
         body?.insertAdjacentHTML(
           'beforeend',
           actorCard.render({
             actor: response?.body.actors[actor],
             alreadyFavorite: false,
+            adminPanel: true,
             addClass: 'actor',
             addClassPoster: 'actor-poster'
           })
         );
       }
+    }
+
+    if (countActor >= this.state.perPage) {
+      addActive(more);
+    } else {
+      removeActive(more);
     }
   }
 

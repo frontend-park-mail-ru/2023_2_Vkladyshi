@@ -11,6 +11,15 @@ import {
 import { FilmCard } from '@components/filmCard/filmCard';
 import { router } from '@router/router';
 import { ActorCard } from '@components/ActorCard/actorCard';
+import {addActive, removeActive} from '@utils/std';
+
+
+export interface FavoritePage {
+  state: {
+    pageNumber: number;
+    perPage: number;
+  }
+}
 
 /**
  * Класс формирования окна сохранённых подборок фильмов и актёров
@@ -27,6 +36,11 @@ export class FavoritePage extends View {
    */
   constructor (ROOT) {
     super(ROOT);
+
+    this.state = {
+      pageNumber: 1,
+      perPage: 10,
+    }
 
     store.subscribe('favoriteFilms', this.subscribeFavoriteFilms.bind(this));
     store.subscribe('favoriteActors', this.subscribeFavoriteActor.bind(this));
@@ -52,12 +66,10 @@ export class FavoritePage extends View {
       );
 
       const body = document.querySelector('.favorite__body');
-      if (body) {
-        body!.innerHTML = '';
-      }
+
 
       store
-        .dispatch(actionFavoriteFilms({ page: 1, per_page: 20 }))
+        .dispatch(actionFavoriteFilms({ page: this.state.pageNumber++, per_page: this.state.perPage }))
         .then(() => {
           this.componentDidMount();
         });
@@ -71,7 +83,7 @@ export class FavoritePage extends View {
         redirect: 'Любимые фильмы'
       })
     );
-    store.dispatch(actionFavoriteActors({ page: 1, per_page: 20 })).then(() => {
+    store.dispatch(actionFavoriteActors({ page: this.state.pageNumber++, per_page: this.state.perPage })).then(() => {
       this.componentDidMount();
     });
   }
@@ -111,12 +123,14 @@ export class FavoritePage extends View {
           const elementsFilms = document.querySelectorAll(
             '.film-selection_film'
           );
+
           if (
             elementsWithDataSetion.length === 0 &&
             elementsFilms.length === 0
           ) {
             const body = document.querySelector('.favorite__body');
             body!.innerHTML = '<div>Ваш список пуст</div>';
+            removeActive(document.querySelector('.more-elements'));
           }
 
           break;
@@ -148,6 +162,13 @@ export class FavoritePage extends View {
               },
               { pushState: true, refresh: false }
             );
+          }
+          break;
+        case event.target.closest('.more-elements') !== null:
+          if (this.isFilm) {
+            store.dispatch(actionFavoriteFilms({page: this.state.pageNumber++, per_page: this.state.perPage}))
+          } else {
+            store.dispatch(actionFavoriteActors({page: this.state.pageNumber++, per_page: this.state.perPage}))
           }
           break;
         case event.target.closest('.actor-selection_actor') !== null:
@@ -188,33 +209,40 @@ export class FavoritePage extends View {
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
-    // contentBlockHTML!.innerHTML = '';
+    const more = document.querySelector('.more-elements');
     const films = store.getState('favoriteFilms')?.body;
     const status = store.getState('favoriteFilms')?.status;
 
     const body = document.querySelector('.favorite__body');
-    if (body) {
-      body!.innerHTML = '';
-    }
 
-    if (films?.length === 0 || status === 404) {
+    if ((films?.length === 0 || status === 404) && this.state.pageNumber === 2) {
       body?.insertAdjacentHTML('beforeend', '<div>Ваш список пуст</div>');
+      removeActive(document.querySelector('.more-elements'));
       return;
     } else if (status !== 200) {
       body?.insertAdjacentHTML('beforeend', '<div>Ошибка сервера!</div>');
+      removeActive(document.querySelector('.more-elements'));
       return;
     }
 
+    let countFilms = 0;
     // eslint-disable-next-line guard-for-in
     for (const film in films) {
+      countFilms++;
       const filmCard = new FilmCard(ROOT);
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
-        filmCard.render({ film: films[film], alreadyFavorite: true })
+        filmCard.render({ film: films[film], alreadyFavorite: true, haveRating: true })
       );
     }
+
+    if (countFilms >= this.state.perPage) {
+      addActive(more);
+    } else {
+      removeActive(more);
+    }
+
     this.isFilm = true;
-    // this.componentDidMount();
   }
 
   /**
@@ -224,33 +252,44 @@ export class FavoritePage extends View {
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
-    contentBlockHTML!.innerHTML = '';
+    // contentBlockHTML!.innerHTML = '';
     const actors = store.getState('favoriteActors')?.body.actors;
     const status = store.getState('favoriteActors')?.status;
+    const more = document.querySelector('.more-elements');
 
-    if (actors?.length === 0 || status === 404) {
+    if ((actors?.length === 0 || status === 404) && this.state.pageNumber === 2) {
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
         '<div>Ваш список пуст</div>'
       );
+      removeActive(document.querySelector('.more-elements'));
       return;
     } else if (status !== 200) {
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
         '<div>Ошибка сервера!</div>'
       );
+      removeActive(document.querySelector('.more-elements'));
       return;
     }
 
+    let countActors = 0;
     // eslint-disable-next-line guard-for-in
     for (const actor in actors) {
+      countActors++;
       const actorCard = new ActorCard(ROOT);
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
         actorCard.render({ actor: actors[actor], alreadyFavorite: true })
       );
     }
+
+    if (countActors >= this.state.perPage) {
+      addActive(more);
+    } else {
+      removeActive(more);
+    }
+
     this.isFilm = false;
-    // this.componentDidMount();
   }
 }

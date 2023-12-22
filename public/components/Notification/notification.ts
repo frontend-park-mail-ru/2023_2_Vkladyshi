@@ -1,4 +1,4 @@
-import { ROOT, API, urls } from '@utils/config';
+import { ROOT } from '@utils/config';
 import { getMonthName } from '@utils/dateConverter';
 import { roundFloat } from '@utils/std';
 

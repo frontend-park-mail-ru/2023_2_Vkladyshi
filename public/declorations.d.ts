@@ -73,6 +73,8 @@ interface searchFilm {
   dateFrom: string;
   dateTo: string;
   actors: any;
+  page: number;
+  per_page: number;
 }
 
 interface searchActor {
@@ -81,6 +83,8 @@ interface searchActor {
   county: string;
   birthday: string;
   films: any;
+  page: number,
+  per_page: number
 }
 
 interface newFilm {

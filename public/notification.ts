@@ -27,19 +27,35 @@ export class NotificationClass {
       requireInteraction: true
     };
 
-    const notifUI = new Notification(data.title, notif);
+    navigator.serviceWorker.ready.then(registration => {
+
+      Notification.requestPermission().then(permission => {
+
+        if (permission === 'granted') {
+          // eslint-disable-next-line no-invalid-this
+          this.state.permission = true;
+          registration.showNotification(data.title, notif);
+        } else {
+          // eslint-disable-next-line no-invalid-this
+          this.state.permission = false;
+        }
+
+      });
+    });
   };
 
   reqiestNotif = async () => {
-    const perm = await Notification.requestPermission();
-
-    if (perm === 'granted') {
-      // eslint-disable-next-line no-invalid-this
-      this.state.permission = true;
-    } else {
-      // eslint-disable-next-line no-invalid-this
-      this.state.permission = false;
-    }
+    // Notification.requestPermission().then(permission => {
+    //
+    //   if (permission === 'granted') {
+    //     // eslint-disable-next-line no-invalid-this
+    //     this.state.permission = true;
+    //   } else {
+    //     // eslint-disable-next-line no-invalid-this
+    //     this.state.permission = false;
+    //   }
+    //
+    // });
   };
 
   startSending () {
@@ -60,7 +76,7 @@ export class NotificationClass {
     const result = store.getState('checkSubscribeCalendar');
 
     // eslint-disable-next-line no-invalid-this
-    console.log(result?.body?.subscribe, perm, this.state.permission);
+    // console.log(result?.body?.subscribe, perm, this.state.permission);
 
     if (perm !== 'granted' || result?.body?.subscribe === false) {
       // eslint-disable-next-line no-invalid-this

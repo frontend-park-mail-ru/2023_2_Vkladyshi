@@ -31,6 +31,7 @@ import { settings } from '@components/Settings/settings';
 export interface UserPage {
   state: {
     file: any;
+    isEdit: boolean;
     userStatus: Number;
     result: {};
     userInfo: {};
@@ -56,6 +57,7 @@ export class UserPage extends View {
     super(ROOT);
     this.state = {
       file: '',
+      isEdit: false,
       errorsHTML: {},
       inputsHTML: {},
       wraps: {},
@@ -151,6 +153,9 @@ export class UserPage extends View {
 
   componentDidMount () {
     const blockHTML = document.querySelector('.settings');
+    this.state.isEdit = false;
+    this.cancelEdit();
+
     const popupEvent = (event) => {
       switch (true) {
         case event.target.closest('.settings_file') !== null:
@@ -175,8 +180,6 @@ export class UserPage extends View {
 
             const reader = new FileReader();
             reader.onload = function (e) {
-              // @ts-ignore
-              // console.log(e?.target?.result, e.target, file.files[0])
               if (e.target && e.target.result) {
                 image.src = `${e.target.result}`;
               }
@@ -190,6 +193,15 @@ export class UserPage extends View {
             reader.readAsDataURL(file.files[0]);
           }
           break;
+        case event.target.closest('.change-user-data__form__pencil') !== null:
+          if (this.state.isEdit) {
+            this.state.isEdit = false;
+            this.cancelEdit()
+          } else {
+            this.state.isEdit = true;
+            this.applyEdit();
+          }
+        break;
         case event.target.closest('.button-submit') !== null:
           event.preventDefault();
           removeErrors(this.state.errorsHTML);
@@ -433,6 +445,50 @@ export class UserPage extends View {
     photo.src = this.state.userInfo['poster'];
 
     insertInInput(this.state.inputsHTML, this.state.userInfo);
+  }
+
+  cancelEdit() {
+    const password1 = document.querySelector('.password-first') as HTMLElement;
+    const password2 = document.querySelector('.password-second') as HTMLElement;
+    const warning = document.querySelector('.change-user-data__form-warning') as HTMLElement;
+    const inputAll = document.querySelectorAll('.input-button');
+    const text1 = document.querySelector('.login-first-text') as HTMLElement;
+    const text2 = document.querySelector('.login-second-text') as HTMLElement;
+    const changeImage = document.querySelector('.change-user-data__form__file') as HTMLElement;
+    const save = document.querySelector('.button-submit') as HTMLElement;
+
+    text1.style.display = 'none';
+    text2.style.display = 'none';
+    warning.style.display = 'none';
+    password1.style.display = 'none';
+    password2.style.display = 'none';
+    save.style.display = 'none';
+    changeImage.style.display = 'none';
+    inputAll.forEach((elem: HTMLElement)=>{
+      elem.style.pointerEvents = 'none';
+    })
+  }
+
+  applyEdit() {
+    const password1 = document.querySelector('.password-first') as HTMLElement;
+    const password2 = document.querySelector('.password-second') as HTMLElement;
+    const inputAll = document.querySelectorAll('.input-button');
+    const warning = document.querySelector('.change-user-data__form-warning') as HTMLElement;
+    const text1 = document.querySelector('.login-first-text') as HTMLElement;
+    const text2 = document.querySelector('.login-second-text') as HTMLElement;
+    const changeImage = document.querySelector('.change-user-data__form__file') as HTMLElement;
+    const save = document.querySelector('.button-submit') as HTMLElement;
+
+    text1.style.display = 'block';
+    text2.style.display = 'block';
+    warning.style.display = 'block';
+    password1.style.display = 'flex';
+    password2.style.display = 'flex';
+    save.style.display = 'block';
+    changeImage.style.display = 'flex';
+    inputAll.forEach((elem: HTMLElement)=> {
+      elem.style.pointerEvents = 'auto';
+    })
   }
 
   init () {

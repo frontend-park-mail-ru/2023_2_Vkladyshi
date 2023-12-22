@@ -70,3 +70,33 @@ ul {
   position: absolute;
   margin-top: 80px;
 }
+
+/*.active {*/
+/*  display: block;*/
+/*}*/
+
+/*.noactive {*/
+/*  display: none;*/
+/*}*/
+
+.more-elements {
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 20px;
+  padding: 8px 22px 8px 22px;
+  border-radius: 8px;
+  border: 1px solid white;
+  cursor: pointer;
+  height: 15px;
+  width: 20px;
+}
+
+.more-elements__text {
+  font-size: 16px;
+}
+
+.more-elements__img {
+  width: 15px;
+  height: 15px;
+}

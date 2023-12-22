@@ -1,22 +1,19 @@
 .review {
   width: var(--block-width);
-
   display: flex;
   flex-direction: column;
   align-items: stretch;
-
   margin: 50px auto 0;
-  /* padding-top: 50px;*/
-  /* padding-bottom: 50px; */
-
   border-radius: 5px;
-  /*background-color: var(--background-color);*/
-  /*background: white;*/
   background-color: rgba(59, 179, 59, 0.1);
 }
 
 .comments__block {
   /*background: white;*/
+}
+
+.comment-header__right {
+  margin-top: 20px;
 }
 
 .review__header {
@@ -49,12 +46,12 @@
   text-align: end;
   width: 40%;
   font-size: 16px;
+  font-weight: bold;
 }
 
 .review__body {
   margin: 3% 0;
 }
-/*@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap");*/
 
 .comment {
   margin-bottom: 50px;

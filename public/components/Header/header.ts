@@ -142,15 +142,15 @@ export class Header extends Component {
             { pushState: true, refresh: false }
           );
           break;
-        case target.closest('.header_menu-header') !== null:
-          router.go(
-            {
-              path: '/selection',
-              props: ''
-            },
-            { pushState: true, refresh: false }
-          );
-          break;
+        // case target.closest('.header_menu-header') !== null:
+        //   router.go(
+        //     {
+        //       path: '/selection',
+        //       props: ''
+        //     },
+        //     { pushState: true, refresh: false }
+        //   );
+        //   break;
         case target.closest('.header__search-mobile__input__cancel') !== null:
           const inputMobile = document.querySelector('.header__search-mobile');
           const selectNew = document.querySelector(
@@ -177,6 +177,15 @@ export class Header extends Component {
             // @ts-ignore
             inputMobile.style.display = 'flex';
           }
+          break;
+        case target.closest('.header_search_item__all-search-container') !== null || target.closest('.header__search-mobile__input__all-search') !== null:
+          router.go(
+              {
+                path: '/selection',
+                props: ''
+              },
+              { pushState: true, refresh: false }
+          );
           break;
         case target.closest('.header_search_item__lope') !== null ||
           target.closest('.header_search_item__mobile-lope-search') !== null:

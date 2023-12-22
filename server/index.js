@@ -228,6 +228,24 @@ const films = {
         title: 'film_2',
         rating: 6,
       },
+      {
+        id: 10,
+        poster: '/icons/Poster.jpg',
+        title: 'film_2',
+        rating: 6,
+      },
+      {
+        id: 12,
+        poster: '/icons/Poster.jpg',
+        title: 'film_2',
+        rating: 6,
+      },
+      {
+        id: 11,
+        poster: '/icons/Poster.jpg',
+        title: 'film_2',
+        rating: 6,
+      },
     ],
   },
 };
@@ -249,6 +267,8 @@ const film = {
       { id: 2, title: 'Боевики' },
       { id: 0, title: 'Военные' },
       { id: 2, title: 'Боевики' },
+      { id: 4, title: 'Кек' },
+      { id: 5, title: 'ЛОл' },
     ],
     rating: 10,
     number: 11,
@@ -300,7 +320,31 @@ const films_tags = {
         rating: 1,
         film_id: 11,
       },
-      film6: {
+      film7: {
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111110000000000000000000000000000000000000000001',
+        rating: 1,
+        film_id: 11,
+      },
+      film8: {
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111110000000000000000000000000000000000000000001',
+        rating: 1,
+        film_id: 11,
+      },
+      film9: {
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111110000000000000000000000000000000000000000001',
+        rating: 1,
+        film_id: 11,
+      },
+      film10: {
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111110000000000000000000000000000000000000000001',
+        rating: 1,
+        film_id: 11,
+      },
+      film11: {
         poster: '/icons/bastards.jpg',
         title: 'film_1 111110000000000000000000000000000000000000000001',
         rating: 1,

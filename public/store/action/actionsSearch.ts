@@ -11,7 +11,9 @@ class ActionsSearch {
     ratingTo,
     mpaa,
     genre,
-    actors
+    actors,
+    page,
+    per_page
   }: searchFilm) {
     const response = post({
       url: urls.searchFilm,
@@ -23,7 +25,9 @@ class ActionsSearch {
         rating_to: ratingTo || 10,
         mpaa: mpaa || '',
         genres: genre || [],
-        actors: actors || []
+        actors: actors || [],
+        page: page || 1,
+        per_page: per_page || 20
       }
     });
 
@@ -39,15 +43,16 @@ class ActionsSearch {
     };
   }
 
-  async searchActor ({ name, films, birthday, amplua }: searchActor) {
+  async searchActor ({ name, films, birthday, amplua, page , per_page}: searchActor) {
     const response = post({
       url: urls.searchActor,
       body: {
         name: name,
         films: films,
         birthday: birthday,
-        amplua: amplua
-        // page: page, per_page: per_page
+        amplua: amplua,
+        page: page || 1,
+        per_page: per_page || 20
       }
     });
 
