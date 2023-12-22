@@ -13,8 +13,6 @@ if (!('PushManager' in window)) {
 
 router.start();
 
-
 notification.reqiestNotif().then(() => {
   notification.startSending();
 });
-

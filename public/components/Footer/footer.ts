@@ -11,7 +11,7 @@ export class Footer extends Component {
    * Метод для рендеринга HTML кода
    * @return {string} html нижней панели
    */
-  render () {
+  render() {
     return templateFooter();
   }
 }

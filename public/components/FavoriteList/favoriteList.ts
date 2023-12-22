@@ -6,7 +6,7 @@ class FavoriteList extends Component {
    * Метод рендеринга элемента
    * @param result
    */
-  render (result) {
+  render(result) {
     return templateFavoriteList(result);
   }
 }

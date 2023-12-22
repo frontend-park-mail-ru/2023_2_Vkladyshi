@@ -746,7 +746,7 @@ app.use('/api/v1/user/isSubscribed', (req, res) => {
     subscribe: lastSubscribe,
   };
   return res.status(200).json({ status: 200, body: notificationPayload });
-})
+});
 
 let lastSubscribe = false;
 

@@ -2,9 +2,11 @@ import { View } from '@views/view';
 import { store } from '@store/store';
 import { Statistics } from '@components/Statistics/statistics';
 import {
-  actionAddFilm, actionFavoriteActors, actionFavoriteFilms,
+  actionAddFilm,
+  actionFavoriteActors,
+  actionFavoriteFilms,
   actionSearchActor,
-  actionStatistics
+  actionStatistics,
 } from '@store/action/actionTemplates';
 import { AdminPanel } from '@components/AdminPanel/adminPanel';
 import { collections, errorInputs, ROOT } from '@utils/config';
@@ -17,9 +19,9 @@ import {
   defaultVariable,
   insertText,
   removeErrors,
-  removeErrorsActive
+  removeErrorsActive,
 } from '@utils/addError';
-import {addActive, removeActive} from '@utils/std';
+import { addActive, removeActive } from '@utils/std';
 
 export interface AdminPage {
   state: {
@@ -46,7 +48,7 @@ export class AdminPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       errorsHTML: {},
@@ -55,14 +57,14 @@ export class AdminPage extends View {
       pageNumber: 1,
       perPage: 10,
       file: '',
-      defaultImage: ''
+      defaultImage: '',
     };
   }
 
   /**
    * Метод создания страницы
    */
-  render () {
+  render() {
     this.renderDefaultPage({});
     const contentBlock = document.querySelector('.content-block');
     const footer = document.querySelector('.footer');
@@ -79,7 +81,7 @@ export class AdminPage extends View {
     });
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const adminPanel = document.querySelector('.admin-panel');
     const addFilm = document.querySelector('.add-film');
     const installPoster = document.querySelector('.add-film__left__poster');
@@ -103,9 +105,11 @@ export class AdminPage extends View {
         case event.target.closest('.actor-selection_actor') !== null:
           const selected = document.querySelector('.selected-actors');
           const allActors = document.querySelector('.results-actors');
-          console.log(event.target.closest('.actor-selection_actor'))
+          console.log(event.target.closest('.actor-selection_actor'));
           if (event.target.closest('.actor-selection_actor.active') !== null) {
-            event.target.closest('.actor-selection_actor')?.classList.remove('active');
+            event.target
+              .closest('.actor-selection_actor')
+              ?.classList.remove('active');
             selected?.appendChild(
               event.target.closest('.actor-selection_actor')
             );
@@ -116,7 +120,9 @@ export class AdminPage extends View {
               ?.querySelector('.actor-selection_actor_name').style.color =
               'black';
           } else {
-            event.target.closest('.actor-selection_actor')?.classList.add('active');
+            event.target
+              .closest('.actor-selection_actor')
+              ?.classList.add('active');
             allActors?.appendChild(
               event.target.closest('.actor-selection_actor')
             );
@@ -227,7 +233,7 @@ export class AdminPage extends View {
       div7,
       div8,
       div9,
-      div10
+      div10,
     ];
 
     // Iterate through the div elements and assign the count values
@@ -243,7 +249,7 @@ export class AdminPage extends View {
     });
   }
 
-  addFilmForm () {
+  addFilmForm() {
     const settings = document.querySelector('.change-user-data') as HTMLElement;
     const title = document.querySelector('.title-text');
     const date = document.querySelector('.date-text');
@@ -277,7 +283,7 @@ export class AdminPage extends View {
       inputButton.render({
         wrap: 'date',
         module: 'add-film',
-        type: 'number'
+        type: 'number',
       })
     );
 
@@ -295,7 +301,7 @@ export class AdminPage extends View {
     this.init();
   }
 
-  getForm () {
+  getForm() {
     const elements = this.state.inputsHTML;
     const genres = document.querySelectorAll('.title-type-admin.active');
     // @ts-ignore
@@ -346,7 +352,7 @@ export class AdminPage extends View {
         country: country,
         file: file,
         actors: actors,
-        genre: genres
+        genre: genres,
       })
     ) {
       store.dispatch(actionAddFilm({ file: data })).then(() => {
@@ -380,7 +386,7 @@ export class AdminPage extends View {
     }
   }
 
-  validateForm (dir) {
+  validateForm(dir) {
     let result = true;
     const elements = this.state.errorsHTML;
     const wraps = this.state.wraps;
@@ -435,13 +441,15 @@ export class AdminPage extends View {
     return result;
   }
 
-  getFormActors () {
+  getFormActors() {
     const nameActor = (
       document.querySelector('.name-input-select') as HTMLInputElement
     ).value.trim();
 
     if (this.state.pageNumber === 1) {
-      const allActors = document.querySelector('.results-actors') as HTMLElement;
+      const allActors = document.querySelector(
+        '.results-actors'
+      ) as HTMLElement;
       allActors!.innerHTML = '';
     }
 
@@ -454,12 +462,12 @@ export class AdminPage extends View {
         birthday: '',
         films: [''],
         page: this.state.pageNumber++,
-        per_page: this.state.perPage
+        per_page: this.state.perPage,
       })
     );
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     const adminPanel = document.querySelector('.admin-panel');
     const addFilm = document.querySelector('.add-film');
     const installPoster = document.querySelector('.settings__img');
@@ -471,7 +479,7 @@ export class AdminPage extends View {
     addFilm?.removeEventListener('click', this.popupEvent);
   }
 
-  resultFindActors () {
+  resultFindActors() {
     const response = store.getState('resultSearchActor');
     store.unsubscribe('resultSearchActor', this.resultFindActors.bind(this));
     const body = document.querySelector('.results-actors');
@@ -490,7 +498,7 @@ export class AdminPage extends View {
             alreadyFavorite: false,
             adminPanel: true,
             addClass: 'actor',
-            addClassPoster: 'actor-poster'
+            addClassPoster: 'actor-poster',
           })
         );
       }
@@ -503,7 +511,7 @@ export class AdminPage extends View {
     }
   }
 
-  init () {
+  init() {
     const inputHtml = document.querySelector('.error-login');
     const textAreaHtml = document.querySelector('.error-text-area');
     const countryHtml = document.querySelector('.error-country');
@@ -546,14 +554,14 @@ export class AdminPage extends View {
       genre: genreHtml,
       date: dateHtml,
       actors: actorsHtml,
-      image: imageError
+      image: imageError,
     };
 
     this.state.wraps = {
       title: wrapLogin,
       textArea: wrapInfo,
       country: wrapCountry,
-      date: wrapDate
+      date: wrapDate,
     };
 
     this.state.inputsHTML = {
@@ -563,7 +571,7 @@ export class AdminPage extends View {
       date: dateHTML,
       genre: genres,
       actors: actors,
-      image: fileInputHTML
+      image: fileInputHTML,
     };
   }
 }

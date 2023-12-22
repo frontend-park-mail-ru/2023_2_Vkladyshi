@@ -10,10 +10,10 @@ export interface NotificationClass {
   };
 }
 export class NotificationClass {
-  constructor () {
+  constructor() {
     this.state = {
       permission: false,
-      intervalFunc: null
+      intervalFunc: null,
     };
 
     store.subscribe('logout', this.cancelSending.bind(this));
@@ -24,13 +24,11 @@ export class NotificationClass {
     const notif = {
       body: data.body,
       icon: 'https://movie-hub.ru/icons/brandTitle.svg',
-      requireInteraction: true
+      requireInteraction: true,
     };
 
-    navigator.serviceWorker.ready.then(registration => {
-
-      Notification.requestPermission().then(permission => {
-
+    navigator.serviceWorker.ready.then((registration) => {
+      Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
           // eslint-disable-next-line no-invalid-this
           this.state.permission = true;
@@ -39,7 +37,6 @@ export class NotificationClass {
           // eslint-disable-next-line no-invalid-this
           this.state.permission = false;
         }
-
       });
     });
   };
@@ -58,14 +55,14 @@ export class NotificationClass {
     // });
   };
 
-  startSending () {
+  startSending() {
     if (this.state.permission && store.getState('auth')?.status === 200) {
       setTimeout(this.sendNotify, 10000);
       this.state.intervalFunc = setInterval(this.sendNotify, 3600000);
     }
   }
 
-  cancelSending () {
+  cancelSending() {
     this.state.permission = false;
     clearInterval(this.state.intervalFunc);
   }
@@ -85,7 +82,7 @@ export class NotificationClass {
     }
 
     const response = await get({
-      url: urls.calendar
+      url: urls.calendar,
     });
     if (response?.status === 200 && response) {
       response?.body.days.forEach((elem) => {
@@ -93,7 +90,7 @@ export class NotificationClass {
           // eslint-disable-next-line no-invalid-this
           this.renderUI({
             title: 'Уведомление о релизах',
-            body: `Сегодня вышел '${elem.dayNews}', не пропустите!`
+            body: `Сегодня вышел '${elem.dayNews}', не пропустите!`,
           });
         }
       });

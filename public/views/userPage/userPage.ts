@@ -5,7 +5,7 @@ import {
   actionCSRF,
   actionGetSettings,
   actionLogout,
-  actionPutSettings
+  actionPutSettings,
 } from '@store/action/actionTemplates';
 import {
   addErrorsActive,
@@ -13,13 +13,13 @@ import {
   insertText,
   removeErrors,
   removeErrorsActive,
-  returnError
+  returnError,
 } from '@utils/addError';
 import {
   validateBirthday,
   validateEmail,
   validateLogin,
-  validatePassword
+  validatePassword,
 } from '@utils/validate';
 import { dateConverter } from '@utils/dateConverter';
 import { router } from '@router/router';
@@ -53,7 +53,7 @@ export class UserPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       file: '',
@@ -69,8 +69,8 @@ export class UserPage extends View {
         birthday: '',
         login: '',
         poster: '',
-        password: ''
-      }
+        password: '',
+      },
     };
 
     store.subscribe('getSettingsStatus', this.subscribeGetStatus.bind(this));
@@ -80,7 +80,7 @@ export class UserPage extends View {
   /**
    * Метод создания страницы
    */
-  render () {
+  render() {
     store.subscribe('unmount', this.componentWillUnmount.bind(this));
     this.renderDefaultPage({});
     store.dispatch(actionGetSettings());
@@ -119,7 +119,7 @@ export class UserPage extends View {
       inputButton.render({
         wrap: 'password-first',
         module: 'user-data',
-        type: 'password'
+        type: 'password',
       })
     );
     passwordSecondText!.insertAdjacentHTML(
@@ -127,7 +127,7 @@ export class UserPage extends View {
       inputButton.render({
         wrap: 'password-second',
         module: 'user-data',
-        type: 'password'
+        type: 'password',
       })
     );
     dateText?.insertAdjacentHTML(
@@ -135,7 +135,7 @@ export class UserPage extends View {
       inputButton.render({
         wrap: 'birthday',
         module: 'user-data',
-        type: 'date'
+        type: 'date',
       })
     );
     emailText?.insertAdjacentHTML(
@@ -151,7 +151,7 @@ export class UserPage extends View {
     this.componentDidMount();
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const blockHTML = document.querySelector('.settings');
     this.state.isEdit = false;
     this.cancelEdit();
@@ -196,12 +196,12 @@ export class UserPage extends View {
         case event.target.closest('.change-user-data__form__pencil') !== null:
           if (this.state.isEdit) {
             this.state.isEdit = false;
-            this.cancelEdit()
+            this.cancelEdit();
           } else {
             this.state.isEdit = true;
             this.applyEdit();
           }
-        break;
+          break;
         case event.target.closest('.button-submit') !== null:
           event.preventDefault();
           removeErrors(this.state.errorsHTML);
@@ -218,7 +218,7 @@ export class UserPage extends View {
     blockHTML?.addEventListener('change', popupEvent);
   }
 
-  getForm () {
+  getForm() {
     const elements = this.state.inputsHTML;
     const login = elements['login']?.value.trim();
     const email = elements['email']?.value;
@@ -257,7 +257,7 @@ export class UserPage extends View {
     }
   }
 
-  validateForm (login, password, passwordSecond, email, file, birthday) {
+  validateForm(login, password, passwordSecond, email, file, birthday) {
     const elements = this.state.errorsHTML;
     const object = this.state.userInfo;
     const wraps = this.state.wraps;
@@ -361,14 +361,14 @@ export class UserPage extends View {
     return result;
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     store.unsubscribe('unmount', this.componentWillUnmount);
     const popup = document.querySelector('.content-block');
     popup?.removeEventListener('click', this.popupEvent);
     popup?.removeEventListener('change', this.popupEvent);
   }
 
-  handlerStatus () {
+  handlerStatus() {
     const errorClassName = 'change-user-data__error';
     switch (this.state.userStatus) {
       case responseStatuses.success:
@@ -377,7 +377,7 @@ export class UserPage extends View {
         router.go(
           {
             path: '/login',
-            props: ``
+            props: ``,
           },
           { pushState: true, refresh: false }
         );
@@ -406,13 +406,13 @@ export class UserPage extends View {
     return false;
   }
 
-  subscribePostStatus () {
+  subscribePostStatus() {
     const result = store.getState('postStatusSettings');
     this.state.userStatus = result.status;
     this.handlerStatus();
   }
 
-  subscribeGetStatus () {
+  subscribeGetStatus() {
     const result = store.getState('getSettingsStatus');
     this.state.userStatus = result.status;
 
@@ -431,7 +431,7 @@ export class UserPage extends View {
         poster: userInfo['photo'],
         infoText: userInfo['info_text'],
         country: userInfo['country'],
-        career: userInfo['career']
+        career: userInfo['career'],
       };
     }
 
@@ -439,7 +439,7 @@ export class UserPage extends View {
     this.setUserInfo();
   }
 
-  setUserInfo () {
+  setUserInfo() {
     const photo = document.querySelector('.settings__img') as HTMLElement;
     // @ts-ignore
     photo.src = this.state.userInfo['poster'];
@@ -450,11 +450,15 @@ export class UserPage extends View {
   cancelEdit() {
     const password1 = document.querySelector('.password-first') as HTMLElement;
     const password2 = document.querySelector('.password-second') as HTMLElement;
-    const warning = document.querySelector('.change-user-data__form-warning') as HTMLElement;
+    const warning = document.querySelector(
+      '.change-user-data__form-warning'
+    ) as HTMLElement;
     const inputAll = document.querySelectorAll('.input-button');
     const text1 = document.querySelector('.login-first-text') as HTMLElement;
     const text2 = document.querySelector('.login-second-text') as HTMLElement;
-    const changeImage = document.querySelector('.change-user-data__form__file') as HTMLElement;
+    const changeImage = document.querySelector(
+      '.change-user-data__form__file'
+    ) as HTMLElement;
     const save = document.querySelector('.button-submit') as HTMLElement;
 
     text1.style.display = 'none';
@@ -464,19 +468,23 @@ export class UserPage extends View {
     password2.style.display = 'none';
     save.style.display = 'none';
     changeImage.style.display = 'none';
-    inputAll.forEach((elem: HTMLElement)=>{
+    inputAll.forEach((elem: HTMLElement) => {
       elem.style.pointerEvents = 'none';
-    })
+    });
   }
 
   applyEdit() {
     const password1 = document.querySelector('.password-first') as HTMLElement;
     const password2 = document.querySelector('.password-second') as HTMLElement;
     const inputAll = document.querySelectorAll('.input-button');
-    const warning = document.querySelector('.change-user-data__form-warning') as HTMLElement;
+    const warning = document.querySelector(
+      '.change-user-data__form-warning'
+    ) as HTMLElement;
     const text1 = document.querySelector('.login-first-text') as HTMLElement;
     const text2 = document.querySelector('.login-second-text') as HTMLElement;
-    const changeImage = document.querySelector('.change-user-data__form__file') as HTMLElement;
+    const changeImage = document.querySelector(
+      '.change-user-data__form__file'
+    ) as HTMLElement;
     const save = document.querySelector('.button-submit') as HTMLElement;
 
     text1.style.display = 'block';
@@ -486,12 +494,12 @@ export class UserPage extends View {
     password2.style.display = 'flex';
     save.style.display = 'block';
     changeImage.style.display = 'flex';
-    inputAll.forEach((elem: HTMLElement)=> {
+    inputAll.forEach((elem: HTMLElement) => {
       elem.style.pointerEvents = 'auto';
-    })
+    });
   }
 
-  init () {
+  init() {
     const loginHTML = document.querySelector('.login-input-user-data');
     const emailHTML = document.querySelector('.email-input-user-data');
     const passwordFirstHTML = document.querySelector(
@@ -525,7 +533,7 @@ export class UserPage extends View {
       passwordFirst: passwordFirstHTML,
       passwordSecond: passwordSecondHTML,
       birthday: birthdayHTML,
-      file: fileInputHTML
+      file: fileInputHTML,
     };
 
     this.state.wraps = {
@@ -533,7 +541,7 @@ export class UserPage extends View {
       email: wrapEmailHTML,
       passwordFirst: wrapPassword,
       passwordSecond: wrapSecondPassword,
-      birthday: wrapBirthdayHTML
+      birthday: wrapBirthdayHTML,
     };
     this.state.errorsHTML = {
       login: loginError,
@@ -541,7 +549,7 @@ export class UserPage extends View {
       passwordFirst: passwordFirstError,
       passwordSecond: passwordSecondError,
       birthday: dateError,
-      image: imageError
+      image: imageError,
     };
   }
 }

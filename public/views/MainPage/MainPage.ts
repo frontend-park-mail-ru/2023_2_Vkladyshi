@@ -4,8 +4,7 @@ import { router } from '@router/router';
 import { calendar } from '@components/Calendar/calendar';
 import { Slider } from '@components/Slider/slider';
 import { store } from '@store/store';
-import { actionSubCalendar
-} from '@store/action/actionTemplates';
+import { actionSubCalendar } from '@store/action/actionTemplates';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
 import { notification } from '@/notification';
 
@@ -20,7 +19,7 @@ export class MainPage extends View {
   /**
    * Метод создания страницы
    */
-  render () {
+  render() {
     this.renderDefaultPage({});
 
     store.subscribe('collectionMain', this.addCalendar.bind(this));
@@ -60,7 +59,7 @@ export class MainPage extends View {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const sendEmail = document.querySelector('.send-email-main');
     sendEmail?.addEventListener('click', (event) => {
       const email = document.querySelector(
@@ -76,7 +75,7 @@ export class MainPage extends View {
       }
     });
   }
-  addCalendar () {
+  addCalendar() {
     store.unsubscribe('collectionMain', this.addCalendar.bind(this));
 
     if (calendar) {
@@ -101,36 +100,34 @@ export class MainPage extends View {
           switch (true) {
             case event.target.className === 'calendar__days__subscribe':
               if (store.getState('auth').status === 200) {
-                store
-                  .dispatch(actionSubCalendar())
-                  .then(async (response) => {
-                    const result = store.getState('subscribeCalendar_res');
-                    console.log(store.state);
-                    if (result['status'] === 200) {
-                      await notification.reqiestNotif();
+                store.dispatch(actionSubCalendar()).then(async (response) => {
+                  const result = store.getState('subscribeCalendar_res');
+                  console.log(store.state);
+                  if (result['status'] === 200) {
+                    await notification.reqiestNotif();
 
-                      if (result?.body?.subscribe === false) {
-                        notification.renderUI({
-                          title: 'Отписка от уведомлений о новинках',
-                          body: 'Вы успешно отписались от новостей'
-                        });
+                    if (result?.body?.subscribe === false) {
+                      notification.renderUI({
+                        title: 'Отписка от уведомлений о новинках',
+                        body: 'Вы успешно отписались от новостей',
+                      });
 
-                        notification.cancelSending();
-                      } else {
-                        notification.renderUI({
-                          title: 'Подписка на уведомления о новинках',
-                          body: 'Благодарим Вас за подсписку!'
-                        });
+                      notification.cancelSending();
+                    } else {
+                      notification.renderUI({
+                        title: 'Подписка на уведомления о новинках',
+                        body: 'Благодарим Вас за подсписку!',
+                      });
 
-                        notification.startSending();
-                      }
+                      notification.startSending();
                     }
-                  });
+                  }
+                });
               } else {
                 router.go(
                   {
                     path: '/login',
-                    props: ``
+                    props: ``,
                   },
                   { pushState: true, refresh: false }
                 );
@@ -142,7 +139,7 @@ export class MainPage extends View {
                 router.go(
                   {
                     path: '/film',
-                    props: `/${filmId}`
+                    props: `/${filmId}`,
                   },
                   { pushState: true, refresh: false }
                 );
@@ -158,7 +155,7 @@ export class MainPage extends View {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     // const popup = document.querySelector('.film-selection');
     // popup?.removeEventListener('click', this.popupEvent);
 

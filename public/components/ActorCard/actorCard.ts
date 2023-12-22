@@ -18,7 +18,13 @@ export class ActorCard extends Component {
    * @param actor
    */
 
-  render ({ actor, alreadyFavorite, addClass = '', addClassPoster = '', adminPanel = false }) {
+  render({
+    actor,
+    alreadyFavorite,
+    addClass = '',
+    addClassPoster = '',
+    adminPanel = false,
+  }) {
     const result = {
       id: actor.actor_id,
       title: actor.actor_name,
@@ -26,7 +32,7 @@ export class ActorCard extends Component {
       alreadyFavorite: alreadyFavorite,
       adminPanel: adminPanel,
       addClass: addClass,
-      addClassPoster: addClassPoster
+      addClassPoster: addClassPoster,
     };
 
     return templateActorCard(result);

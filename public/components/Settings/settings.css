@@ -47,16 +47,15 @@
   margin-top: 25px;
   display: flex;
   justify-content: space-between;
-
 }
 
-.change-user-data__form, .change-user-data__form-save {
+.change-user-data__form,
+.change-user-data__form-save {
   display: flex;
   flex-direction: column;
   text-align: left;
   width: 90%;
   margin: 2% auto;
-
 }
 
 .change-user-data {

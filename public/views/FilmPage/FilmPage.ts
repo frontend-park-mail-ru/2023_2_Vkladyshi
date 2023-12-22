@@ -11,7 +11,7 @@ import {
   actionGetCommentsFilm,
   actionRemoveFavoriteActor,
   actionRemoveFavoriteFilm,
-  actionSearchFilm
+  actionSearchFilm,
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
@@ -39,14 +39,14 @@ export class FilmPage extends View {
    * @param ROOT
    * @class
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
       filmInfo: null,
       fildId: 0,
       commentsInfo: [],
       rewiewBunch: 1,
-      mapFilms: {}
+      mapFilms: {},
     };
 
     store.subscribe(
@@ -58,7 +58,7 @@ export class FilmPage extends View {
    * Метод создания страницы
    * @param props
    */
-  render (props) {
+  render(props) {
     store.subscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.subscribe('removeView', this.componentWillUnmount.bind(this));
     // store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
@@ -71,14 +71,14 @@ export class FilmPage extends View {
           actionGetCommentsFilm({
             film_id: this.state.fildId,
             page: this.state.rewiewBunch,
-            per_page: 5
+            per_page: 5,
           })
         );
       });
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     const contentBlockHTML = document.querySelector(
       '.content-block'
     ) as HTMLElement;
@@ -123,11 +123,11 @@ export class FilmPage extends View {
           false,
           false,
           false,
-          false
+          false,
         ],
         // @ts-ignore
         mark: rating.toFixed(1),
-        mark_number: number
+        mark_number: number,
       };
     }
 
@@ -173,7 +173,7 @@ export class FilmPage extends View {
     this.addEvents();
   }
 
-  insertComments () {
+  insertComments() {
     const mainHTML = document.querySelector(
       '.film-page__comments'
     ) as HTMLElement;
@@ -194,7 +194,7 @@ export class FilmPage extends View {
         photo: res['photo'],
         name: res['name'],
         rating: res['rating'],
-        text: res['text']
+        text: res['text'],
       };
 
       const result = document.createElement('buf');
@@ -220,7 +220,7 @@ export class FilmPage extends View {
     reviewForm.event(this.state.fildId);
   }
 
-  addEvents () {
+  addEvents() {
     const popup = document.querySelector('.main-container');
     const popupEvent = (event) => {
       const filmId = event.target
@@ -270,7 +270,7 @@ export class FilmPage extends View {
           router.go(
             {
               path: '/actor',
-              props: `/${actorId}`
+              props: `/${actorId}`,
             },
             { pushState: true, refresh: false }
           );
@@ -286,13 +286,13 @@ export class FilmPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  redirectToComments () {
+  redirectToComments() {
     const status = store.getState('auth').status;
     if (status !== 200) {
       router.go(
         {
           path: '/login',
-          props: ``
+          props: ``,
         },
         { pushState: true, refresh: false }
       );
@@ -302,7 +302,7 @@ export class FilmPage extends View {
     }
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     store.unsubscribe('removeView', this.componentWillUnmount.bind(this));
     store.unsubscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.unsubscribe(
@@ -314,7 +314,7 @@ export class FilmPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  getFavoriteFilmsList () {
+  getFavoriteFilmsList() {
     const favoriteFilms = store.getState('favoriteFilms');
     store.unsubscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     if (favoriteFilms?.status !== 200) {
@@ -337,7 +337,7 @@ export class FilmPage extends View {
     });
   }
 
-  subscribeActorStatus () {
+  subscribeActorStatus() {
     this.state.filmInfo = store.getState('filmInfo');
     store.unsubscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.unsubscribe('removeView', this.componentWillUnmount.bind(this));
@@ -347,7 +347,7 @@ export class FilmPage extends View {
     this.componentDidMount();
   }
 
-  subscribeCommentsStatrus () {
+  subscribeCommentsStatrus() {
     const result = store.getState('filmCommentsStatus');
     if (result?.status === 200) {
       store.unsubscribe(

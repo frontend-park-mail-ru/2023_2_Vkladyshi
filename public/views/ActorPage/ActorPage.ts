@@ -4,7 +4,7 @@ import {
   actionActor,
   actionAddFavoriteActor,
   actionFavoriteActors,
-  actionRemoveFavoriteActor
+  actionRemoveFavoriteActor,
 } from '@store/action/actionTemplates';
 import { image } from '@components/Image/image';
 import { actorInfo } from '@components/ActorInfo/actorInfo';
@@ -27,10 +27,10 @@ export class ActorDescritionPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
-      actorInfo: null
+      actorInfo: null,
     };
 
     // this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
@@ -41,7 +41,7 @@ export class ActorDescritionPage extends View {
    * Метод создания страницы
    * @param props
    */
-  render (props = null) {
+  render(props = null) {
     this.renderDefaultPage({});
     store.unsubscribe('removeView', this.subscribeActorStatus.bind(this));
     store.subscribe('removeView', this.componentWillUnmount.bind(this));
@@ -55,7 +55,7 @@ export class ActorDescritionPage extends View {
     }
   }
 
-  componentDidMount () {
+  componentDidMount() {
     let result = {};
 
     const res = this.state.actorInfo;
@@ -79,7 +79,7 @@ export class ActorDescritionPage extends View {
         poster: res['poster_href'],
         infoText: res['info_text'] ? res['info_text'] : 'Неизвестно',
         country: res['country'] ? res['country'] : 'Неизвестно',
-        career: res['career']
+        career: res['career'],
       };
     }
 
@@ -106,7 +106,7 @@ export class ActorDescritionPage extends View {
     this.addEvents();
   }
 
-  addEvents () {
+  addEvents() {
     const popup = document.querySelector('.video-content');
     // @ts-ignore
     const id = parseInt(location?.pathname?.match(/\d+/)[0]);
@@ -155,7 +155,7 @@ export class ActorDescritionPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  componentWillUnmount () {
+  componentWillUnmount() {
     store.unsubscribe('removeView', this.subscribeActorStatus.bind(this));
     store.unsubscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
     store.unsubscribe('actorInfo', this.subscribeActorStatus.bind(this));
@@ -163,7 +163,7 @@ export class ActorDescritionPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  getFavoriteActorsList () {
+  getFavoriteActorsList() {
     const favoriteActors = store.getState('favoriteActors');
     store.unsubscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
     // @ts-ignore
@@ -185,7 +185,7 @@ export class ActorDescritionPage extends View {
     });
   }
 
-  subscribeActorStatus () {
+  subscribeActorStatus() {
     this.state.actorInfo = store.getState('actorInfo');
     store.subscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
     store.dispatch(actionFavoriteActors({ page: 1, per_page: 20 }));

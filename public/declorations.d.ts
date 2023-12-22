@@ -83,8 +83,8 @@ interface searchActor {
   county: string;
   birthday: string;
   films: any;
-  page: number,
-  per_page: number
+  page: number;
+  per_page: number;
 }
 
 interface newFilm {

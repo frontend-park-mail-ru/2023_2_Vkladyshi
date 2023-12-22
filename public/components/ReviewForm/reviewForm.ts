@@ -3,7 +3,7 @@ import * as templateReviewForm from '@components/ReviewForm/reviewForm.hbs';
 import { store } from '@store/store';
 import {
   actionAddComment,
-  actionAddCommentTwo
+  actionAddCommentTwo,
 } from '@store/action/actionTemplates';
 import { validateReview } from '@utils/validate';
 import { addErrorsActive, insertText } from '@utils/addError';
@@ -21,10 +21,10 @@ export interface ReviewForm {
  * @typedef {ReviewForm}
  */
 export class ReviewForm extends Component {
-  constructor (ROOT) {
+  constructor(ROOT) {
     super(ROOT);
     this.state = {
-      fildId: 0
+      fildId: 0,
     };
   }
   /**
@@ -32,11 +32,11 @@ export class ReviewForm extends Component {
    * @param params
    * @returns {string} html форма заполенения отзыва
    */
-  render (params) {
+  render(params) {
     return templateReviewForm(params);
   }
 
-  event (fildId) {
+  event(fildId) {
     this.state.fildId = fildId;
     // const infoHTML = document.querySelector('.additional-info__review');
     const textHTML = document.querySelector(
@@ -71,7 +71,7 @@ export class ReviewForm extends Component {
             actionAddComment({
               film_id: this.state.fildId,
               rating: select,
-              text: text
+              text: text,
             })
           )
           .then((response) => {
@@ -87,7 +87,7 @@ export class ReviewForm extends Component {
           actionAddCommentTwo({
             film_id: this.state.fildId,
             rating: select,
-            text: text
+            text: text,
           })
         );
       };

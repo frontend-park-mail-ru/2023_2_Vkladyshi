@@ -35,5 +35,5 @@ export class View extends Component {
 
       main.insertAdjacentHTML('beforeend', footer.render());
     }
-  };
+  }
 }

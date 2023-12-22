@@ -318,10 +318,8 @@
 }
 
 .noactive {
-    display: none;
+  display: none;
 }
-
-
 
 .noactive-opacity {
   opacity: 0;
