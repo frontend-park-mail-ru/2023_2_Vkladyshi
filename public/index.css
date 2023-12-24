@@ -24,9 +24,11 @@
 @import './components/Slider/slider.css';
 @import './components/ActorInfo/actorInfo.css';
 @import './components/AddFilm/addFilm.css';
+@import './components/ModeratorPanel/moderatorPanel.css';
 @import './components/FavoriteList/favoriteList.css';
 @import './components/Statistics/statistics.css';
 @import './components/AdminPanel/adminPanel.css';
+@import './components/UserStatistic/userStatistic.css';
 @import './components/Modal/modal.css';
 @import './router/Page404/page404.css';
 @import './components/DirectoryFilms/directoryFilms.css';

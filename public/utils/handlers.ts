@@ -8,9 +8,27 @@ const handlers = [
     method: actionsUser.getStatisticsCsat.bind(actionsUser),
   },
   { type: 'searchFilm', method: actionsSearch.searchFilm.bind(actionsSearch) },
+  { type: 'getTrends', method: actionsSearch.getTrends.bind(actionsSearch) },
+  {
+    type: 'searchModerUser',
+    method: actionsSearch.searchModerUser.bind(actionsSearch),
+  },
   {
     type: 'searchActor',
     method: actionsSearch.searchActor.bind(actionsSearch),
+  },
+  {
+    type: 'userStatistic',
+    method: actionsUser.userStatistic.bind(actionsUser),
+  },
+  {
+    type: 'alreadyWatched',
+    method: actionsUser.alreadyWatched.bind(actionsUser),
+  },
+  { type: 'updateRole', method: actionsUser.updateRole.bind(actionsUser) },
+  {
+    type: 'removeComment',
+    method: actionsUser.removeComment.bind(actionsUser),
   },
   { type: 'signin', method: actionsUser.signin.bind(actionsUser) },
   { type: 'signup', method: actionsUser.signup.bind(actionsUser) },

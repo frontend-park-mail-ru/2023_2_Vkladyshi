@@ -5,8 +5,10 @@ import {
   actionAddFilm,
   actionFavoriteActors,
   actionFavoriteFilms,
+  actionModerSearchUsers,
   actionSearchActor,
   actionStatistics,
+  actionUpdateRole,
 } from '@store/action/actionTemplates';
 import { AdminPanel } from '@components/AdminPanel/adminPanel';
 import { collections, errorInputs, ROOT } from '@utils/config';
@@ -22,6 +24,8 @@ import {
   removeErrorsActive,
 } from '@utils/addError';
 import { addActive, removeActive } from '@utils/std';
+import { ModeratorPanel } from '@components/ModeratorPanel/moderatorPanel';
+import { router } from '@router/router';
 
 export interface AdminPage {
   state: {
@@ -32,6 +36,7 @@ export interface AdminPage {
     perPage: number;
     file: any;
     defaultImage: any;
+    currentPage: any;
   };
 }
 
@@ -55,16 +60,18 @@ export class AdminPage extends View {
       wraps: {},
       inputsHTML: {},
       pageNumber: 1,
-      perPage: 10,
+      perPage: 20,
       file: '',
       defaultImage: '',
+      currentPage: '',
     };
   }
 
   /**
    * Метод создания страницы
+   * @param props
    */
-  render() {
+  render(props) {
     this.renderDefaultPage({});
     const contentBlock = document.querySelector('.content-block');
     const footer = document.querySelector('.footer');
@@ -72,21 +79,93 @@ export class AdminPage extends View {
     const stat = new Statistics();
     const addFilm = new AddFilm(ROOT);
     const adminPanel = new AdminPanel(ROOT);
+    const moderatorPanel = new ModeratorPanel(ROOT);
     contentBlock?.insertAdjacentHTML('beforebegin', adminPanel.render());
     contentBlock?.insertAdjacentHTML('afterbegin', stat.render());
     contentBlock?.insertAdjacentHTML('afterbegin', addFilm.render());
-    store.dispatch(actionStatistics()).then(() => {
-      this.addFilmForm();
-      this.componentDidMount();
-    });
+    contentBlock?.insertAdjacentHTML('afterbegin', moderatorPanel.render());
+
+    let selected;
+    let button;
+    if (props === '/csat') {
+      button = document.querySelector('.statistic-chart');
+      selected = document.querySelector('.admin-panel__csat');
+    } else if (props === '/addFilm') {
+      button = document.querySelector('.add-film');
+      selected = document.querySelector('.admin-panel__add-film');
+    } else if (props === '/moderators') {
+      button = document.querySelector('.moderator');
+      selected = document.querySelector('.admin-panel__moder');
+    }
+
+    selected?.classList.add('active');
+    button?.classList.remove('noactive');
+    this.state.currentPage = button;
+    this.addFilmForm();
+    this.componentDidMount();
   }
 
   componentDidMount() {
     const adminPanel = document.querySelector('.admin-panel');
     const addFilm = document.querySelector('.add-film');
     const installPoster = document.querySelector('.add-film__left__poster');
+    const moderatorSearch = document.querySelector('.moderator');
     const actorFind = document.querySelector('.actors-find') as HTMLElement;
     actorFind!.style.marginTop = '20px';
+
+    const moderEvent = (event) => {
+      event.preventDefault();
+
+      const selected = document.querySelector(
+        '.moderator-role__form'
+      ) as HTMLSelectElement;
+      const search = document.querySelector(
+        '.moderator-search'
+      ) as HTMLInputElement;
+      store.subscribe(
+        'searchModerUser',
+        this.subscribeResultSearchUsers.bind(this)
+      );
+
+      switch (true) {
+        case event.target.closest('.select-user-role') !== null:
+          if (event.target.closest('option')) {
+            store.dispatch(
+              actionUpdateRole({
+                login: event.target
+                  .closest('.moderator__body__user')
+                  .getAttribute('data-section'),
+                role: event.target.value,
+              })
+            );
+          }
+          break;
+        case event.target.closest('.moderator-submit') !== null:
+          this.state.pageNumber = 1;
+          store.dispatch(
+            actionModerSearchUsers({
+              login: search?.value,
+              role: selected?.value,
+              page: this.state.pageNumber,
+              per_page: this.state.perPage,
+            })
+          );
+          break;
+        case event.target.closest('.more-elements') !== null:
+          store.dispatch(
+            actionModerSearchUsers({
+              login: search?.value,
+              role: selected?.value,
+              page: ++this.state.pageNumber,
+              per_page: this.state.perPage,
+            })
+          );
+          break;
+        default:
+          break;
+      }
+    };
+
     this.popupEvent = (event) => {
       switch (true) {
         case event.target.closest('.center-text') !== null:
@@ -99,13 +178,10 @@ export class AdminPage extends View {
       }
 
       const button = adminPanel?.querySelector('.active') as HTMLElement;
-      const csat = document.querySelector('.statistic-chart');
-      const addFilm = document.querySelector('.add-film');
       switch (true) {
         case event.target.closest('.actor-selection_actor') !== null:
           const selected = document.querySelector('.selected-actors');
           const allActors = document.querySelector('.results-actors');
-          console.log(event.target.closest('.actor-selection_actor'));
           if (event.target.closest('.actor-selection_actor.active') !== null) {
             event.target
               .closest('.actor-selection_actor')
@@ -155,12 +231,31 @@ export class AdminPage extends View {
           }
           break;
         case button.closest('.admin-panel__csat') !== null:
-          csat?.classList.remove('noactive');
-          addFilm?.classList.add('noactive');
+          router.go(
+            {
+              path: '/admin',
+              props: `/csat`,
+            },
+            { pushState: true, refresh: false }
+          );
           break;
         case button.closest('.admin-panel__add-film') !== null:
-          csat?.classList.add('noactive');
-          addFilm?.classList.remove('noactive');
+          router.go(
+            {
+              path: '/admin',
+              props: `/addFilm`,
+            },
+            { pushState: true, refresh: false }
+          );
+          break;
+        case button.closest('.admin-panel__moder') !== null:
+          router.go(
+            {
+              path: '/admin',
+              props: `/moderators`,
+            },
+            { pushState: true, refresh: false }
+          );
           break;
         default:
           break;
@@ -202,6 +297,7 @@ export class AdminPage extends View {
     installPoster?.addEventListener('change', this.changeEvent);
     adminPanel?.addEventListener('click', this.popupEvent);
     addFilm?.addEventListener('click', this.popupEvent);
+    moderatorSearch?.addEventListener('click', moderEvent);
 
     const result = store.getState('getStatistics');
     if (result?.status !== 200) {
@@ -468,6 +564,11 @@ export class AdminPage extends View {
   }
 
   componentWillUnmount() {
+    store.unsubscribe(
+      'searchModerUser',
+      this.subscribeResultSearchUsers.bind(this)
+    );
+    store.unsubscribe('resultSearchActor', this.resultFindActors.bind(this));
     const adminPanel = document.querySelector('.admin-panel');
     const addFilm = document.querySelector('.add-film');
     const installPoster = document.querySelector('.settings__img');
@@ -505,6 +606,63 @@ export class AdminPage extends View {
     }
 
     if (countActor >= this.state.perPage) {
+      addActive(more);
+    } else {
+      removeActive(more);
+    }
+  }
+
+  subscribeResultSearchUsers() {
+    const roles = {
+      moderator: `<option value='moderator'>модератор</option>`,
+      user: `<option value='user'>юзер</option>`,
+    };
+
+    store.unsubscribe(
+      'searchModerUser',
+      this.subscribeResultSearchUsers.bind(this)
+    );
+    const body = document.querySelector('.moderator__body');
+    if (this.state.pageNumber === 1) {
+      body!.innerHTML = '';
+    }
+    const result = store.getState('searchModerUser')?.body;
+    const more = document.querySelector('.more-elements');
+
+    let countUsers = 0;
+    result.forEach((elem) => {
+      countUsers++;
+
+      let res = roles[elem.role];
+
+      if (elem.role === 'super') {
+        res = `<option value='super' disabled selected>админ</option>`;
+      } else {
+        for (const role in roles) {
+          if (roles[role] !== roles[elem.role]) {
+            res += roles[role];
+          }
+        }
+      }
+
+      body?.insertAdjacentHTML(
+        'beforeend',
+        `<div class="moderator__body__user" data-section=${elem.login}>
+    
+            <div class="moderator__body__login">
+                ${elem.login}
+            </div>
+            <div class="moderator__body__role">
+            
+                 <select class='select-user-role'>
+                    ${res}
+                </select>
+            </div>
+    </div>`
+      );
+    });
+
+    if (countUsers >= this.state.perPage) {
       addActive(more);
     } else {
       removeActive(more);

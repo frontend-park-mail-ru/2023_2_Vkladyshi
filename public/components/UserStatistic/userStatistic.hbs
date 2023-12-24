@@ -1,0 +1,17 @@
+<div class='statistic-chart'>
+  <h1 class='statistic-chart__title'>Распределение по жанрам</h1>
+  <div class='statistic-chart__body'>
+    <div class='simple-bar-chart'>
+      {{#each result}}
+        <div
+          class='item-user-statistic'
+          data-section='{{genre_id}}'
+          style='--clr: {{color}}; --val: {{avg}}'
+        >
+          <div class='label'>{{genreName}} ({{count}})</div>
+          <div class='value'>{{avg}}</div>
+        </div>
+      {{/each}}
+    </div>
+  </div>
+</div>

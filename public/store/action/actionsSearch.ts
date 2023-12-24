@@ -74,6 +74,36 @@ class ActionsSearch {
       resultSearchActor: result,
     };
   }
+
+  async searchModerUser({ login, role, page, per_page }: searchModerUser) {
+    const response = get({
+      url: urls.searchModerUser,
+      query: {
+        login: login,
+        role: role,
+        page: page || 1,
+        per_page: per_page || 20,
+      },
+    });
+
+    const result = await response;
+
+    return {
+      searchModerUser: result,
+    };
+  }
+
+  async getTrends() {
+    const response = get({
+      url: urls.trends,
+    });
+
+    const result = await response;
+
+    return {
+      getTrends: result,
+    };
+  }
 }
 
 export const actionsSearch = new ActionsSearch();

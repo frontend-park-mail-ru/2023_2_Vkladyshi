@@ -72,7 +72,11 @@ export class FilmCard extends Component {
           }
 
           if (store.getState('auth').status === 200) {
-            store.dispatch(actionAddFavoriteFilm({ film_id: filmId }));
+            if (active) {
+              store.dispatch(actionAddFavoriteFilm({ film_id: filmId }));
+            } else {
+              store.dispatch(actionRemoveFavoriteFilm({ film_id: filmId }));
+            }
           } else {
             router.go(
               {

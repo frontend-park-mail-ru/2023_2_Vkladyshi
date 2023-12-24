@@ -1,0 +1,28 @@
+.item-user-statistic {
+  height: calc(10% * var(--val));
+  background-color: var(--clr, var(--item-default-color));
+  position: relative;
+  animation: item-height 1s ease forwards;
+  min-width: 40px;
+}
+
+.item-user-statistic > * {
+  position: absolute;
+  text-align: center;
+}
+.item-user-statistic > .label {
+  inset: 100% 0 auto 0;
+}
+.item-user-statistic > .value {
+  inset: auto 0 100% 0;
+}
+
+@media screen and (max-width: 760px) {
+  .item-user-statistic > .label {
+    writing-mode: vertical-rl;
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

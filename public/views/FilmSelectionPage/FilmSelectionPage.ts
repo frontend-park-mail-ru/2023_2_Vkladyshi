@@ -7,6 +7,7 @@ import {
   actionCollectionMain,
   actionFavoriteActors,
   actionFavoriteFilms,
+  actionGetTrends,
   actionRemoveFavoriteActor,
   actionRemoveFavoriteFilm,
   actionSearchActor,
@@ -93,6 +94,8 @@ export class FilmSelectionPage extends View {
     ) {
       if (window.location.pathname === '/') {
         store.subscribe('collectionMain', this.addFilmToMain.bind(this));
+        store.subscribe('getTrends', this.getTrends.bind(this));
+        store.dispatch(actionGetTrends());
         store.dispatch(actionCollectionMain({ collection_id: 0 }));
       } else {
         store.subscribe(
@@ -163,21 +166,7 @@ export class FilmSelectionPage extends View {
       return;
     }
 
-    let countFilms = 0;
-    // eslint-disable-next-line guard-for-in
-    for (const film in buf.body.films) {
-      countFilms++;
-      const filmCard = new FilmCard(ROOT);
-      sliderLiner?.insertAdjacentHTML(
-        'beforeend',
-        filmCard.render({
-          film: buf.body.films[film],
-          alreadyFavorite: false,
-        })
-      );
-
-      filmCard.addEvent(buf.body.films[film].id);
-    }
+    this.addFilmsToPage(sliderLiner, buf.body.films, true);
   }
 
   renderByElement() {
@@ -185,19 +174,9 @@ export class FilmSelectionPage extends View {
   }
 
   componentDidMount(isFilms) {
-    console.log(isFilms, 'componentDidMount');
-    let popup;
-    if (this.state.current === 'film') {
-      popup = document.querySelector('.film-selection');
-    } else if (this.state.current === 'main') {
-      popup = document.querySelector('.slider-container');
-    } else {
-      popup = document.querySelector('.film-selection');
-    }
+    const popup = document.querySelector('.content-block');
 
-    console.log(popup, 22);
     const popupEvent = (event) => {
-      console.log(popup, 1000);
       this.popupEvent = popupEvent;
       const filmId = event.target
         .closest('.film-selection_film')
@@ -234,32 +213,54 @@ export class FilmSelectionPage extends View {
           }
           break;
         case event.target.closest('.image-watchlist') !== null:
-          let active = true;
-          let element;
+          let active = false;
+
+          let elements;
           if (isFilms) {
-            element = document.querySelector(`[data-section="${filmId}"]`);
+            elements = Array.from(
+              document.querySelectorAll(`[data-section="${filmId}"]`)
+            );
           } else {
-            element = document.querySelector(`[data-section="${actorId}"]`);
+            elements = Array.from(
+              document.querySelectorAll(`[data-section="${actorId}"]`)
+            );
           }
 
-          const orange = element?.querySelector(
-            '.red-watchlist'
-          ) as HTMLElement;
-          const red = element?.querySelector(
-            '.orange-watchlist'
-          ) as HTMLElement;
-          if (element?.querySelector('.orange-watchlist.active')) {
+          const orange = elements.flatMap((elem) =>
+            Array.from(elem.querySelectorAll('.red-watchlist'))
+          );
+          const red = elements.flatMap((elem) =>
+            Array.from(elem.querySelectorAll('.orange-watchlist'))
+          );
+
+          if (
+            elements.some(
+              (elem) =>
+                elem.querySelectorAll('.orange-watchlist.active').length > 0
+            )
+          ) {
             active = true;
-            red.classList.remove('active');
-            red.classList.add('noactive');
-            orange.classList.remove('noactive');
-            orange.classList.add('active');
-          } else {
-            active = false;
+          }
+
+          red.forEach((red) => {
             red.classList.remove('noactive');
             red.classList.add('active');
+          });
+
+          orange.forEach((orange) => {
             orange.classList.remove('active');
             orange.classList.add('noactive');
+          });
+
+          if (active) {
+            red.forEach((red) => {
+              red.classList.remove('active');
+              red.classList.add('noactive');
+            });
+            orange.forEach((orange) => {
+              orange.classList.remove('noactive');
+              orange.classList.add('active');
+            });
           }
 
           if (store.getState('auth').status === 200) {
@@ -287,7 +288,6 @@ export class FilmSelectionPage extends View {
               { pushState: true, refresh: false }
             );
           }
-
           break;
         case event.target.closest('.film-selection_film') !== null:
           this.componentWillUnmount();
@@ -339,7 +339,15 @@ export class FilmSelectionPage extends View {
   }
 
   componentWillUnmount() {
-    const popup = document.querySelector('.film-selection');
+    const popup = document.querySelector('.content-block');
+    store.unsubscribe('collectionMain', this.addFilmToMain.bind(this));
+    store.unsubscribe('getTrends', this.getTrends.bind(this));
+    store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
+    store.unsubscribe(
+      'resultSearchActor',
+      this.subscribeSearchActors.bind(this)
+    );
+    store.unsubscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     popup?.removeEventListener('click', this.popupEvent);
   }
 
@@ -369,11 +377,6 @@ export class FilmSelectionPage extends View {
     const actors = store.getState('resultSearchActor')?.body?.actors;
     const contentBlockHTML = document.querySelector('.content-block');
     const filmSelect = new FilmSelection(ROOT);
-    const selection = document.querySelector('.film-selection');
-
-    // if (selection) {
-    //   selection.remove();
-    // }
 
     if (!document.querySelector('.film-selection_films')) {
       contentBlockHTML?.insertAdjacentHTML(
@@ -424,7 +427,6 @@ export class FilmSelectionPage extends View {
     }
   }
   addFilmToPage() {
-    console.log('addFilmToPage');
     store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
     store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
 
@@ -445,22 +447,12 @@ export class FilmSelectionPage extends View {
     const contentBlockHTML = document.querySelector('.content-block');
     const filmSelect = new FilmSelection(ROOT);
 
-    console.log(
-      document.querySelector('.film-selection'),
-      -2,
-      this.state.pageNumber
-    );
     if (!document.querySelector('.film-selection')) {
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
         filmSelect.render(buf.body)
       );
     }
-    console.log(
-      document.querySelector('.film-selection'),
-      -1,
-      this.state.pageNumber
-    );
 
     const contentBlock = document.querySelector('.film-selection_films');
     const more = document.querySelector('.more-elements');
@@ -478,21 +470,8 @@ export class FilmSelectionPage extends View {
       return;
     }
 
-    let countFilms = 0;
-    // eslint-disable-next-line guard-for-in
-    for (const film in buf.body.films) {
-      countFilms++;
-      const filmCard = new FilmCard(ROOT);
-      contentBlock?.insertAdjacentHTML(
-        'beforeend',
-        filmCard.render({
-          film: buf.body.films[film],
-          alreadyFavorite: false,
-        })
-      );
-    }
+    const countFilms = this.addFilmsToPage(contentBlock, buf.body.films);
 
-    console.log(countFilms, more, this.state.perPage);
     if (countFilms >= this.state.perPage) {
       addActive(more);
     } else {
@@ -513,14 +492,27 @@ export class FilmSelectionPage extends View {
     }
     const array = favoriteFilms?.body;
     array?.forEach((key) => {
-      const film = document.querySelector(`[data-section="${key?.id}"]`);
-      if (film) {
-        const orange = film?.querySelector('.red-watchlist') as HTMLElement;
-        const red = film?.querySelector('.orange-watchlist') as HTMLElement;
-        red.classList.remove('active');
-        red.classList.add('noactive');
-        orange.classList.remove('noactive');
-        orange.classList.add('active');
+      // const film = document.querySelectorAll(`[data-section="${key?.id}"]`);/
+      const elements = Array.from(
+        document.querySelectorAll(`[data-section="${key?.id}"]`)
+      );
+      if (elements.length > 0) {
+        // const elements = Array.from(document.querySelectorAll(`[data-section="${key?.id}"]`));
+        const orange = elements.flatMap((elem) =>
+          Array.from(elem.querySelectorAll('.red-watchlist'))
+        );
+        const red = elements.flatMap((elem) =>
+          Array.from(elem.querySelectorAll('.orange-watchlist'))
+        );
+
+        red.forEach((elem) => {
+          elem.classList.remove('active');
+          elem.classList.add('noactive');
+        });
+        orange.forEach((elem) => {
+          elem.classList.remove('noactive');
+          elem.classList.add('active');
+        });
       }
     });
   }
@@ -546,6 +538,27 @@ export class FilmSelectionPage extends View {
     });
   }
 
+  addFilmsToPage(html, films, addEvent = false) {
+    let countFilms = 0;
+    // eslint-disable-next-line guard-for-in
+    for (const film in films) {
+      countFilms++;
+      const filmCard = new FilmCard(ROOT);
+      html?.insertAdjacentHTML(
+        'beforeend',
+        filmCard.render({
+          film: films[film],
+          alreadyFavorite: false,
+          haveRating: true,
+        })
+      );
+      if (addEvent) {
+        filmCard.addEvent(films[film].id);
+      }
+    }
+    return countFilms;
+  }
+
   addFilmToMain() {
     store.unsubscribe('collectionMain', this.addFilmToMain.bind(this));
     this.state.current = 'main';
@@ -558,7 +571,6 @@ export class FilmSelectionPage extends View {
         this.state.perPage,
         'favorite'
       );
-      // store.dispatch(actionFavoriteFilms({ page: this.state.pageNumber++, per_page: this.state.perPage }));
     }
 
     const buf = store.getState('collectionMain');
@@ -575,18 +587,7 @@ export class FilmSelectionPage extends View {
 
     sliderNAme?.insertAdjacentHTML('beforeend', filmSelect.render(buf.body));
 
-    // eslint-disable-next-line guard-for-in
-    for (const film in buf.body.films) {
-      const filmCard = new FilmCard(ROOT);
-      sliderLiner?.insertAdjacentHTML(
-        'beforeend',
-        filmCard.render({
-          film: buf.body.films[film],
-          alreadyFavorite: false,
-          haveRating: true,
-        })
-      );
-    }
+    this.addFilmsToPage(sliderLiner, buf.body.films);
 
     const divName = document.querySelector(
       '.film-selection_name'
@@ -594,7 +595,6 @@ export class FilmSelectionPage extends View {
     const divFilm = document.querySelector('.film-selection_films');
     if (divName) {
       divName!.textContent = 'Новинки';
-      // divName.style.marginTop = '40px';
     }
     divFilm?.remove();
 
@@ -669,6 +669,32 @@ export class FilmSelectionPage extends View {
     this.state.actorData.films = <string>searchParams.get('films');
 
     return this.state.actorData;
+  }
+
+  getTrends() {
+    store.unsubscribe('getTrends', this.getTrends.bind(this));
+    this.state.current = 'main';
+
+    const buf = store.getState('getTrends');
+    if (buf === undefined || buf === null || buf.body === undefined) {
+      return;
+    }
+
+    const sliderNew = new Slider();
+    document
+      .querySelector('.content-block')
+      ?.insertAdjacentHTML('beforeend', sliderNew.renderLine());
+    sliderNew.addLine();
+
+    const sliderLiner = document.querySelectorAll('.slider-container');
+    const sliderName = document.querySelectorAll('.slider-name');
+    const filmSelect = new FilmSelection(ROOT);
+
+    sliderName[1]?.insertAdjacentHTML(
+      'beforeend',
+      filmSelect.render(buf.body, 'В тренде')
+    );
+    this.addFilmsToPage(sliderLiner[1], buf.body.films);
   }
 
   Offline() {

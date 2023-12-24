@@ -12,11 +12,16 @@ import { FilmCard } from '@components/filmCard/filmCard';
 import { router } from '@router/router';
 import { ActorCard } from '@components/ActorCard/actorCard';
 import { addActive, removeActive } from '@utils/std';
+import { Modal } from '@components/Modal/modal';
+import { inputButton } from '@components/inputButton/inputButton';
+import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
+import { DirectoryFilms } from '@components/DirectoryFilms/directoryFilms';
 
 export interface FavoritePage {
   state: {
     pageNumber: number;
     perPage: number;
+    modal: Modal;
   };
 }
 
@@ -39,6 +44,7 @@ export class FavoritePage extends View {
     this.state = {
       pageNumber: 1,
       perPage: 10,
+      modal: new Modal(ROOT),
     };
 
     store.subscribe('favoriteFilms', this.subscribeFavoriteFilms.bind(this));
@@ -96,6 +102,27 @@ export class FavoritePage extends View {
       .then(() => {
         this.componentDidMount();
       });
+
+    // const modal = new Modal(ROOT);
+    // const inputButton = new In();
+    // const mainHTML = document.querySelector('main');
+    // mainHTML?.insertAdjacentHTML('afterbegin', this.state.modal.render(true));
+    //
+    // const modalHTML = document.querySelector('.modal');
+    // const bodyHTML = document.querySelector('.modal__window__body');
+    // const buttonHTML = document.querySelector('.modal__window__button');
+    //
+    // modalHTML?.classList.add('none-active-modal');
+    //
+    // bodyHTML!.insertAdjacentHTML(
+    //   'beforeend',
+    //   inputButton.render({ wrap: 'direction', module: 'modal' })
+    // );
+    //
+    // buttonHTML!.insertAdjacentHTML(
+    //   'beforeend',
+    //   buttonSubmit.render({ text: 'Создать' })
+    // );
   }
 
   /**
@@ -103,6 +130,17 @@ export class FavoritePage extends View {
    * @param isFilms проверка что рендерим фильмы
    */
   componentDidMount() {
+    if (this.isFilm) {
+      addActive(document.querySelector('.create-direction'));
+    } else {
+      removeActive(document.querySelector('.create-direction'));
+    }
+
+    // const dragstart = (event) => {
+    //   event.dataTransfer.setData('dragItem', event.target.dataset.section);
+    //   // console.log('dragstart')
+    // }
+
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       const filmId = event.target
@@ -206,9 +244,84 @@ export class FavoritePage extends View {
       }
     };
 
-    const elements = document.querySelector('.favorite');
-    elements?.removeEventListener('click', popupEvent);
-    elements?.addEventListener('click', popupEvent);
+    const favorites = document.querySelector('.favorite');
+    favorites?.removeEventListener('click', popupEvent);
+    favorites?.addEventListener('click', popupEvent);
+    //
+    // const movalEvent = (event) => {
+    //   switch (true) {
+    //     case event.target.closest('.modal__window') === null:
+    //       this.state.modal.displayNone();
+    //       break;
+    //     case event.target.closest('.button-submit') !== null:
+    //       const inputText = document.querySelector('.direction-input-modal') as HTMLInputElement;
+    //       const contentBlockHTML = document.querySelector('.favorite-films__header') as HTMLInputElement;
+    //       // console.log(inputText.value.trim());
+    //       this.state.modal.displayNone();
+    //
+    //       const directory = new DirectoryFilms(ROOT);
+    //       const buf = document.createElement('div') as HTMLElement;
+    //       buf.innerHTML = directory.render({directionName: inputText.value.trim()});
+    //
+    //       const dir = buf.querySelector('.directory-films') as HTMLElement;
+    //       dir.addEventListener('dragenter', dragenter);
+    //       dir.addEventListener('dragleave', dragleave);
+    //       dir.addEventListener('dragover', dragover);
+    //       dir.addEventListener('drop', drop.bind(dir));
+    //
+    //       contentBlockHTML.insertAdjacentElement('afterend', dir);
+    //
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // };
+    //
+    //
+    //
+    // const dragenter = (event) => {
+    //   event.preventDefault()
+    //   const target = event.target;
+    //   target.style.opacity = 0.7;
+    // }
+    //
+    // const dragleave = (event) => {
+    //   const target = event.target;
+    //   target.style.opacity = 1;
+    // }
+    //
+    // const dragover = (event) => {
+    //   event.preventDefault();
+    // }
+    //
+    // const drop = (event) => {
+    //   const flag = event.dataTransfer.getData('dragItem');
+    //   const element = document.querySelector(`[data-section="${flag}"]`);
+    //   element?.remove();
+    // }
+    //
+    // const elements = document.querySelectorAll('.film-selection_film');
+    // const dirs = document.querySelectorAll('.directory-films');
+    //
+    // elements.forEach(item => {
+    //   item.addEventListener('dragstart', dragstart.bind(item));
+    // })
+    //
+    // dirs.forEach(dir => {
+    //   dir.addEventListener('dragenter', dragenter);
+    //   dir.addEventListener('dragleave', dragleave);
+    //   dir.addEventListener('dragover', dragover);
+    //   dir.addEventListener('drop', drop.bind(dir));
+    // })
+    //
+    // const createDir = document.querySelector('.create-direction');
+    // createDir?.addEventListener('click', (event) => {
+    //   const modalHTML = document.querySelector('.modal');
+    //
+    //   this.state.modal.displayActive();
+    //
+    //   modalHTML?.addEventListener('click', movalEvent);
+    // });
   }
 
   /**

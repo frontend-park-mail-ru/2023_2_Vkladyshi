@@ -1,7 +1,7 @@
 .admin-panel {
-  display: grid;
+  display: flex;
   color: white;
-  grid-template-columns: 100px 180px;
+  /*grid-template-columns: 100px 180px;*/
   grid-gap: 30px;
   justify-content: center;
   padding-top: 100px;
@@ -47,5 +47,10 @@
   bottom: 20px;
   width: 100px;
   height: 100px;
-  /*background-color: #73a32f;*/
+}
+
+.admin-panel__csat,
+.admin-panel__add-film,
+.admin-panel__moder {
+  cursor: pointer;
 }

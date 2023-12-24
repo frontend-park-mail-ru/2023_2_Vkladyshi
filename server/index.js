@@ -102,6 +102,24 @@ const calendar = {
   },
 };
 
+const moderUsers = {
+  status: 200,
+  body: [
+    {
+      login: 'pedik',
+      role: 'moderator',
+    },
+    {
+      login: 'andrey',
+      role: 'admin',
+    },
+    {
+      login: 'anton',
+      role: 'user',
+    },
+  ],
+};
+
 const comments = {
   status: 200,
   body: {
@@ -109,6 +127,7 @@ const comments = {
       {
         name: 'Login_User',
         rating: 3,
+        id_user: 1,
         text: 'Фильм отличный 11/10',
         film_id: 7,
         film_name: 'film',
@@ -117,12 +136,26 @@ const comments = {
       {
         name: 'Login_User',
         rating: 4,
+        id_user: 2,
         text: 'Фильм отличный 11/10',
         film_id: 7,
         film_name: 'film',
       },
     ],
   },
+};
+
+const userStatistic = {
+  status: 200,
+  body: [
+    { genre_id: 9, count: 20, avg: 5.5 },
+    { genre_id: 7, count: 2, avg: 10 },
+    { genre_id: 15, count: 1, avg: 9 },
+    { genre_id: 3, count: 2, avg: 2 },
+    { genre_id: 1, count: 5, avg: 1 },
+    { genre_id: 5, count: 2, avg: 5 },
+    { genre_id: 11, count: 1, avg: 8.2 },
+  ],
 };
 
 const favoriteFilms = {
@@ -354,6 +387,8 @@ const films_tags = {
   },
 };
 
+app.use(express.static('public'));
+
 app.listen(port, function () {
   console.log(`Server listening port ${port}`);
 });
@@ -473,12 +508,40 @@ app.get('/api/v1/favorite/film/remove', (req, res) => {
   });
 });
 
+app.get('/api/v1/trends', (req, res) => {
+  return res.status(200).json(films);
+});
+
 app.get('/admin', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/userStatistic', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/admin/csat', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/admin/addFilm', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/admin/moderators', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
 app.get('/api/v1/admin/csat', (req, res) => {
   return res.status(200).json(csat);
+});
+
+app.get('/api/v1/users/list', (req, res) => {
+  return res.status(200).json(moderUsers);
+});
+
+app.post('/api/v1/users/updateRole', (req, res) => {
+  return res.status(200).json({ status: 200 });
 });
 
 app.use('/signup', (req, res) => {
@@ -592,14 +655,6 @@ app.get('/actor/:actor_id', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-// app.get('/films', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
-//
-// app.get('/actors', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
-
 app.get('/films/:collection_id', (req, res) => {
   const collectionId = req.query.collection_id;
   if (collectionId !== 0) {
@@ -617,6 +672,15 @@ app.get('/film/:filmId', (req, res) => {
 app.use('/api/v1/actor', (req, res) => {
   return res.status(200).json(actor);
 });
+
+app.use('/api/v1/lasts', (req, res) => {
+  return res.status(200).json(films);
+});
+
+app.use('/api/v1/statistics', (req, res) => {
+  return res.status(200).json(userStatistic);
+});
+
 // /api/v1/find
 app.use('/api/v1/find', (req, res) => {
   const secFetchSite = req.headers['sec-fetch-site'];
@@ -690,15 +754,6 @@ app.get('/api/v1/comment', (req, res) => {
   res.status(200).json(comments);
   return res;
 });
-
-/*
-*   const secFetchSite = req.headers['sec-fetch-site'];
-  if (!secFetchSite) {
-    res.sendFile(__dirname + '/index.html');
-    return;
-  }
-*
-* */
 
 app.use('/api/v1/calendar', (req, res) => {
   return res.status(200).json(calendar);

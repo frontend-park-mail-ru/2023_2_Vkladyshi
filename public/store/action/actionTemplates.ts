@@ -113,8 +113,18 @@ export const actionSearchFilm = (params: searchFilm) => ({
   value: params,
 });
 
+export const actionModerSearchUsers = (params: searchModerUser) => ({
+  type: 'searchModerUser',
+  value: params,
+});
+
 export const actionSearchActor = (params: searchActor) => ({
   type: 'searchActor',
+  value: params,
+});
+
+export const actionUpdateRole = (params: updateRole) => ({
+  type: 'updateRole',
   value: params,
 });
 
@@ -137,4 +147,21 @@ export const actionSubCalendar = () => ({
 
 export const actionCheckSubscribeCalendar = () => ({
   type: 'checkSubscribeCalendar',
+});
+
+export const actionGetTrends = () => ({
+  type: 'getTrends',
+});
+
+export const actionRemoveComment = (params: removeComment) => ({
+  type: 'removeComment',
+  value: params,
+});
+
+export const actionUserStatistic = () => ({
+  type: 'userStatistic',
+});
+
+export const actionAlreadyWatched = () => ({
+  type: 'alreadyWatched',
 });

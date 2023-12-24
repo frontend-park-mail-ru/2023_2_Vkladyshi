@@ -81,7 +81,7 @@ export class UserPage extends View {
    * Метод создания страницы
    */
   render() {
-    store.subscribe('unmount', this.componentWillUnmount.bind(this));
+    // store.subscribe('unmount', this.componentWillUnmount.bind(this));
     this.renderDefaultPage({});
     store.dispatch(actionGetSettings());
 
@@ -362,7 +362,7 @@ export class UserPage extends View {
   }
 
   componentWillUnmount() {
-    store.unsubscribe('unmount', this.componentWillUnmount);
+    // store.unsubscribe('unmount', this.componentWillUnmount);
     const popup = document.querySelector('.content-block');
     popup?.removeEventListener('click', this.popupEvent);
     popup?.removeEventListener('change', this.popupEvent);

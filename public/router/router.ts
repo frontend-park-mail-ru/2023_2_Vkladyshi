@@ -89,7 +89,6 @@ class Router {
 
     window.addEventListener('popstate', () => {
       const url = new URL(window.location.href);
-
       const hasNumber = /\d/.test(url.pathname);
 
       let path = '';
@@ -104,6 +103,7 @@ class Router {
 
       this.go({ path, props }, { pushState: false, refresh: false });
     });
+
     this.refresh();
     this.firstView = true;
 
@@ -147,7 +147,7 @@ class Router {
       this.lastView = { path: stateObject.path, props: stateObject.props };
       if (store.getState('auth')?.status !== 200) {
         view = this.mapViews.get('/login');
-        stateObject = { props: '', path: '/login' };
+        stateObject = { path: '/login', props: '' };
       }
 
       this.navigate(stateObject, pushState);
@@ -187,16 +187,12 @@ class Router {
 
   subscribeRouterAuthStatus() {
     const status = store.getState('auth')?.status;
-    // const loginStatus = store.getState('login')?.status;
 
     if (window.location.pathname === '/') {
       return;
     }
 
-    // console.log(store.getState('auth')?.body?.role, store.getState('auth'));
-
     if (this.lastView.path === '/admin') {
-      // console.log(store.getState('auth'), store.getState('auth')?.body?.role);
       if (status === 200) {
         if (store.getState('auth')?.body?.role === undefined) {
           store.subscribe('auth', this.subscribeRouterRoleStatus.bind(this));
@@ -218,10 +214,6 @@ class Router {
         }
       }
     }
-    //
-    // if (this.lastView.path === '/admin' && ) {
-    //   return;
-    // }
 
     if (
       status === 200 &&
@@ -234,7 +226,6 @@ class Router {
         },
         { pushState: true, refresh: false }
       );
-      // this.lastView = { path: '/', props: '' };
     }
   }
 
@@ -253,7 +244,7 @@ class Router {
       this.go(
         {
           path: '/admin',
-          props: '',
+          props: this.lastView.props,
         },
         { pushState: true, refresh: false }
       );

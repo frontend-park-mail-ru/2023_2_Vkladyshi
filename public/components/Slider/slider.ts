@@ -1,4 +1,5 @@
 import * as templateSlider from '@components/Slider/slider.hbs';
+import * as templateSliderLine from '@components/Slider/sliderLine.hbs';
 
 /**
  * Класс рендеринга авторизации
@@ -14,6 +15,10 @@ export class Slider {
    */
   render() {
     return templateSlider();
+  }
+
+  renderLine() {
+    return templateSliderLine();
   }
 
   plusSlides() {
@@ -70,12 +75,6 @@ export class Slider {
     const prev = document.querySelector('.slider-prev');
     const next = document.querySelector('.slider-next');
 
-    // sliders.addEventListener('wheel', (event) => {
-    //   event.preventDefault();
-    //   sliders.scrollLeft += event.deltaY;
-    //   sliders.style.scrollBehavior = 'smooth';
-    // });
-
     prev?.addEventListener('click', () => {
       sliders.style.scrollBehavior = 'smooth';
       sliders.scrollLeft -= 280;
@@ -88,12 +87,6 @@ export class Slider {
   }
 
   addEvents() {
-    const prev = document.querySelector('.prev');
-    const next = document.querySelector('.next');
-
-    prev?.addEventListener('click', this.minusSlides.bind(this));
-    next?.addEventListener('click', this.plusSlides.bind(this));
-
     const sliderFull = document.querySelector('.slideshow-container');
     sliderFull?.classList.remove('noactive');
 
@@ -106,6 +99,26 @@ export class Slider {
 
     this.addEvents();
     this.showSliders();
+  }
+
+  addLine() {
+    const sliders = document.querySelectorAll('.slider-container');
+    const prev = document.querySelector('.line-prev');
+    const next = document.querySelector('.line-next');
+
+    console.log(prev, next);
+
+    prev?.addEventListener('click', () => {
+      // @ts-ignore
+      sliders[1].style.scrollBehavior = 'smooth';
+      sliders[1].scrollLeft -= 280;
+    });
+
+    next?.addEventListener('click', () => {
+      // @ts-ignore
+      sliders[1].style.scrollBehavior = 'smooth';
+      sliders[1].scrollLeft += 280;
+    });
   }
 }
 

@@ -5,47 +5,35 @@
         <div class='film-name'>{{title}}</div>
         <div class='content-card'>
 
-            <div class="param-list__left">
-                <div class="param-list__left__row1">Год релиза</div>
-                <div class="param-list__left__row2">Страна</div>
-                <div class="param-list__left__row3">Жанры</div>
-            </div>
-            <div class="param-list__right">
-                <div class="param-list__right__date">{{date}}</div>
-                <div class="param-list__right__country">{{country}}</div>
-                <section class='param-list__right__row-genre'></section>
-            </div>
-
-
-<!--          <ul class='param-list'>-->
-<!--              <div class="param-list__left">Год релиза</div>-->
-<!--              <div class="param-list__right">{{date}}</div>-->
-<!--          </ul>-->
-<!--          <ul class='param-list'>-->
-<!--              <div class="param-list__left">Страна</div>-->
-<!--              <div class="param-list__right"> {{country}}</div>-->
-<!--          </ul>-->
-<!--            <ul class='param-list'>-->
-<!--                <div class="param-list__left">Жанры</div>-->
-<!--                <div class="param-list__right">-->
-<!--                    {{#each body.genre}}-->
-<!--                        {{title}}-->
-<!--                    {{/each}}-->
-<!--                </div>-->
-<!--            </ul>-->
+          <div class='param-list__left'>
+            <div class='param-list__left__row1'>Год релиза</div>
+            <div class='param-list__left__row2'>Страна</div>
+            <div class='param-list__left__row3'>Жанры</div>
+          </div>
+          <div class='param-list__right'>
+            <div class='param-list__right__date'>{{date}}</div>
+            <div class='param-list__right__country'>{{country}}</div>
+            <section class='param-list__right__row-genre'></section>
+          </div>
         </div>
       </div>
       <div class='player'>
         <div class='video-content'>
-            <div class="video-content__watchlist">
-                {{#if alreadyFavorite}}
-                    <img class='image-cancel' src='/icons/cancel.png' />
-                {{else}}
-                    <img class='image-watchlist main-film-card orange-watchlist active' src='/icons/bookmark2.svg' />
-                    <img class='image-watchlist main-film-card red-watchlist noactive' src='/icons/bookmark1.svg' />
-                {{/if}}
+          <div class='video-content__watchlist'>
+            {{#if alreadyFavorite}}
+              <img class='image-cancel' src='/icons/cancel.png' />
+            {{else}}
+              <img
+                class='image-watchlist main-film-card orange-watchlist active'
+                src='/icons/bookmark2.svg'
+              />
+              <img
+                class='image-watchlist main-film-card red-watchlist noactive'
+                src='/icons/bookmark1.svg'
+              />
+            {{/if}}
 
-            </div>
+          </div>
           <div
             class='video-content-image'
             style='background-image: url("{{poster}}")'
@@ -59,40 +47,22 @@
           <div class='cinema'>Смотреть</div>
         </div>
 
-          <div class='rating'>
-              <div class='left'>
-                  <div class='number'>{{mark}}</div>
-                  <div class='count'>{{mark_number}} оценок</div>
-              </div>
-              <div class='right'>
-                  <div class='review-button'>Оставить отзыв</div>
-              </div>
+        <div class='rating'>
+          <div class='left'>
+            <div class='number'>{{mark}}</div>
+            <div class='count'>{{mark_number}} оценок</div>
           </div>
+          <div class='right'>
+            <div class='review-button'>Оставить отзыв</div>
+          </div>
+        </div>
       </div>
       <div class='film-info'>{{infoText}}</div>
-<!--      <div class='rating'>-->
-<!--        <div class='left'>-->
-<!--          <div class='number'>{{mark}}</div>-->
-<!--          <div class='count'>{{mark_number}} оценок</div>-->
-<!--        </div>-->
-<!--        <div class='right'>-->
-<!--          <div class='review-button'>Оставить отзыв</div>-->
-<!--        </div>-->
-<!--      </div>-->
       <div class='actors'>
         <div class='actors-header'>Актёры</div>
         <div class='actors-list'>
           {{#each actors}}
             <div class='actor table__actor__text' data-section='{{actor_id}}'>
-<!--                <div class='actor-selection_actor_header' style="position: absolute">-->
-<!--                    {{#if alreadyFavorite}}-->
-<!--                        <img class='image-cancel' src='/icons/cancel.png' />-->
-<!--                    {{else}}-->
-<!--                        <img class='image-watchlist orange-watchlist active' src='/icons/bookmark2.svg' />-->
-<!--                        <img class='image-watchlist red-watchlist noactive' src='/icons/bookmark1.svg' />-->
-<!--                    {{/if}}-->
-<!--                </div>-->
-
               <img
                 class='actor-poster'
                 style='background-image: url("{{actor_photo}}")'
@@ -102,36 +72,26 @@
           {{/each}}
         </div>
       </div>
-<!--        <div class="slider-equal">-->
-<!--            <div class="slider-equal-films">-->
-<!--            </div>-->
-<!--        </div>-->
     </div>
   </div>
 </div>
 
-<div class="film-block">
-    <div class="slider-equal">
-        <div class="film-selection__header">
-            <div class="film-selection__header__yellow"></div>
-            <div class="film-selection_name">Похожие фильмы</div>
-        </div>
-        <div class="slider">
-            <img src="/icons/back.png" class="slider-prev">
-            <div class="slider-container"></div>
-            <img src="/icons/next.png" class="slider-next">
-        </div>
-
+<div class='film-block'>
+  <div class='slider-equal'>
+    <div class='film-selection__header'>
+      <div class='film-selection__header__yellow'></div>
+      <div class='film-selection_name'>Похожие фильмы</div>
+    </div>
+    <div class='slider'>
+      <img src='/icons/back.png' class='slider-prev' />
+      <div class='slider-container'></div>
+      <img src='/icons/next.png' class='slider-next' />
     </div>
 
-<!--    <img src="/icons/back.png" class="slider-prev">-->
-
-    </div>
-<!--    <img src="/icons/next.png" class="slider-next">-->
-
-    <div class="film-page-comments">
-        <div class='film-page__comments'>
-            <div class='film-page__comments__header'>Отзывы</div>
-        </div>
-    </div>
+  </div>
+</div>
+<div class='film-page-comments'>
+  <div class='film-page__comments'>
+    <div class='film-page__comments__header'>Отзывы</div>
+  </div>
 </div>

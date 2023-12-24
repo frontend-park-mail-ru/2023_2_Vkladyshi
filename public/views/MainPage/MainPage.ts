@@ -51,7 +51,6 @@ export class MainPage extends View {
         ) as HTMLElement;
         if (divName) {
           divName!.textContent = 'Новинки';
-          // divName.style.marginTop = '0px';
         }
 
         this.componentDidMount();
@@ -156,9 +155,6 @@ export class MainPage extends View {
   }
 
   componentWillUnmount() {
-    // const popup = document.querySelector('.film-selection');
-    // popup?.removeEventListener('click', this.popupEvent);
-
     const popup = document.querySelector('.film-selection');
     popup?.removeEventListener('click', this.popupEvent);
 

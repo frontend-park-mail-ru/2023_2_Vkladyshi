@@ -244,6 +244,64 @@ class ActionsUser {
       addFilm: result,
     };
   }
+
+  async updateRole({ login, role }: updateRole) {
+    const response = post({
+      url: urls.updateRole,
+      body: {
+        login: login,
+        role: role,
+      },
+    });
+
+    const result = await response;
+    return {
+      updateRole: result,
+    };
+  }
+
+  async userStatistic() {
+    const response = get({
+      url: urls.userStatistic,
+    });
+
+    const result = await response;
+    return {
+      userStatistic: result,
+    };
+  }
+
+  async alreadyWatched() {
+    const response = get({
+      url: urls.alreadyWatched,
+    });
+
+    const result = await response;
+    return {
+      alreadyWatched: result,
+    };
+  }
+
+  async removeComment({
+    film_id,
+    user_id,
+    deleteFromServiceFilms,
+  }: removeComment) {
+    const response = post({
+      url: deleteFromServiceFilms
+        ? urls.deleteCommentFromServiceFilms
+        : urls.deleteCommentFromServiceComments,
+      body: {
+        user_id: user_id,
+        film_id: film_id,
+      },
+    });
+
+    const result = await response;
+    return {
+      removeComment: result,
+    };
+  }
 }
 
 export const actionsUser = new ActionsUser();

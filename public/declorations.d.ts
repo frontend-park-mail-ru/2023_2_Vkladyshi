@@ -108,3 +108,21 @@ interface SubscribeCalendar {
   login: string;
   subscribeFilmID: number;
 }
+
+interface updateRole {
+  login: string;
+  role: string;
+}
+
+interface removeComment {
+  user_id: number;
+  film_id: number;
+  deleteFromServiceFilms: boolean;
+}
+
+interface searchModerUser {
+  login: string;
+  role: string;
+  page: number;
+  per_page: number;
+}

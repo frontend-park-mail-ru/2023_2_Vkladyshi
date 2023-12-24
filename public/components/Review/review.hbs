@@ -1,26 +1,4 @@
-<!--<div class='review'>-->
-<!--  <div class='review__header'>-->
-<!--    <img class='review__header__img' src='{{photo}}' />-->
-<!--    {{#if user}}-->
-<!--      <h1-->
-<!--        class='review__header__film-name table__header'-->
-<!--        data-section='{{film_id}}'-->
-<!--      >{{film_name}}</h1>-->
-<!--    {{/if}}-->
-<!--    {{#if film}}-->
-<!--      <h1 class='review__header__user-name table__header'>{{name}}</h1>-->
-<!--    {{/if}}-->
-<!--    &lt;!&ndash;    <span class='review__header__review-data table__row__text'>{{date}}</span>&ndash;&gt;-->
-<!--    <span-->
-<!--      class='review__header__review-data table__row__text'-->
-<!--    >{{rating}}/10</span>-->
-<!--  </div>-->
-<!--  <div class='review__body'>-->
-<!--    <span class='review__body__text table__row__text'>{{text}}</span>-->
-<!--  </div>-->
-<!--</div>-->
-
-<div class='comment'>
+<div class='comment' data-section='{{userId}}'>
   <div class='comment-header'>
     <div class='comment-header__left'>
       <div class='comment-img'>
@@ -28,6 +6,9 @@
       </div>
       <div class='comment-details'>
         <h4 class='comment-name'>{{name}}</h4>
+      </div>
+      <div class='comment-header__left__comment-remove noactive'>
+        <img class='image-cancel' src='/icons/cancel.png' />
       </div>
     </div>
   </div>

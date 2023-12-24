@@ -10,11 +10,12 @@ export class FilmSelection extends Component {
   /**
    * Метод рендеринга элемента
    * @param response
-   * @return {string}
+   * @param collection_name
+   * @returns {string}
    */
-  render(response) {
+  render(response, collection_name = 'Результат поиска') {
     const result = {
-      collection_name: 'Результат поиска',
+      collection_name: collection_name,
       haveFilms: true,
     };
     if (response?.films?.length === 0) {

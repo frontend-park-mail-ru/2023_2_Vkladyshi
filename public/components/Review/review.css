@@ -12,6 +12,14 @@
   /*background: white;*/
 }
 
+.comment-header__left__comment-remove {
+  /*display: flex;*/
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+  cursor: pointer;
+}
+
 .comment-header__right {
   margin-top: 20px;
 }
@@ -87,7 +95,8 @@
 
 .comment-header__left {
   display: flex;
-  justify-items: center;
+  /*justify-items: center;*/
+  align-items: center;
 }
 
 .comment-name {

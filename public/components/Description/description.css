@@ -70,10 +70,10 @@
   text-align: left;
 }
 
-.param-list__right__date,
-.param-list__right__country {
-  cursor: pointer;
-}
+/*.param-list__right__date,*/
+/*.param-list__right__country {*/
+/*  cursor: pointer;*/
+/*}*/
 
 .param-list__right__row-genre {
   display: flex;

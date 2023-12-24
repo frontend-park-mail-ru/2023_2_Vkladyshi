@@ -173,10 +173,18 @@ export class Header extends Component {
               '.header__search-mobile'
             ); // @ts-ignore
             inputMobile.classList.remove('reverse');
-            // inputMobile?.classList.remove('noactive')
             // @ts-ignore
             inputMobile.style.display = 'flex';
           }
+          break;
+        case target.closest('.header_user-statistic-header') !== null:
+          router.go(
+            {
+              path: '/userStatistic',
+              props: '',
+            },
+            { pushState: true, refresh: false }
+          );
           break;
         case target.closest('.header_search_item__all-search-container') !==
           null ||

@@ -5,10 +5,12 @@ import { store } from '@store/store';
 import {
   actionAddFavoriteActor,
   actionAddFavoriteFilm,
+  actionAuth,
   actionCollectionMain,
   actionFavoriteFilms,
   actionFilm,
   actionGetCommentsFilm,
+  actionRemoveComment,
   actionRemoveFavoriteActor,
   actionRemoveFavoriteFilm,
   actionSearchFilm,
@@ -61,6 +63,12 @@ export class FilmPage extends View {
   render(props) {
     store.subscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.subscribe('removeView', this.componentWillUnmount.bind(this));
+    store.subscribe('logoutStatus', this.subscribeLogoutFilmPage.bind(this));
+
+    // if (store.getState('auth')?.role === undefined && store.getState('auth')?.status === 200) {
+    //   store.subscribe('auth', this.subscribeDeleteComment.bind(this));
+    //   store.dispatch(actionAuth());
+    // }
     // store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     this.renderDefaultPage({});
 
@@ -178,8 +186,9 @@ export class FilmPage extends View {
       '.film-page__comments'
     ) as HTMLElement;
     const reviewForm = new ReviewForm(ROOT);
+    const auth = store.getState('auth');
 
-    if (store.getState('auth').status === 200) {
+    if (auth.status === 200) {
       mainHTML?.insertAdjacentHTML(
         'beforeend',
         reviewForm.render({ login: true })
@@ -187,6 +196,7 @@ export class FilmPage extends View {
     }
 
     const result = this.state.commentsInfo['comment'];
+    console.log(store.getState('auth'));
 
     result.forEach((res) => {
       const table = {
@@ -195,6 +205,7 @@ export class FilmPage extends View {
         name: res['name'],
         rating: res['rating'],
         text: res['text'],
+        userId: res['id_user'],
       };
 
       const result = document.createElement('buf');
@@ -217,16 +228,20 @@ export class FilmPage extends View {
       mainHTML?.appendChild(reviewHTML);
     });
 
+    if (
+      store.getState('auth')?.role === undefined &&
+      store.getState('auth')?.status === 200
+    ) {
+      store.subscribe('auth', this.subscribeDeleteComment.bind(this));
+      store.dispatch(actionAuth());
+    }
+
     reviewForm.event(this.state.fildId);
   }
 
   addEvents() {
     const popup = document.querySelector('.main-container');
     const popupEvent = (event) => {
-      const filmId = event.target
-        .closest('.film-selection_film')
-        ?.getAttribute('data-section');
-      event.preventDefault();
       this.popupEvent = popupEvent;
       switch (true) {
         case event.target.closest('.image-watchlist.main-film-card') !== null:
@@ -278,6 +293,29 @@ export class FilmPage extends View {
         case event.target.closest('.review-button') !== null:
           this.redirectToComments();
           break;
+        case event.target.closest('.image-cancel') !== null:
+          if (store.getState('auth').status === 200) {
+            store.dispatch(
+              actionRemoveComment({
+                film_id: this.state.fildId,
+                user_id: Number(
+                  event.target.closest('.comment')?.getAttribute('data-section')
+                ),
+                deleteFromServiceFilms: true,
+              })
+            );
+            store.dispatch(
+              actionRemoveComment({
+                film_id: this.state.fildId,
+                user_id: Number(
+                  event.target.closest('.comment')?.getAttribute('data-section')
+                ),
+                deleteFromServiceFilms: false,
+              })
+            );
+            event.target.closest('.comment')?.remove();
+          }
+          break;
         default:
           break;
       }
@@ -305,6 +343,7 @@ export class FilmPage extends View {
   componentWillUnmount() {
     store.unsubscribe('removeView', this.componentWillUnmount.bind(this));
     store.unsubscribe('filmInfo', this.subscribeActorStatus.bind(this));
+    store.unsubscribe('logoutStatus', this.subscribeLogoutFilmPage.bind(this));
     store.unsubscribe(
       'filmCommentsStatus',
       this.subscribeCommentsStatrus.bind(this)
@@ -333,7 +372,6 @@ export class FilmPage extends View {
         red?.classList.remove('noactive');
         red?.classList.add('active');
       }
-      // console.log(key?.id)
     });
   }
 
@@ -357,5 +395,33 @@ export class FilmPage extends View {
       this.state.commentsInfo = result.body;
       this.insertComments();
     }
+  }
+
+  subscribeDeleteComment() {
+    store.unsubscribe('auth', this.subscribeDeleteComment.bind(this));
+    const auth = store.getState('auth');
+
+    if (
+      auth?.status === 200 &&
+      (auth?.body.role === 'super' || auth?.body.role === 'moderator')
+    ) {
+      const removes = document.querySelectorAll(
+        '.comment-header__left__comment-remove'
+      );
+      removes?.forEach((elem) => {
+        elem.classList.remove('noactive');
+      });
+    }
+  }
+
+  subscribeLogoutFilmPage() {
+    store.unsubscribe('logoutStatus', this.subscribeLogoutFilmPage.bind(this));
+
+    const removes = document.querySelectorAll(
+      '.comment-header__left__comment-remove'
+    );
+    removes?.forEach((elem) => {
+      elem.classList.add('noactive');
+    });
   }
 }
