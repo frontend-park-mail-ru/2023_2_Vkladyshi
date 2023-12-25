@@ -15,8 +15,9 @@ import { UserStatisticPage } from '@views/UserStatisticPage/userStatisticPage';
 export const ROOT = document.querySelector('#root');
 
 // export const DOMAIN = 'http://localhost:8001';
-// export const DOMAIN = 'http://127.0.0.1:8001';
-export const DOMAIN = 'https://movie-hub.ru';
+export const DOMAIN = 'http://127.0.0.1:8001';
+
+// export const DOMAIN = 'https://movie-hub.ru';
 export const urls = {
   main: '/',
   findFilm: '/api/v1/films',

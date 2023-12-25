@@ -27,6 +27,7 @@ export class NotificationClass {
       requireInteraction: true,
     };
 
+    console.log('navigator.serviceWorker.ready')
     navigator.serviceWorker.ready.then((registration) => {
       Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
@@ -41,11 +42,38 @@ export class NotificationClass {
     });
   };
 
+  reqiestNotif = async () => {
+    // Notification.requestPermission().then(permission => {
+    //
+    //   if (permission === 'granted') {
+    //     // eslint-disable-next-line no-invalid-this
+    //     this.state.permission = true;
+    //   } else {
+    //     // eslint-disable-next-line no-invalid-this
+    //     this.state.permission = false;
+    //   }
+    //
+    // });
+  };
+
   startSending() {
-    if (this.state.permission && store.getState('auth')?.status === 200) {
-      setTimeout(this.sendNotify, 10000);
-      this.state.intervalFunc = setInterval(this.sendNotify, 3600000);
-    }
+
+    navigator.serviceWorker.ready.then((registration) => {
+      Notification.requestPermission().then((permission) => {
+        if (permission === 'granted') {
+          // eslint-disable-next-line no-invalid-this
+          this.state.permission = true;
+          if (store.getState('auth')?.status === 200) {
+            setTimeout(this.sendNotify, 10000);
+            this.state.intervalFunc = setInterval(this.sendNotify, 3600000);
+          }
+        } else {
+          // eslint-disable-next-line no-invalid-this
+          this.state.permission = false;
+        }
+      });
+    });
+
   }
 
   cancelSending() {

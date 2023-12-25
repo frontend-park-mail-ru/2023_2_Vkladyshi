@@ -93,10 +93,10 @@ const calendar = {
   body: {
     monthName: 'Декабрь 2023',
     monthText: 'Календарь релизов',
-    currentDay: 19,
+    currentDay: 25,
     days: [
       { dayNumber: 14, dayNews: 'Kostolom111 Kostolom111', id: 10 },
-      { dayNumber: 19, dayNews: 'Провожающая в последний путь Фрирен', id: 3 },
+      { dayNumber: 25, dayNews: 'Провожающая в последний путь Фрирен', id: 3 },
       { dayNumber: 21, dayNews: 'Night1 Night', id: 5 },
     ],
   },
