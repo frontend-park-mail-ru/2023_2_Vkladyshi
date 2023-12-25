@@ -1,39 +1,10 @@
 import { View } from '@views/view';
-import {
-  collections,
-  errorInputs,
-  responseStatuses,
-  ROOT,
-} from '@utils/config';
+import { collections, ROOT } from '@utils/config';
 import { store } from '@store/store';
 import {
   actionAlreadyWatched,
-  actionCSRF,
-  actionGetSettings,
-  actionLogout,
-  actionPutSettings,
   actionUserStatistic,
 } from '@store/action/actionTemplates';
-import {
-  addErrorsActive,
-  insertInInput,
-  insertText,
-  removeErrors,
-  removeErrorsActive,
-  returnError,
-} from '@utils/addError';
-import {
-  validateBirthday,
-  validateEmail,
-  validateLogin,
-  validatePassword,
-} from '@utils/validate';
-import { dateConverter } from '@utils/dateConverter';
-import { router } from '@router/router';
-import { inputButton } from '@components/inputButton/inputButton';
-import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
-import { image } from '@components/Image/image';
-import { settings } from '@components/Settings/settings';
 import { UserStatistic } from '@components/UserStatistic/userStatistic';
 import { FilmSelection } from '@components/FilmSelection/filmSelection';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
@@ -58,8 +29,6 @@ export class UserStatisticPage extends View {
   constructor(ROOT) {
     super(ROOT);
     this.state = {};
-
-    // store.subscribe('getUserStatistic', this.subscribeUserStatistic.bind(this));
   }
 
   /**
@@ -87,23 +56,47 @@ export class UserStatisticPage extends View {
       if (store.getState('userStatistic')?.status === 200) {
         const statHTML = document.querySelector('.statistic');
         const statistic = store.getState('userStatistic')?.body;
-        let result = [];
+        // let result = [];
+        //
+        // result = statistic.map(({ genre_id, count, avg }) => {
+        //   const avgPointer = avg;
+        //   const { key: genreName, color } =
+        //     collections.collection_items.find(
+        //       (object) => genre_id === object.value
+        //     ) || {};
+        //   return {
+        //     genreName: genreName,
+        //     genreId: genre_id,
+        //     count: count,
+        //     avg: avg.toFixed(1),
+        //     color: color,
+        //   };
+        // });
 
-        result = statistic.map(({ genre_id, count, avg }) => {
-          const avgPointer = avg;
-          const { key: genreName, color } =
-            collections.collection_items.find(
-              (object) => genre_id === object.value
-            ) || {};
-          return {
-            genreName: genreName,
-            genreId: genre_id,
-            count: count,
-            avg: avg.toFixed(1),
-            color: color,
-          };
+        const res = collections.collection_items.map((elem) => {
+          const matchedObject = statistic.find(
+            (object) => elem.value === object.genre_id
+          );
+          if (matchedObject) {
+            return {
+              genreName: elem.key,
+              genreId: matchedObject.genre_id,
+              count: matchedObject.count,
+              avg: matchedObject.avg.toFixed(1),
+              color: elem.color,
+            };
+          } else {
+            return {
+              genreName: elem.key,
+              genreId: elem.value,
+              count: 0,
+              avg: 0,
+              color: elem.color,
+            };
+          }
         });
-        statHTML?.insertAdjacentHTML('beforeend', stat.render(result));
+
+        statHTML?.insertAdjacentHTML('beforeend', stat.render(res));
       }
     });
 
@@ -111,10 +104,10 @@ export class UserStatisticPage extends View {
       const result = store.getState('alreadyWatched');
 
       if (result?.status === 200) {
-        const slider = new Slider();
+        const slider = new Slider(ROOT);
         const statHTML = document.querySelector('.already-viewed');
         statHTML?.insertAdjacentHTML('beforeend', slider.renderLine());
-        slider.addLine();
+        // slider.addLine();
 
         const sliderLiner = document.querySelector('.slider-container');
         const sliderNAme = document.querySelector('.slider-name');
@@ -127,7 +120,16 @@ export class UserStatisticPage extends View {
         );
 
         const films = new FilmSelectionPage('');
-        films.addFilmsToPage(sliderLiner, result?.body?.films, true);
+        if (result?.body?.films?.length > 0) {
+          films.addFilmsToPage(sliderLiner, result?.body?.films, true);
+          slider.addLine();
+        } else {
+          const select = document.querySelector('.film-selection_films');
+          select?.insertAdjacentHTML(
+            'beforeend',
+            `<div class="label">Просмотренных ещё нет</div>`
+          );
+        }
       }
     });
   }

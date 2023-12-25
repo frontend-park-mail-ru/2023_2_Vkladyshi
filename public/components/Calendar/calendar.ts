@@ -33,10 +33,15 @@ class Calendar extends Component {
             result?.days.find((day) => day.dayNumber === dayNumber)?.id || '';
 
           // if (dayNews !== '' && filmID !== '') {
-          //   const divElement = document.querySelector(`li[data-section="${filmID}"]`);
-          //   console.log(divElement)
+          //   // const divElement = document.querySelector(`.calendar__days__day[data-section="${filmID}"]`) as HTMLElement;
+          //   const divElement = document.querySelector('[data-section="10"]') as HTMLElement;
+          //
+          //   // document.querySelector('[data-section="10"].calendar__days__day');
+          //
+          //   console.log(divElement, 112, filmID)
           //   if (divElement) {
-          //     divElement.classList.add('pointer');
+          //     divElement.style.cursor = 'pointer';
+          //     // divElement.classList.add('pointer');
           //   }
           // }
 

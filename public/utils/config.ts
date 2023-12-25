@@ -15,8 +15,8 @@ import { UserStatisticPage } from '@views/UserStatisticPage/userStatisticPage';
 export const ROOT = document.querySelector('#root');
 
 // export const DOMAIN = 'http://localhost:8001';
-export const DOMAIN = 'http://127.0.0.1:8001';
-// export const DOMAIN = 'https://movie-hub.ru';
+// export const DOMAIN = 'http://127.0.0.1:8001';
+export const DOMAIN = 'https://movie-hub.ru';
 export const urls = {
   main: '/',
   findFilm: '/api/v1/films',
@@ -135,7 +135,7 @@ export const header = new Header(ROOT);
 export const collections = {
   collection_name: 'Жанры',
   collection_items: [
-    { key: 'Боевики', value: 5, color: '#5EB344' },
+    { key: 'Боевики', value: 5, color: '#a0b79b' },
     { key: 'Военные', value: 6, color: '#FCB72A' },
     { key: 'Детективы', value: 7, color: '#F8821A' },
     { key: 'Драмы', value: 8, color: '#E0393E' },

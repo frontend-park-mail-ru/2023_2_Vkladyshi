@@ -1,32 +1,18 @@
 .simple-bar-chart {
-  --line-count: 10;
-  --line-color: currentcolor;
-  --line-opacity: 0.25;
-  --item-gap: 2%;
-  --item-default-color: #060606;
-
+  gap: 4px;
   height: 10rem;
-  display: grid;
-  grid-auto-flow: column;
-  gap: var(--item-gap);
+  display: flex;
   align-items: end;
-  padding-inline: var(--item-gap);
-  --padding-block: 1.5rem; /*space for labels*/
-  padding-block: var(--padding-block);
-  position: relative;
-  isolation: isolate;
 }
 
 .statistic-chart {
   padding-top: 50px;
-  /*display: flex;*/
-  /*flex-direction: column;*/
-  /*align-items: center;*/
-  /*justify-content: center;*/
 }
 
 .statistic-chart__title {
   color: white;
+  padding: 30px 0 30px 0;
+  font-size: 25px;
 }
 
 .value {
@@ -74,22 +60,3 @@
 .label {
   color: white;
 }
-
-/*!* demo *!*/
-/*body {*/
-/*    margin: 0;*/
-/*    padding: 2rem;*/
-/*    color: #1D1E22;*/
-/*    background-color: #f0f0f0;*/
-/*    font-family: system-ui, sans-serif;*/
-/*    text-align: center;*/
-/*}*/
-
-/*@media (prefers-color-scheme: dark) {*/
-/*    body {*/
-/*        background-color: #1D1E22;*/
-/*        color: #f0f0f0;*/
-/*    }*/
-/*}*/
-
-/*body > * { max-width: 45rem; margin-inline: auto}*/

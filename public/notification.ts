@@ -41,20 +41,6 @@ export class NotificationClass {
     });
   };
 
-  reqiestNotif = async () => {
-    // Notification.requestPermission().then(permission => {
-    //
-    //   if (permission === 'granted') {
-    //     // eslint-disable-next-line no-invalid-this
-    //     this.state.permission = true;
-    //   } else {
-    //     // eslint-disable-next-line no-invalid-this
-    //     this.state.permission = false;
-    //   }
-    //
-    // });
-  };
-
   startSending() {
     if (this.state.permission && store.getState('auth')?.status === 200) {
       setTimeout(this.sendNotify, 10000);

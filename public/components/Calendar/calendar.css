@@ -2,8 +2,6 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  /*color: #f5c518;*/
-  /* color: #ffffff; */
   margin: auto;
 }
 
@@ -119,7 +117,7 @@
     /*padding: 0.7rem;*/
 
     /*font-weight: 300;*/
-    font-size: 12px;
+    font-size: 14px;
   }
 
   .calendar__days__time {
@@ -128,7 +126,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .calendar__days {
     display: flex;
     flex-direction: row;
@@ -137,17 +135,14 @@
 
   .calendar__days {
     .calendar__days__day {
-      width: 105px;
-      height: 105px;
+      width: 110px;
+      height: 110px;
 
       margin: 0.25rem;
 
       border-radius: 0.2rem;
 
-      /*padding: 0.3rem;*/
-
-      /*font-weight: 300;*/
-      font-size: 12px;
+      font-size: 13px;
     }
     .calendar__days__time {
       font-size: 0.8rem;

@@ -43,7 +43,7 @@ export class FavoritePage extends View {
 
     this.state = {
       pageNumber: 1,
-      perPage: 10,
+      perPage: 20,
       modal: new Modal(ROOT),
     };
 
@@ -136,11 +136,6 @@ export class FavoritePage extends View {
       removeActive(document.querySelector('.create-direction'));
     }
 
-    // const dragstart = (event) => {
-    //   event.dataTransfer.setData('dragItem', event.target.dataset.section);
-    //   // console.log('dragstart')
-    // }
-
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       const filmId = event.target
@@ -193,6 +188,7 @@ export class FavoritePage extends View {
           );
           break;
         case event.target.closest('.redirect-to-favorite') !== null:
+          console.log(this.isFilm);
           this.componentWillUnmount();
           if (this.isFilm) {
             router.go(
@@ -245,83 +241,8 @@ export class FavoritePage extends View {
     };
 
     const favorites = document.querySelector('.favorite');
-    favorites?.removeEventListener('click', popupEvent);
+    // favorites?.removeEventListener('click', popupEvent);
     favorites?.addEventListener('click', popupEvent);
-    //
-    // const movalEvent = (event) => {
-    //   switch (true) {
-    //     case event.target.closest('.modal__window') === null:
-    //       this.state.modal.displayNone();
-    //       break;
-    //     case event.target.closest('.button-submit') !== null:
-    //       const inputText = document.querySelector('.direction-input-modal') as HTMLInputElement;
-    //       const contentBlockHTML = document.querySelector('.favorite-films__header') as HTMLInputElement;
-    //       // console.log(inputText.value.trim());
-    //       this.state.modal.displayNone();
-    //
-    //       const directory = new DirectoryFilms(ROOT);
-    //       const buf = document.createElement('div') as HTMLElement;
-    //       buf.innerHTML = directory.render({directionName: inputText.value.trim()});
-    //
-    //       const dir = buf.querySelector('.directory-films') as HTMLElement;
-    //       dir.addEventListener('dragenter', dragenter);
-    //       dir.addEventListener('dragleave', dragleave);
-    //       dir.addEventListener('dragover', dragover);
-    //       dir.addEventListener('drop', drop.bind(dir));
-    //
-    //       contentBlockHTML.insertAdjacentElement('afterend', dir);
-    //
-    //       break;
-    //     default:
-    //       break;
-    //   }
-    // };
-    //
-    //
-    //
-    // const dragenter = (event) => {
-    //   event.preventDefault()
-    //   const target = event.target;
-    //   target.style.opacity = 0.7;
-    // }
-    //
-    // const dragleave = (event) => {
-    //   const target = event.target;
-    //   target.style.opacity = 1;
-    // }
-    //
-    // const dragover = (event) => {
-    //   event.preventDefault();
-    // }
-    //
-    // const drop = (event) => {
-    //   const flag = event.dataTransfer.getData('dragItem');
-    //   const element = document.querySelector(`[data-section="${flag}"]`);
-    //   element?.remove();
-    // }
-    //
-    // const elements = document.querySelectorAll('.film-selection_film');
-    // const dirs = document.querySelectorAll('.directory-films');
-    //
-    // elements.forEach(item => {
-    //   item.addEventListener('dragstart', dragstart.bind(item));
-    // })
-    //
-    // dirs.forEach(dir => {
-    //   dir.addEventListener('dragenter', dragenter);
-    //   dir.addEventListener('dragleave', dragleave);
-    //   dir.addEventListener('dragover', dragover);
-    //   dir.addEventListener('drop', drop.bind(dir));
-    // })
-    //
-    // const createDir = document.querySelector('.create-direction');
-    // createDir?.addEventListener('click', (event) => {
-    //   const modalHTML = document.querySelector('.modal');
-    //
-    //   this.state.modal.displayActive();
-    //
-    //   modalHTML?.addEventListener('click', movalEvent);
-    // });
   }
 
   /**
@@ -339,6 +260,7 @@ export class FavoritePage extends View {
    * Метод для обработки ответа с фильмами
    */
   subscribeFavoriteFilms() {
+    this.isFilm = true;
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
@@ -381,14 +303,13 @@ export class FavoritePage extends View {
     } else {
       removeActive(more);
     }
-
-    this.isFilm = true;
   }
 
   /**
    * Метод для обработки ответа с актерами
    */
   subscribeFavoriteActor() {
+    this.isFilm = false;
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
@@ -432,7 +353,5 @@ export class FavoritePage extends View {
     } else {
       removeActive(more);
     }
-
-    this.isFilm = false;
   }
 }

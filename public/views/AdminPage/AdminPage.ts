@@ -37,6 +37,10 @@ export interface AdminPage {
     file: any;
     defaultImage: any;
     currentPage: any;
+    popupEvent: any;
+    changeEvent: any;
+    adminPanelEvent: any;
+    moderEvent: any;
   };
 }
 
@@ -46,8 +50,8 @@ export interface AdminPage {
  * @typedef {AdminPage}
  */
 export class AdminPage extends View {
-  private popupEvent: (event) => void;
-  private changeEvent: (event) => void;
+  // private popupEvent: (event) => void;
+  // private changeEvent: (event) => void;
 
   /**
    * Конструктор класса
@@ -56,6 +60,10 @@ export class AdminPage extends View {
   constructor(ROOT) {
     super(ROOT);
     this.state = {
+      popupEvent: '',
+      changeEvent: '',
+      adminPanelEvent: '',
+      moderEvent: '',
       errorsHTML: {},
       wraps: {},
       inputsHTML: {},
@@ -81,16 +89,13 @@ export class AdminPage extends View {
     const adminPanel = new AdminPanel(ROOT);
     const moderatorPanel = new ModeratorPanel(ROOT);
     contentBlock?.insertAdjacentHTML('beforebegin', adminPanel.render());
-    contentBlock?.insertAdjacentHTML('afterbegin', stat.render());
+    // contentBlock?.insertAdjacentHTML('afterbegin', stat.render());
     contentBlock?.insertAdjacentHTML('afterbegin', addFilm.render());
     contentBlock?.insertAdjacentHTML('afterbegin', moderatorPanel.render());
 
     let selected;
     let button;
-    if (props === '/csat') {
-      button = document.querySelector('.statistic-chart');
-      selected = document.querySelector('.admin-panel__csat');
-    } else if (props === '/addFilm') {
+    if (props === '/addFilm') {
       button = document.querySelector('.add-film');
       selected = document.querySelector('.admin-panel__add-film');
     } else if (props === '/moderators') {
@@ -113,7 +118,7 @@ export class AdminPage extends View {
     const actorFind = document.querySelector('.actors-find') as HTMLElement;
     actorFind!.style.marginTop = '20px';
 
-    const moderEvent = (event) => {
+    this.state.moderEvent = (event) => {
       event.preventDefault();
 
       const selected = document.querySelector(
@@ -166,7 +171,7 @@ export class AdminPage extends View {
       }
     };
 
-    this.popupEvent = (event) => {
+    this.state.popupEvent = (event) => {
       switch (true) {
         case event.target.closest('.center-text') !== null:
           const last = document.querySelector('.center-text.active');
@@ -230,39 +235,12 @@ export class AdminPage extends View {
             event.target.classList.remove('active');
           }
           break;
-        case button.closest('.admin-panel__csat') !== null:
-          router.go(
-            {
-              path: '/admin',
-              props: `/csat`,
-            },
-            { pushState: true, refresh: false }
-          );
-          break;
-        case button.closest('.admin-panel__add-film') !== null:
-          router.go(
-            {
-              path: '/admin',
-              props: `/addFilm`,
-            },
-            { pushState: true, refresh: false }
-          );
-          break;
-        case button.closest('.admin-panel__moder') !== null:
-          router.go(
-            {
-              path: '/admin',
-              props: `/moderators`,
-            },
-            { pushState: true, refresh: false }
-          );
-          break;
         default:
           break;
       }
     };
 
-    this.changeEvent = (event) => {
+    this.state.changeEvent = (event) => {
       switch (true) {
         case event.target.closest('.settings_file') !== null:
           const file = document.querySelector(
@@ -294,10 +272,36 @@ export class AdminPage extends View {
       }
     };
 
-    installPoster?.addEventListener('change', this.changeEvent);
-    adminPanel?.addEventListener('click', this.popupEvent);
-    addFilm?.addEventListener('click', this.popupEvent);
-    moderatorSearch?.addEventListener('click', moderEvent);
+    this.state.adminPanelEvent = (event) => {
+      const button = adminPanel?.querySelector('.active') as HTMLElement;
+      switch (true) {
+        case event.target.closest('.admin-panel__add-film') !== null:
+          router.go(
+            {
+              path: '/admin',
+              props: `/addFilm`,
+            },
+            { pushState: true, refresh: false }
+          );
+          break;
+        case event.target.closest('.admin-panel__moder') !== null:
+          router.go(
+            {
+              path: '/admin',
+              props: `/moderators`,
+            },
+            { pushState: true, refresh: false }
+          );
+          break;
+        default:
+          break;
+      }
+    };
+
+    installPoster?.addEventListener('change', this.state.changeEvent);
+    adminPanel?.addEventListener('click', this.state.adminPanelEvent);
+    addFilm?.addEventListener('click', this.state.popupEvent);
+    moderatorSearch?.addEventListener('click', this.state.moderEvent);
 
     const result = store.getState('getStatistics');
     if (result?.status !== 200) {
@@ -575,9 +579,9 @@ export class AdminPage extends View {
     const body = document.querySelector('.results-actors');
     body!.innerHTML = '';
 
-    installPoster?.removeEventListener('change', this.changeEvent);
-    adminPanel?.removeEventListener('click', this.popupEvent);
-    addFilm?.removeEventListener('click', this.popupEvent);
+    installPoster?.removeEventListener('change', this.state.changeEvent);
+    adminPanel?.removeEventListener('click', this.state.popupEvent);
+    addFilm?.removeEventListener('click', this.state.popupEvent);
   }
 
   resultFindActors() {

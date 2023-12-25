@@ -39,7 +39,7 @@ export class MainPage extends View {
         '        </div>'
     );
 
-    const slider = new Slider();
+    const slider = new Slider(ROOT);
     contentBlockHTML?.insertAdjacentHTML('beforeend', slider.render());
     slider.addEvents();
 
@@ -101,7 +101,6 @@ export class MainPage extends View {
               if (store.getState('auth').status === 200) {
                 store.dispatch(actionSubCalendar()).then(async (response) => {
                   const result = store.getState('subscribeCalendar_res');
-                  console.log(store.state);
                   if (result['status'] === 200) {
                     await notification.reqiestNotif();
 

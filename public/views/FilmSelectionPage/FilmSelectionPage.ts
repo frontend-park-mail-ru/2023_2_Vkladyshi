@@ -19,6 +19,7 @@ import { FilmCard } from '@components/filmCard/filmCard';
 import { ActorCard } from '@components/ActorCard/actorCard';
 import { Slider } from '@components/Slider/slider';
 import { addActive, removeActive } from '@utils/std';
+import { Component } from '@components/component';
 
 export interface FilmSelectionPage {
   state: {
@@ -26,6 +27,7 @@ export interface FilmSelectionPage {
     current: string;
     pageNumber: number;
     perPage: number;
+    components: Component[];
     filmData: {
       title: string;
       dateFrom: string;
@@ -59,9 +61,10 @@ export class FilmSelectionPage extends View {
     super(ROOT);
     this.state = {
       dataSection: '',
+      components: [],
       current: 'none',
       pageNumber: 1,
-      perPage: 10,
+      perPage: 20,
       filmData: {
         title: '',
         dateFrom: '',
@@ -169,8 +172,8 @@ export class FilmSelectionPage extends View {
     this.addFilmsToPage(sliderLiner, buf.body.films, true);
   }
 
-  renderByElement() {
-    this.renderEqualFilms();
+  async renderByElement() {
+    await this.renderEqualFilms();
   }
 
   componentDidMount(isFilms) {
@@ -348,6 +351,9 @@ export class FilmSelectionPage extends View {
       this.subscribeSearchActors.bind(this)
     );
     store.unsubscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
+    this.state.components.forEach((elem) => {
+      elem?.componentWillUnmount();
+    });
     popup?.removeEventListener('click', this.popupEvent);
   }
 
@@ -578,8 +584,8 @@ export class FilmSelectionPage extends View {
       return;
     }
 
-    const sliderNew = new Slider();
-    sliderNew.addEventsLine();
+    const sliderNew = new Slider(ROOT);
+    this.state.components.push(sliderNew);
 
     const sliderLiner = document.querySelector('.slider-container');
     const sliderNAme = document.querySelector('.slider-name');
@@ -598,6 +604,8 @@ export class FilmSelectionPage extends View {
     }
     divFilm?.remove();
 
+    console.log('add MAin');
+    sliderNew.addEventsLine();
     this.componentDidMount(true);
   }
 
@@ -680,11 +688,11 @@ export class FilmSelectionPage extends View {
       return;
     }
 
-    const sliderNew = new Slider();
+    const sliderNew = new Slider(ROOT);
+    this.state.components.push(sliderNew);
     document
       .querySelector('.content-block')
       ?.insertAdjacentHTML('beforeend', sliderNew.renderLine());
-    sliderNew.addLine();
 
     const sliderLiner = document.querySelectorAll('.slider-container');
     const sliderName = document.querySelectorAll('.slider-name');
@@ -695,6 +703,7 @@ export class FilmSelectionPage extends View {
       filmSelect.render(buf.body, 'В тренде')
     );
     this.addFilmsToPage(sliderLiner[1], buf.body.films);
+    sliderNew.addLine();
   }
 
   Offline() {

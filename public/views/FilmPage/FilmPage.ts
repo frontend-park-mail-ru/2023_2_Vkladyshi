@@ -1,19 +1,14 @@
-/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { collections, ROOT } from '@utils/config';
 import { store } from '@store/store';
 import {
-  actionAddFavoriteActor,
   actionAddFavoriteFilm,
   actionAuth,
-  actionCollectionMain,
   actionFavoriteFilms,
   actionFilm,
   actionGetCommentsFilm,
   actionRemoveComment,
-  actionRemoveFavoriteActor,
   actionRemoveFavoriteFilm,
-  actionSearchFilm,
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
@@ -22,10 +17,12 @@ import { ReviewForm } from '@components/ReviewForm/reviewForm';
 import { Description } from '@components/Description/description';
 import { Slider } from '@components/Slider/slider';
 import { FilmSelectionPage } from '@views/FilmSelectionPage/FilmSelectionPage';
+import { Component } from '@components/component';
 
 export interface FilmPage {
   state: {
     filmInfo: null;
+    components: Component[];
     fildId: number;
     mapFilms: {};
     rewiewBunch: number;
@@ -45,6 +42,7 @@ export class FilmPage extends View {
     super(ROOT);
     this.state = {
       filmInfo: null,
+      components: [],
       fildId: 0,
       commentsInfo: [],
       rewiewBunch: 1,
@@ -65,11 +63,6 @@ export class FilmPage extends View {
     store.subscribe('removeView', this.componentWillUnmount.bind(this));
     store.subscribe('logoutStatus', this.subscribeLogoutFilmPage.bind(this));
 
-    // if (store.getState('auth')?.role === undefined && store.getState('auth')?.status === 200) {
-    //   store.subscribe('auth', this.subscribeDeleteComment.bind(this));
-    //   store.dispatch(actionAuth());
-    // }
-    // store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     this.renderDefaultPage({});
 
     if (props != null) {
@@ -171,11 +164,13 @@ export class FilmPage extends View {
         );
       }
 
-      const sliderFilms = new Slider();
-      sliderFilms.addEventsLine();
-
+      const sliderFilms = new Slider(ROOT);
+      this.state.components.push(sliderFilms);
       const filmSelection = new FilmSelectionPage(ROOT);
-      filmSelection.renderByElement();
+
+      filmSelection.renderByElement().then(() => {
+        sliderFilms.addLine();
+      });
     }
 
     this.addEvents();
@@ -348,6 +343,10 @@ export class FilmPage extends View {
       'filmCommentsStatus',
       this.subscribeCommentsStatrus.bind(this)
     );
+
+    this.state.components.forEach((elem) => {
+      elem?.componentWillUnmount();
+    });
 
     const popup = document.querySelector('.film-selection');
     popup?.removeEventListener('click', this.popupEvent);

@@ -310,7 +310,11 @@ export class Header extends Component {
     };
     headerContainer?.addEventListener('click', this.eventFunc);
 
-    window.addEventListener('resize', (e) => {
+    const windowEvent = () => {
+      const slider = document.querySelector('.slider-container') as HTMLElement;
+      const prev = document.querySelector('.line-prev') as HTMLElement;
+      const next = document.querySelector('.line-next') as HTMLElement;
+
       const width = document.body.clientWidth;
       if (width > 800) {
         const mobile = document.querySelector(
@@ -319,7 +323,11 @@ export class Header extends Component {
         // @ts-ignore
         mobile?.style.display = 'none';
       }
-    });
+    };
+
+    // window.addEventListener('load', windowEvent);
+    windowEvent();
+    window.addEventListener('resize', windowEvent);
 
     const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
