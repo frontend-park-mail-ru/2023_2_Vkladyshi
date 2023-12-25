@@ -1,10 +1,13 @@
 <div class='film-selection'>
-  <div class='film-selection_name'>
-    {{collection_name}}
+  <div class='film-selection__header'>
+    <div class='film-selection__header__yellow'></div>
+    <div class='film-selection_name'>
+      {{collection_name}}
+    </div>
   </div>
-  <ul class='film-selection_films'>
-    {{#if haveFilms}}{{else}}
-      <div><p>К сожалению, но ничего не найдено.</p></div>
-    {{/if}}
-  </ul>
+  <ul class='film-selection_films'></ul>
+  <div class='more-elements noactive'><img
+      class='more-elements__img'
+      src='/icons/strelka-white.svg'
+    /></div>
 </div>

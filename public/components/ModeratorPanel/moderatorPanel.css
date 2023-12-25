@@ -1,0 +1,139 @@
+.moderator {
+  width: 100%;
+  /*height: 100vh;*/
+  /*border-: 1px solid white;*/
+  margin-top: 50px;
+  /*display: flex;*/
+  flex-direction: column;
+}
+
+.moderator__header__titles {
+  height: 30px;
+}
+
+.moderator__more {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.moderator__header__search {
+  height: 60px;
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid white;
+}
+
+.moderator__header {
+  height: 90px;
+  /*border: 1px solid white;*/
+  display: flex;
+  flex-direction: column;
+}
+
+.moderator-titles {
+  display: flex;
+  flex-direction: row;
+  height: 30px;
+}
+
+.moderator-titles__login,
+.moderator-titles__role,
+.moderator-titles__id {
+  border: 1px solid white;
+  height: 100%;
+  color: white;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.moderator__body {
+  display: flex;
+  flex-direction: column;
+}
+
+.moderator-search {
+  height: 30px;
+  border-radius: 7px;
+  border: 0;
+  width: 300px;
+  font-size: 22px;
+  text-align: center;
+}
+
+.moderator-submit {
+  height: 30px;
+  width: 85px;
+  background-color: #f5c518;
+  color: black;
+  border-radius: 7px;
+  border: 0;
+  cursor: pointer;
+  font-size: 21px;
+}
+
+.select-user-role {
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  color: white;
+  border: 0;
+  text-align: center;
+  font-size: 15px;
+}
+
+.moderator-role__form {
+  width: 100%;
+  height: 30px;
+  background-color: #f5c518;
+  color: black;
+  border-radius: 7px;
+  border: 0;
+  cursor: pointer;
+  font-size: 21px;
+}
+
+.moderator__body__id {
+  width: 10%;
+  border: 1px solid white;
+  /*height: 100%;*/
+  padding: 5px 0 5px 0;
+}
+
+.moderator__body__login {
+  width: 80%;
+  border: 1px solid white;
+  /*height: 100%;*/
+  padding: 5px 0 5px 0;
+}
+
+.moderator__body__role {
+  width: 20%;
+  border: 1px solid white;
+  /*height: 100%;*/
+  padding: 5px 0 5px 0;
+}
+
+.moderator__body__user {
+  color: white;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.moderator-titles__role {
+  width: 20%;
+}
+
+.moderator-titles__login {
+  width: 80%;
+}
+
+.moderator-titles__id {
+  width: 10%;
+}

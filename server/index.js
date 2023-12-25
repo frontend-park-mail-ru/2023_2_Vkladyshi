@@ -18,11 +18,18 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('../webpack.config.ts');
 
+const admin = require('firebase-admin');
+const serviceAccount = require('./vkladishi-1114b-firebase-adminsdk-bsvk2-a19d858f15.json');
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 app.use(
   cors({
     origin: ['http://localhost:8001', 'http://127.0.0.1:8001'],
-    credentials: true
+    credentials: true,
   })
 );
 
@@ -58,9 +65,9 @@ const csat = {
       { number: 7, count: 11 },
       { number: 8, count: 129 },
       { number: 9, count: 6 },
-      { number: 10, count: 0 }
-    ]
-  }
+      { number: 10, count: 0 },
+    ],
+  },
 };
 
 const actor = {
@@ -77,147 +84,40 @@ const actor = {
     headersItems: ['Биография', 'Фото'],
     info_text:
       'Родился 6 июля 1946 года в Нью-Йорке. Его отец, парикмахер Фрэнк Сталлоне-старший (англ. Frank Stallone, Sr., 1919—2011), — иммигрант из Сицилии; мать, Жаклин Лейбофиш (1921—2020).',
-    number: '8 млн.'
-  }
+    number: '8 млн.',
+  },
 };
 
 const calendar = {
   status: 200,
   body: {
-    monthName: 'Февраль 2022',
+    monthName: 'Декабрь 2023',
     monthText: 'Календарь релизов',
-    days: {
-      day1: {
-        dayNumber: 1,
-        dayNews: 'Неудержимые 1',
-        filmID: 1
-      },
-      day2: {
-        dayNumber: 2,
-        dayNews: 'Неудержимые 2',
-        filmID: 2
-      },
-      day3: {
-        dayNumber: 3,
-        dayNews: 'Неудержимые 3',
-        filmID: 3
-      },
-      day4: {
-        dayNumber: 4,
-        dayNews: ''
-      },
-      day5: {
-        dayNumber: 4,
-        dayNews: ''
-      },
-      day6: {
-        dayNumber: 6,
-        dayNews: ''
-      },
-      day7: {
-        dayNumber: 7,
-        dayNews: ''
-      },
-      day8: {
-        dayNumber: 8,
-        dayNews: ''
-      },
-      day9: {
-        dayNumber: 9,
-        dayNews: ''
-      },
-      day10: {
-        dayNumber: 10,
-        dayNews: ''
-      },
-      day11: {
-        dayNumber: 11,
-        dayNews: 'Неудержимые 1',
-        filmID: 3
-      },
-      day12: {
-        dayNumber: 12,
-        dayNews: 'Неудержимые 2',
-        filmID: 3
-      },
-      day13: {
-        dayNumber: 13,
-        dayNews: 'Неудержимые 3',
-        filmID: 3
-      },
-      day14: {
-        dayNumber: 14,
-        dayNews: ''
-      },
-      day15: {
-        dayNumber: 15,
-        dayNews: ''
-      },
-      day16: {
-        dayNumber: 16,
-        dayNews: ''
-      },
-      day17: {
-        dayNumber: 17,
-        dayNews: ''
-      },
-      day18: {
-        dayNumber: 18,
-        dayNews: ''
-      },
-      day19: {
-        dayNumber: 19,
-        dayNews: ''
-      },
-      day20: {
-        dayNumber: 20,
-        dayNews: ''
-      },
-      day21: {
-        dayNumber: 21,
-        dayNews: 'Неудержимые 1',
-        filmID: 2
-      },
-      day22: {
-        dayNumber: 22,
-        dayNews: 'Неудержимые 2',
-        filmID: 1
-      },
-      day23: {
-        dayNumber: 23,
-        dayNews: 'Неудержимые 3',
-        filmID: 2
-      },
-      day24: {
-        dayNumber: 24,
-        dayNews: ''
-      },
-      day25: {
-        dayNumber: 25,
-        dayNews: ''
-      },
-      day26: {
-        dayNumber: 26,
-        dayNews: ''
-      },
-      day27: {
-        dayNumber: 27,
-        dayNews: ''
-      },
-      day28: {
-        dayNumber: 28,
-        dayNews: ''
-      },
-      day29: {
-        dayNumber: 29,
-        dayNews: ''
-      },
-      day30: {
-        dayNumber: 30,
-        dayNews: ''
-      }
-    }
-  }
+    currentDay: 25,
+    days: [
+      { dayNumber: 14, dayNews: 'Kostolom111 Kostolom111', id: 10 },
+      { dayNumber: 25, dayNews: 'Провожающая в последний путь Фрирен', id: 3 },
+      { dayNumber: 21, dayNews: 'Night1 Night', id: 5 },
+    ],
+  },
+};
+
+const moderUsers = {
+  status: 200,
+  body: [
+    {
+      login: 'pedik',
+      role: 'moderator',
+    },
+    {
+      login: 'andrey',
+      role: 'admin',
+    },
+    {
+      login: 'anton',
+      role: 'user',
+    },
+  ],
 };
 
 const comments = {
@@ -227,127 +127,97 @@ const comments = {
       {
         name: 'Login_User',
         rating: 3,
+        id_user: 1,
         text: 'Фильм отличный 11/10',
         film_id: 7,
         film_name: 'film',
-        photo: '/icons/star.png'
+        photo: '/icons/star.png',
       },
       {
         name: 'Login_User',
         rating: 4,
+        id_user: 2,
         text: 'Фильм отличный 11/10',
         film_id: 7,
-        film_name: 'film'
+        film_name: 'film',
       },
-      {
-        name: 'Login_User',
-        rating: 7,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film'
-      },
-      {
-        name: 'Login_User',
-        rating: 8,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film'
-      },
-      {
-        name: 'Login_User',
-        rating: 9,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film'
-      },
-      {
-        name: 'Login_User',
-        rating: 10,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film'
-      },
-      {
-        name: 'Login_User',
-        rating: 1,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film'
-      },
-      {
-        name: 'Login_User',
-        rating: 2,
-        text: 'Фильм отличный 11/10',
-        film_id: 7,
-        film_name: 'film'
-      }
-    ]
-  }
+    ],
+  },
+};
+
+const userStatistic = {
+  status: 200,
+  body: [
+    { genre_id: 9, count: 20, avg: 5.5 },
+    { genre_id: 7, count: 2, avg: 10 },
+    { genre_id: 15, count: 1, avg: 9 },
+    { genre_id: 3, count: 2, avg: 2 },
+    { genre_id: 1, count: 5, avg: 1 },
+    { genre_id: 5, count: 2, avg: 5 },
+    { genre_id: 11, count: 1, avg: 8.2 },
+  ],
 };
 
 const favoriteFilms = {
   status: 200,
-  body: {
-    collection_name: 'Новинки',
-    films: [
-      {
-        id: 3,
-        poster: '/icons/bastards.jpg',
-        title: 'film_1 111111',
-        rating: 4.5
-      },
-      {
-        id: 8,
-        poster: '/icons/Poster.jpg',
-        title: 'film_2',
-        rating: 4.1
-      },
-      {
-        id: 3,
-        poster: '/icons/bastards.jpg',
-        title: 'film_1 111111',
-        rating: 4.5
-      },
-      {
-        film: { id: 8 },
-        poster: '/icons/Poster.jpg',
-        title: 'film_2',
-        rating: 4.1
-      },
-      {
-        film: { id: 3 },
-        poster: '/icons/bastards.jpg',
-        title: 'film_1 111111',
-        rating: 4.5
-      },
-      {
-        film: { id: 8 },
-        poster: '/icons/Poster.jpg',
-        title: 'film_2',
-        rating: 4.1
-      }
-    ]
-  }
+  body: [
+    // {
+    //   id: 3,
+    //   poster: '/icons/bastards.jpg',
+    //   title: 'film_1 111111',
+    //   rating: 1,
+    // },
+    // {
+    //   id: 8,
+    //   poster: '/icons/Poster.jpg',
+    //   title: 'film_2',
+    //   rating: 2,
+    // },
+    // {
+    //   id: 4,
+    //   poster: '/icons/bastards.jpg',
+    //   title: 'film_1 111111',
+    //   rating: 3,
+    // },
+    // {
+    //   id: 5,
+    //   poster: '/icons/Poster.jpg',
+    //   title: 'film_2',
+    //   rating: 4,
+    // },
+    // {
+    //   id: 30,
+    //   poster: '/icons/bastards.jpg',
+    //   title: 'film_1 111111',
+    //   rating: 5,
+    // },
+    // {
+    //   id: 10,
+    //   poster: '/icons/Poster.jpg',
+    //   title: 'film_2',
+    //   rating: 6,
+    // },
+  ],
 };
 
 const favoriteActors = {
   status: 200,
   body: {
     actors: [
-      {
-        actor_id: 1,
-        actor_name: 'Джейсон Стэйтем',
-        actor_photo: '/icons/star.png'
-      },
-      { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
-      { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
-      {
-        actor_id: 4,
-        actor_name: 'Сильвестр Сталлоне',
-        actor_photo: '/icons/star.png'
-      }
-    ]
-  }
+      // {
+      //   actor_id: 1,
+      //   actor_name: 'Джейсон Стэйтем',
+      //   actor_photo: '/icons/star.png',
+      // },
+      // { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
+      // { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
+      // {
+      //   actor_id: 4,
+      //   actor_name: 'Сильвестр Сталлоне',
+      //   actor_photo: '/icons/star.png',
+      // },
+    ],
+  },
 };
 
 const films = {
@@ -359,40 +229,73 @@ const films = {
         id: 3,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 4.5
+        rating: 1,
       },
       {
-        film: { id: 8 },
+        id: 8,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4.1
+        rating: 2,
       },
       {
-        film: { id: 3 },
+        id: 4,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 4.5
+        rating: 3,
       },
       {
-        film: { id: 8 },
+        id: 5,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4.1
+        rating: 4,
       },
       {
-        film: { id: 3 },
+        id: 30,
         poster: '/icons/bastards.jpg',
         title: 'film_1 111111',
-        rating: 4.5
+        rating: 5,
       },
       {
-        film: { id: 8 },
+        id: 10,
         poster: '/icons/Poster.jpg',
         title: 'film_2',
-        rating: 4.1
-      }
-    ]
-  }
+        rating: 6,
+      },
+    ],
+  },
+};
+
+const trand = {
+  status: 200,
+  body: {
+    collection_name: 'Новинки',
+    films: [
+      {
+        id: 3,
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111111',
+        rating: 1,
+      },
+      {
+        id: 8,
+        poster: '/icons/Poster.jpg',
+        title: 'film_2',
+        rating: 2,
+      },
+      {
+        id: 4,
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111111',
+        rating: 3,
+      },
+      {
+        id: 5,
+        poster: '/icons/Poster.jpg',
+        title: 'film_2',
+        rating: 4,
+      },
+    ],
+  },
 };
 
 const film = {
@@ -400,32 +303,39 @@ const film = {
   body: {
     film: {
       id: 10,
-      title: 'film',
+      title: 'Леди Баг и Супер-Кот: Пробуждение силы',
       poster: '/icons/Poster.jpg',
       release_date: '2023-12-30',
       country: 'USA',
       mpaa: 'R',
-      info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.'
+      info: 'Неудержимые несут потери: Барни Росс выбывает из строя, а Ли Кристмас отстранен от будущих операций. В команду набирают новых бойцов и отправляют возмещать ущерб. Но и они терпят поражение и попадают в плен. Теперь Ли Кристмас должен в одиночку пробраться в логово противника и освободить команду, попутно предотвратив глобальную катастрофу. Только так можно спасти мир и восстановить репутацию Неудержимых.',
     },
-    genre: [{ id: 0, title: 'war' }],
+    genre: [
+      { id: 0, title: 'Военные' },
+      { id: 2, title: 'Боевики' },
+      { id: 0, title: 'Военные' },
+      { id: 2, title: 'Боевики' },
+      { id: 4, title: 'Кек' },
+      { id: 5, title: 'ЛОл' },
+    ],
     rating: 10,
     number: 11,
     actors: [
       {
         actor_id: 1,
         actor_name: 'Джейсон Стэйтем',
-        actor_photo: '/icons/star.png'
+        actor_photo: '/icons/star.png',
       },
       { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
       { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
       {
         actor_id: 4,
         actor_name: 'Сильвестр Сталлоне',
-        actor_photo: '/icons/star.png'
-      }
+        actor_photo: '/icons/star.png',
+      },
     ],
-    directors: [{ directors_id: 1, directors_name: 'POHUI' }]
-  }
+    directors: [{ directors_id: 1, directors_name: 'POHUI' }],
+  },
 };
 
 // eslint-disable-next-line camelcase
@@ -438,35 +348,61 @@ const films_tags = {
         poster: '/icons/bastards.jpg',
         title: 'Бесславные ублюдки',
         rating: 8,
-        film_id: 11
+        film_id: 11,
       },
       film3: {
         poster: '/icons/bastards.jpg',
         title: 'film_1 111110000000000000000000000000000000000000000001',
         rating: 1,
-        film_id: 11
+        film_id: 11,
       },
       film4: {
         poster: '/icons/bastards.jpg',
         title: 'film_1',
         rating: 1,
-        film_id: 11
+        film_id: 11,
       },
       film5: {
         poster: '/icons/bastards.jpg',
         title: 'film_1 111',
         rating: 1,
-        film_id: 11
+        film_id: 11,
       },
-      film6: {
+      film7: {
         poster: '/icons/bastards.jpg',
         title: 'film_1 111110000000000000000000000000000000000000000001',
         rating: 1,
-        film_id: 11
-      }
-    }
-  }
+        film_id: 11,
+      },
+      film8: {
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111110000000000000000000000000000000000000000001',
+        rating: 1,
+        film_id: 11,
+      },
+      film9: {
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111110000000000000000000000000000000000000000001',
+        rating: 1,
+        film_id: 11,
+      },
+      film10: {
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111110000000000000000000000000000000000000000001',
+        rating: 1,
+        film_id: 11,
+      },
+      film11: {
+        poster: '/icons/bastards.jpg',
+        title: 'film_1 111110000000000000000000000000000000000000000001',
+        rating: 1,
+        film_id: 11,
+      },
+    },
+  },
 };
+
+app.use(express.static('public'));
 
 app.listen(port, function () {
   console.log(`Server listening port ${port}`);
@@ -476,32 +412,32 @@ const users = {
   Admin: {
     email: 'Admin.mail.ru',
     password: 'Admin123',
-    age: 100
+    age: 100,
   },
   dorofeef: {
     email: 'd.dorofeev@corp.mail.ru',
     password: 'Password1',
-    age: 21
+    age: 21,
   },
   volodin: {
     email: 'Password2@mail.ru',
     password: 'Password1',
-    age: 25
+    age: 25,
   },
   Andrey111: {
     email: 'Andrey@111',
-    password: 'Andrey111'
+    password: 'Andrey111',
   },
   login: {
     email: 'email@mail.ru',
     password: 'Password1',
-    age: 28
+    age: 28,
   },
   ostapenko: {
     email: 'a.ostapenko@corp.mail.ru',
     password: 'Password1',
-    age: 21
-  }
+    age: 21,
+  },
 };
 const ids = {};
 
@@ -511,8 +447,8 @@ const settings = {
     login: 'Andrey111',
     email: 'Andrey@111',
     photo: '/icons/star.png',
-    birthday: '2010-01-01'
-  }
+    birthday: '2010-01-01',
+  },
 };
 
 app.get(express.static('dist'));
@@ -544,7 +480,7 @@ app.use('/signin', (req, res) => {
   ids[id] = login;
 
   res.cookie('session_id', id, {
-    expires: new Date(Date.now() + 1000 * 60 * 10)
+    expires: new Date(Date.now() + 1000 * 60 * 100),
   });
 
   // res.cookie('session_id', { httpOnly: true });
@@ -559,40 +495,68 @@ app.use('/registration', (req, res) => {
 
 app.get('/api/v1/csrf', (req, res) => {
   return res.status(200).json({
-    status: 200
+    status: 200,
   });
 });
 
 app.get('/api/v1/favorite/film/add', (req, res) => {
   return res.status(200).json({
-    status: 200
+    status: 200,
   });
 });
 
 app.get('/api/v1/favorite/actor/add', (req, res) => {
   return res.status(200).json({
-    status: 200
+    status: 200,
   });
 });
 
 app.get('/api/v1/favorite/actor/remove', (req, res) => {
   return res.status(200).json({
-    status: 200
+    status: 200,
   });
 });
 
 app.get('/api/v1/favorite/film/remove', (req, res) => {
   return res.status(200).json({
-    status: 200
+    status: 200,
   });
+});
+
+app.get('/api/v1/trends', (req, res) => {
+  return res.status(200).json(trand);
 });
 
 app.get('/admin', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
+app.get('/userStatistic', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/admin/csat', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/admin/addFilm', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/admin/moderators', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
+});
+
 app.get('/api/v1/admin/csat', (req, res) => {
   return res.status(200).json(csat);
+});
+
+app.get('/api/v1/users/list', (req, res) => {
+  return res.status(200).json(moderUsers);
+});
+
+app.post('/api/v1/users/updateRole', (req, res) => {
+  return res.status(200).json({ status: 200 });
 });
 
 app.use('/signup', (req, res) => {
@@ -609,7 +573,7 @@ app.use('/signup', (req, res) => {
   }
   if (users[login] !== undefined) {
     return res.status(200).json({
-      status: 409
+      status: 409,
     });
   }
 
@@ -629,7 +593,10 @@ app.get('/authcheck', (req, res) => {
     return res.status(200).json({ status: 401 }).end();
   }
 
-  return res.status(200).json({ status: 200, login: 'volodin' }).end();
+  return res
+    .status(200)
+    .json({ status: 200, body: { role: 'super', login: 'volodin' } })
+    .end();
 });
 
 app.get('/logout', (req, res) => {
@@ -666,13 +633,17 @@ app.get('/api/v1/settings', (req, res) => {
   return res.status(200).json(settings);
 });
 
+app.post('/api/v1/add/film', (req, res) => {
+  return res.status(200).json({ status: 200 });
+});
+
 const formidableMiddleware = require('express-formidable');
 
 app.use(
   formidableMiddleware({
     encoding: 'utf-8',
     uploadDir: '/home/andr/go',
-    multiples: true // req.files to be arrays of files
+    multiples: true, // req.files to be arrays of files
   })
 );
 
@@ -680,6 +651,12 @@ app.post('/api/v1/settings', (req, res) => {
   console.log(req.body);
   console.log(req.file);
   console.log(req.fields);
+  console.log('KEEKK/SETT', req.fields.password);
+
+  if (req.fields.password === 'Andrey111') {
+    res.status(200).json({ status: 409 }).end();
+    return;
+  }
 
   res.status(200).json({ status: 200 }).end();
 });
@@ -692,14 +669,6 @@ app.get('/actor', (req, res) => {
 app.get('/actor/:actor_id', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
-
-// app.get('/films', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
-//
-// app.get('/actors', (req, res) => {
-//   res.sendFile(__dirname + '/index.html');
-// });
 
 app.get('/films/:collection_id', (req, res) => {
   const collectionId = req.query.collection_id;
@@ -718,9 +687,20 @@ app.get('/film/:filmId', (req, res) => {
 app.use('/api/v1/actor', (req, res) => {
   return res.status(200).json(actor);
 });
+
+app.use('/api/v1/lasts', (req, res) => {
+  // return res.status(200).json(films);
+  return res.status(200).json(films);
+});
+
+app.use('/api/v1/statistics', (req, res) => {
+  return res.status(200).json(userStatistic);
+});
+
 // /api/v1/find
 app.use('/api/v1/find', (req, res) => {
   const secFetchSite = req.headers['sec-fetch-site'];
+  console.log(req.query);
   if (!secFetchSite) {
     res.sendFile(__dirname + '/index.html');
     return;
@@ -740,17 +720,6 @@ app.use('/api/v1/film', (req, res) => {
   return res.status(200).json({ body: film.body, status: film.status });
 });
 
-// app.use('/api/v1/search/film', (req, res) => {
-//   return res.status(200).json({ body: favoriteFilms.body, status: favoriteFilms.status });
-// });
-const urlencodedParser = express.urlencoded({ extended: false });
-// app.use('/api/v1/search/film', urlencodedParser, (request, response) => {
-//   // if(!request.body) return response.sendStatus(400);
-//   console.log(request.body, 55551);
-//   return res.status(200).json({ body: favoriteFilms.body, status: favoriteFilms.status });
-// });
-
-// http://127.0.0.1:8001/films?title=kek&date_from=kek&date_to=kek&rating_from=0&rating_to=9&mpaa=kek&genre=kek&actors=kek
 app.use('/api/v1/search/film', (req, res) => {
   res.status(200).json({ status: 200 }).end();
 });
@@ -802,25 +771,25 @@ app.get('/api/v1/comment', (req, res) => {
   return res;
 });
 
-/*
-*   const secFetchSite = req.headers['sec-fetch-site'];
-  if (!secFetchSite) {
-    res.sendFile(__dirname + '/index.html');
-    return;
-  }
-*
-* */
-
 app.use('/api/v1/calendar', (req, res) => {
   return res.status(200).json(calendar);
 });
 
-app.use('/api/v1/find', (req, res) => {
-  return res.status(200).json(films);
-});
+// app.use('/api/v1/find', (req, res) => {
+//   return res.status(200).json(films);
+// });
 
 app.use('/api/v1/search/actors', (req, res) => {
+  const secFetchSite = req.headers['sec-fetch-site'];
+  if (!secFetchSite) {
+    res.sendFile(__dirname + '/index.html');
+    return;
+  }
   return res.status(200).json(favoriteActors);
+});
+
+app.use('/actors', (req, res) => {
+  res.sendFile(__dirname + '/index.html');
 });
 
 app.use('/api/v1/films', (req, res) => {
@@ -838,7 +807,32 @@ app.use('/api/v1/films', (req, res) => {
 app.use('/api/v1/subscribe/calendar', (req, res) => {
   console.log(req['subscribeFilmID']);
   console.log('calendar_subscribe');
-  return res.status(200).json({ status: 200, body: { notificationID: 11, subscribe: true } });
+  return res
+    .status(200)
+    .json({ status: 200, body: { notificationID: 11, subscribe: true } });
+});
+
+app.use('/api/v1/user/isSubscribed', (req, res) => {
+  const notificationPayload = {
+    subscribe: lastSubscribe,
+  };
+  return res.status(200).json({ status: 200, body: notificationPayload });
+});
+
+let lastSubscribe = false;
+
+app.use('/api/v1/user/subscribePush', (req, res) => {
+  if (lastSubscribe === false) {
+    lastSubscribe = true;
+  } else {
+    lastSubscribe = false;
+  }
+
+  const notificationPayload = {
+    subscribe: lastSubscribe,
+  };
+
+  return res.status(200).json({ status: 200, body: notificationPayload });
 });
 
 /// /------------------------------------------------------------------
@@ -846,7 +840,7 @@ app.use('/api/v1/subscribe/calendar', (req, res) => {
 const port_ws = process.env.PORT || 8003;
 const wss = new ws.Server(
   {
-    port: port_ws
+    port: port_ws,
   },
   () => console.log(`WSS started on ${port_ws}`)
 );
@@ -859,7 +853,7 @@ const premieresFilmsBD = [
       'https://upload.wikimedia.org/wikipedia/ru/6/67/%D0%94%D0%BE%D0%BC%D0%94%D1%80%D0%B0%D0%BA%D0%BE%D0%BD%D0%B0%D0%9F%D0%BE%D1%81%D1%82%D0%B5%D1%80.jpg',
     rating: -1.8,
     ticket_link: 'https://rutracker.org/forum/viewtopic.php?t=6249419',
-    prod_date: '2022.11.12'
+    prod_date: '2022.11.12',
   },
   {
     id: 10,
@@ -868,8 +862,8 @@ const premieresFilmsBD = [
       'https://upload.wikimedia.org/wikipedia/ru/a/aa/EyesWideShutPoster.jpg',
     rating: 7.8,
     ticket_link: 'https://www.kinopoisk.ru/film/3608/',
-    prod_date: '2022.11.05'
-  }
+    prod_date: '2022.11.05',
+  },
 ];
 
 const timer = setInterval(
@@ -877,12 +871,12 @@ const timer = setInterval(
     broadcastMessage({
       action: 'ANONS_FILM',
       payload:
-        premieresFilmsBD[Math.floor(Math.random() * premieresFilmsBD.length)]
+        premieresFilmsBD[Math.floor(Math.random() * premieresFilmsBD.length)],
     }),
   5000
 );
 
-wss.on('connection', function connection (ws, request, client) {
+wss.on('connection', function connection(ws, request, client) {
   ws.on('message', function (message) {
     message = JSON.parse(message);
     switch (message.action) {
@@ -898,7 +892,7 @@ wss.on('connection', function connection (ws, request, client) {
  * @param message
  * @param id
  */
-function broadcastMessage (message, id) {
+function broadcastMessage(message, id) {
   wss.clients.forEach((client) => {
     client.send(JSON.stringify(message));
   });

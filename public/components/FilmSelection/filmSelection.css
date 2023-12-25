@@ -3,6 +3,23 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  width: 100%;
+}
+
+.film-selection__header {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  margin-top: 100px;
+}
+
+.film-selection__header__yellow {
+  width: 5px;
+  height: 40px;
+  background: #f5c518;
+  border-radius: 8px;
+  margin-right: 5px;
+  margin-left: 5px;
 }
 
 .film-selection_films {
@@ -18,18 +35,16 @@
 
 .film-selection_name {
   width: 97%;
-  margin-top: 100px;
 
   padding-bottom: 10px;
   border-bottom: 1px solid #ffffff;
   color: #ffffff;
   /*border-bottom: 1px solid #F5C518;*/
   /*color: #F5C518;*/
-  font-family: Montserrat, serif;
-  font-size: 32px;
-  font-style: normal;
-  font-weight: 500;
-  line-height: normal;
-  letter-spacing: 0.96px;
+  font-size: 26px;
+  /*font-style: normal;*/
+  /*font-weight: 500;*/
+  /*line-height: normal;*/
+  /*letter-spacing: 0.96px;*/
   text-align: left;
 }

@@ -1,3 +1,7 @@
+export interface Component {
+  componentWillUnmount(): void;
+}
+
 /**
  * Класс родитель всех компонентов
  * @class Component
@@ -10,7 +14,7 @@ export class Component {
    * @param ROOT
    * @class
    */
-  constructor (ROOT) {
+  constructor(ROOT) {
     this.rootNode = ROOT;
   }
 }

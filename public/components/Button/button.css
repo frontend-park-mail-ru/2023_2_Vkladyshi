@@ -12,10 +12,9 @@
 .button__text {
   color: #fff;
   text-align: center;
-  font-family: Montserrat;
   font-size: 20px;
   font-style: normal;
-  font-weight: 300;
+  /*font-weight: 300;*/
   line-height: normal;
   letter-spacing: 0.6px;
 }
@@ -36,7 +35,6 @@
 .form__text {
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
-  font-family: Montserrat;
   font-size: 32px;
   font-style: normal;
   font-weight: 500;

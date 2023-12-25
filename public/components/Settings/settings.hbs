@@ -7,8 +7,15 @@
       method='post'
     >
       <div class='change-user-data__header table__header'>
-        Ваш профиль
+        <div>Ваш профиль</div>
+        <div class='change-user-data__form__pencil'><img
+            class='pencil-image'
+            src='/icons/pencil.png'
+          /></div>
+
       </div>
+      <div class='change-user-data__form-warning text-form'>*В случае изменения
+        логина необходима повторная авторизация</div>
       <span class='text-form login-text'>Логин</span>
       <span class='error-login error-string'></span>
       <span class='text-form email-text'>Электронная почта</span>
@@ -21,7 +28,7 @@
       <div>
         <span class='error-password-second error-string'></span>
       </div>
-      <div class='change-user-data__form user-data-buttons'>
+      <div class='change-user-data__form-save user-data-buttons'>
         <label class='change-user-data__form__file button button__text'>
           <img
             class='change-user-data__form__img'
@@ -37,7 +44,7 @@
         <span class='error-image error-string'></span>
       </div>
     </form>
-    <div class='change-user-data__error'></div>
+    <!--    <div class='change-user-data__error'></div>-->
     <div class='change-user-data__success-string-settings'></div>
   </div>
 

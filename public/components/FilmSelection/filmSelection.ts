@@ -1,6 +1,5 @@
 import { Component } from '@components/component';
 import * as templateFilmSelection from '@components/FilmSelection/filmSelection.hbs';
-import { collections, ROOT } from '@utils/config';
 
 /**
  * Класс рендеринга формирования подборки фильмов
@@ -11,28 +10,18 @@ export class FilmSelection extends Component {
   /**
    * Метод рендеринга элемента
    * @param response
-   * @return {string}
+   * @param collection_name
+   * @returns {string}
    */
-  render (response) {
+  render(response, collection_name = 'Результат поиска') {
     const result = {
-      collection_name: 'Результат поиска',
-      haveFilms: true
+      collection_name: collection_name,
+      haveFilms: true,
     };
-
-    if (response?.length === 0 || response?.length === undefined) {
+    if (response?.films?.length === 0) {
       result.haveFilms = false;
     }
 
     return templateFilmSelection(result);
   }
 }
-
-const getKeyByValue = (value) => {
-  const collectionItems = collections.collection_items;
-  for (const item of collectionItems) {
-    if (item.value === value) {
-      return item.key;
-    }
-  }
-  return null;
-};

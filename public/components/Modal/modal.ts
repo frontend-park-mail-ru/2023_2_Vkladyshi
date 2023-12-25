@@ -13,10 +13,10 @@ export class Modal extends Component {
    * @param info
    * @return {string} html нижней панели
    */
-  render (info) {
+  render(info) {
     return templateModal(info);
   }
-  displayActive () {
+  displayActive() {
     const modalHTML = document.querySelector('.modal');
     modalHTML?.classList.remove('none-active-modal');
     modalHTML?.classList.add('active-modal');
@@ -29,7 +29,7 @@ export class Modal extends Component {
     headerHTML.style.opacity = '0.6';
   }
 
-  displayNone () {
+  displayNone() {
     const modalHTML = document.querySelector('.modal');
     const contentBlockHTML = document.querySelector(
       '.content-block'

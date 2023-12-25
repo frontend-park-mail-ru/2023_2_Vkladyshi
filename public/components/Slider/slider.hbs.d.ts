@@ -1,4 +1,4 @@
-type Signin = () => string;
+type Slider = () => string;
 
-declare let signin: Signin;
-export = signin;
+declare let slider: Slider;
+export = slider;

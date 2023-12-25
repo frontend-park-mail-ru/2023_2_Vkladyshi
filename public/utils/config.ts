@@ -10,20 +10,14 @@ import { UserPage } from '@views/userPage/userPage';
 import { CommentsPage } from '@views/CommentsPage/CommentsPage';
 import { FavoritePage } from '@views/FavoritePage/FavoritePage';
 import { AdminPage } from '@views/AdminPage/AdminPage';
-// kek
+import { UserStatisticPage } from '@views/UserStatisticPage/userStatisticPage';
+
 export const ROOT = document.querySelector('#root');
 
 // export const DOMAIN = 'http://localhost:8001';
 export const DOMAIN = 'http://127.0.0.1:8001';
+
 // export const DOMAIN = 'https://movie-hub.ru';
-export const DOMAIN_SW = '127.0.0.1:8003';
-
-export const API = {
-  ws: `ws://${DOMAIN_SW}/api/v1/notifications`
-};
-
-/// api/v1/find
-/// api/v1/films
 export const urls = {
   main: '/',
   findFilm: '/api/v1/films',
@@ -32,9 +26,12 @@ export const urls = {
   csrf: '/api/v1/csrf',
   actor: '/api/v1/actor',
   searchFilm: '/api/v1/find',
+  calendarSub: '/api/v1/user/subscribePush',
+  calendarCheck: '/api/v1/user/isSubscribed',
   searchActor: '/api/v1/search/actor',
   comments: '/api/v1/comment',
   addComment: '/api/v1/comment/add',
+  addCommentTwo: '/api/v1/rating/add',
   favoriteFilms: '/api/v1/favorite/films',
   favoriteActors: '/api/v1/favorite/actors',
   addFavoriteFilm: '/api/v1/favorite/film/add',
@@ -50,15 +47,22 @@ export const urls = {
   logout: '/logout',
   calendar: '/api/v1/calendar',
   statisticsCsat: '/api/v1/admin/csat',
+  addFilm: '/api/v1/add/film',
   subscribeCalendar: '/api/v1/subscribe/calendar',
-  ws: `ws://${DOMAIN_SW}/api/v1/notifications`
+  searchModerUser: '/api/v1/users/list',
+  updateRole: '/api/v1/users/updateRole',
+  deleteCommentFromServiceFilms: '/api/v1/rating/delete',
+  deleteCommentFromServiceComments: '/api/v1/comment/delete',
+  trends: '/api/v1/trends',
+  userStatistic: '/api/v1/statistics',
+  alreadyWatched: '/api/v1/lasts',
 };
 
 export const methods = {
   post: 'POST',
   get: 'GET',
   put: 'PUT',
-  delete: 'DELETE'
+  delete: 'DELETE',
 };
 
 export const responseStatuses = {
@@ -68,7 +72,7 @@ export const responseStatuses = {
   serverError: 500,
   notFound: 404,
   alreadyExists: 409,
-  csrfError: 412
+  csrfError: 412,
 };
 
 export const errorInputs = {
@@ -81,20 +85,10 @@ export const errorInputs = {
   NotAllElement: '* Обязательно поле',
   LoginExists: 'Логин уже используется',
   ServerError: 'Ошибка сервера',
-  badRequest: 'Почта уже используется'
+  badRequest: 'Почта уже используется',
+  repeatPassword: 'Тот же пароль',
+  VariableError: 'Невалидное значение',
 };
-
-export const mainPage = MainPage;
-export const signinPage = SigninPage;
-export const signupPage = SignupPage;
-export const filmSelectionPage = FilmSelectionPage;
-export const selectCollectionPage = SelectCollectionPage;
-export const actorPage = ActorDescritionPage;
-export const filmPage = FilmPage;
-export const userPage = UserPage;
-export const commentsPage = CommentsPage;
-export const favoritePage = FavoritePage;
-export const adminPage = AdminPage;
 
 export const config = {
   menu: {
@@ -102,39 +96,39 @@ export const config = {
       href: urls.basket,
       png_name: 'myTags.svg',
       name: 'Мои фильмы',
-      renderObject: ''
+      renderObject: '',
     },
     profile: {
       href: urls.profile,
       png_name: 'iconPerson.svg',
       name: 'Мой профиль',
-      renderObject: ''
+      renderObject: '',
     },
     signin: {
       href: urls.signin,
       png_name: 'iconPerson.svg',
       name: 'Войти',
-      renderObject: signinPage
+      renderObject: SigninPage,
     },
     signup: {
       href: urls.signup,
       png_name: 'iconPerson.svg',
       name: 'Зарегистрироваться',
-      renderObject: signupPage
+      renderObject: SignupPage,
     },
     selection: {
       href: urls.selection,
       png_name: 'vectorTags.svg',
       name: 'Поиск',
-      renderObject: selectCollectionPage
+      renderObject: SelectCollectionPage,
     },
     main: {
       href: urls.main,
       png_name: 'brandIcon.svg',
       name: 'MovieHub',
-      renderObject: mainPage
-    }
-  }
+      renderObject: MainPage,
+    },
+  },
 };
 
 export const header = new Header(ROOT);
@@ -142,39 +136,40 @@ export const header = new Header(ROOT);
 export const collections = {
   collection_name: 'Жанры',
   collection_items: [
-    { key: 'Боевики', value: 5 },
-    { key: 'Военные', value: 6 },
-    { key: 'Детективы', value: 7 },
-    { key: 'Драмы', value: 8 },
-    { key: 'Комедии', value: 9 },
-    { key: 'Криминальные', value: 10 },
-    { key: 'Аниме', value: 1 },
-    { key: 'Дорама', value: 2 },
-    { key: 'Мультфильм', value: 3 },
-    { key: 'Детские', value: 4 },
-    { key: 'Ужасы', value: 11 },
-    { key: 'Мелодрама', value: 12 },
-    { key: 'Фантастика', value: 13 },
-    { key: 'Триллер', value: 14 },
-    { key: 'Фэнтези', value: 15 }
-  ]
+    { key: 'Боевики', value: 5, color: '#a0b79b' },
+    { key: 'Военные', value: 6, color: '#FCB72A' },
+    { key: 'Детективы', value: 7, color: '#F8821A' },
+    { key: 'Драмы', value: 8, color: '#E0393E' },
+    { key: 'Комедии', value: 9, color: '#963D97' },
+    { key: 'Криминальные', value: 10, color: '#069CDB' },
+    { key: 'Аниме', value: 1, color: '#5EB344' },
+    { key: 'Дорама', value: 2, color: '#9ec3d3' },
+    { key: 'Мультфильм', value: 3, color: '#a476c4' },
+    { key: 'Детские', value: 4, color: '#3c3e3f' },
+    { key: 'Ужасы', value: 11, color: '#833675' },
+    { key: 'Мелодрама', value: 12, color: '#b6b67f' },
+    { key: 'Фантастика', value: 13, color: '#c2a467' },
+    { key: 'Триллер', value: 14, color: '#b268af' },
+    { key: 'Фэнтези', value: 15, color: '#95d782' },
+  ],
 };
 
 export const routes = [
-  { path: '/', view: mainPage },
-  { path: '/login', view: signinPage },
-  { path: '/registration', view: signupPage },
-  { path: '/selection', view: selectCollectionPage },
-  { path: '/films', view: filmSelectionPage },
-  { path: '/actors', view: filmSelectionPage },
-  { path: '/actor', view: actorPage },
-  { path: '/film', view: filmPage },
-  { path: '/comments', view: commentsPage }
+  { path: '/', view: MainPage },
+  { path: '/login', view: SigninPage },
+  { path: '/registration', view: SignupPage },
+  { path: '/selection', view: SelectCollectionPage },
+  { path: '/films', view: FilmSelectionPage },
+  { path: '/actors', view: FilmSelectionPage },
+  { path: '/actor', view: ActorDescritionPage },
+  { path: '/film', view: FilmPage },
+  { path: '/comments', view: CommentsPage },
 ];
 
 export const privateRoutes = [
-  { path: '/settings', view: userPage },
-  { path: '/watchlist/films', view: favoritePage },
-  { path: '/watchlist/actors', view: favoritePage },
-  { path: '/admin', view: adminPage }
+  { path: '/settings', view: UserPage },
+  { path: '/userStatistic', view: UserStatisticPage },
+  { path: '/watchlist/films', view: FavoritePage },
+  { path: '/watchlist/actors', view: FavoritePage },
+  { path: '/admin', view: AdminPage },
 ];
