@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 import { View } from '@views/view';
 import { errorInputs, responseStatuses, ROOT } from '@utils/config';
 import { store } from '@store/store';
@@ -62,7 +63,7 @@ export class SigninPage extends View {
    */
   render() {
     if (document.querySelector('.popupSign') == null) {
-      this.renderDefaultPage();
+      this.renderDefaultPage({});
       const mainHTML = document.querySelector('main');
       const popup = document.createElement('div');
       popup.classList.add('popupSign');
@@ -71,6 +72,7 @@ export class SigninPage extends View {
       mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
       const icon = document.querySelector('.image-container') as HTMLElement;
       icon!.style.backgroundImage = 'url("/icons/loginImage.jpg")';
+      icon!.style.justifyContent = 'center';
 
       const containerHTML = document.querySelector('.image-container');
       containerHTML?.appendChild(popup);
@@ -104,12 +106,12 @@ export class SigninPage extends View {
         'afterbegin',
         buttonSubmit.render({ text: 'Войти' })
       );
-
-      this.componentDidMount();
-      this.init();
-      this.setUserInfo();
-      store.subscribe('login', this.subscribeSigninStatus.bind(this));
     }
+
+    this.componentDidMount();
+    this.init();
+    this.setUserInfo();
+    store.subscribe('login', this.subscribeSigninStatus.bind(this));
   }
 
   getForm() {

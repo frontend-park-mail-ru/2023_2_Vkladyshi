@@ -2,8 +2,6 @@
   display: flex;
   flex-flow: column;
   align-items: center;
-  /*color: #f5c518;*/
-  /* color: #ffffff; */
   margin: auto;
 }
 
@@ -15,11 +13,16 @@
   color: white;
   font-weight: 800;
   margin: 1rem 0 0;
+  display: flex;
+  justify-items: center;
+  align-items: center;
 }
 
 .calendar__days {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  /*display: flex;*/
 
   flex-wrap: wrap;
 
@@ -28,9 +31,15 @@
   padding: 0;
 }
 
+.calendar__days__name {
+  padding: 0;
+  margin: 0;
+}
+
 .calendar__days__day {
   color: white;
   display: flex;
+  /*cursor: not-allowed;*/
 
   width: 9rem;
   height: 9rem;
@@ -41,33 +50,53 @@
 
   /*border-radius: 0.2rem;*/
 
-  padding: 1rem;
+  /*padding: 1rem;*/
 
-  font-weight: 300;
+  /*font-weight: 300;*/
   font-size: 15px;
-  line-height: normal;
+  /*line-height: normal;*/
   box-sizing: border-box;
   background: rgba(255, 255, 255, 0.4);
   box-shadow: 0 8px 32px 0 rgba(118, 121, 160, 0.37);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
+  /*backdrop-filter: blur(4px);*/
+  /*-webkit-backdrop-filter: blur(4px);*/
   border-radius: 10px;
   border: 1px solid rgba(255, 255, 255, 0.18);
-  transition: all 0.5s ease;
+  /*transition: all 0.5s ease;*/
 }
 
-/*.calendar__days__day:hover {*/
-/*  !* border: 3px solid rgba(255, 255, 255, 0.7); *!*/
-/*  !* background: rgba(255, 255, 255, 0.3); *!*/
+.calendar__days__day:hover {
+  /*border: 3px solid rgba(255, 255, 255, 0.7); */
+  /* background: rgba(255, 255, 255, 0.3);*/
 
-/*  border: 3px solid #ffffff;*/
-/*  !* background: #f5c51846; *!*/
-/*}*/
+  /*border: 3px solid #ffffff;*/
+  /* background: #f5c51846; */
+}
 
 .calendar__days__time {
   font-size: 1.8rem;
   margin: 0 0 1rem 0;
   font-weight: 500;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.calendar__days__subscribe {
+  margin-right: 5px;
+  width: 50px;
+  height: auto;
+  fill: orange;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.calendar__days__subscribe:hover {
+  opacity: 0.8;
+}
+
+.pointer {
+  cursor: pointer;
 }
 
 .calendar__days__day_today {
@@ -78,17 +107,17 @@
 
 @media (max-width: 1300px) {
   .calendar__days__day {
-    width: 6rem;
-    height: 6rem;
+    width: 105px;
+    height: 105px;
 
     margin: 0.25rem;
 
     border-radius: 0.2rem;
 
-    padding: 0.7rem;
+    /*padding: 0.7rem;*/
 
-    font-weight: 300;
-    font-size: 0.5rem;
+    /*font-weight: 300;*/
+    font-size: 14px;
   }
 
   .calendar__days__time {
@@ -97,7 +126,7 @@
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   .calendar__days {
     display: flex;
     flex-direction: row;
@@ -106,17 +135,14 @@
 
   .calendar__days {
     .calendar__days__day {
-      width: 4rem;
-      height: 4rem;
+      width: 110px;
+      height: 110px;
 
       margin: 0.25rem;
 
       border-radius: 0.2rem;
 
-      padding: 0.3rem;
-
-      font-weight: 300;
-      font-size: 0.4rem;
+      font-size: 13px;
     }
     .calendar__days__time {
       font-size: 0.8rem;
@@ -128,13 +154,13 @@
   .calendar__days {
     grid-template-columns: 1fr 1fr 1fr 1fr;
     .calendar__days__day {
-      width: 85px;
-      height: 85px;
+      width: 105px;
+      height: 105px;
 
       margin: 0.25rem;
 
       border-radius: 0.2rem;
-      font-size: 9px;
+      font-size: 12px;
     }
     .calendar__days__time {
       font-size: 0.9rem;

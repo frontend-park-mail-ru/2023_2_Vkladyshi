@@ -73,12 +73,56 @@ interface searchFilm {
   dateFrom: string;
   dateTo: string;
   actors: any;
+  page: number;
+  per_page: number;
 }
 
 interface searchActor {
   name: string;
-  amplua: string;
+  amplua: any;
   county: string;
   birthday: string;
   films: any;
+  page: number;
+  per_page: number;
+}
+
+interface newFilm {
+  title: string;
+  filmInfo: string;
+  genre: any;
+  actors: any;
+  date: string;
+}
+
+interface filmNotifPayload {
+  id: number;
+  poster_ver: string;
+  name: string;
+  rating: number;
+  ticket: string;
+  prod_date: string;
+}
+
+interface SubscribeCalendar {
+  login: string;
+  subscribeFilmID: number;
+}
+
+interface updateRole {
+  login: string;
+  role: string;
+}
+
+interface removeComment {
+  user_id: number;
+  film_id: number;
+  deleteFromServiceFilms: boolean;
+}
+
+interface searchModerUser {
+  login: string;
+  role: string;
+  page: number;
+  per_page: number;
 }

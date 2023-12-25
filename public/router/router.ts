@@ -3,6 +3,7 @@ import { DOMAIN, privateRoutes, ROOT, routes } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
 import { page404 } from '@router/Page404/page404';
+import { response } from 'express';
 
 interface Class {
   render: Function;
@@ -18,15 +19,21 @@ interface Router {
   mapViews: Map<string, Class>;
   privateMapViews: Map<string, Class>;
   lastView: { path; props };
+  lastViewClass: any;
+  firstView: boolean;
+  role: string;
 }
 class Router {
   constructor(ROOT) {
     this.root = ROOT;
     this.lastView = { path: '/', props: '' };
+    this.role = 'user';
+    this.firstView = false;
+    this.lastViewClass = '';
     this.mapViews = new Map();
     this.privateMapViews = new Map();
 
-    // store.subscribe('auth', this.subscribeRouterAuthStatus.bind(this));
+    store.subscribe('auth', this.subscribeRouterAuthStatus.bind(this));
     store.subscribe('login', this.subscribeRouterSigninStatus.bind(this));
     store.subscribe('logoutStatus', this.subscribeRouterLogout.bind(this));
   }
@@ -82,7 +89,6 @@ class Router {
 
     window.addEventListener('popstate', () => {
       const url = new URL(window.location.href);
-
       const hasNumber = /\d/.test(url.pathname);
 
       let path = '';
@@ -97,13 +103,16 @@ class Router {
 
       this.go({ path, props }, { pushState: false, refresh: false });
     });
+
     this.refresh();
-    setTimeout(() => {
-      ROOT?.insertAdjacentHTML(
-        'beforeend',
-        '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
-      );
-    }, 36000);
+    this.firstView = true;
+
+    // setTimeout(() => {
+    //   ROOT?.insertAdjacentHTML(
+    //     'beforeend',
+    //     '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
+    //   );
+    // }, 36000);
   }
 
   go(
@@ -112,11 +121,23 @@ class Router {
   ) {
     let view = this.mapViews.get(stateObject.path);
     if (view) {
+      if (
+        stateObject.path === '/login' ||
+        stateObject.path === '/registration'
+      ) {
+      } else {
+        this.lastView = { path: stateObject.path, props: stateObject.props };
+      }
+
       this.navigate(stateObject, pushState);
+      if (this.lastViewClass) {
+        this?.lastViewClass?.componentWillUnmount();
+      }
+
       // @ts-ignore
       // eslint-disable-next-line new-cap
-      const viewResult = new view(ROOT);
-      viewResult.render(stateObject.props);
+      this.lastViewClass = new view(ROOT);
+      this.lastViewClass.render(stateObject.props);
       window.scrollTo(0, 0);
       return;
     }
@@ -126,16 +147,19 @@ class Router {
       this.lastView = { path: stateObject.path, props: stateObject.props };
       if (store.getState('auth')?.status !== 200) {
         view = this.mapViews.get('/login');
-        stateObject = { props: '', path: '/login' };
+        stateObject = { path: '/login', props: '' };
       }
 
       this.navigate(stateObject, pushState);
-      window.scrollTo(0, 0);
+      if (this.lastViewClass) {
+        this?.lastViewClass?.componentWillUnmount();
+      }
 
       // @ts-ignore
       // eslint-disable-next-line new-cap
-      const viewResult = new view(ROOT);
-      viewResult.render(stateObject.props);
+      this.lastViewClass = new view(ROOT);
+      this.lastViewClass.render(stateObject.props);
+      window.scrollTo(0, 0);
     }
   }
 
@@ -162,9 +186,39 @@ class Router {
   }
 
   subscribeRouterAuthStatus() {
-    const status = store.getState('auth').status;
+    const status = store.getState('auth')?.status;
 
-    if (status === 200) {
+    if (window.location.pathname === '/') {
+      return;
+    }
+
+    if (this.lastView.path === '/admin') {
+      if (status === 200) {
+        if (store.getState('auth')?.body?.role === undefined) {
+          store.subscribe('auth', this.subscribeRouterRoleStatus.bind(this));
+          store.unsubscribe('auth', this.subscribeRouterAuthStatus.bind(this));
+          store.dispatch(actionAuth());
+          return;
+        } else if (store.getState('auth')?.body?.role === 'super') {
+          this.subscribeRouterRoleStatus();
+          return;
+        } else if (store.getState('auth')?.body?.role !== 'super') {
+          this.go(
+            {
+              path: '/',
+              props: '',
+            },
+            { pushState: true, refresh: false }
+          );
+          return;
+        }
+      }
+    }
+
+    if (
+      status === 200 &&
+      (!this.firstView || window.location.pathname === '/login')
+    ) {
       router.go(
         {
           path: this.lastView.path,
@@ -172,7 +226,28 @@ class Router {
         },
         { pushState: true, refresh: false }
       );
-      this.lastView = { path: '/', props: '' };
+    }
+  }
+
+  subscribeRouterRoleStatus() {
+    store.unsubscribe('auth', this.subscribeRouterRoleStatus.bind(this));
+    store.subscribe('auth', this.subscribeRouterAuthStatus.bind(this));
+    if (store.getState('auth')?.body?.role !== 'super') {
+      this.go(
+        {
+          path: '/',
+          props: '',
+        },
+        { pushState: true, refresh: false }
+      );
+    } else if (store.getState('auth')?.body?.role === 'super') {
+      this.go(
+        {
+          path: '/admin',
+          props: this.lastView.props,
+        },
+        { pushState: true, refresh: false }
+      );
     }
   }
 
@@ -181,41 +256,23 @@ class Router {
 
     if (logout === 200) {
       store.setState({ auth: { status: 400 } });
-      this.go(
-        {
-          path: '/',
-          props: '',
-        },
-        { pushState: true, refresh: false }
-      );
+      this.role = 'user';
+      if (this.privateMapViews.get(window.location.pathname)) {
+        this.go(
+          {
+            path: '/',
+            props: '',
+          },
+          { pushState: true, refresh: false }
+        );
+      }
     }
   }
 
   subscribeRouterSigninStatus() {
-    const status = store.getState('login').status;
-    store.setState({ auth: { status: status } });
-
-    if (status === 200) {
-      router.go(
-        {
-          path: this.lastView.path,
-          props: this.lastView.props,
-        },
-        { pushState: true, refresh: false }
-      );
-
-      this.lastView = { path: '/', props: '' };
-    }
+    const status = store.getState('login');
+    store.setState({ auth: status });
   }
 }
 
 export const router = new Router(ROOT);
-
-// } else if (this.mapViews.get(`/${names[1]}`) && url.search) {
-//   this.go(
-//       {
-//         path: `/${names[1]}`,
-//         props: `/${url.search}`
-//       },
-//       { pushState: !redirect, refresh: !redirect }
-//   );

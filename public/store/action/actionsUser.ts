@@ -1,5 +1,7 @@
+/* eslint-disable require-jsdoc */
 import { post, get, getCsrf } from '@utils/ajax';
 import { urls } from '@utils/config';
+import { router } from '@router/router';
 
 class ActionsUser {
   async signin(user) {
@@ -88,7 +90,7 @@ class ActionsUser {
 
     const result = await response;
     return {
-      postStatusSettings: result['status'],
+      postStatusSettings: result,
     };
   }
 
@@ -126,6 +128,18 @@ class ActionsUser {
     const result = await response;
     return {
       addCommentStatus: result['status'],
+    };
+  }
+
+  async addCommentTwo({ film_id, rating, text }: addComment) {
+    const response = post({
+      url: urls.addCommentTwo,
+      body: { film_id: film_id, rating: rating, text: text },
+    });
+
+    const result = await response;
+    return {
+      addCommentTwoStatus: result['status'],
     };
   }
 
@@ -215,6 +229,77 @@ class ActionsUser {
 
     return {
       getStatistics: result,
+    };
+  }
+
+  async addFilm(newFilm) {
+    const response = post({
+      url: urls.addFilm,
+      body: newFilm,
+      contentType: true,
+    });
+
+    const result = await response;
+    return {
+      addFilm: result,
+    };
+  }
+
+  async updateRole({ login, role }: updateRole) {
+    const response = post({
+      url: urls.updateRole,
+      body: {
+        login: login,
+        role: role,
+      },
+    });
+
+    const result = await response;
+    return {
+      updateRole: result,
+    };
+  }
+
+  async userStatistic() {
+    const response = get({
+      url: urls.userStatistic,
+    });
+
+    const result = await response;
+    return {
+      userStatistic: result,
+    };
+  }
+
+  async alreadyWatched() {
+    const response = get({
+      url: urls.alreadyWatched,
+    });
+
+    const result = await response;
+    return {
+      alreadyWatched: result,
+    };
+  }
+
+  async removeComment({
+    film_id,
+    user_id,
+    deleteFromServiceFilms,
+  }: removeComment) {
+    const response = post({
+      url: deleteFromServiceFilms
+        ? urls.deleteCommentFromServiceFilms
+        : urls.deleteCommentFromServiceComments,
+      body: {
+        user_id: user_id,
+        film_id: film_id,
+      },
+    });
+
+    const result = await response;
+    return {
+      removeComment: result,
     };
   }
 }

@@ -11,6 +11,19 @@ import {
 import { FilmCard } from '@components/filmCard/filmCard';
 import { router } from '@router/router';
 import { ActorCard } from '@components/ActorCard/actorCard';
+import { addActive, removeActive } from '@utils/std';
+import { Modal } from '@components/Modal/modal';
+import { inputButton } from '@components/inputButton/inputButton';
+import { buttonSubmit } from '@components/ButtonSubmit/buttonSubmit';
+import { DirectoryFilms } from '@components/DirectoryFilms/directoryFilms';
+
+export interface FavoritePage {
+  state: {
+    pageNumber: number;
+    perPage: number;
+    modal: Modal;
+  };
+}
 
 /**
  * Класс формирования окна сохранённых подборок фильмов и актёров
@@ -28,6 +41,12 @@ export class FavoritePage extends View {
   constructor(ROOT) {
     super(ROOT);
 
+    this.state = {
+      pageNumber: 1,
+      perPage: 20,
+      modal: new Modal(ROOT),
+    };
+
     store.subscribe('favoriteFilms', this.subscribeFavoriteFilms.bind(this));
     store.subscribe('favoriteActors', this.subscribeFavoriteActor.bind(this));
   }
@@ -36,7 +55,7 @@ export class FavoritePage extends View {
    * Метод создания страницы
    */
   render() {
-    this.renderDefaultPage();
+    this.renderDefaultPage({});
     const contentBlockHTML = document.querySelector(
       '.content-block'
     ) as HTMLElement;
@@ -47,11 +66,19 @@ export class FavoritePage extends View {
         'beforeend',
         favoriteList.render({
           title: 'Список фильмов',
-          redirect: 'Любимые акторы',
+          redirect: 'Любимые актёры',
         })
       );
+
+      const body = document.querySelector('.favorite__body');
+
       store
-        .dispatch(actionFavoriteFilms({ page: 1, per_page: 20 }))
+        .dispatch(
+          actionFavoriteFilms({
+            page: this.state.pageNumber++,
+            per_page: this.state.perPage,
+          })
+        )
         .then(() => {
           this.componentDidMount();
         });
@@ -65,9 +92,37 @@ export class FavoritePage extends View {
         redirect: 'Любимые фильмы',
       })
     );
-    store.dispatch(actionFavoriteActors({ page: 1, per_page: 20 })).then(() => {
-      this.componentDidMount();
-    });
+    store
+      .dispatch(
+        actionFavoriteActors({
+          page: this.state.pageNumber++,
+          per_page: this.state.perPage,
+        })
+      )
+      .then(() => {
+        this.componentDidMount();
+      });
+
+    // const modal = new Modal(ROOT);
+    // const inputButton = new In();
+    // const mainHTML = document.querySelector('main');
+    // mainHTML?.insertAdjacentHTML('afterbegin', this.state.modal.render(true));
+    //
+    // const modalHTML = document.querySelector('.modal');
+    // const bodyHTML = document.querySelector('.modal__window__body');
+    // const buttonHTML = document.querySelector('.modal__window__button');
+    //
+    // modalHTML?.classList.add('none-active-modal');
+    //
+    // bodyHTML!.insertAdjacentHTML(
+    //   'beforeend',
+    //   inputButton.render({ wrap: 'direction', module: 'modal' })
+    // );
+    //
+    // buttonHTML!.insertAdjacentHTML(
+    //   'beforeend',
+    //   buttonSubmit.render({ text: 'Создать' })
+    // );
   }
 
   /**
@@ -75,6 +130,12 @@ export class FavoritePage extends View {
    * @param isFilms проверка что рендерим фильмы
    */
   componentDidMount() {
+    if (this.isFilm) {
+      addActive(document.querySelector('.create-direction'));
+    } else {
+      removeActive(document.querySelector('.create-direction'));
+    }
+
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
       const filmId = event.target
@@ -98,6 +159,23 @@ export class FavoritePage extends View {
 
           const element = document.querySelector(`[data-section="${id}"]`);
           element?.remove();
+
+          const elementsWithDataSetion = document.querySelectorAll(
+            '.actor-selection_actor '
+          );
+          const elementsFilms = document.querySelectorAll(
+            '.film-selection_film'
+          );
+
+          if (
+            elementsWithDataSetion.length === 0 &&
+            elementsFilms.length === 0
+          ) {
+            const body = document.querySelector('.favorite__body');
+            body!.innerHTML = '<div>Ваш список пуст</div>';
+            removeActive(document.querySelector('.more-elements'));
+          }
+
           break;
         case event.target.closest('.film-selection_film') !== null:
           this.componentWillUnmount();
@@ -110,6 +188,7 @@ export class FavoritePage extends View {
           );
           break;
         case event.target.closest('.redirect-to-favorite') !== null:
+          console.log(this.isFilm);
           this.componentWillUnmount();
           if (this.isFilm) {
             router.go(
@@ -129,6 +208,23 @@ export class FavoritePage extends View {
             );
           }
           break;
+        case event.target.closest('.more-elements') !== null:
+          if (this.isFilm) {
+            store.dispatch(
+              actionFavoriteFilms({
+                page: this.state.pageNumber++,
+                per_page: this.state.perPage,
+              })
+            );
+          } else {
+            store.dispatch(
+              actionFavoriteActors({
+                page: this.state.pageNumber++,
+                per_page: this.state.perPage,
+              })
+            );
+          }
+          break;
         case event.target.closest('.actor-selection_actor') !== null:
           this.componentWillUnmount();
           router.go(
@@ -144,9 +240,9 @@ export class FavoritePage extends View {
       }
     };
 
-    const elements = document.querySelector('.favorite');
-    elements?.removeEventListener('click', popupEvent);
-    elements?.addEventListener('click', popupEvent);
+    const favorites = document.querySelector('.favorite');
+    // favorites?.removeEventListener('click', popupEvent);
+    favorites?.addEventListener('click', popupEvent);
   }
 
   /**
@@ -155,49 +251,107 @@ export class FavoritePage extends View {
   componentWillUnmount() {
     const elements = document.querySelector('.favorite');
     elements?.removeEventListener('click', this.popupEvent);
+
+    store.unsubscribe('favoriteFilms', this.subscribeFavoriteFilms.bind(this));
+    store.unsubscribe('favoriteActors', this.subscribeFavoriteActor.bind(this));
   }
 
   /**
    * Метод для обработки ответа с фильмами
    */
   subscribeFavoriteFilms() {
+    this.isFilm = true;
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
-    contentBlockHTML.innerHTML = '';
-    const films = store.getState('favoriteFilms')?.body.films;
+    const more = document.querySelector('.more-elements');
+    const films = store.getState('favoriteFilms')?.body;
+    const status = store.getState('favoriteFilms')?.status;
 
+    const body = document.querySelector('.favorite__body');
+
+    if (
+      (films?.length === 0 || status === 404) &&
+      this.state.pageNumber === 2
+    ) {
+      body?.insertAdjacentHTML('beforeend', '<div>Ваш список пуст</div>');
+      removeActive(document.querySelector('.more-elements'));
+      return;
+    } else if (status !== 200) {
+      body?.insertAdjacentHTML('beforeend', '<div>Ошибка сервера!</div>');
+      removeActive(document.querySelector('.more-elements'));
+      return;
+    }
+
+    let countFilms = 0;
     // eslint-disable-next-line guard-for-in
     for (const film in films) {
+      countFilms++;
       const filmCard = new FilmCard(ROOT);
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
-        filmCard.render({ film: films[film], alreadyFavorite: true })
+        filmCard.render({
+          film: films[film],
+          alreadyFavorite: true,
+          haveRating: true,
+        })
       );
     }
-    this.isFilm = true;
-    // this.componentDidMount();
+
+    if (countFilms >= this.state.perPage) {
+      addActive(more);
+    } else {
+      removeActive(more);
+    }
   }
 
   /**
    * Метод для обработки ответа с актерами
    */
   subscribeFavoriteActor() {
+    this.isFilm = false;
     const contentBlockHTML = document.querySelector(
       '.favorite__body'
     ) as HTMLElement;
-    contentBlockHTML.innerHTML = '';
+    // contentBlockHTML!.innerHTML = '';
     const actors = store.getState('favoriteActors')?.body.actors;
+    const status = store.getState('favoriteActors')?.status;
+    const more = document.querySelector('.more-elements');
 
+    if (
+      (actors?.length === 0 || status === 404) &&
+      this.state.pageNumber === 2
+    ) {
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        '<div>Ваш список пуст</div>'
+      );
+      removeActive(document.querySelector('.more-elements'));
+      return;
+    } else if (status !== 200) {
+      contentBlockHTML?.insertAdjacentHTML(
+        'beforeend',
+        '<div>Ошибка сервера!</div>'
+      );
+      removeActive(document.querySelector('.more-elements'));
+      return;
+    }
+
+    let countActors = 0;
     // eslint-disable-next-line guard-for-in
     for (const actor in actors) {
+      countActors++;
       const actorCard = new ActorCard(ROOT);
       contentBlockHTML?.insertAdjacentHTML(
         'beforeend',
         actorCard.render({ actor: actors[actor], alreadyFavorite: true })
       );
     }
-    this.isFilm = false;
-    // this.componentDidMount();
+
+    if (countActors >= this.state.perPage) {
+      addActive(more);
+    } else {
+      removeActive(more);
+    }
   }
 }

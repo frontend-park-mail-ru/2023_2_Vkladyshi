@@ -2,15 +2,12 @@ const CACHE_NAME = 'moviehub-1';
 
 const blackSearchUrls = /object=user_avatar|user\/\d+/;
 
-const assetUrls = [
-  '/',
-  // '/index.html',
-  // '/settings'
-];
+const assetUrls = ['/'];
 
 const cachedReg =
   /\/api|(.png|.ttf|.woff2|.js|.ts|.jpg|.jpeg|.icon|.svg|.css|\/)$/;
 
+// ServiceWorkerRegistration.showNotification().catch((err) => {console.log('Не мобильная версия')})
 self.addEventListener('activate', (event) => {
   const expectedCacheNames = Object.keys(CACHE_NAME).map(
     (key) => CACHE_NAME[key]
@@ -43,6 +40,7 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
 
   const url = new URL(request.url);
+
   if (
     event.request.method !== 'GET' ||
     !cachedReg.test(url.pathname) ||
@@ -50,6 +48,7 @@ self.addEventListener('fetch', (event) => {
   ) {
     return;
   }
+
   event.respondWith(networkFirst(request, /\/$/.test(url.pathname)));
 });
 

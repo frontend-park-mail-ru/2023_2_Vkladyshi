@@ -1,3 +1,7 @@
+export interface Component {
+  componentWillUnmount(): void;
+}
+
 /**
  * Класс родитель всех компонентов
  * @class Component

@@ -25,7 +25,7 @@
   grid-template-columns: minmax(300px, auto) auto;
   grid-gap: 30px;
   margin-top: 20px;
-  padding-bottom: 100px;
+  /*padding-bottom: 100px;*/
 }
 
 .param-list {
@@ -35,7 +35,7 @@
 }
 
 .player {
-  grid-row-end: 4;
+  grid-row-end: 3;
   grid-row-start: 1;
 }
 
@@ -43,7 +43,8 @@
   font-size: 57px;
   color: white;
   text-align: center;
-  line-height: 44px;
+  /*line-height: 44px;*/
+  margin-bottom: 15px;
 }
 
 .info {
@@ -67,7 +68,7 @@
 }
 
 .rating {
-  width: 500px;
+  width: 350px;
   height: 100px;
   background-color: hsla(0, 0%, 100%, 0.18);
   color: white;
@@ -80,11 +81,11 @@
   display: flex;
   align-content: center;
   align-items: center;
-  margin-left: 30px;
+  margin-left: 10px;
 }
 
 .right {
-  margin-right: 30px;
+  margin-right: 10px;
   display: flex;
   align-content: center;
   align-items: center;
@@ -100,8 +101,8 @@
 }
 
 .count {
-  margin-left: 20px;
-  font-size: 19px;
+  margin-left: 8px;
+  font-size: 17px;
 }
 
 .column {
@@ -110,7 +111,8 @@
 }
 
 .review-button {
-  font-size: 19px;
+  font-size: 17px;
+  cursor: pointer;
 }
 
 .review-button:hover {
@@ -119,7 +121,6 @@
 
 .film-page {
   /*background: rgb(31,31,31);*/
-  font-family: Montserrat;
   position: relative;
   margin-top: 80px;
 }
@@ -246,6 +247,14 @@
     height: auto;
   }
 
+  .film-name {
+    font-size: 30px;
+  }
+
+  .column {
+    margin-top: 100px;
+  }
+
   .video-buttons {
     display: flex;
     justify-content: center;
@@ -300,7 +309,6 @@
     padding: 0;
     grid-row: 1;
     grid-column: 1;
-    height: 100px;
   }
 
   .param-list {
@@ -322,9 +330,9 @@
   .info {
     font-size: 15px;
   }
-  .film-page {
-    margin: 0;
-  }
+  /*.film-page {*/
+  /*  margin: 0;*/
+  /*}*/
   .count {
     width: 100px;
     font-size: 15px;

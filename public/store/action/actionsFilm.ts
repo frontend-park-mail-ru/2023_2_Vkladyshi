@@ -77,6 +77,30 @@ class ActionsFilm {
       calendarInfo: result,
     };
   }
+
+  async subscribeCalendar() {
+    const response = get({
+      url: urls.calendarSub,
+      query: {},
+    });
+
+    const result = await response;
+    return {
+      subscribeCalendar_res: result,
+    };
+  }
+
+  async checkSubscribeCalendar() {
+    const response = get({
+      url: urls.calendarCheck,
+      query: {},
+    });
+
+    const result = await response;
+    return {
+      checkSubscribeCalendar: result,
+    };
+  }
 }
 
 export const actionsFilm = new ActionsFilm();

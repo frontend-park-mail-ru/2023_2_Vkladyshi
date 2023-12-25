@@ -42,15 +42,15 @@ export class SelectCollectionPage extends View {
       renderedSearchFilm: true,
     };
 
-    store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
-    store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
+    // store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
+    // store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
   }
 
   /**
    * Метод создания страницы
    */
   render() {
-    this.renderDefaultPage();
+    this.renderDefaultPage({});
 
     if (!document.querySelector('.select-collection-frame')) {
       const main = ROOT?.querySelector('main');
@@ -82,6 +82,19 @@ export class SelectCollectionPage extends View {
    * @return {Promise} Promise ответа
    */
   componentDidMount(searchFilm = true) {
+    if (
+      /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+        navigator.userAgent
+      )
+    ) {
+      // Отключение hover у дива
+      const divElement = document.querySelectorAll('.title-type');
+      divElement.forEach((elem) => {
+        // @ts-ignore
+        elem?.style.isHovered = 'none';
+      });
+    }
+
     if (searchFilm) {
       this.eventsSearchFilm();
     } else {
@@ -92,9 +105,36 @@ export class SelectCollectionPage extends View {
     this.panelEvent = (event) => {
       switch (true) {
         case event.target.closest('.search-container__select__films') !== null:
+          const actorButtom1 = document.querySelector(
+            '.film-selection__header__yellow-selection-actor'
+          );
+          const filmButtom1 = document.querySelector(
+            '.film-selection__header__yellow-selection-film'
+          );
+          filmButtom1?.classList.remove('noactive-opacity');
+          actorButtom1?.classList.add('noactive-opacity');
+          actorButtom1?.classList.remove('active-opacity');
+          store.subscribe(
+            'resultSearchFilm',
+            this.subscribeSearchFilms.bind(this)
+          );
           this.eventsSearchFilm();
           break;
         case event.target.closest('.search-container__select__actors') !== null:
+          const actorButtom = document.querySelector(
+            '.film-selection__header__yellow-selection-actor'
+          );
+          const filmButtom = document.querySelector(
+            '.film-selection__header__yellow-selection-film'
+          );
+          actorButtom?.classList.add('active-opacity');
+          actorButtom?.classList.remove('noactive-opacity');
+          filmButtom?.classList.remove('active-opacity');
+          filmButtom?.classList.add('noactive-opacity');
+          store.subscribe(
+            'resultSearchActor',
+            this.subscribeSearchActors.bind(this)
+          );
           this.eventsSearchActor();
           break;
         case event.target.closest('.result-button') !== null:
@@ -360,9 +400,9 @@ export class SelectCollectionPage extends View {
     const ratingTo = (
       document.querySelector('.rating-right-input-select') as HTMLInputElement
     )?.value;
-    let mpaa = (
+    const mpaa = (
       document.querySelector('.mpaa-container__input') as HTMLInputElement
-    )?.value;
+    )?.checked;
     const dateFrom = (
       document.querySelector('.years-left-input-select') as HTMLInputElement
     )?.value;
@@ -371,31 +411,21 @@ export class SelectCollectionPage extends View {
     )?.value;
     const actors = (
       document.querySelector('.actors-input-select') as HTMLInputElement
-    )?.value.split(' ');
-
-    if (mpaa === 'on') {
-      mpaa = 'NC-17';
+    )?.value.split(',');
+    let mpaaResult;
+    if (mpaa) {
+      mpaaResult = 'R';
     } else {
-      mpaa = 'G';
+      mpaaResult = '';
     }
 
     const genres = document.querySelectorAll('.title-type.active');
     const sectionDataArray = Array.from(genres).map((div) =>
-      div.getAttribute('data-section')
+      parseInt(<string>div.getAttribute('data-section'))
     );
-    this.state.dataSection = `?title=${title}&date_from=${dateFrom}&date_to=${dateTo}&rating_from=${ratingFrom}&rating_to=${ratingTo}&mpaa=${mpaa}&genre=${sectionDataArray}&actors=${actors}`;
-    store.dispatch(
-      actionSearchFilm({
-        title: title,
-        dateFrom: dateFrom,
-        dateTo: dateTo,
-        ratingFrom: Number(ratingFrom),
-        ratingTo: Number(ratingTo),
-        mpaa: mpaa,
-        genre: sectionDataArray,
-        actors: actors,
-      })
-    );
+
+    this.state.dataSection = `?title=${title}&date_from=${dateFrom}&date_to=${dateTo}&rating_from=${ratingFrom}&rating_to=${ratingTo}&mpaa=${mpaaResult}&genre=${sectionDataArray}&actors=${actors}`;
+    this.subscribeSearchFilms();
   }
 
   /**
@@ -405,9 +435,11 @@ export class SelectCollectionPage extends View {
     const name = (
       document.querySelector('.name-input-select') as HTMLInputElement
     )?.value?.trim();
+
     const amplua = (
-      document.querySelector('.amp-lua-input-select') as HTMLInputElement
-    )?.value;
+      document.querySelector('.actors-input-select') as HTMLInputElement
+    )?.value.split(' ');
+
     const country = (
       document.querySelector('.country-input-select') as HTMLInputElement
     )?.value;
@@ -420,15 +452,7 @@ export class SelectCollectionPage extends View {
       ) as HTMLInputElement
     )?.value.split(' ');
     this.state.dataSection = `?name=${name}&amplua=${amplua}&country=${country}&birthday=${birthday}&films=${films}`;
-    store.dispatch(
-      actionSearchActor({
-        name: name,
-        amplua: amplua,
-        county: country,
-        birthday: birthday,
-        films: films,
-      })
-    );
+    this.subscribeSearchActors();
   }
 
   /**

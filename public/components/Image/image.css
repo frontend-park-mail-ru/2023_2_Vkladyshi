@@ -8,8 +8,8 @@
 
   /*background-image: none;*/
   background-size: cover;
-  /*background-repeat: no-repeat;*/
-  /*background-position: center center;*/
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 /*.header__container {*/
@@ -68,12 +68,13 @@
   width: 100%;
   height: 100%;
   /* Измените значения, чтобы настроить уровень затемнения */
-  background: rgb(0 0 0 / 40%) linear-gradient(
-          to top,
-          rgba(0, 0, 0, 0.85) 0,
-          rgba(0, 0, 0, 0.5) 60%,
-          rgba(0, 0, 0, 0.7) 100%
-  );
+  background: rgb(0 0 0 / 40%)
+    linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.85) 0,
+      rgba(0, 0, 0, 0.5) 60%,
+      rgba(0, 0, 0, 0.7) 100%
+    );
 }
 
 .video-main {
@@ -82,7 +83,7 @@
 }
 
 .first-text {
-  /*margin-top: 10px;*/
+  margin-bottom: 10px;
   font-size: 55px;
   /*position: absolute;*/
 }
@@ -90,15 +91,24 @@
 .input-main-email {
   /*width: 100%;*/
   height: 50px;
-  width: 90%;
+  width: 85%;
   background-color: transparent;
-  border: 1px solid #F3C23C;
+  border: 1px solid #f3c23c;
   border-radius: 8px 0 0 8px;
   border-right: none;
   color: white;
   font-size: 22px;
   /*transition: all 0.5s ease;*/
-  cursor: pointer;
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+.email-main-page {
+  text-align: center;
+}
+
+.input-main-email::placeholder {
+  color: #ffffff;
 }
 
 .input-main-email:hover {
@@ -114,18 +124,18 @@
 }
 
 .send-email-main {
-  width: 10%;
+  width: 15%;
   height: 54px;
-  background: #F3C23C;
+  background: #f3c23c;
   border-radius: 0 8px 8px 0;
-  border: 2px solid #F3C23C;
+  border: 2px solid #f3c23c;
   color: black;
   display: flex;
   align-content: center;
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  cursor: pointer;
+  cursor: not-allowed;
   transition: all 0.5s ease;
 }
 
@@ -133,13 +143,40 @@
   opacity: 0.8;
 }
 
-.input-main-email:focus {
+input:focus {
   outline: none;
 }
 
 .second-text {
   margin-top: 10px;
   font-size: 30px;
+}
+
+@keyframes moveDown {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(80px);
+  }
+}
+
+@keyframes moveUp {
+  from {
+    transform: translateY(80px);
+  }
+  to {
+    transform: translateY(0);
+    /*display: none;*/
+  }
+}
+
+.header__search-mobile {
+  animation: moveDown 1s forwards;
+}
+
+.header__search-mobile.reverse {
+  animation: moveUp 1s forwards;
 }
 
 @media screen and (max-width: 1150px) {
@@ -162,6 +199,11 @@
   }
 }
 
+@media screen and (max-width: 800px) {
+  .image-container {
+    justify-content: flex-start;
+  }
+}
 
 @media screen and (max-width: 700px) {
   .input-main-email {
@@ -175,8 +217,11 @@
   .first-text {
     font-size: 22px;
   }
-}
 
+  .input-main-email::placeholder {
+    font-size: 14px;
+  }
+}
 
 @media screen and (max-width: 450px) {
   .input-main-email {

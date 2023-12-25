@@ -47,7 +47,7 @@ export class CommentsPage extends View {
    * @returns {string} html авторизации
    */
   render(props = null) {
-    this.renderDefaultPage();
+    this.renderDefaultPage({});
     store.dispatch(
       actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
     );
