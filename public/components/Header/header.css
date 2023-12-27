@@ -167,19 +167,23 @@ input::placeholder {
   display: none;
 }
 
-.films-search-header {
-  /*display: none;*/
+.brand_icon, .icon {
+  height: 35px;
+  width: auto;
 }
 
 .header_search_item__lope-container {
   background: white;
   border-radius: 0 8px 8px 0;
-  /*height: 70px;*/
   display: flex;
   justify-content: center;
   align-items: center;
   width: 10%;
   cursor: auto;
+}
+
+.icon-profile {
+  height: 35px;
 }
 
 .header_search_item__all-search-container {
@@ -458,6 +462,7 @@ header__search-mobile__input::placeholder {
     width: 30px;
   }
 
+
   .header_search_item__lope {
     height: 50px;
     width: 50px;
@@ -528,6 +533,10 @@ header__search-mobile__input::placeholder {
   .header_user-statistic-header {
     position: absolute;
     right: 45px;
+  }
+
+  .icon-profile {
+    height: 35px;
   }
 
   header {

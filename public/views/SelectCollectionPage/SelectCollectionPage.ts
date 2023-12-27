@@ -64,7 +64,7 @@ export class SelectCollectionPage extends View {
         '.header__container__shadow'
       ) as HTMLElement;
 
-      icon!.style.backgroundImage = 'url("/icons/ocean.jpg")';
+      icon!.style.backgroundImage = 'url("/icons/ocean.webp")';
       icon!.style.backgroundAttachment = 'fixed';
       iconsShadow!.style.backgroundAttachment = 'fixed';
 

@@ -7,7 +7,7 @@ const assetUrls = ['/'];
 const cachedReg =
   /\/api|(.png|.ttf|.woff2|.js|.ts|.jpg|.jpeg|.icon|.svg|.css|\/)$/;
 
-// ServiceWorkerRegistration.showNotification().catch((err) => {console.log('Не мобильная версия')})
+
 self.addEventListener('activate', (event) => {
   const expectedCacheNames = Object.keys(CACHE_NAME).map(
     (key) => CACHE_NAME[key]

@@ -87,7 +87,7 @@ export class SignupPage extends View {
       mainHTML!.innerHTML = '';
       mainHTML?.insertAdjacentHTML('afterbegin', image.render({}));
       const icon = document.querySelector('.image-container') as HTMLElement;
-      icon!.style.backgroundImage = 'url("/icons/loginImage.jpg")';
+      icon!.style.backgroundImage = 'url("/icons/loginImage.webp")';
 
       const containerHTML = document.querySelector('.image-container');
       containerHTML?.appendChild(popup);

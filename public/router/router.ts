@@ -106,13 +106,6 @@ class Router {
 
     this.refresh();
     this.firstView = true;
-
-    // setTimeout(() => {
-    //   ROOT?.insertAdjacentHTML(
-    //     'beforeend',
-    //     '<iframe class="csat-container" src="https://www.movie-hub.ru"></iframe>'
-    //   );
-    // }, 36000);
   }
 
   go(

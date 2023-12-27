@@ -21,15 +21,17 @@
         <div class='video-content'>
           <div class='video-content__watchlist'>
             {{#if alreadyFavorite}}
-              <img class='image-cancel' src='/icons/cancel.png' />
+              <img class='image-cancel' src='/icons/cancel.webp' alt=""/>
             {{else}}
               <img
                 class='image-watchlist main-film-card orange-watchlist active'
-                src='/icons/bookmark2.svg'
+                src='/icons/bookmark2.webp'
+                alt=""
               />
               <img
                 class='image-watchlist main-film-card red-watchlist noactive'
-                src='/icons/bookmark1.svg'
+                src='/icons/bookmark1.webp'
+                alt=""
               />
             {{/if}}
 
@@ -41,7 +43,7 @@
         </div>
         <div class='video-buttons'>
           <div class='trailer'>
-            <img class='trailer-player-image' src='/icons/play-button.svg' />
+            <img class='trailer-player-image' src='/icons/play-button.webp' alt=""/>
             Трейлер
           </div>
           <div class='cinema'>Смотреть</div>
@@ -66,6 +68,7 @@
               <img
                 class='actor-poster'
                 style='background-image: url("{{actor_photo}}")'
+                alt=""
               />
               <div class='actor-name'>{{actor_name}}</div>
             </div>
@@ -83,9 +86,9 @@
       <div class='film-selection_name'>Похожие фильмы</div>
     </div>
     <div class='slider'>
-      <img src='/icons/back.png' class='line-prev' />
+      <img src='/icons/back.webp' class='line-prev' alt=""/>
       <div class='slider-container'></div>
-      <img src='/icons/next.png' class='line-next' />
+      <img src='/icons/next.webp' class='line-next' alt=""/>
     </div>
 
   </div>

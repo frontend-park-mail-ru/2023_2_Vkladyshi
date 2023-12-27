@@ -191,7 +191,6 @@ export class FilmPage extends View {
     }
 
     const result = this.state.commentsInfo['comment'];
-    console.log(store.getState('auth'));
 
     result.forEach((res) => {
       const table = {

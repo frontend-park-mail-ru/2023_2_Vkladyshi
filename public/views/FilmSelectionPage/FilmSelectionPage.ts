@@ -190,7 +190,6 @@ export class FilmSelectionPage extends View {
 
       switch (true) {
         case event.target.closest('.more-elements') !== null:
-          console.log('.more-elements');
           if (isFilms) {
             store.subscribe(
               'resultSearchFilm',
@@ -400,7 +399,7 @@ export class FilmSelectionPage extends View {
     ) {
       contentBlock?.insertAdjacentHTML(
         'beforeend',
-        '<p>Ничего не найдено</p><img class="image404-ui" src="/icons/404image.svg">'
+        '<p>Ничего не найдено</p><img class="image404-ui" src="/icons/404image.webp" alt="">'
       );
       return;
     } else if (store.getState('resultSearchActor')?.status !== 200) {
@@ -465,7 +464,7 @@ export class FilmSelectionPage extends View {
     if (buf?.body?.films?.length === 0 || buf?.status === 404) {
       contentBlock?.insertAdjacentHTML(
         'beforeend',
-        '<p>Ничего не найдено</p><img class="image404-ui" src="/icons/404image.svg">'
+        '<p>Ничего не найдено</p><img class="image404-ui" src="/icons/404image.webp" alt="">'
       );
       return;
     } else if (buf?.status !== 200) {
@@ -484,7 +483,6 @@ export class FilmSelectionPage extends View {
       removeActive(more);
     }
 
-    console.log('DAAA');
     if (this.state.pageNumber <= 2) {
       this.componentDidMount(true);
     }
@@ -604,7 +602,6 @@ export class FilmSelectionPage extends View {
     }
     divFilm?.remove();
 
-    console.log('add MAin');
     sliderNew.addEventsLine();
     this.componentDidMount(true);
   }

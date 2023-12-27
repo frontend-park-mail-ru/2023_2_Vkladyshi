@@ -23,11 +23,10 @@ export class NotificationClass {
   renderUI = (data) => {
     const notif = {
       body: data.body,
-      icon: 'https://movie-hub.ru/icons/brandTitle.svg',
+      icon: 'https://movie-hub.ru/icons/brandTitle.webp',
       requireInteraction: true,
     };
 
-    console.log('navigator.serviceWorker.ready')
     navigator.serviceWorker.ready.then((registration) => {
       Notification.requestPermission().then((permission) => {
         if (permission === 'granted') {
@@ -86,11 +85,7 @@ export class NotificationClass {
     await store.dispatch(actionCheckSubscribeCalendar());
     const result = store.getState('checkSubscribeCalendar');
 
-    // eslint-disable-next-line no-invalid-this
-    // console.log(result?.body?.subscribe, perm, this.state.permission);
-
     if (perm !== 'granted' || result?.body?.subscribe === false) {
-      // eslint-disable-next-line no-invalid-this
       this.cancelSending();
       return;
     }

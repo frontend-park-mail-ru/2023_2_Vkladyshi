@@ -30,7 +30,7 @@ export class MainPage extends View {
       'afterbegin',
       '        <div class="video-container1">\n' +
         '            <video class="video-container" autoplay muted loop>\n' +
-        '                <source class="video-main" src="/icons/video-main.mp4" type="video/mp4">\n' +
+        '                <source class="video-main" src="/icons/video-main.webm" type="video/mp4">\n' +
         '            </video>\n' +
         '            <div class="overlay"></div>\n' +
         "            <div class='header__container__text'>\n" +

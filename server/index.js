@@ -161,42 +161,42 @@ const userStatistic = {
 const favoriteFilms = {
   status: 200,
   body: [
-    // {
-    //   id: 3,
-    //   poster: '/icons/bastards.jpg',
-    //   title: 'film_1 111111',
-    //   rating: 1,
-    // },
-    // {
-    //   id: 8,
-    //   poster: '/icons/Poster.jpg',
-    //   title: 'film_2',
-    //   rating: 2,
-    // },
-    // {
-    //   id: 4,
-    //   poster: '/icons/bastards.jpg',
-    //   title: 'film_1 111111',
-    //   rating: 3,
-    // },
-    // {
-    //   id: 5,
-    //   poster: '/icons/Poster.jpg',
-    //   title: 'film_2',
-    //   rating: 4,
-    // },
-    // {
-    //   id: 30,
-    //   poster: '/icons/bastards.jpg',
-    //   title: 'film_1 111111',
-    //   rating: 5,
-    // },
-    // {
-    //   id: 10,
-    //   poster: '/icons/Poster.jpg',
-    //   title: 'film_2',
-    //   rating: 6,
-    // },
+    {
+      id: 3,
+      poster: '/icons/bastards.jpg',
+      title: 'film_1 111111',
+      rating: 1,
+    },
+    {
+      id: 8,
+      poster: '/icons/Poster.jpg',
+      title: 'film_2',
+      rating: 2,
+    },
+    {
+      id: 4,
+      poster: '/icons/bastards.jpg',
+      title: 'film_1 111111',
+      rating: 3,
+    },
+    {
+      id: 5,
+      poster: '/icons/Poster.jpg',
+      title: 'film_2',
+      rating: 4,
+    },
+    {
+      id: 30,
+      poster: '/icons/bastards.jpg',
+      title: 'film_1 111111',
+      rating: 5,
+    },
+    {
+      id: 10,
+      poster: '/icons/Poster.jpg',
+      title: 'film_2',
+      rating: 6,
+    },
   ],
 };
 
@@ -204,18 +204,18 @@ const favoriteActors = {
   status: 200,
   body: {
     actors: [
-      // {
-      //   actor_id: 1,
-      //   actor_name: 'Джейсон Стэйтем',
-      //   actor_photo: '/icons/star.png',
-      // },
-      // { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
-      // { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
-      // {
-      //   actor_id: 4,
-      //   actor_name: 'Сильвестр Сталлоне',
-      //   actor_photo: '/icons/star.png',
-      // },
+      {
+        actor_id: 1,
+        actor_name: 'Джейсон Стэйтем',
+        actor_photo: '/icons/star.png',
+      },
+      { actor_id: 2, actor_name: 'Фифти Сент', actor_photo: '/icons/star.png' },
+      { actor_id: 3, actor_name: 'Меган Фокс', actor_photo: '/icons/star.png' },
+      {
+        actor_id: 4,
+        actor_name: 'Сильвестр Сталлоне',
+        actor_photo: '/icons/star.png',
+      },
     ],
   },
 };

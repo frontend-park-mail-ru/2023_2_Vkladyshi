@@ -461,7 +461,7 @@ export class AdminPage extends View {
           setTimeout(() => {
             ROOT?.insertAdjacentHTML(
               'beforeend',
-              '<img class="create-successfully" src="/icons/icon-success.png"/>'
+              '<img class="create-successfully" src="/icons/icon-success.webp" alt=""/>'
             );
           });
           setTimeout(() => {
@@ -480,7 +480,7 @@ export class AdminPage extends View {
           const image = document.querySelector(
             '.settings__img'
           ) as HTMLImageElement;
-          image.src = '/icons/space6.jpg';
+          image.src = '/icons/space6.webp';
         }
       });
     }

@@ -5,30 +5,32 @@
       <img
         class='header_search_item__select-search__arrow icon'
         src='/icons/strelka-white.svg'
+        alt=""
       />
       <div class='header__search-mobile__select__list'>
         <div class='header__search-mobile__select__films'>
-          <img class='image-select' src='/icons/youtube.png' />
+          <img class='image-select' src='/icons/youtube.webp' alt=""/>
         </div>
         <div class='header__search-mobile__select__actors'>
-          <img class='image-select' src='/icons/people.png' />
+          <img class='image-select' src='/icons/people.webp' alt=""/>
         </div>
       </div>
     </div>
     <div class='header__search-mobile__search-input'>
       <input class='header__search-mobile__input' placeholder='Фильмы' />
       <div class='header__search-mobile__input__all-search'>
-        <img class='image-cancel' src='/icons/all-search-white.svg' />
+        <img class='image-cancel' src='/icons/all-search-white.svg' alt=""/>
       </div>
       <div class='header__search-mobile__input__cancel'>
-        <img class='image-cancel' src='/icons/cancel2.svg' />
+        <img class='image-cancel' src='/icons/cancel2.svg' alt=""/>
       </div>
     </div>
 
     <div class='header__search-mobile__search'>
       <img
         class='header_search_item__mobile-lope-search search-mobile-lope'
-        src='/icons/loupe-white.png'
+        src='/icons/loupe-white.webp'
+        alt=""
       />
     </div>
   </div>
@@ -37,20 +39,8 @@
       class='header_brand-header header-button right-element'
       data-section='{{brand.key}}'
     >
-      <img src='/icons/{{brand.png_name}}' class='brand_icon' />
+      <img src='/icons/brandIcon.webp' class='brand_icon' alt=""/>
     </div>
-
-    <!--    <div-->
-    <!--      class='header_menu-header header-button right-element'-->
-    <!--      data-section='{{selection.key}}'-->
-    <!--    >-->
-    <!--      <img src='/icons/{{selection.png_name}}' class='icon' />-->
-    <!--      <span>{{selection.name}}</span>-->
-    <!--    </div>-->
-    <!--    <input-->
-    <!--      class='header_search_item right-element'-->
-    <!--      placeholder='Поиск фильмов'-->
-    <!--    />-->
     <div class='header_search_item right-element'>
       <div class='header_search_item__select-search'>
         <div
@@ -61,15 +51,16 @@
         >Актёры</div>
         <img
           class='header_search_item__select-search__arrow-header'
-          src='/icons/strelka.png'
+          src='/icons/strelka.webp'
+          alt=""
         />
         <div class='header_search__list-search'>
           <div class='header_search__list-search__films'>
-            <img class='image-select' src='/icons/youtube.png' />
+            <img class='image-select' src='/icons/youtube.webp' alt=""/>
             <div class='text-select'>Фильмы</div>
           </div>
           <div class='header_search__list-search__actors'>
-            <img class='image-select' src='/icons/people.png' />
+            <img class='image-select' src='/icons/people.webp' alt=""/>
             <div class='text-select'>Актёры</div>
           </div>
         </div>
@@ -78,11 +69,12 @@
       <div class='header_search_item__all-search-container'>
         <img
           class='header_search_item__all-search'
-          src='/icons/all-search.png'
+          src='/icons/all-search.webp'
+          alt=""
         />
       </div>
       <div class='header_search_item__lope-container'>
-        <img class='header_search_item__lope' src='/icons/loupe.png' />
+        <img class='header_search_item__lope' src='/icons/loupe.webp' alt=""/>
       </div>
 
     </div>
@@ -90,7 +82,8 @@
     <div class='search-mobile header-button right-element'>
       <img
         class='header_search_item__mobile-lope icon'
-        src='/icons/loupe-white.png'
+        src='/icons/loupe-white.webp'
+        alt=""
       />
     </div>
 
@@ -98,7 +91,7 @@
       class='header_basket-item header-button right-element'
       data-section='{{basket.key}}'
     >
-      <img src='/icons/{{basket.png_name}}' class='icon' />
+      <img src='/icons/{{basket.png_name}}' class='icon' alt=""/>
       <span>{{basket.name}}</span>
     </div>
 
@@ -109,7 +102,7 @@
             <li class='liNavProfile'>
               <ul class='ul-header'>
                 <div class='header_header-item header-button right-element'>
-                  <img src='/icons/{{profile.png_name}}' class='icon' />
+                  <img src='/icons/{{profile.png_name}}' class='icon-profile' alt=""/>
                   <span
                     class='header_header-item profile-text'
                   >{{profile.name}}</span>
@@ -135,7 +128,7 @@
         class='header_login-header header-button right-element'
         data-section='{{signin.key}}'
       >
-        <img src='/icons/{{signin.png_name}}' class='icon' alt='' />
+        <img src='/icons/{{signin.png_name}}' class='icon-profile' alt='' />
         <span class='loginText'>{{signin.name}}</span>
       </div>
     {{/if}}

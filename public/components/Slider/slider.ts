@@ -96,15 +96,12 @@ export class Slider extends Component {
 
     this.addEvents();
     this.showSliders();
-    console.log('addEventsLine');
 
     this.resizeEvent();
     window.addEventListener('resize', this.resizeEvent.bind(this));
   }
 
   addLine() {
-    console.log('addLine');
-
     const slider = document.querySelectorAll('.slider-container');
     this.state.prevHTML = document.querySelector('.line-prev');
     this.state.nextHTML = document.querySelector('.line-next');
@@ -131,7 +128,6 @@ export class Slider extends Component {
   resizeEvent() {
     const sliderAll = document.querySelector('.slider') as HTMLElement;
 
-    // console.log(this.state.sliderHTML.offsetWidth, '<' ,sliderAll.offsetWidth);
     if (
       this.state.sliderHTML.offsetWidth < sliderAll.offsetWidth ||
       window.innerWidth <= 500 ||

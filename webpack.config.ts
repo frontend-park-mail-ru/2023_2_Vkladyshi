@@ -19,31 +19,13 @@ module.exports = {
   },
   optimization: {
     minimizer: [
-      new TerserPlugin(), // Минимизация JavaScript
-      new OptimizeCSSAssetsPlugin({}), // Минимизация CSS
+      new TerserPlugin(),
+      new OptimizeCSSAssetsPlugin({}),
     ],
   },
 
   plugins: [
-    new ImageMinimizerPlugin({
-      minimizerOptions: {
-        plugins: [
-          ['gifsicle', { interlaced: true }],
-          ['jpegtran', { progressive: true }],
-          ['optipng', { optimizationLevel: 5 }],
-          [
-            'svgo',
-            {
-              plugins: [
-                {
-                  removeViewBox: false,
-                },
-              ],
-            },
-          ],
-        ],
-      },
-    }),
+
 
     new HtmlWebpackPlugin({
       template: './public/index.html',

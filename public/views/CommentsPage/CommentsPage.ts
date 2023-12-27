@@ -127,30 +127,6 @@ export class CommentsPage extends View {
           break;
       }
     };
-
-    // const handleScroll = () => {
-    //   this.scrollEvent = handleScroll;
-    //   if (
-    //     Math.floor(window.innerHeight + document.documentElement.scrollTop) /
-    //       10 ===
-    //     Math.floor(document.documentElement.offsetHeight - 1) / 10
-    //   ) {
-    //     this.state.rewiewBunch += 1;
-    //     console.log('inIF');
-    //     console.log(this.state.rewiewBunch);
-    //     store.dispatch(
-    //       actionGetCommentsUser({ page: this.state.rewiewBunch, per_page: 5 })
-    //     );
-    //   }
-    //
-    //   console.log(
-    //     Math.floor(window.innerHeight + document.documentElement.scrollTop) / 10
-    //   );
-    //   console.log(Math.floor(document.documentElement.offsetHeight - 1) / 10);
-    // };
-    //
-    // popup?.addEventListener('click', popupEvent);
-    // window?.addEventListener('scroll', handleScroll);
   }
 
   componentWillUnmount() {
