@@ -56,22 +56,6 @@ export class UserStatisticPage extends View {
       if (store.getState('userStatistic')?.status === 200) {
         const statHTML = document.querySelector('.statistic');
         const statistic = store.getState('userStatistic')?.body;
-        // let result = [];
-        //
-        // result = statistic.map(({ genre_id, count, avg }) => {
-        //   const avgPointer = avg;
-        //   const { key: genreName, color } =
-        //     collections.collection_items.find(
-        //       (object) => genre_id === object.value
-        //     ) || {};
-        //   return {
-        //     genreName: genreName,
-        //     genreId: genre_id,
-        //     count: count,
-        //     avg: avg.toFixed(1),
-        //     color: color,
-        //   };
-        // });
 
         const res = collections.collection_items.map((elem) => {
           const matchedObject = statistic.find(
@@ -107,7 +91,6 @@ export class UserStatisticPage extends View {
         const slider = new Slider(ROOT);
         const statHTML = document.querySelector('.already-viewed');
         statHTML?.insertAdjacentHTML('beforeend', slider.renderLine());
-        // slider.addLine();
 
         const sliderLiner = document.querySelector('.slider-container');
         const sliderNAme = document.querySelector('.slider-name');

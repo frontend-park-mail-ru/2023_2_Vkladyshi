@@ -41,9 +41,6 @@ export class SelectCollectionPage extends View {
       firstSearchFilm: true,
       renderedSearchFilm: true,
     };
-
-    // store.subscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
-    // store.subscribe('resultSearchActor', this.subscribeSearchActors.bind(this));
   }
 
   /**

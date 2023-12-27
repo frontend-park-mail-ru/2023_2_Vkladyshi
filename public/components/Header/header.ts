@@ -20,9 +20,8 @@ export interface Header {
  * @typedef {Header}
  */
 export class Header extends Component {
-  private readonly config = {};
   private eventFunc: (event) => void;
-  private eventSearch: (event) => void;
+
   /**
    * Конструктор для формирования родительского элемента
    * @class

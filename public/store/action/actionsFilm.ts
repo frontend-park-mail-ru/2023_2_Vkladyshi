@@ -1,7 +1,6 @@
 /* eslint-disable require-jsdoc */
 import { get } from '@utils/ajax';
 import { urls } from '@utils/config';
-import { page404 } from '@router/Page404/page404';
 
 class ActionsFilm {
   async getCollectionDataMain({ collection_id }: collectionParams) {
@@ -23,10 +22,6 @@ class ActionsFilm {
     });
 
     const result = await response;
-    //
-    // if (result['status'] !== 200) {
-    //   page404.render();
-    // }
 
     return {
       collectionMenu: result,
@@ -41,10 +36,6 @@ class ActionsFilm {
 
     const result = await response;
 
-    // if (result['status'] !== 200) {
-    //   page404.render();
-    // }
-
     return {
       actorInfo: result['body'],
     };
@@ -57,10 +48,6 @@ class ActionsFilm {
     });
 
     const result = await response;
-
-    // if (result['status'] !== 200) {
-    //   page404.render();
-    // }
 
     return {
       filmInfo: result['body'],

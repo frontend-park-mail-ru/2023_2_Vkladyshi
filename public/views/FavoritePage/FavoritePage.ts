@@ -102,27 +102,6 @@ export class FavoritePage extends View {
       .then(() => {
         this.componentDidMount();
       });
-
-    // const modal = new Modal(ROOT);
-    // const inputButton = new In();
-    // const mainHTML = document.querySelector('main');
-    // mainHTML?.insertAdjacentHTML('afterbegin', this.state.modal.render(true));
-    //
-    // const modalHTML = document.querySelector('.modal');
-    // const bodyHTML = document.querySelector('.modal__window__body');
-    // const buttonHTML = document.querySelector('.modal__window__button');
-    //
-    // modalHTML?.classList.add('none-active-modal');
-    //
-    // bodyHTML!.insertAdjacentHTML(
-    //   'beforeend',
-    //   inputButton.render({ wrap: 'direction', module: 'modal' })
-    // );
-    //
-    // buttonHTML!.insertAdjacentHTML(
-    //   'beforeend',
-    //   buttonSubmit.render({ text: 'Создать' })
-    // );
   }
 
   /**

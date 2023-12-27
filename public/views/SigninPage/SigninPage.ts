@@ -55,7 +55,6 @@ export class SigninPage extends View {
         password: '',
       },
     };
-    // store.subscribe('auth', this.redirectToMain.bind(this));
   }
 
   /**

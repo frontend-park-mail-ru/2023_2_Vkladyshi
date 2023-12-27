@@ -1,24 +1,17 @@
 .image-container {
   min-height: 100vh;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   width: 100%;
-  /*transform: scale(1.25) translateY(-10%);*/
 
-  /*background-image: none;*/
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 }
 
-/*.header__container {*/
-/*    position: relative;*/
-/*    flex-direction: column;*/
-/*}*/
 
 .header__container {
-  /*background-image: none;*/
   position: relative;
   flex-direction: column;
 }
@@ -45,7 +38,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  text-align: center; /* Центрирует текст по горизонтали */
+  text-align: center;
   color: white;
   width: 70%;
   height: 20%;
@@ -53,7 +46,6 @@
 
 .video-container {
   width: 100%;
-  /*min-height: 100vh;*/
   height: auto;
 }
 
@@ -67,7 +59,6 @@
   left: 0;
   width: 100%;
   height: 100%;
-  /* Измените значения, чтобы настроить уровень затемнения */
   background: rgb(0 0 0 / 40%)
     linear-gradient(
       to top,
@@ -85,11 +76,9 @@
 .first-text {
   margin-bottom: 10px;
   font-size: 55px;
-  /*position: absolute;*/
 }
 
 .input-main-email {
-  /*width: 100%;*/
   height: 50px;
   width: 85%;
   background-color: transparent;
@@ -98,7 +87,6 @@
   border-right: none;
   color: white;
   font-size: 22px;
-  /*transition: all 0.5s ease;*/
   cursor: not-allowed;
   opacity: 1;
 }
@@ -113,7 +101,6 @@
 
 .input-main-email:hover {
   opacity: 0.8;
-  /*box-shadow: 50px 0 50px -30px #F3C23C;*/
 }
 
 .main-email {
@@ -167,7 +154,6 @@ input:focus {
   }
   to {
     transform: translateY(0);
-    /*display: none;*/
   }
 }
 

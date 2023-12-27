@@ -50,9 +50,6 @@ export interface AdminPage {
  * @typedef {AdminPage}
  */
 export class AdminPage extends View {
-  // private popupEvent: (event) => void;
-  // private changeEvent: (event) => void;
-
   /**
    * Конструктор класса
    * @param ROOT
@@ -89,7 +86,6 @@ export class AdminPage extends View {
     const adminPanel = new AdminPanel(ROOT);
     const moderatorPanel = new ModeratorPanel(ROOT);
     contentBlock?.insertAdjacentHTML('beforebegin', adminPanel.render());
-    // contentBlock?.insertAdjacentHTML('afterbegin', stat.render());
     contentBlock?.insertAdjacentHTML('afterbegin', addFilm.render());
     contentBlock?.insertAdjacentHTML('afterbegin', moderatorPanel.render());
 
@@ -258,13 +254,12 @@ export class AdminPage extends View {
                 image.src = `${e.target.result}`;
               }
             };
-            // @ts-ignore
-            if (file.files[0]) {
-              // @ts-ignore
+
+            if (file.files) {
               this.state.file = file.files[0];
+              reader.readAsDataURL(file.files[0]);
             }
-            // @ts-ignore
-            reader.readAsDataURL(file.files[0]);
+
           }
           break;
         default:
@@ -321,8 +316,6 @@ export class AdminPage extends View {
       'div[data-section="10"]'
     ) as HTMLElement;
 
-    // Заданное значение number
-    // Get an array of all the div elements
     const divElements = [
       div1,
       div2,
@@ -336,9 +329,9 @@ export class AdminPage extends View {
       div10,
     ];
 
-    // Iterate through the div elements and assign the count values
+
     divElements.forEach((div, index) => {
-      const count = index + 1; // Calculate the count value based on the index
+      const count = index + 1;
       const targetObject = result.body.statistics.find(
         (obj) => obj.number === count
       );
@@ -356,6 +349,7 @@ export class AdminPage extends View {
     const country = document.querySelector('.country-text');
     const button = document.querySelector('.add-film__left');
     const genre = document.querySelector('.section-title-type');
+
     // @ts-ignore
     settings?.style.width = '100%';
 

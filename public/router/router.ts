@@ -3,7 +3,6 @@ import { DOMAIN, privateRoutes, ROOT, routes } from '@utils/config';
 import { store } from '@store/store';
 import { actionAuth, actionCSRF } from '@store/action/actionTemplates';
 import { page404 } from '@router/Page404/page404';
-import { response } from 'express';
 
 interface Class {
   render: Function;

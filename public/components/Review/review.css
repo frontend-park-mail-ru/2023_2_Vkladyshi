@@ -8,12 +8,7 @@
   background-color: rgba(59, 179, 59, 0.1);
 }
 
-.comments__block {
-  /*background: white;*/
-}
-
 .comment-header__left__comment-remove {
-  /*display: flex;*/
   justify-content: center;
   align-items: center;
   margin-left: 30px;
@@ -63,15 +58,10 @@
 
 .comment {
   margin-bottom: 50px;
-  /*background: white;*/
   border-radius: 8px;
   width: var(--block-width);
 
   padding: 10px 20px 10px 20px;
-
-  /*background-color: rgba(189, 230, 189, 0.9);*/
-  /* rgba(255, 240, 195, 0.9) */
-  /* rgba(255, 229, 229, 0.9) */
 }
 
 .comments__all {

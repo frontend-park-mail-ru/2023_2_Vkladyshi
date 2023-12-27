@@ -8,7 +8,6 @@ import {
 } from '@store/action/actionTemplates';
 import { image } from '@components/Image/image';
 import { actorInfo } from '@components/ActorInfo/actorInfo';
-import { router } from '@router/router';
 
 export interface ActorDescritionPage {
   state: {
@@ -32,9 +31,6 @@ export class ActorDescritionPage extends View {
     this.state = {
       actorInfo: null,
     };
-
-    // this.subscribeActorStatus = this.subscribeActorStatus.bind(this);
-    // this.componentWillUnmount = this.componentWillUnmount.bind(this);
   }
 
   /**
@@ -57,9 +53,7 @@ export class ActorDescritionPage extends View {
 
   componentDidMount() {
     let result = {};
-
     const res = this.state.actorInfo;
-    // const { actors, rating, number, genre, film } = this.state.actorInfo;
 
     if (res) {
       const dateTime = new Date(res['birthday']);
@@ -100,7 +94,6 @@ export class ActorDescritionPage extends View {
 
       const containerHTML = document.querySelector('.image-container');
       containerHTML?.insertAdjacentHTML('beforeend', actorInfo.render(result));
-      // containerHTML?.insertAdjacentHTML('beforeend', info.render(result));
     }
 
     this.addEvents();
@@ -148,10 +141,9 @@ export class ActorDescritionPage extends View {
           break;
       }
     };
-    // const kek = document.querySelector('.similar-movies');
 
-    popup?.removeEventListener('click', this.popupEvent);
-    popup?.removeEventListener('click', popupEvent);
+    // popup?.removeEventListener('click', this.popupEvent);
+    // popup?.removeEventListener('click', popupEvent);
     popup?.addEventListener('click', popupEvent);
   }
 
@@ -166,8 +158,7 @@ export class ActorDescritionPage extends View {
   getFavoriteActorsList() {
     const favoriteActors = store.getState('favoriteActors');
     store.unsubscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
-    // @ts-ignore
-    const id = parseInt(location?.pathname?.match(/\d+/)[0]);
+
     if (favoriteActors?.status !== 200) {
       return;
     }

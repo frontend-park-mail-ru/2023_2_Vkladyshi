@@ -12,21 +12,6 @@ export const showNotification = (
   switch (type) {
     case 'ANONS_FILM':
       const sepDate = payload.prod_date.split(' ')[0].split('.').reverse();
-      // console.log(
-      //   // ...payload,
-      //   roundFloat(payload.rating),
-      //   // urls.img.poster_ver(payload.poster_ver),
-      //   `В Кино с ${+sepDate[0]} ${getMonthName(+sepDate[1])}!`,
-      //   payload.ticket || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley');
-
-      // content = NotificationUI.renderTemplate({
-      //   ...payload,
-      //   rating: roundFloat(payload.rating),
-      //   poster_ver: urls.img.poster_ver(payload.poster_ver),
-      //   description: `В Кино с ${+sepDate[0]} ${getMonthName(+sepDate[1])}!`,
-      //   ticket: payload.ticket || 'https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley'
-      // });
-
       break;
     default:
       const content = '';

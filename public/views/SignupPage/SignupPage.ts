@@ -433,16 +433,5 @@ export class SignupPage extends View {
     };
   }
 
-  redirectToMain() {
-    // if (store.getState('login').status === 200) {
-    //   store.unsubscribe('login', this.redirectToMain.bind(this));
-    //   router.go(
-    //     {
-    //       path: '/',
-    //       props: ''
-    //     },
-    //     { pushState: true, refresh: false }
-    //   );
-    // }
-  }
+  redirectToMain() {}
 }

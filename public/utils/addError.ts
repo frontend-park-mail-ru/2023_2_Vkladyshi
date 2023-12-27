@@ -6,7 +6,6 @@
 export const returnError = (string, className) => {
   const errorElement = document.querySelector(`.${className}`);
   if (errorElement) {
-    // errorElement.classList.add('active');
     errorElement.textContent = string;
   }
 };
