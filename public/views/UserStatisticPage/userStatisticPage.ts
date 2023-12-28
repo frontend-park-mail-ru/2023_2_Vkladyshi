@@ -2,7 +2,7 @@ import { View } from '@views/view';
 import { collections, ROOT } from '@utils/config';
 import { store } from '@store/store';
 import {
-  actionAlreadyWatched,
+  actionAlreadyWatched, actionFavoriteFilms,
   actionUserStatistic
 } from '@store/action/actionTemplates';
 import { UserStatistic } from '@components/UserStatistic/userStatistic';
@@ -102,10 +102,56 @@ export class UserStatisticPage extends View {
           filmSelect.render(result?.body, 'Последние просмотренные')
         );
 
+        document.querySelector('.film-selection_films')?.remove();
+
         const films = new FilmSelectionPage('');
         if (result?.body?.films?.length > 0) {
           films.addFilmsToPage(sliderLiner, result?.body?.films, true);
           slider.addLine();
+
+          store.dispatch(actionFavoriteFilms({ page: 1, per_page: 20 })).then(()=>{
+            const favoriteFilms = store.getState('favoriteFilms');
+
+            const array1 = favoriteFilms?.body;
+            array1?.forEach((key) => {
+              // const film = document.querySelectorAll(`[data-section="${key?.id}"]`);/
+              const elements = Array.from(
+                document.querySelectorAll(`[data-section="${key?.id}"]`)
+              );
+
+              if (elements.length > 0) {
+
+                // const elements = Array.from(document.querySelectorAll(`[data-section="${key?.id}"]`));
+                const orange = elements.flatMap((elem) =>
+                  Array.from(elem.querySelectorAll('.red-watchlist'))
+                );
+
+                const red = elements.flatMap((elem) =>
+                  Array.from(elem.querySelectorAll('.orange-watchlist'))
+                );
+
+                red.forEach((elem) => {
+                  elem.classList.remove('active');
+                  elem.classList.add('noactive');
+                });
+                orange.forEach((elem) => {
+                  elem.classList.remove('noactive');
+                  elem.classList.add('active');
+                });
+              }
+            });
+
+          });
+
+
+
+
+
+
+
+
+
+
         } else {
           const select = document.querySelector('.film-selection_films');
           select?.insertAdjacentHTML(

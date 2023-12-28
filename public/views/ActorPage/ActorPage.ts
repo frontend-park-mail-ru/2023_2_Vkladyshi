@@ -178,8 +178,10 @@ export class ActorDescritionPage extends View {
 
   subscribeActorStatus () {
     this.state.actorInfo = store.getState('actorInfo');
-    store.subscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
-    store.dispatch(actionFavoriteActors({ page: 1, per_page: 20 }));
+    if (store.getState('auth').status === 200) {
+      store.subscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
+      store.dispatch(actionFavoriteActors({ page: 1, per_page: 20 }));
+    }
     this.componentDidMount();
   }
 }

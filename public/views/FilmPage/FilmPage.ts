@@ -72,7 +72,7 @@ export class FilmPage extends View {
           actionGetCommentsFilm({
             film_id: this.state.fildId,
             page: this.state.rewiewBunch,
-            per_page: 5
+            per_page: 20
           })
         );
       });
@@ -287,23 +287,6 @@ export class FilmPage extends View {
         case event.target.closest('.review-button') !== null:
           this.redirectToComments();
           break;
-        case event.target.closest('.trailer') !== null: // @ts-ignore
-          const text = '<iframe width="560" height="315" src="https://www.youtube.com/embed/v6TjKMQisn0?si=w2g6vm-zuRRXeHK2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'// @ts-ignore
-          // const text = `<iframe width="720" height="480" src="${this.state?.filmInfo['film']?.trailer_href}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
-          // const text = '<iframe width="560" height="315" src="https://www.youtube.com/embed/-dYy1Ack60A?si=TrjGLPM0scGTDFkG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
-          popup?.insertAdjacentHTML('afterbegin', `<div class="trailer-video">${text}</div>`);
-          // @ts-ignore
-          document.querySelector('body')?.style.overflow = 'hidden';
-          break;
-        case event.target.closest('.trailer-video') !== null:
-          document.querySelector('.trailer-video')?.remove();
-          // @ts-ignore
-          document.querySelector('body')?.style.overflow = 'auto';
-          break;
-        case event.target.closest('.cinema') !== null:
-          // @ts-ignore
-          window.location.href = `https://www.imdb.com/find/?q=${this.state?.filmInfo['film']?.title}`;
-          break;
         case event.target.closest('.image-cancel') !== null:
           if (store.getState('auth').status === 200) {
             store.dispatch(
@@ -371,13 +354,15 @@ export class FilmPage extends View {
   getFavoriteFilmsList () {
     const favoriteFilms = store.getState('favoriteFilms');
     store.unsubscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
+
     if (favoriteFilms?.status !== 200) {
       return;
     }
+
     const array = favoriteFilms?.body;
     array?.forEach((key) => {
       const film = document.querySelector('.image-watchlist');
-      if (film && key?.id === this.state.fildId) {
+      if (key?.id === this.state.fildId) {
         const red = document?.querySelector('.red-watchlist') as HTMLElement;
         const orange = document?.querySelector(
           '.orange-watchlist'
@@ -388,16 +373,48 @@ export class FilmPage extends View {
         red?.classList.add('active');
       }
     });
+
+    const array1 = favoriteFilms?.body;
+    array1?.forEach((key) => {
+      // const film = document.querySelectorAll(`[data-section="${key?.id}"]`);/
+      const elements = Array.from(
+        document.querySelectorAll(`[data-section="${key?.id}"]`)
+      );
+
+      if (elements.length > 0) {
+
+        // const elements = Array.from(document.querySelectorAll(`[data-section="${key?.id}"]`));
+        const orange = elements.flatMap((elem) =>
+          Array.from(elem.querySelectorAll('.red-watchlist'))
+        );
+
+         const red = elements.flatMap((elem) =>
+          Array.from(elem.querySelectorAll('.orange-watchlist'))
+        );
+
+        red.forEach((elem) => {
+          elem.classList.remove('active');
+          elem.classList.add('noactive');
+        });
+        orange.forEach((elem) => {
+          elem.classList.remove('noactive');
+          elem.classList.add('active');
+        });
+      }
+    });
   }
 
   subscribeActorStatus () {
     this.state.filmInfo = store.getState('filmInfo');
     store.unsubscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.unsubscribe('removeView', this.componentWillUnmount.bind(this));
-    store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
-    store.dispatch(actionFavoriteFilms({ page: 1, per_page: 20 }));
 
     this.componentDidMount();
+    if (store.getState('auth').status === 200) {
+      store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
+      store.dispatch(actionFavoriteFilms({ page: 1, per_page: 20 }));
+    }
+
   }
 
   subscribeCommentsStatrus () {

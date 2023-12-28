@@ -136,9 +136,9 @@ export class Slider extends Component {
     }
 
     if (
-      this.state.sliderHTML.offsetWidth < sliderAll.offsetWidth ||
+      this.state.sliderHTML?.offsetWidth < sliderAll?.offsetWidth ||
       window.innerWidth <= 500 ||
-      sliderAll.offsetWidth === 0
+      sliderAll?.offsetWidth === 0
     ) {
       this.state.prevHTML.style.display = 'none';
       this.state.nextHTML.style.display = 'none';

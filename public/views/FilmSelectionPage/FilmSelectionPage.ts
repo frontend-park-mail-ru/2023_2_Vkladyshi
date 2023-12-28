@@ -99,8 +99,8 @@ export class FilmSelectionPage extends View {
         store.subscribe('collectionMain', this.addFilmToMain.bind(this));
         store.subscribe('getTrends', this.getTrends.bind(this));
 
-        await store.dispatch(actionGetTrends()).then(() => {console.log(1)});
-        store.dispatch(actionCollectionMain({ collection_id: 0 })).then(() => {console.log(2)});
+        await store.dispatch(actionGetTrends());
+        store.dispatch(actionCollectionMain({ collection_id: 0 }));
       } else {
         store.subscribe(
           'resultSearchFilm',
@@ -370,15 +370,18 @@ export class FilmSelectionPage extends View {
       'resultSearchActor',
       this.subscribeSearchActors.bind(this)
     );
-    store.subscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
     this.state.current = 'actor';
-    this.sendDataActor(
-      {},
-      this.state.pageNumber,
-      this.state.perPage,
-      'favorite'
-    );
-    this.state.pageNumber++;
+
+    if (store.getState('auth').status === 200) {
+      store.subscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
+      this.sendDataActor(
+        {},
+        this.state.pageNumber,
+        this.state.perPage,
+        'favorite'
+      );
+      this.state.pageNumber++;
+    }
 
     const actors = store.getState('resultSearchActor')?.body?.actors;
     const contentBlockHTML = document.querySelector('.content-block');
@@ -437,13 +440,17 @@ export class FilmSelectionPage extends View {
     store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
 
     this.state.current = 'film';
-    this.sendDataFilm(
-      {},
-      this.state.pageNumber,
-      this.state.perPage,
-      'favorite'
-    );
-    this.state.pageNumber++;
+
+    if (store.getState('auth')?.status === 200) {
+      store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
+      this.sendDataFilm(
+        {},
+        this.state.pageNumber,
+        this.state.perPage,
+        'favorite'
+      );
+      this.state.pageNumber++;
+    }
 
     const buf = store.getState('resultSearchFilm');
     if (buf === undefined || buf === null || buf.body === undefined) {

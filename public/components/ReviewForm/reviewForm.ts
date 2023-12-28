@@ -8,6 +8,8 @@ import {
 import { validateReview } from '@utils/validate';
 import { addErrorsActive, insertText } from '@utils/addError';
 import { router } from '@router/router';
+import { Review } from '@components/Review/review';
+import { ROOT } from '@utils/config';
 
 export interface ReviewForm {
   state: {
@@ -94,10 +96,6 @@ export class ReviewForm extends Component {
       const review = document.querySelector('.review-form__body__button');
       review?.addEventListener('click', Event);
     } else if (store.getState('auth').status !== 200) {
-      // router.go(
-      //   { path: '/login', props: `` },
-      //   { pushState: true, refresh: false }
-      // );
     }
   }
 }

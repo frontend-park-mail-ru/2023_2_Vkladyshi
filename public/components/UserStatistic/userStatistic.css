@@ -1,5 +1,5 @@
 .item-user-statistic {
-  height: calc(10% * var(--val));
+  height: calc(5% * var(--val));
   border-bottom: 1px solid var(--clr, var(--item-default-color));
 
   background-color: var(--clr, var(--item-default-color));
