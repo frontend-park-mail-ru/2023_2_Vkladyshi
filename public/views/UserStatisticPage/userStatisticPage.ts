@@ -3,7 +3,7 @@ import { collections, ROOT } from '@utils/config';
 import { store } from '@store/store';
 import {
   actionAlreadyWatched,
-  actionUserStatistic,
+  actionUserStatistic
 } from '@store/action/actionTemplates';
 import { UserStatistic } from '@components/UserStatistic/userStatistic';
 import { FilmSelection } from '@components/FilmSelection/filmSelection';
@@ -26,7 +26,7 @@ export class UserStatisticPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {};
   }
@@ -34,12 +34,12 @@ export class UserStatisticPage extends View {
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     this.renderDefaultPage({});
     this.componentDidMount();
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const contentBlock = document.querySelector('.content-block');
     contentBlock?.insertAdjacentHTML(
       'beforeend',
@@ -67,7 +67,7 @@ export class UserStatisticPage extends View {
               genreId: matchedObject.genre_id,
               count: matchedObject.count,
               avg: matchedObject.avg.toFixed(1),
-              color: elem.color,
+              color: elem.color
             };
           } else {
             return {
@@ -75,7 +75,7 @@ export class UserStatisticPage extends View {
               genreId: elem.value,
               count: 0,
               avg: 0,
-              color: elem.color,
+              color: elem.color
             };
           }
         });
@@ -117,5 +117,5 @@ export class UserStatisticPage extends View {
     });
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount () {}
 }

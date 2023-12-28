@@ -9,6 +9,7 @@ export interface Slider {
     prevHTML: any;
     nextHTML: any;
     sliderHTML: any;
+    number: number;
   };
 }
 
@@ -18,13 +19,14 @@ export interface Slider {
  * @typedef {Slider}
  */
 export class Slider extends Component {
-  constructor(ROOT) {
+  constructor (ROOT, num = 0) {
     super(ROOT);
     this.state = {
       slideIndex: 0,
       prevHTML: '',
       nextHTML: '',
       sliderHTML: '',
+      number: num
     };
   }
 
@@ -32,7 +34,7 @@ export class Slider extends Component {
    * Метод рендеринга слайдера
    * @return {string} html слайдера
    */
-  render() {
+  render () {
     return templateSlider();
   }
 
@@ -40,11 +42,11 @@ export class Slider extends Component {
    * Метод рендеринга линейного слайдера
    * @return {string} html слайдера
    */
-  renderLine() {
+  renderLine () {
     return templateSliderLine();
   }
 
-  showSlidesAuto() {
+  showSlidesAuto () {
     const bannerContainer = document.getElementById('banner-container');
     bannerContainer?.remove();
 
@@ -66,9 +68,9 @@ export class Slider extends Component {
     } catch {}
   }
 
-  showSliders() {
+  showSliders () {
     const slider = document.querySelectorAll('.slider-container');
-    this.state.sliderHTML = slider.length === 2 ? slider[1] : slider[0];
+    this.state.sliderHTML = slider.length === 2 ? slider[0] : slider[1];
     this.state.prevHTML = document.querySelector('.slider-prev');
     this.state.nextHTML = document.querySelector('.slider-next');
 
@@ -83,14 +85,14 @@ export class Slider extends Component {
     });
   }
 
-  addEvents() {
+  addEvents () {
     const sliderFull = document.querySelector('.slideshow-container');
     sliderFull?.classList.remove('noactive');
 
     this.showSlidesAuto();
   }
 
-  addEventsLine() {
+  addEventsLine () {
     const sliderFull = document.querySelector('.slider-full');
     sliderFull?.classList.remove('noactive');
 
@@ -101,7 +103,7 @@ export class Slider extends Component {
     window.addEventListener('resize', this.resizeEvent.bind(this));
   }
 
-  addLine() {
+  addLine () {
     const slider = document.querySelectorAll('.slider-container');
     this.state.prevHTML = document.querySelector('.line-prev');
     this.state.nextHTML = document.querySelector('.line-next');
@@ -121,12 +123,17 @@ export class Slider extends Component {
     window.addEventListener('resize', this.resizeEvent.bind(this));
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     window.removeEventListener('resize', this.resizeEvent.bind(this));
   }
 
-  resizeEvent() {
-    const sliderAll = document.querySelector('.slider') as HTMLElement;
+  resizeEvent () {
+    let sliderAll;
+    if (this.state.number === 0) {
+      sliderAll = document.querySelectorAll('.slider')[0];
+    } else if (this.state.number === 1) {
+      sliderAll = document.querySelectorAll('.slider')[1];
+    }
 
     if (
       this.state.sliderHTML.offsetWidth < sliderAll.offsetWidth ||

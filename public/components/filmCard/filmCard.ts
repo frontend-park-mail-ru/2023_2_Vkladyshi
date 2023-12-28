@@ -6,7 +6,7 @@ import {
   actionAddFavoriteActor,
   actionAddFavoriteFilm,
   actionRemoveFavoriteActor,
-  actionRemoveFavoriteFilm,
+  actionRemoveFavoriteFilm
 } from '@store/action/actionTemplates';
 
 /**
@@ -24,20 +24,20 @@ export class FilmCard extends Component {
    * @param film.haveRating
    * @param film
    */
-  render({ film, alreadyFavorite, haveRating = false }) {
+  render ({ film, alreadyFavorite, haveRating = false }) {
     const result = {
       id: film.id,
       title: film.title,
       poster: film.poster,
       rating: film.rating === undefined ? 8 : film.rating.toFixed(1),
       alreadyFavorite: alreadyFavorite,
-      haveRating: haveRating,
+      haveRating: haveRating
     };
 
     return templateFilmCard(result);
   }
 
-  addEvent(filmId) {
+  addEvent (filmId) {
     const element = document.querySelector(
       `[data-section="${filmId}"].film-selection_film`
     );
@@ -81,7 +81,7 @@ export class FilmCard extends Component {
             router.go(
               {
                 path: '/login',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -92,7 +92,7 @@ export class FilmCard extends Component {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`,
+              props: `/${filmId}`
             },
             { pushState: true, refresh: false }
           );

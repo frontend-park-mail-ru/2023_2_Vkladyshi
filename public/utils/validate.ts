@@ -19,7 +19,7 @@ export const validatePassword = (password) => {
   if (!password) {
     return {
       result: false,
-      error: errorInputs.NotAllElement,
+      error: errorInputs.NotAllElement
     };
   }
   if (
@@ -31,7 +31,7 @@ export const validatePassword = (password) => {
     return {
       result: false,
       error:
-        'Пароль должен содержать не менее 8 символов, иметь хотя бы одну заглавную букву, строчную латинскую букву и цифру',
+        'Пароль должен содержать не менее 8 символов, иметь хотя бы одну заглавную букву, строчную латинскую букву и цифру'
     };
   }
   return { result: true };
@@ -48,7 +48,7 @@ export const validateLogin = (login) => {
     return {
       result: false,
       error:
-        'Логин должен быть длиннее 4 символов и состоять из латинских букв, цифр, - и _ ',
+        'Логин должен быть длиннее 4 символов и состоять из латинских букв, цифр, - и _ '
     };
   }
 
@@ -57,7 +57,7 @@ export const validateLogin = (login) => {
     if (login.includes(dangerousChars[i])) {
       return {
         result: false,
-        error: "В логине не должно спец-символов: < > & ' / `",
+        error: "В логине не должно спец-символов: < > & ' / `"
       };
     }
   }
@@ -68,12 +68,12 @@ export const validateLogin = (login) => {
 export const validateReview = (str) => {
   if (str && /^[a-zA-Z0-9а-яА-Я\s()!.,?-]+$/.test(str)) {
     return {
-      result: true,
+      result: true
     };
   } else {
     return {
       result: false,
-      error: 'В вашем сообщении не должно быть спец символов.',
+      error: 'В вашем сообщении не должно быть спец символов.'
     };
   }
 };
@@ -85,7 +85,7 @@ export const validateBirthday = (date) => {
   if (birthdayDate.toString() === 'Invalid Date') {
     return {
       result: false,
-      error: 'Укажите правильную дату',
+      error: 'Укажите правильную дату'
     };
   }
 
@@ -97,11 +97,11 @@ export const validateBirthday = (date) => {
   if (birthdayDate < minDate || birthdayDate > maxDate) {
     return {
       result: false,
-      error: 'Укажите правильную дату',
+      error: 'Укажите правильную дату'
     };
   }
 
   return {
-    result: true,
+    result: true
   };
 };

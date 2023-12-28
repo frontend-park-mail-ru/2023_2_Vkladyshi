@@ -3,89 +3,89 @@ import { get } from '@utils/ajax';
 import { urls } from '@utils/config';
 
 class ActionsFilm {
-  async getCollectionDataMain({ collection_id }: collectionParams) {
+  async getCollectionDataMain ({ collection_id }: collectionParams) {
     const response = get({
       url: urls.basket,
-      query: { collection_id: collection_id },
+      query: { collection_id: collection_id }
     });
 
     const result = await response;
     return {
-      collectionMain: result,
+      collectionMain: result
     };
   }
 
-  async getCollectionDataMenu({ collection_id }: collectionParams) {
+  async getCollectionDataMenu ({ collection_id }: collectionParams) {
     const response = get({
       url: urls.basket,
-      query: { collection_id: collection_id },
+      query: { collection_id: collection_id }
     });
 
     const result = await response;
 
     return {
-      collectionMenu: result,
+      collectionMenu: result
     };
   }
 
-  async getActor({ actorName }: actor) {
+  async getActor ({ actorName }: actor) {
     const response = get({
       url: urls.actor,
-      query: { actor_id: actorName },
+      query: { actor_id: actorName }
     });
 
     const result = await response;
 
     return {
-      actorInfo: result['body'],
+      actorInfo: result['body']
     };
   }
 
-  async getFilm({ filmId }: film) {
+  async getFilm ({ filmId }: film) {
     const response = get({
       url: urls.film,
-      query: { film_id: filmId },
+      query: { film_id: filmId }
     });
 
     const result = await response;
 
     return {
-      filmInfo: result['body'],
+      filmInfo: result['body']
     };
   }
 
-  async getCalendar() {
+  async getCalendar () {
     const response = get({
-      url: urls.calendar,
+      url: urls.calendar
     });
 
     const result = await response;
     return {
-      calendarInfo: result,
+      calendarInfo: result
     };
   }
 
-  async subscribeCalendar() {
+  async subscribeCalendar () {
     const response = get({
       url: urls.calendarSub,
-      query: {},
+      query: {}
     });
 
     const result = await response;
     return {
-      subscribeCalendar_res: result,
+      subscribeCalendar_res: result
     };
   }
 
-  async checkSubscribeCalendar() {
+  async checkSubscribeCalendar () {
     const response = get({
       url: urls.calendarCheck,
-      query: {},
+      query: {}
     });
 
     const result = await response;
     return {
-      checkSubscribeCalendar: result,
+      checkSubscribeCalendar: result
     };
   }
 }

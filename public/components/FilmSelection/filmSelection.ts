@@ -13,10 +13,10 @@ export class FilmSelection extends Component {
    * @param collection_name
    * @returns {string}
    */
-  render(response, collection_name = 'Результат поиска') {
+  render (response, collection_name = 'Результат поиска') {
     const result = {
       collection_name: collection_name,
-      haveFilms: true,
+      haveFilms: true
     };
     if (response?.films?.length === 0) {
       result.haveFilms = false;

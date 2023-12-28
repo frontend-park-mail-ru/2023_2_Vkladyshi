@@ -12,7 +12,7 @@ export class СountLikeFilm extends Component {
    * @param result
    * @returns {string} html элемента оценки фильма
    */
-  render(result) {
+  render (result) {
     return templateСountLikeFilm(result);
   }
 }

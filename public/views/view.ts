@@ -9,7 +9,7 @@ import { ContentBlock } from '@components/ContentBlock/contentBlock';
  * @typedef {View}
  */
 export class View extends Component {
-  renderDefaultPage(data: {}) {
+  renderDefaultPage (data: {}) {
     let main = document.querySelector('main');
 
     if (main == null) {
@@ -21,6 +21,7 @@ export class View extends Component {
       ROOT?.insertAdjacentHTML('afterbegin', header.render());
       header.componentDidMount();
     } else {
+      header.closeList();
       main.innerHTML = '';
     }
 

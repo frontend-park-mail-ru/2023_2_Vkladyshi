@@ -3,7 +3,7 @@ import { urls } from '@utils/config';
 import { page404 } from '@router/Page404/page404';
 
 class ActionsSearch {
-  async searchFilm({
+  async searchFilm ({
     title,
     dateFrom,
     dateTo,
@@ -13,7 +13,7 @@ class ActionsSearch {
     genre,
     actors,
     page,
-    per_page,
+    per_page
   }: searchFilm) {
     const response = post({
       url: urls.searchFilm,
@@ -27,8 +27,8 @@ class ActionsSearch {
         genres: genre || [],
         actors: actors || [],
         page: page || 1,
-        per_page: per_page || 20,
-      },
+        per_page: per_page || 20
+      }
     });
 
     const result = await response;
@@ -39,17 +39,17 @@ class ActionsSearch {
     }
 
     return {
-      resultSearchFilm: result,
+      resultSearchFilm: result
     };
   }
 
-  async searchActor({
+  async searchActor ({
     name,
     films,
     birthday,
     amplua,
     page,
-    per_page,
+    per_page
   }: searchActor) {
     const response = post({
       url: urls.searchActor,
@@ -59,8 +59,8 @@ class ActionsSearch {
         birthday: birthday,
         amplua: amplua,
         page: page || 1,
-        per_page: per_page || 20,
-      },
+        per_page: per_page || 20
+      }
     });
 
     const result = await response;
@@ -71,37 +71,37 @@ class ActionsSearch {
     }
 
     return {
-      resultSearchActor: result,
+      resultSearchActor: result
     };
   }
 
-  async searchModerUser({ login, role, page, per_page }: searchModerUser) {
+  async searchModerUser ({ login, role, page, per_page }: searchModerUser) {
     const response = get({
       url: urls.searchModerUser,
       query: {
         login: login,
         role: role,
         page: page || 1,
-        per_page: per_page || 20,
-      },
+        per_page: per_page || 20
+      }
     });
 
     const result = await response;
 
     return {
-      searchModerUser: result,
+      searchModerUser: result
     };
   }
 
-  async getTrends() {
+  async getTrends () {
     const response = get({
-      url: urls.trends,
+      url: urls.trends
     });
 
     const result = await response;
 
     return {
-      getTrends: result,
+      getTrends: result
     };
   }
 }

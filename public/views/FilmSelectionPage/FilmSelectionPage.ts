@@ -11,7 +11,7 @@ import {
   actionRemoveFavoriteActor,
   actionRemoveFavoriteFilm,
   actionSearchActor,
-  actionSearchFilm,
+  actionSearchFilm
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { FilmSelection } from '@components/FilmSelection/filmSelection';
@@ -57,7 +57,7 @@ export interface FilmSelectionPage {
 export class FilmSelectionPage extends View {
   private popupEvent: (event) => void;
 
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       dataSection: '',
@@ -73,15 +73,15 @@ export class FilmSelectionPage extends View {
         ratingTo: 10,
         mpaa: '',
         genre: [],
-        actors: [''],
+        actors: ['']
       },
       actorData: {
         name: '',
         amplua: '',
         country: '',
         birthday: '',
-        films: '',
-      },
+        films: ''
+      }
     };
   }
 
@@ -89,7 +89,7 @@ export class FilmSelectionPage extends View {
    * Метод рендеринга элемента
    * @param isMain
    */
-  async render(isMain = false) {
+  async render (isMain = false) {
     if (
       window.location.pathname === '/films/' ||
       window.location.pathname === '/films' ||
@@ -98,8 +98,9 @@ export class FilmSelectionPage extends View {
       if (window.location.pathname === '/') {
         store.subscribe('collectionMain', this.addFilmToMain.bind(this));
         store.subscribe('getTrends', this.getTrends.bind(this));
-        store.dispatch(actionGetTrends());
-        store.dispatch(actionCollectionMain({ collection_id: 0 }));
+
+        await store.dispatch(actionGetTrends()).then(() => {console.log(1)});
+        store.dispatch(actionCollectionMain({ collection_id: 0 })).then(() => {console.log(2)});
       } else {
         store.subscribe(
           'resultSearchFilm',
@@ -142,7 +143,7 @@ export class FilmSelectionPage extends View {
     }
   }
 
-  async renderEqualFilms() {
+  async renderEqualFilms () {
     const genre = store.getState('filmInfo')?.genre;
 
     await store.dispatch(
@@ -156,7 +157,7 @@ export class FilmSelectionPage extends View {
         genre: genre ? genre.map((elem) => elem.genre_id) : [],
         actors: [''],
         page: this.state.pageNumber,
-        per_page: this.state.perPage,
+        per_page: this.state.perPage
       })
     );
 
@@ -169,14 +170,14 @@ export class FilmSelectionPage extends View {
       return;
     }
 
-    this.addFilmsToPage(sliderLiner, buf.body.films, true);
+    this.addFilmsToPage(sliderLiner, buf?.body?.films, true);
   }
 
-  async renderByElement() {
+  async renderByElement () {
     await this.renderEqualFilms();
   }
 
-  componentDidMount(isFilms) {
+  componentDidMount (isFilms) {
     const popup = document.querySelector('.content-block');
 
     const popupEvent = (event) => {
@@ -285,7 +286,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/login',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -296,7 +297,7 @@ export class FilmSelectionPage extends View {
           router.go(
             {
               path: '/film',
-              props: `/${filmId}`,
+              props: `/${filmId}`
             },
             { pushState: true, refresh: false }
           );
@@ -307,7 +308,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/watchlist/actors',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -315,7 +316,7 @@ export class FilmSelectionPage extends View {
             router.go(
               {
                 path: '/watchlist/films',
-                props: ``,
+                props: ``
               },
               { pushState: true, refresh: false }
             );
@@ -326,7 +327,7 @@ export class FilmSelectionPage extends View {
           router.go(
             {
               path: '/actor',
-              props: `/${actorId}`,
+              props: `/${actorId}`
             },
             { pushState: true, refresh: false }
           );
@@ -340,7 +341,7 @@ export class FilmSelectionPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const popup = document.querySelector('.content-block');
     store.unsubscribe('collectionMain', this.addFilmToMain.bind(this));
     store.unsubscribe('getTrends', this.getTrends.bind(this));
@@ -356,15 +357,15 @@ export class FilmSelectionPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  subscribeSearchFilms() {
+  subscribeSearchFilms () {
     this.addFilmToPage();
   }
 
-  subscribeSearchActors() {
+  subscribeSearchActors () {
     this.addActorsToPage();
   }
 
-  addActorsToPage() {
+  addActorsToPage () {
     store.unsubscribe(
       'resultSearchActor',
       this.subscribeSearchActors.bind(this)
@@ -431,7 +432,7 @@ export class FilmSelectionPage extends View {
       this.componentDidMount(false);
     }
   }
-  addFilmToPage() {
+  addFilmToPage () {
     store.unsubscribe('resultSearchFilm', this.subscribeSearchFilms.bind(this));
     store.subscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
 
@@ -488,7 +489,7 @@ export class FilmSelectionPage extends View {
     }
   }
 
-  getFavoriteFilmsList() {
+  getFavoriteFilmsList () {
     const favoriteFilms = store.getState('favoriteFilms');
     store.unsubscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     if (favoriteFilms?.status !== 200) {
@@ -521,7 +522,7 @@ export class FilmSelectionPage extends View {
     });
   }
 
-  getFavoriteActorsList() {
+  getFavoriteActorsList () {
     const favoriteActors = store.getState('favoriteActors');
     store.unsubscribe('favoriteActors', this.getFavoriteActorsList.bind(this));
     if (favoriteActors?.status !== 200) {
@@ -542,7 +543,7 @@ export class FilmSelectionPage extends View {
     });
   }
 
-  addFilmsToPage(html, films, addEvent = false) {
+  addFilmsToPage (html, films, addEvent = false) {
     let countFilms = 0;
     // eslint-disable-next-line guard-for-in
     for (const film in films) {
@@ -553,7 +554,7 @@ export class FilmSelectionPage extends View {
         filmCard.render({
           film: films[film],
           alreadyFavorite: false,
-          haveRating: true,
+          haveRating: true
         })
       );
       if (addEvent) {
@@ -563,7 +564,7 @@ export class FilmSelectionPage extends View {
     return countFilms;
   }
 
-  addFilmToMain() {
+  addFilmToMain () {
     store.unsubscribe('collectionMain', this.addFilmToMain.bind(this));
     this.state.current = 'main';
 
@@ -586,27 +587,17 @@ export class FilmSelectionPage extends View {
     this.state.components.push(sliderNew);
 
     const sliderLiner = document.querySelector('.slider-container');
-    const sliderNAme = document.querySelector('.slider-name');
-    const filmSelect = new FilmSelection(ROOT);
-
-    sliderNAme?.insertAdjacentHTML('beforeend', filmSelect.render(buf.body));
 
     this.addFilmsToPage(sliderLiner, buf.body.films);
 
-    const divName = document.querySelector(
-      '.film-selection_name'
-    ) as HTMLElement;
     const divFilm = document.querySelector('.film-selection_films');
-    if (divName) {
-      divName!.textContent = 'Новинки';
-    }
     divFilm?.remove();
 
     sliderNew.addEventsLine();
     this.componentDidMount(true);
   }
 
-  sendDataFilm(data, page, per_page, mode = 'film') {
+  sendDataFilm (data, page, per_page, mode = 'film') {
     if (mode === 'film') {
       store.dispatch(
         actionSearchFilm({
@@ -619,7 +610,7 @@ export class FilmSelectionPage extends View {
           genre: data.genre ? data.genre.split(',').map(Number) : [],
           actors: data.actors?.split(','),
           page: page,
-          per_page: per_page,
+          per_page: per_page
         })
       );
     } else if (mode === 'favorite') {
@@ -627,7 +618,7 @@ export class FilmSelectionPage extends View {
     }
   }
 
-  sendDataActor(data, page, per_page, mode = 'actor') {
+  sendDataActor (data, page, per_page, mode = 'actor') {
     if (mode === 'actor') {
       store.dispatch(
         actionSearchActor({
@@ -637,7 +628,7 @@ export class FilmSelectionPage extends View {
           birthday: data.birthday || '',
           films: data.films ? data.films?.split(',') : [''],
           page: page,
-          per_page: per_page,
+          per_page: per_page
         })
       );
     } else if (mode === 'favorite') {
@@ -645,7 +636,7 @@ export class FilmSelectionPage extends View {
     }
   }
 
-  getDataFilmFromQuery() {
+  getDataFilmFromQuery () {
     const url = new URL(window.location.href);
 
     const searchParams = url.searchParams;
@@ -662,7 +653,7 @@ export class FilmSelectionPage extends View {
     return this.state.filmData;
   }
 
-  getDataActorFromQuery() {
+  getDataActorFromQuery () {
     const url = new URL(window.location.href);
 
     const searchParams = url.searchParams;
@@ -676,7 +667,7 @@ export class FilmSelectionPage extends View {
     return this.state.actorData;
   }
 
-  getTrends() {
+  getTrends () {
     store.unsubscribe('getTrends', this.getTrends.bind(this));
     this.state.current = 'main';
 
@@ -685,7 +676,7 @@ export class FilmSelectionPage extends View {
       return;
     }
 
-    const sliderNew = new Slider(ROOT);
+    const sliderNew = new Slider(ROOT, 1);
     this.state.components.push(sliderNew);
     document
       .querySelector('.content-block')
@@ -699,11 +690,11 @@ export class FilmSelectionPage extends View {
       'beforeend',
       filmSelect.render(buf.body, 'В тренде')
     );
-    this.addFilmsToPage(sliderLiner[1], buf.body.films);
+    this.addFilmsToPage(sliderLiner[1], buf?.body?.films);
     sliderNew.addLine();
   }
 
-  Offline() {
+  Offline () {
     this.renderDefaultPage({});
     const contentBlockHTML = document.querySelector('.content-block');
 

@@ -18,12 +18,12 @@ const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackConfig = require('../webpack.config.ts');
 
-const admin = require('firebase-admin');
-const serviceAccount = require('./vkladishi-1114b-firebase-adminsdk-bsvk2-a19d858f15.json');
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-});
+// const admin = require('firebase-admin');
+// const serviceAccount = require('./vkladishi-1114b-firebase-adminsdk-bsvk2-a19d858f15.json');
+//
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+// });
 
 app.use(webpackDevMiddleware(webpack(webpackConfig)));
 app.use(
@@ -305,6 +305,7 @@ const film = {
       id: 10,
       title: 'Леди Баг и Супер-Кот: Пробуждение силы',
       poster: '/icons/Poster.jpg',
+      trailer_href: 'https://www.youtube.com/watch?v=-dYy1Ack60A',
       release_date: '2023-12-30',
       country: 'USA',
       mpaa: 'R',

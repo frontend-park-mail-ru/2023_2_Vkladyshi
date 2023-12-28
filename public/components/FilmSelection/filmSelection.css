@@ -15,7 +15,7 @@
 
 .film-selection__header__yellow {
   width: 5px;
-  height: 40px;
+  height: 30px;
   background: #f5c518;
   border-radius: 8px;
   margin-right: 5px;
@@ -35,16 +35,12 @@
 
 .film-selection_name {
   width: 97%;
+  display: flex;
+  align-items: center;
 
-  padding-bottom: 10px;
-  border-bottom: 1px solid #ffffff;
+  /*padding-bottom: 10px;*/
+  /*border-bottom: 1px solid #ffffff;*/
   color: #ffffff;
-  /*border-bottom: 1px solid #F5C518;*/
-  /*color: #F5C518;*/
   font-size: 26px;
-  /*font-style: normal;*/
-  /*font-weight: 500;*/
-  /*line-height: normal;*/
-  /*letter-spacing: 0.96px;*/
   text-align: left;
 }

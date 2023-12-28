@@ -8,7 +8,7 @@ import {
   actionFilm,
   actionGetCommentsFilm,
   actionRemoveComment,
-  actionRemoveFavoriteFilm,
+  actionRemoveFavoriteFilm
 } from '@store/action/actionTemplates';
 import { router } from '@router/router';
 import { image } from '@components/Image/image';
@@ -38,7 +38,7 @@ export class FilmPage extends View {
    * @param ROOT
    * @class
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       filmInfo: null,
@@ -46,7 +46,7 @@ export class FilmPage extends View {
       fildId: 0,
       commentsInfo: [],
       rewiewBunch: 1,
-      mapFilms: {},
+      mapFilms: {}
     };
 
     store.subscribe(
@@ -58,7 +58,7 @@ export class FilmPage extends View {
    * Метод создания страницы
    * @param props
    */
-  render(props) {
+  render (props) {
     store.subscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.subscribe('removeView', this.componentWillUnmount.bind(this));
     store.subscribe('logoutStatus', this.subscribeLogoutFilmPage.bind(this));
@@ -72,14 +72,14 @@ export class FilmPage extends View {
           actionGetCommentsFilm({
             film_id: this.state.fildId,
             page: this.state.rewiewBunch,
-            per_page: 5,
+            per_page: 5
           })
         );
       });
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const contentBlockHTML = document.querySelector(
       '.content-block'
     ) as HTMLElement;
@@ -124,11 +124,11 @@ export class FilmPage extends View {
           false,
           false,
           false,
-          false,
+          false
         ],
         // @ts-ignore
         mark: rating.toFixed(1),
-        mark_number: number,
+        mark_number: number
       };
     }
 
@@ -176,7 +176,7 @@ export class FilmPage extends View {
     this.addEvents();
   }
 
-  insertComments() {
+  insertComments () {
     const mainHTML = document.querySelector(
       '.film-page__comments'
     ) as HTMLElement;
@@ -199,7 +199,7 @@ export class FilmPage extends View {
         name: res['name'],
         rating: res['rating'],
         text: res['text'],
-        userId: res['id_user'],
+        userId: res['id_user']
       };
 
       const result = document.createElement('buf');
@@ -233,7 +233,7 @@ export class FilmPage extends View {
     reviewForm.event(this.state.fildId);
   }
 
-  addEvents() {
+  addEvents () {
     const popup = document.querySelector('.main-container');
     const popupEvent = (event) => {
       this.popupEvent = popupEvent;
@@ -279,13 +279,30 @@ export class FilmPage extends View {
           router.go(
             {
               path: '/actor',
-              props: `/${actorId}`,
+              props: `/${actorId}`
             },
             { pushState: true, refresh: false }
           );
           break;
         case event.target.closest('.review-button') !== null:
           this.redirectToComments();
+          break;
+        case event.target.closest('.trailer') !== null: // @ts-ignore
+          const text = '<iframe width="560" height="315" src="https://www.youtube.com/embed/v6TjKMQisn0?si=w2g6vm-zuRRXeHK2" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>'// @ts-ignore
+          // const text = `<iframe width="720" height="480" src="${this.state?.filmInfo['film']?.trailer_href}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>`
+          // const text = '<iframe width="560" height="315" src="https://www.youtube.com/embed/-dYy1Ack60A?si=TrjGLPM0scGTDFkG" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>';
+          popup?.insertAdjacentHTML('afterbegin', `<div class="trailer-video">${text}</div>`);
+          // @ts-ignore
+          document.querySelector('body')?.style.overflow = 'hidden';
+          break;
+        case event.target.closest('.trailer-video') !== null:
+          document.querySelector('.trailer-video')?.remove();
+          // @ts-ignore
+          document.querySelector('body')?.style.overflow = 'auto';
+          break;
+        case event.target.closest('.cinema') !== null:
+          // @ts-ignore
+          window.location.href = `https://www.imdb.com/find/?q=${this.state?.filmInfo['film']?.title}`;
           break;
         case event.target.closest('.image-cancel') !== null:
           if (store.getState('auth').status === 200) {
@@ -295,7 +312,7 @@ export class FilmPage extends View {
                 user_id: Number(
                   event.target.closest('.comment')?.getAttribute('data-section')
                 ),
-                deleteFromServiceFilms: true,
+                deleteFromServiceFilms: true
               })
             );
             store.dispatch(
@@ -304,7 +321,7 @@ export class FilmPage extends View {
                 user_id: Number(
                   event.target.closest('.comment')?.getAttribute('data-section')
                 ),
-                deleteFromServiceFilms: false,
+                deleteFromServiceFilms: false
               })
             );
             event.target.closest('.comment')?.remove();
@@ -318,13 +335,13 @@ export class FilmPage extends View {
     popup?.addEventListener('click', popupEvent);
   }
 
-  redirectToComments() {
+  redirectToComments () {
     const status = store.getState('auth').status;
     if (status !== 200) {
       router.go(
         {
           path: '/login',
-          props: ``,
+          props: ``
         },
         { pushState: true, refresh: false }
       );
@@ -334,7 +351,7 @@ export class FilmPage extends View {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     store.unsubscribe('removeView', this.componentWillUnmount.bind(this));
     store.unsubscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.unsubscribe('logoutStatus', this.subscribeLogoutFilmPage.bind(this));
@@ -351,7 +368,7 @@ export class FilmPage extends View {
     popup?.removeEventListener('click', this.popupEvent);
   }
 
-  getFavoriteFilmsList() {
+  getFavoriteFilmsList () {
     const favoriteFilms = store.getState('favoriteFilms');
     store.unsubscribe('favoriteFilms', this.getFavoriteFilmsList.bind(this));
     if (favoriteFilms?.status !== 200) {
@@ -373,7 +390,7 @@ export class FilmPage extends View {
     });
   }
 
-  subscribeActorStatus() {
+  subscribeActorStatus () {
     this.state.filmInfo = store.getState('filmInfo');
     store.unsubscribe('filmInfo', this.subscribeActorStatus.bind(this));
     store.unsubscribe('removeView', this.componentWillUnmount.bind(this));
@@ -383,7 +400,7 @@ export class FilmPage extends View {
     this.componentDidMount();
   }
 
-  subscribeCommentsStatrus() {
+  subscribeCommentsStatrus () {
     const result = store.getState('filmCommentsStatus');
     if (result?.status === 200) {
       store.unsubscribe(
@@ -395,7 +412,7 @@ export class FilmPage extends View {
     }
   }
 
-  subscribeDeleteComment() {
+  subscribeDeleteComment () {
     store.unsubscribe('auth', this.subscribeDeleteComment.bind(this));
     const auth = store.getState('auth');
 
@@ -412,7 +429,7 @@ export class FilmPage extends View {
     }
   }
 
-  subscribeLogoutFilmPage() {
+  subscribeLogoutFilmPage () {
     store.unsubscribe('logoutStatus', this.subscribeLogoutFilmPage.bind(this));
 
     const removes = document.querySelectorAll(

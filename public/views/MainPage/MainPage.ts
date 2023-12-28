@@ -19,7 +19,7 @@ export class MainPage extends View {
   /**
    * Метод создания страницы
    */
-  render() {
+  render () {
     this.renderDefaultPage({});
 
     store.subscribe('collectionMain', this.addCalendar.bind(this));
@@ -30,7 +30,7 @@ export class MainPage extends View {
       'afterbegin',
       '        <div class="video-container1">\n' +
         '            <video class="video-container" autoplay muted loop>\n' +
-        '                <source class="video-main" src="/icons/video-main.webm" type="video/mp4">\n' +
+        '                <source class="video-main" src="/icons/video-main.webm" type="video/webm">\n' +
         '            </video>\n' +
         '            <div class="overlay"></div>\n' +
         "            <div class='header__container__text'>\n" +
@@ -39,26 +39,20 @@ export class MainPage extends View {
         '        </div>'
     );
 
-    const slider = new Slider(ROOT);
+
+    const slider = new Slider(ROOT, 0);
     contentBlockHTML?.insertAdjacentHTML('beforeend', slider.render());
     slider.addEvents();
 
     if (contentBlockHTML) {
       const filmSelection = new FilmSelectionPage(ROOT);
       filmSelection.render(true).then((response) => {
-        const divName = document.querySelector(
-          '.film-selection_name'
-        ) as HTMLElement;
-        if (divName) {
-          divName!.textContent = 'Новинки';
-        }
-
         this.componentDidMount();
       });
     }
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const sendEmail = document.querySelector('.send-email-main');
     sendEmail?.addEventListener('click', (event) => {
       const email = document.querySelector(
@@ -74,7 +68,7 @@ export class MainPage extends View {
       }
     });
   }
-  addCalendar() {
+  addCalendar () {
     store.unsubscribe('collectionMain', this.addCalendar.bind(this));
 
     if (calendar) {
@@ -107,14 +101,14 @@ export class MainPage extends View {
                     if (result?.body?.subscribe === false) {
                       notification.renderUI({
                         title: 'Отписка от уведомлений о новинках',
-                        body: 'Вы успешно отписались от новостей',
+                        body: 'Вы успешно отписались от новостей'
                       });
 
                       notification.cancelSending();
                     } else {
                       notification.renderUI({
                         title: 'Подписка на уведомления о новинках',
-                        body: 'Благодарим Вас за подсписку!',
+                        body: 'Благодарим Вас за подсписку!'
                       });
 
                       notification.startSending();
@@ -125,7 +119,7 @@ export class MainPage extends View {
                 router.go(
                   {
                     path: '/login',
-                    props: ``,
+                    props: ``
                   },
                   { pushState: true, refresh: false }
                 );
@@ -137,7 +131,7 @@ export class MainPage extends View {
                 router.go(
                   {
                     path: '/film',
-                    props: `/${filmId}`,
+                    props: `/${filmId}`
                   },
                   { pushState: true, refresh: false }
                 );
@@ -153,7 +147,7 @@ export class MainPage extends View {
     }
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     const popup = document.querySelector('.film-selection');
     popup?.removeEventListener('click', this.popupEvent);
 

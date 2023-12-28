@@ -16,7 +16,6 @@ export const ROOT = document.querySelector('#root');
 
 // export const DOMAIN = 'http://localhost:8001';
 export const DOMAIN = 'http://127.0.0.1:8001';
-
 // export const DOMAIN = 'https://movie-hub.ru';
 export const urls = {
   main: '/',
@@ -55,14 +54,14 @@ export const urls = {
   deleteCommentFromServiceComments: '/api/v1/comment/delete',
   trends: '/api/v1/trends',
   userStatistic: '/api/v1/statistics',
-  alreadyWatched: '/api/v1/lasts',
+  alreadyWatched: '/api/v1/lasts'
 };
 
 export const methods = {
   post: 'POST',
   get: 'GET',
   put: 'PUT',
-  delete: 'DELETE',
+  delete: 'DELETE'
 };
 
 export const responseStatuses = {
@@ -72,7 +71,7 @@ export const responseStatuses = {
   serverError: 500,
   notFound: 404,
   alreadyExists: 409,
-  csrfError: 412,
+  csrfError: 412
 };
 
 export const errorInputs = {
@@ -87,7 +86,7 @@ export const errorInputs = {
   ServerError: 'Ошибка сервера',
   badRequest: 'Почта уже используется',
   repeatPassword: 'Тот же пароль',
-  VariableError: 'Невалидное значение',
+  VariableError: 'Невалидное значение'
 };
 
 export const config = {
@@ -96,39 +95,39 @@ export const config = {
       href: urls.basket,
       png_name: 'myTags.svg',
       name: 'Мои фильмы',
-      renderObject: '',
+      renderObject: ''
     },
     profile: {
       href: urls.profile,
       png_name: 'iconPerson.webp',
       name: 'Мой профиль',
-      renderObject: '',
+      renderObject: ''
     },
     signin: {
       href: urls.signin,
       png_name: 'iconPerson.webp',
       name: 'Войти',
-      renderObject: SigninPage,
+      renderObject: SigninPage
     },
     signup: {
       href: urls.signup,
       png_name: 'iconPerson.webp',
       name: 'Зарегистрироваться',
-      renderObject: SignupPage,
+      renderObject: SignupPage
     },
     selection: {
       href: urls.selection,
       png_name: 'vectorTags.webp',
       name: 'Поиск',
-      renderObject: SelectCollectionPage,
+      renderObject: SelectCollectionPage
     },
     main: {
       href: urls.main,
       png_name: 'brandIcon.webp',
       name: 'MovieHub',
-      renderObject: MainPage,
-    },
-  },
+      renderObject: MainPage
+    }
+  }
 };
 
 export const header = new Header(ROOT);
@@ -150,8 +149,8 @@ export const collections = {
     { key: 'Мелодрама', value: 12, color: '#b6b67f' },
     { key: 'Фантастика', value: 13, color: '#c2a467' },
     { key: 'Триллер', value: 14, color: '#b268af' },
-    { key: 'Фэнтези', value: 15, color: '#95d782' },
-  ],
+    { key: 'Фэнтези', value: 15, color: '#95d782' }
+  ]
 };
 
 export const routes = [
@@ -163,7 +162,7 @@ export const routes = [
   { path: '/actors', view: FilmSelectionPage },
   { path: '/actor', view: ActorDescritionPage },
   { path: '/film', view: FilmPage },
-  { path: '/comments', view: CommentsPage },
+  { path: '/comments', view: CommentsPage }
 ];
 
 export const privateRoutes = [
@@ -171,5 +170,5 @@ export const privateRoutes = [
   { path: '/userStatistic', view: UserStatisticPage },
   { path: '/watchlist/films', view: FavoritePage },
   { path: '/watchlist/actors', view: FavoritePage },
-  { path: '/admin', view: AdminPage },
+  { path: '/admin', view: AdminPage }
 ];

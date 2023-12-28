@@ -12,7 +12,7 @@ export class UserStatistic extends Component {
    * @param result
    * @return {string} html элемента блока изменения данных
    */
-  render(result) {
+  render (result) {
     return templateUserStatistic({ result: result });
   }
 }

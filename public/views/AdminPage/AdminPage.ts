@@ -8,7 +8,7 @@ import {
   actionModerSearchUsers,
   actionSearchActor,
   actionStatistics,
-  actionUpdateRole,
+  actionUpdateRole
 } from '@store/action/actionTemplates';
 import { AdminPanel } from '@components/AdminPanel/adminPanel';
 import { collections, errorInputs, ROOT } from '@utils/config';
@@ -21,7 +21,7 @@ import {
   defaultVariable,
   insertText,
   removeErrors,
-  removeErrorsActive,
+  removeErrorsActive
 } from '@utils/addError';
 import { addActive, removeActive } from '@utils/std';
 import { ModeratorPanel } from '@components/ModeratorPanel/moderatorPanel';
@@ -54,7 +54,7 @@ export class AdminPage extends View {
    * Конструктор класса
    * @param ROOT
    */
-  constructor(ROOT) {
+  constructor (ROOT) {
     super(ROOT);
     this.state = {
       popupEvent: '',
@@ -68,7 +68,7 @@ export class AdminPage extends View {
       perPage: 20,
       file: '',
       defaultImage: '',
-      currentPage: '',
+      currentPage: ''
     };
   }
 
@@ -76,7 +76,7 @@ export class AdminPage extends View {
    * Метод создания страницы
    * @param props
    */
-  render(props) {
+  render (props) {
     this.renderDefaultPage({});
     const contentBlock = document.querySelector('.content-block');
     const footer = document.querySelector('.footer');
@@ -106,7 +106,7 @@ export class AdminPage extends View {
     this.componentDidMount();
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const adminPanel = document.querySelector('.admin-panel');
     const addFilm = document.querySelector('.add-film');
     const installPoster = document.querySelector('.add-film__left__poster');
@@ -136,7 +136,7 @@ export class AdminPage extends View {
                 login: event.target
                   .closest('.moderator__body__user')
                   .getAttribute('data-section'),
-                role: event.target.value,
+                role: event.target.value
               })
             );
           }
@@ -148,7 +148,7 @@ export class AdminPage extends View {
               login: search?.value,
               role: selected?.value,
               page: this.state.pageNumber,
-              per_page: this.state.perPage,
+              per_page: this.state.perPage
             })
           );
           break;
@@ -158,7 +158,7 @@ export class AdminPage extends View {
               login: search?.value,
               role: selected?.value,
               page: ++this.state.pageNumber,
-              per_page: this.state.perPage,
+              per_page: this.state.perPage
             })
           );
           break;
@@ -259,7 +259,6 @@ export class AdminPage extends View {
               this.state.file = file.files[0];
               reader.readAsDataURL(file.files[0]);
             }
-
           }
           break;
         default:
@@ -274,7 +273,7 @@ export class AdminPage extends View {
           router.go(
             {
               path: '/admin',
-              props: `/addFilm`,
+              props: `/addFilm`
             },
             { pushState: true, refresh: false }
           );
@@ -283,7 +282,7 @@ export class AdminPage extends View {
           router.go(
             {
               path: '/admin',
-              props: `/moderators`,
+              props: `/moderators`
             },
             { pushState: true, refresh: false }
           );
@@ -326,9 +325,8 @@ export class AdminPage extends View {
       div7,
       div8,
       div9,
-      div10,
+      div10
     ];
-
 
     divElements.forEach((div, index) => {
       const count = index + 1;
@@ -342,7 +340,7 @@ export class AdminPage extends View {
     });
   }
 
-  addFilmForm() {
+  addFilmForm () {
     const settings = document.querySelector('.change-user-data') as HTMLElement;
     const title = document.querySelector('.title-text');
     const date = document.querySelector('.date-text');
@@ -377,7 +375,7 @@ export class AdminPage extends View {
       inputButton.render({
         wrap: 'date',
         module: 'add-film',
-        type: 'number',
+        type: 'number'
       })
     );
 
@@ -395,7 +393,7 @@ export class AdminPage extends View {
     this.init();
   }
 
-  getForm() {
+  getForm () {
     const elements = this.state.inputsHTML;
     const genres = document.querySelectorAll('.title-type-admin.active');
     // @ts-ignore
@@ -446,7 +444,7 @@ export class AdminPage extends View {
         country: country,
         file: file,
         actors: actors,
-        genre: genres,
+        genre: genres
       })
     ) {
       store.dispatch(actionAddFilm({ file: data })).then(() => {
@@ -480,7 +478,7 @@ export class AdminPage extends View {
     }
   }
 
-  validateForm(dir) {
+  validateForm (dir) {
     let result = true;
     const elements = this.state.errorsHTML;
     const wraps = this.state.wraps;
@@ -535,7 +533,7 @@ export class AdminPage extends View {
     return result;
   }
 
-  getFormActors() {
+  getFormActors () {
     const nameActor = (
       document.querySelector('.name-input-select') as HTMLInputElement
     ).value.trim();
@@ -556,12 +554,12 @@ export class AdminPage extends View {
         birthday: '',
         films: [''],
         page: this.state.pageNumber++,
-        per_page: this.state.perPage,
+        per_page: this.state.perPage
       })
     );
   }
 
-  componentWillUnmount() {
+  componentWillUnmount () {
     store.unsubscribe(
       'searchModerUser',
       this.subscribeResultSearchUsers.bind(this)
@@ -578,7 +576,7 @@ export class AdminPage extends View {
     addFilm?.removeEventListener('click', this.state.popupEvent);
   }
 
-  resultFindActors() {
+  resultFindActors () {
     const response = store.getState('resultSearchActor');
     store.unsubscribe('resultSearchActor', this.resultFindActors.bind(this));
     const body = document.querySelector('.results-actors');
@@ -597,7 +595,7 @@ export class AdminPage extends View {
             alreadyFavorite: false,
             adminPanel: true,
             addClass: 'actor',
-            addClassPoster: 'actor-poster',
+            addClassPoster: 'actor-poster'
           })
         );
       }
@@ -610,10 +608,10 @@ export class AdminPage extends View {
     }
   }
 
-  subscribeResultSearchUsers() {
+  subscribeResultSearchUsers () {
     const roles = {
       moderator: `<option value='moderator'>модератор</option>`,
-      user: `<option value='user'>юзер</option>`,
+      user: `<option value='user'>юзер</option>`
     };
 
     store.unsubscribe(
@@ -667,7 +665,7 @@ export class AdminPage extends View {
     }
   }
 
-  init() {
+  init () {
     const inputHtml = document.querySelector('.error-login');
     const textAreaHtml = document.querySelector('.error-text-area');
     const countryHtml = document.querySelector('.error-country');
@@ -710,14 +708,14 @@ export class AdminPage extends View {
       genre: genreHtml,
       date: dateHtml,
       actors: actorsHtml,
-      image: imageError,
+      image: imageError
     };
 
     this.state.wraps = {
       title: wrapLogin,
       textArea: wrapInfo,
       country: wrapCountry,
-      date: wrapDate,
+      date: wrapDate
     };
 
     this.state.inputsHTML = {
@@ -727,7 +725,7 @@ export class AdminPage extends View {
       date: dateHTML,
       genre: genres,
       actors: actors,
-      image: fileInputHTML,
+      image: fileInputHTML
     };
   }
 }

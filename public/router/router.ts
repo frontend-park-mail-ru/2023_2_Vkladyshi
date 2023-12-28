@@ -23,7 +23,7 @@ interface Router {
   role: string;
 }
 class Router {
-  constructor(ROOT) {
+  constructor (ROOT) {
     this.root = ROOT;
     this.lastView = { path: '/', props: '' };
     this.role = 'user';
@@ -37,13 +37,13 @@ class Router {
     store.subscribe('logoutStatus', this.subscribeRouterLogout.bind(this));
   }
 
-  register({ path, view }, privatePath = false) {
+  register ({ path, view }, privatePath = false) {
     privatePath
       ? this.privateMapViews.set(path, view)
       : this.mapViews.set(path, view);
   }
 
-  refresh(redirect = false) {
+  refresh (redirect = false) {
     const url = new URL(window.location.href);
     const names = url.pathname.split('/');
 
@@ -54,7 +54,7 @@ class Router {
       this.go(
         {
           path: url.pathname,
-          props: url.search,
+          props: url.search
         },
         { pushState: !redirect, refresh: !redirect }
       );
@@ -65,7 +65,7 @@ class Router {
       this.go(
         {
           path: `/${names[1]}`,
-          props: `/${names[2]}`,
+          props: `/${names[2]}`
         },
         { pushState: !redirect, refresh: !redirect }
       );
@@ -74,7 +74,7 @@ class Router {
     }
   }
 
-  start() {
+  start () {
     store.dispatch(actionCSRF());
     store.dispatch(actionAuth());
 
@@ -107,7 +107,7 @@ class Router {
     this.firstView = true;
   }
 
-  go(
+  go (
     stateObject: stateObject,
     { pushState, refresh }: { pushState: boolean; refresh: boolean }
   ) {
@@ -155,7 +155,7 @@ class Router {
     }
   }
 
-  navigate({ path, props }: stateObject, pushState = false) {
+  navigate ({ path, props }: stateObject, pushState = false) {
     const location = DOMAIN;
 
     if ((path === '/films' || path === '/actors') && props === '/') {
@@ -177,7 +177,7 @@ class Router {
     }
   }
 
-  subscribeRouterAuthStatus() {
+  subscribeRouterAuthStatus () {
     const status = store.getState('auth')?.status;
 
     if (window.location.pathname === '/') {
@@ -198,7 +198,7 @@ class Router {
           this.go(
             {
               path: '/',
-              props: '',
+              props: ''
             },
             { pushState: true, refresh: false }
           );
@@ -214,21 +214,21 @@ class Router {
       router.go(
         {
           path: this.lastView.path,
-          props: this.lastView.props,
+          props: this.lastView.props
         },
         { pushState: true, refresh: false }
       );
     }
   }
 
-  subscribeRouterRoleStatus() {
+  subscribeRouterRoleStatus () {
     store.unsubscribe('auth', this.subscribeRouterRoleStatus.bind(this));
     store.subscribe('auth', this.subscribeRouterAuthStatus.bind(this));
     if (store.getState('auth')?.body?.role !== 'super') {
       this.go(
         {
           path: '/',
-          props: '',
+          props: ''
         },
         { pushState: true, refresh: false }
       );
@@ -236,14 +236,14 @@ class Router {
       this.go(
         {
           path: '/admin',
-          props: this.lastView.props,
+          props: this.lastView.props
         },
         { pushState: true, refresh: false }
       );
     }
   }
 
-  subscribeRouterLogout() {
+  subscribeRouterLogout () {
     const logout = store.getState('logoutStatus');
 
     if (logout === 200) {
@@ -253,7 +253,7 @@ class Router {
         this.go(
           {
             path: '/',
-            props: '',
+            props: ''
           },
           { pushState: true, refresh: false }
         );
@@ -261,7 +261,7 @@ class Router {
     }
   }
 
-  subscribeRouterSigninStatus() {
+  subscribeRouterSigninStatus () {
     const status = store.getState('login');
     store.setState({ auth: status });
   }

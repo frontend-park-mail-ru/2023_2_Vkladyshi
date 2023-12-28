@@ -165,7 +165,7 @@ input::placeholder {
 }
 
 .icon-profile {
-  height: 35px;
+  height: 45px;
 }
 
 .header_search_item__all-search-container {
@@ -186,7 +186,11 @@ input::placeholder {
   border-right: none;
   padding: 8px 15px 8px 5px;
   /*border: 1px solid #f3c23c;*/
-  text-align: center;
+  text-align: left;
+}
+
+.header_search_item__input::placeholder {
+  text-align: left;
 }
 
 .header_search__list-search {

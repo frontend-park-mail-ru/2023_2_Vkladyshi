@@ -5,11 +5,11 @@ const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 
-const isDev = process.env.NODE_ENV === 'development';
+const isDev = process.env.NODE_ENV === 'production';
 const isProd = !isDev;
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: ['./public/index.ts'],
   output: {
     filename: 'index.js',

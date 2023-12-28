@@ -11,7 +11,7 @@ export class Image {
    * @return {string} html авторизации
    * @param urlImage
    */
-  render(urlImage) {
+  render (urlImage) {
     return templateImage(urlImage);
   }
 }
